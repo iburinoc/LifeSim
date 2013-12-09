@@ -73,7 +73,7 @@ public class Plane{
 				(n.x * v.x + n.y * v.y + n.z * v.z);
 	}
 	
-	public Point intersection(Vector v, Point p){	
+	public Point intersection(Vector v, Point p){
 		double t = calculateT(v,p);
 		double nx = p.x + v.x * t;
 		double ny = p.y + v.y * t;

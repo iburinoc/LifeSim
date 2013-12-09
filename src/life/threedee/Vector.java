@@ -45,7 +45,7 @@ public class Vector{
 		Matrix y = new Matrix(new double[][]{{u1,u3},{v1,v3}});
 		Matrix z = new Matrix(new double[][]{{u1,u2},{v1,v2}});
 		
-		return new Vector(x.determinant(),y.determinant(),z.determinant());
+		return new Vector(x.determinant(),-y.determinant(),z.determinant());
 	}
 	
 	public double dotProduct(Vector v){

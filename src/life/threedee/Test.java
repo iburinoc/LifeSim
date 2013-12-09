@@ -8,6 +8,7 @@ public class Test{
 	}
 	
 	public static void main(String[] args){
+	    System.out.println(new Matrix(new double[][]{{1, 5, 3},{2, 4, 7},{4, 6, 2}}).determinant());
 		Plane p = new Plane(new Point(0,0,1),new Vector(0,0,1));
 		Point a = new Point(0,1,0);
 		Vector v = new Vector(0,0,1);

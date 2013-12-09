@@ -2,67 +2,67 @@ package life.engine.resources;
 
 import life.engine.land.Land;
 
-public class Grass implements Resource{
+public class Grass implements Resource {
     private double energy;
     private int x;
     private int y;    
-    private Land l;
+    private Land land;
 
-    public Grass(int x, int y) {
+    public Grass (int x, int y) {
         this.energy = 1;
         this.x = x;
         this.y = y;
     }
     
     @Override
-    public void step() {
+    public void step () {
         energy += 1;
     }
     
     @Override
-    public void consume() {
+    public void consume () {
         
     }
 
     @Override
-    public void getValue() {
+    public void getValue () {
         
     }
 
     @Override
-    public double getEnergy() {
+    public double getEnergy () {
         return this.energy;
     }
     
-    public int getX() {
+    public int getX () {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX (int x) {
         this.x = x;
     }
 
-    public int getY() {
+    public int getY () {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY (int y) {
         this.y = y;
     }
 
-    public void setEnergy(double energy) {
+    public void setEnergy (double energy) {
         this.energy = energy;
     }
 
-    public Land getLand() {
-        return this.l;
+    public Land getLand () {
+        return this.land;
     }
     
-    public void setLand(Land l) {
-        this.l = l;
+    public void setLand (Land land) {
+        this.land = land;
     }
     
-    public String getStr() {
+    public String getString() {
         return ".";
     }
 }

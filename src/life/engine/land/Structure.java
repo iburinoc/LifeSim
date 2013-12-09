@@ -2,7 +2,6 @@ package life.engine.land;
 
 import life.engine.creatures.Creature;
 
-
 public abstract class Structure {
     public Tile location;
     public long hardness;

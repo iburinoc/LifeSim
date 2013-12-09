@@ -1,7 +1,6 @@
 package life.engine.land;
 
 import java.util.ArrayList;
-
 import life.engine.creatures.Creature;
 
 public class Land {
@@ -15,12 +14,12 @@ public class Land {
         this.objects = objects;
         this.structures = structures;
         this.land = land;
-        for (LandObject lo: objects) {
-            lo.setLand(this);
+        for (LandObject landObject: objects) {
+            landObject.setLand(this);
         }
     }
 
-    public void step() {
+    public void step () {
         for (LandObject object: objects) {
             if (object instanceof Creature) {
                 Creature c = (Creature) object;
@@ -33,29 +32,29 @@ public class Land {
         }
     }
     
-    public void outputStringToConsole() {
+    public void outputStringToConsole () {
         int minX = 0, minY = 0, maxX = 0, maxY = 0;
-        for (LandObject lo: objects) {
-            if (lo.getX() < minX) {
-                minX = lo.getX();
+        for (LandObject landObject: objects) {
+            if (landObject.getX() < minX) {
+                minX = landObject.getX();
             }
-            if (lo.getY() < minY) {
-                minY = lo.getY();
+            if (landObject.getY() < minY) {
+                minY = landObject.getY();
             }
-            if (lo.getX() > maxX) {
-                maxX = lo.getX();
+            if (landObject.getX() > maxX) {
+                maxX = landObject.getX();
             }
-            if (lo.getY() > maxY) {
-                maxY = lo.getY();
+            if (landObject.getY() > maxY) {
+                maxY = landObject.getY();
             }
         }
         System.out.println("---");
         for (int i = minX; i <= maxX; i++) {
             for (int j = minY; j <= maxY; j++) {
                 boolean thingThere = false;
-                for (LandObject lo: objects) {
-                    if (lo.getX() == i && lo.getY() == j) {
-                        System.out.print(lo.getStr());
+                for (LandObject landObject: objects) {
+                    if (landObject.getX() == i && landObject.getY() == j) {
+                        System.out.print(landObject.getString());
                         thingThere = true;
                     }
                 }
@@ -68,22 +67,22 @@ public class Land {
         System.out.println("---");
     }
     
-    public ArrayList<LandObject> getObjects() {
+    public ArrayList<LandObject> getObjects () {
         return this.objects;
     }
-    public void setObjects(ArrayList<LandObject> objects) {
+    public void setObjects (ArrayList<LandObject> objects) {
         this.objects = objects;
     }
-    public ArrayList<Structure> getStructures() {
+    public ArrayList<Structure> getStructures () {
         return structures;
     }
-    public void setStructures(ArrayList<Structure> structures) {
+    public void setStructures (ArrayList<Structure> structures) {
         this.structures = structures;
     }
-    public ArrayList<ArrayList<Tile>> getLand() {
+    public ArrayList<ArrayList<Tile>> getLand () {
         return land;
     }
-    public void setLand(ArrayList<ArrayList<Tile>> land) {
+    public void setLand (ArrayList<ArrayList<Tile>> land) {
         this.land = land;
     }
 }

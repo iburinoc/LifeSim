@@ -1,7 +1,6 @@
 package life.engine.test;
 
 import java.util.ArrayList;
-
 import life.engine.creatures.Hare;
 import life.engine.creatures.Wolf;
 import life.engine.land.Land;

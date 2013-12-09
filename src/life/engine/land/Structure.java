@@ -1,4 +1,6 @@
-package life.engine;
+package life.engine.land;
+
+import life.engine.creatures.Creature;
 
 
 public abstract class Structure {

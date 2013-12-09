@@ -1,4 +1,6 @@
-package life.engine;
+package life.engine.creatures;
+
+import life.engine.resources.Resource;
 
 
 public interface Herbivore extends Creature {

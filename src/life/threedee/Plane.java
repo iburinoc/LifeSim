@@ -67,7 +67,7 @@ public class Plane{
 	}
 	
 	public double calculateT(Vector v,Point p){
-		return (n.x * p.x - n.x * o.x + 
+		return -(n.x * p.x - n.x * o.x + 
 				n.y * p.y - n.y * o.y + 
 				n.z * p.z - n.z * o.z) / 
 				(n.x * v.x + n.y * v.y + n.z * v.z);

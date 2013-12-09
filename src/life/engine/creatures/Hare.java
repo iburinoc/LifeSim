@@ -7,13 +7,19 @@ import life.engine.land.LandObject;
 import life.engine.resources.Grass;
 import life.engine.resources.Resource;
 
-public class Rabbit implements Herbivore{
+public class Hare implements Herbivore{
     private double energy;
     private int x;
     private int y;
     private Land l;
     
-    public Rabbit(Rabbit parent1, Rabbit parent2) {
+    public Hare(int x, int y) {
+        this.energy = 100;
+        this.x = x;
+        this.y = y;
+    }
+    
+    public Hare(Hare parent1, Hare parent2) {
         energy = parent1.getEnergy()/3+parent2.getEnergy()/3;
         parent1.setEnergy(2*parent1.getEnergy()/3);
         parent2.setEnergy(2*parent2.getEnergy()/3);
@@ -23,6 +29,13 @@ public class Rabbit implements Herbivore{
     
     @Override
     public void step() {
+        this.move();
+        for (LandObject lo: l.getObjects()) {
+            if (lo instanceof Resource && this.x == lo.getX() && this.y == lo.getY()) {
+                this.feed((Resource) lo);
+            }
+        }
+        this.energy -= 1;
     }
     
     @Override
@@ -36,15 +49,15 @@ public class Rabbit implements Herbivore{
                 double dy = o.getY()-this.getY();
                 if (Math.abs(dx)>Math.abs(dy)) {
                     if (dx<0) {
-                        preferredDirection[3]++;
-                    } else {
                         preferredDirection[1]++;
+                    } else {
+                        preferredDirection[3]++;
                     }
                 } else {
                     if (dy<0) {
-                        preferredDirection[0]++;
-                    } else {
                         preferredDirection[2]++;
+                    } else {
+                        preferredDirection[0]++;
                     }
                 }
             } else if (o instanceof Grass) {
@@ -52,15 +65,15 @@ public class Rabbit implements Herbivore{
                 double dy = o.getY()-this.getY();
                 if (Math.abs(dx)>Math.abs(dy)) {
                     if (dx<0) {
-                        preferredDirection[1]++;
-                    } else {
                         preferredDirection[3]++;
+                    } else {
+                        preferredDirection[1]++;
                     }
                 } else {
                     if (dy<0) {
-                        preferredDirection[2]++;
-                    } else {
                         preferredDirection[0]++;
+                    } else {
+                        preferredDirection[2]++;
                     }
                 }
             }
@@ -84,8 +97,8 @@ public class Rabbit implements Herbivore{
     }
 
     @Override
-    public void survives() {
-        
+    public boolean survives() {
+        return this.energy > 0;
     }
 
     @Override
@@ -95,6 +108,7 @@ public class Rabbit implements Herbivore{
         } else {
             this.energy += r.getEnergy()/4;
         }
+        l.getObjects().remove(r);
     }
     
 
@@ -120,5 +134,17 @@ public class Rabbit implements Herbivore{
 
     public void setY(int y) {
         this.y = y;
+    }
+    
+    public Land getLand() {
+        return l;
+    }
+
+    public void setLand(Land l) {
+        this.l = l;
+    }
+    
+    public String getStr() {
+        return "H";
     }
 }

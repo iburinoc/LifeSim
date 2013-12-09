@@ -5,4 +5,6 @@ public interface LandObject {
     public int getX();
     public int getY();
     public double getEnergy(); 
+    public void setLand(Land l);
+    public String getStr();
 }

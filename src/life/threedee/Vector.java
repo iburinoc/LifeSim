@@ -34,7 +34,20 @@ public class Vector{
 	}
 	
 	public Vector crossProduct(Vector v){
+		Vector u = this;
+		double u1 = u.x;
+		double u2 = u.y;
+		double u3 = u.z;
 		
+		double v1 = v.x;
+		double v2 = v.y;
+		double v3 = v.z;
+		
+		Matrix x = new Matrix(new double[][]{{u2,u3},{v2,v3}});
+		Matrix y = new Matrix(new double[][]{{u1,u3},{v1,v3}});
+		Matrix z = new Matrix(new double[][]{{u1,u2},{v1,v2}});
+		
+		return new Vector(x.determinant(),y.determinant(),z.determinant());
 	}
 	
 	public double dotProduct(Vector v){

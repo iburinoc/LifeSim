@@ -66,11 +66,15 @@ public class Plane{
 		return cond1 && cond2;
 	}
 	
-	public Point intersection(Vector v, Point p){	
-		double t = (n.x * p.x - n.x * o.x + 
+	public double calculateT(Vector v,Point p){
+		return (n.x * p.x - n.x * o.x + 
 				n.y * p.y - n.y * o.y + 
 				n.z * p.z - n.z * o.z) / 
 				(n.x * v.x + n.y * v.y + n.z * v.z);
+	}
+	
+	public Point intersection(Vector v, Point p){	
+		double t = calculateT(v,p);
 		double nx = p.x + v.x * t;
 		double ny = p.y + v.y * t;
 		double nz = p.z + v.z * t;

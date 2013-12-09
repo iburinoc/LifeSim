@@ -13,6 +13,10 @@ public class POC3D extends JPanel{
 	
 	private List<Plane> objects;
 	
+	private double x;
+	private double y;
+	private double z;
+	
 	public POC3D(){
 		j = new JFrame("Proof of Concept");
 		

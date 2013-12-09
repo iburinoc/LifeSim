@@ -2,12 +2,11 @@ package life.threedee;
 
 public class Plane{
 	
-	// 0 = ax + by + cz + d
+	// z = ax + by + c
 	
 	double a; // x coeff
 	double b; // y coeff
-	double c; // z coeff
-	double d; // constant
+	double c; // constant
 	
 	public Plane(Point a,Point b,Point c){
 		if(collinear(a,b,c)){
@@ -17,7 +16,21 @@ public class Plane{
 	}
 	
 	private void createPlane(Point a,Point b,Point c){
+		double d = a.x;
+		double e = a.y;
+		double f = a.z;
 		
+		double g = b.x;
+		double h = b.y;
+		double i = b.z;
+		
+		double j = c.x;
+		double k = c.y;
+		double l = c.z;
+		
+		this.a = (l*h - l*e - k*i + k*f - f*h + f*e + e*i - e*f)/(j*h - j*e - k*g + k*d - d*h + d*e + e*g - e*d);
+		this.b = (i - this.a * (g-d) - f)/(h - e);
+		this.c = f - this.a * d - this.b * e;
 	}
 	
 	private boolean collinear(Point a,Point b,Point c){

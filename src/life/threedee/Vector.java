@@ -5,32 +5,30 @@ public class Vector{
 	public final double s;
 	
 	public Vector(double x,double y,double z){
-		this(x,y,z,1);
-	}
-	
-	public Vector(double x,double y,double z,double s){
 		double mag = Math.sqrt(x * x + y * y + z * z);
 		
-		this.x = x / mag;
-		this.y = y / mag;
-		this.z = z / mag;
-		this.s = s;
-	}
-	
-	public Vector(Point p0, Point p1){
-		double x = (p1.x - p0.x);
-		double y = (p1.y - p0.y);
-		double z = (p1.z - p0.z);
-		double mag = Math.sqrt(x * x + y * y + z * z);
-		
-		this.x = x / mag;
-		this.y = y / mag;
-		this.z = z / mag;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 		this.s = mag;
 	}
 	
+	public Vector(Point p0, Point p1){
+		this.x = (p1.x - p0.x);
+		this.y = (p1.y - p0.y);
+		this.z = (p1.z - p0.z);
+		double mag = Math.sqrt(x * x + y * y + z * z);
+		
+		this.s = mag;
+	}
+	
+	public Vector unit(){
+		double mag = Math.sqrt(x * x + y * y + z * z);
+		return new Vector(x / mag, y / mag, z / mag);
+	}
+	
 	public String toString(){
-		return "(" + x + "," + y + "," + y + "," + s + ")";
+		return "(" + x + "," + y + "," + z + "," + s + ")";
 	}
 	
 	public Vector crossProduct(Vector v){

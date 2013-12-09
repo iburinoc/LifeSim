@@ -10,4 +10,8 @@ public class Point{
 		this.y = y;
 		this.z = z;
 	}
+	
+	public String toString(){
+		return "(" + x + "," + y + "," + z + ")";
+	}
 }

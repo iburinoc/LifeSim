@@ -18,6 +18,11 @@ public class Plane{
 		createPlane(a,b,c);
 	}
 	
+	public Plane(Point o,Vector n){
+		this.o = o;
+		this.n = n;
+	}
+	
 	private void createPlane(Point a,Point b,Point c){
 		double d = a.x;
 		double e = a.y;
@@ -34,6 +39,9 @@ public class Plane{
 		this.a = (l*h - l*e - k*i + k*f - f*h + f*e + e*i - e*f)/(j*h - j*e - k*g + k*d - d*h + d*e + e*g - e*d);
 		this.b = (i - this.a * (g-d) - f)/(h - e);
 		this.c = f - this.a * d - this.b * e;
+		
+		o = a;
+		n = new Vector(a,b).crossProduct(new Vector(a,c));
 	}
 	
 	private boolean collinear(Point a,Point b,Point c){
@@ -58,8 +66,15 @@ public class Plane{
 		return cond1 && cond2;
 	}
 	
-	private boolean crossed(Vector v, Point p){	
-		
+	public Point intersection(Vector v, Point p){	
+		double t = (n.x * p.x - n.x * o.x + 
+				n.y * p.y - n.y * o.y + 
+				n.z * p.z - n.z * o.z) / 
+				(n.x * v.x + n.y * v.y + n.z * v.z);
+		double nx = p.x + v.x * t;
+		double ny = p.y + v.y * t;
+		double nz = p.z + v.z * t;
+		return new Point(nx,ny,nz);
 	}
 	
 	private double eval(double x,double z){

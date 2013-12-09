@@ -24,7 +24,6 @@ public class POC3D extends JPanel{
 		
 		j.setSize(new Dimension(1280,720));
 		j.setVisible(true);
-		
 	}
 	
 	@Override

@@ -55,6 +55,10 @@ public class Plane{
 		return cond1 && cond2;
 	}
 	
+	private boolean crossed(Vector v, Point p){	
+		
+	}
+	
 	private double eval(double x,double z){
 		return a * x + b * z + c;
 	}

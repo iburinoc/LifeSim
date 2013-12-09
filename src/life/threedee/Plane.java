@@ -8,6 +8,9 @@ public class Plane{
 	double b; // y coeff
 	double c; // constant
 	
+	Point o; //Origin point on plane
+	Vector n; //Normal
+	
 	public Plane(Point a,Point b,Point c){
 		if(collinear(a,b,c)){
 			throw new IllegalArgumentException("Points collinear");

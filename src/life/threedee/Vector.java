@@ -1,18 +1,43 @@
 package life.threedee;
 
 public class Vector{
-	public final double p,r,y;
+	public final double x,y,z;
 	public final double s;
 	
-	public Vector(double p,double r,double y){
-		this(p,r,y,1);
+	public Vector(double x,double y,double z){
+		this(x,y,z,1);
 	}
 	
-	public Vector(double p,double r,double y,double s){
-		assert(Math.abs(p * p + r * r + y * y - 1) < 0.0000001);
-		this.p = p;
-		this.r = r;
-		this.y = y;
+	public Vector(double x,double y,double z,double s){
+		double mag = Math.sqrt(x * x + y * y + z * z);
+		
+		this.x = x / mag;
+		this.y = y / mag;
+		this.z = z / mag;
 		this.s = s;
+	}
+	
+	public Vector(Point p0, Point p1){
+		double x = (p1.x - p0.x);
+		double y = (p1.y - p0.y);
+		double z = (p1.z - p0.z);
+		double mag = Math.sqrt(x * x + y * y + z * z);
+		
+		this.x = x / mag;
+		this.y = y / mag;
+		this.z = z / mag;
+		this.s = mag;
+	}
+	
+	public String toString(){
+		return "(" + x + "," + y + "," + y + "," + s + ")";
+	}
+	
+	public Vector crossProduct(Vector v){
+		
+	}
+	
+	public double dotProduct(Vector v){
+		
 	}
 }

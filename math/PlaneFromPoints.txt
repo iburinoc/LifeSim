@@ -1,0 +1,15 @@
+d e f
+g h i
+j k l
+
+z = ax + by + c
+f = ad + be + c
+c = f - ad + be
+i = ag + bh + f - ad - be
+i = a(g - d) + b(h - e) + f
+b = (i - a(g - d)-f)/(h-e)
+l = aj + (k(i-a(g-d)-f))/(h-e) + f - ad - (e(i-a(g-d)-f))/(h-e)
+
+** more maff **
+
+result:

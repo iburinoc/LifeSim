@@ -29,6 +29,8 @@ public class Camera{
 	}
 	
 	public void draw(Graphics g, List<Plane> objects){
+		double[] dirPolar = dir.polarTransform();
+		double[] rightPolar = Vector.UNIT_X.polarTransform();
 		Vector right = ;
 		Vector up;
 		for(int x = 0; x < screenWidth; x++){

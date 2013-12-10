@@ -18,5 +18,12 @@ public class Test{
         System.out.println(Vector.fromPolarTransform(otherVector.polarTransform()[0], otherVector.polarTransform()[1], otherVector.s));
         System.out.println(Vector.fromPolarTransform(otherVector.polarTransform()[0] * 2, otherVector.polarTransform()[1], otherVector.s));
         System.out.println(Vector.fromPolarTransform(otherVector.polarTransform()[0] * 4, otherVector.polarTransform()[1], otherVector.s));
+        System.out.println(Vector.UNIT_X.polarTransform()[0] + ":" + Vector.UNIT_X.polarTransform()[1]);
+        System.out.println(Vector.UNIT_Y.polarTransform()[0] + ":" + Vector.UNIT_Y.polarTransform()[1]);
+        System.out.println(Vector.UNIT_Z.polarTransform()[0] + ":" + Vector.UNIT_Z.polarTransform()[1]);
+        System.out.println(Vector.fromPolarTransform(Vector.UNIT_X.polarTransform()[0], Vector.UNIT_X.polarTransform()[1], 1));
+        System.out.println(Vector.fromPolarTransform(Vector.UNIT_Y.polarTransform()[0], Vector.UNIT_Y.polarTransform()[1], 1));
+        System.out.println(Vector.fromPolarTransform(Vector.UNIT_Z.polarTransform()[0], Vector.UNIT_Z.polarTransform()[1], 1));
+        System.out.println(Double.NaN == Double.NaN);
 	}
 }

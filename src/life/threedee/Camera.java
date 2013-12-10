@@ -29,8 +29,8 @@ public class Camera{
 	}
 	
 	public void draw(Graphics g, List<Plane> objects){
-		Vector right = ;
-		Vector up;
+		Vector right = Vector.UNIT_X;
+		Vector up = Vector.UNIT_Y;
 		for(int x = 0; x < screenWidth; x++){
 			for(int y = 0; y < screenHeight; y++){
 				Vector dir = getVector

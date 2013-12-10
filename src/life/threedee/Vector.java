@@ -49,4 +49,8 @@ public class Vector {
 	public double dotProduct(Vector vector){
 		return x * vector.x + y * vector.y + z * vector.z;
 	}
+	
+	public Vector add(Vector v) {
+		return new Vector(x + v.x, y + v.y, z + v.z);
+	}
 }

@@ -2,19 +2,18 @@ package life.threedee;
 
 public class Plane{
 
+	/*
 	// z = ax + by + c
 
 	double a; // x coeff
 	double b; // y coeff
 	double c; // constant
-
+	*/
+	
 	Point origin; // Origin point on plane
 	Vector normal; // Normal
 
 	public Plane(Point a, Point b, Point c){
-		if(collinear(a, b, c)){
-			throw new IllegalArgumentException("Points collinear");
-		}
 		origin = a;
 		normal = new Vector(a, b).crossProduct(new Vector(a, c));
 	}
@@ -36,7 +35,7 @@ public class Plane{
 	 * = (i - this.a * (g - d) - f) / (h - e); this.c = f - this.a * d - this.b
 	 * * e; Here for reference. no longer needed.
 	 */
-
+	/*
 	private boolean collinear(Point a, Point b, Point c){
 		boolean condition1 = false, condition2 = false;
 		try{
@@ -57,6 +56,7 @@ public class Plane{
 		}
 		return condition1 && condition2;
 	}
+	*/
 
 	public double calculateT(Vector vector, Point point){
 		return -(normal.x * point.x - normal.x * origin.x + normal.y * point.y - normal.y * origin.y + normal.z * point.z - normal.z * origin.z)
@@ -71,7 +71,29 @@ public class Plane{
 		return new Point(nx, ny, nz);
 	}
 
-	private double evaluate(double x, double z){
-		return a * x + b * z + c;
+	/**
+	 * Call this with three values, the two you wish to plug in and a NaN that
+	 * you wish to solve for. remember, if you give two values that are not part
+	 * of the plane, you will get NaN back
+	 * 
+	 * @param x
+	 * @param z
+	 * @return
+	 */
+	public Point evaluate(double x, double y,double z) {
+		//x=(-(yn(y-y0)+zn(z-z0))+xn*x0)/xn
+		if(x != x){
+			x = (-(normal.y * (y - origin.y) + normal.z * (z - origin.z)) + normal.x * origin.x) / normal.x;
+			return new Point(x,y,z);
+		}
+		if(y != y){
+			y = (-(normal.x * (x - origin.x) + normal.z * (z - origin.z)) + normal.y * origin.y) / normal.y;
+			return new Point(x,y,z);
+		}
+		if(z != z){
+			z = (-(normal.y * (y - origin.y) + normal.x * (x - origin.x)) + normal.z * origin.z) / normal.z;
+			return new Point(x,y,z);
+		}
+		return null;
 	}
 }

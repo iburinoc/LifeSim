@@ -14,7 +14,7 @@ public class Camera{
 			screenWidth  = 480,
 			screenHeight = 360;
 	
-	public Camera(double x, double y, double z){
+	public Camera(double x,double y,double z){
 		
 	}
 	

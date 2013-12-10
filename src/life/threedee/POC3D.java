@@ -2,6 +2,7 @@ package life.threedee;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,6 +30,7 @@ public class POC3D extends JPanel implements Runnable{
 
 	@Override
 	public void run(){
+        objects = new ArrayList<Plane>();
 		Plane p = new Plane(new Point(0,0,1),new Vector(0,-1,1));
 		objects.add(p);
 		c = new Camera();

@@ -28,6 +28,7 @@ public class Vector{
 		return new Vector(x / s, y / s, z / s);
 	}
 
+    @Override
 	public String toString(){
 		return "(" + x + ", " + y + ", " + z + ", " + s + ")";
 	}

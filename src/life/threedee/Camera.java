@@ -33,8 +33,8 @@ public class Camera{
 		double px = rx * dx;
 		double py = ry * dy;
 		
-		Vector nright = right.setScal(px);
-		Vector nup = right.setScal(py);
+		Vector nright = right.setScalar(px);
+		Vector nup = right.setScalar(py);
 		return nup.add(nright);
 	}
 

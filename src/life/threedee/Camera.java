@@ -32,9 +32,10 @@ public class Camera{
 		int ry = screenHeight / 2 - y;
 		double px = rx * dx;
 		double py = ry * dy;
+        return null;
 	}
 
 	private Plane closestInFront(){
-
+        return null;
 	}
 }

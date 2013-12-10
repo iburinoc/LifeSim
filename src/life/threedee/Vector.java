@@ -55,19 +55,18 @@ public class Vector{
 
     public static Vector relativeTransform(double yaw, double pitch, double scalar){
         double x = Math.cos(yaw), z = Math.sin(yaw), y = Math.tan(pitch) * Math.sqrt(x * x + z * z);
-
-        return new Vector(x, y, z);
+        return new Vector(x, y, z).setScalar(scalar);
     }
 
 	public Vector add(Vector v){
 		return new Vector(x + v.x, y + v.y, z + v.z);
 	}
 	
-	public Vector scalProduct(double scalar){
+	public Vector scalarProduct(double scalar){
 		return new Vector(x * scalar, y * scalar, z * scalar);
 	}
 	
-	public Vector setScal(double scalar){
+	public Vector setScalar(double scalar){
 		double mod = scalar / s;
 		return new Vector(x * mod, y * mod, z * mod);
 	}

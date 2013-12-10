@@ -15,7 +15,8 @@ public class Plane {
 		if(collinear(a, b, c)) {
 			throw new IllegalArgumentException("Points collinear");
 		}
-		createPlane(a, b, c);
+		origin = a;
+		normal = new Vector(a, b).crossProduct(new Vector(a, c));
 	}
 	
 	public Plane (Point origin, Vector normal) {
@@ -23,8 +24,8 @@ public class Plane {
 		this.normal = normal;
 	}
 	
-	private void createPlane (Point a, Point b, Point c) {
-		double d = a.x;
+	/*
+	 * double d = a.x;
 		double e = a.y;
 		double f = a.z;
 		
@@ -39,10 +40,8 @@ public class Plane {
 		this.a = (l * h - l * e - k * i + k * f - f * h + f * e + e * i - e * f) / (j * h - j * e - k * g + k * d - d * h + d * e + e * g - e * d);
 		this.b = (i - this.a * (g - d) - f) / (h - e);
 		this.c = f - this.a * d - this.b * e;
-		
-		origin = a;
-		normal = new Vector(a, b).crossProduct(new Vector(a, c));
-	}
+		Here for reference.  no longer needed.
+	 */
 	
 	private boolean collinear (Point a,Point b,Point c) {
 		boolean condition1 = false, condition2 = false;

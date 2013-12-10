@@ -1,5 +1,6 @@
 package life.threedee;
 
+import java.awt.Graphics;
 import java.util.List;
 
 public class Camera{
@@ -25,6 +26,16 @@ public class Camera{
 	
 	public Camera(){
 		this(new Point(0,0,0),new Vector(0,0,1));
+	}
+	
+	public void draw(Graphics g, List<Plane> objects){
+		Vector right = ;
+		Vector up;
+		for(int x = 0; x < screenWidth; x++){
+			for(int y = 0; y < screenHeight; y++){
+				Vector dir = getVector
+			}
+		}
 	}
 	
 	private Vector getVectorForPixel(int x,int y, Vector right, Vector up){

@@ -5,11 +5,10 @@ public class Vector{
 	public final double s;
 
 	public Vector(double x, double y, double z){
-		double mag = Math.sqrt(x * x + y * y + z * z);
+		this.s = Math.sqrt(x * x + y * y + z * z);
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.s = mag;
 	}
 
 	public Vector(Point point0, Point point1){
@@ -21,8 +20,7 @@ public class Vector{
 	}
 
 	public Vector unitVector(){
-		double mag = Math.sqrt(x * x + y * y + z * z);
-		return new Vector(x / mag, y / mag, z / mag);
+		return new Vector(x / s, y / s, z / s);
 	}
 
 	public String toString(){
@@ -55,15 +53,20 @@ public class Vector{
         return new double[] {yaw, pitch};
     }
 
+    public static Vector relativeTransform(double yaw, double pitch, double scalar){
+        double x = Math.cos(yaw), z = Math.sin(yaw), y = Math.tan(pitch) * Math.sqrt(x * x + z * z);
+        return new Vector(x, y, z).setScalar(scalar);
+    }
+
 	public Vector add(Vector v){
 		return new Vector(x + v.x, y + v.y, z + v.z);
 	}
 	
-	public Vector scalProduct(double scalar){
+	public Vector scalarProduct(double scalar){
 		return new Vector(x * scalar, y * scalar, z * scalar);
 	}
 	
-	public Vector setScal(double scalar){
+	public Vector setScalar(double scalar){
 		double mod = scalar / s;
 		return new Vector(x * mod, y * mod, z * mod);
 	}

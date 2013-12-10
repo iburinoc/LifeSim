@@ -12,6 +12,9 @@ public class Test{
 		Plane plane = new Plane(new Point(0, 0, 1), new Vector(0, 0, 1));
 		Point point = new Point(0, 1, 0);
 		Vector vector = new Vector(0, 0, 1);
-		System.out.println(plane.intersection(vector, point));
+		System.out.println(plane.intersection(vector, point) + "\n\n");
+        Vector otherVector = new Vector(1, 1, 1);
+        System.out.println(otherVector.polarTransform()[0] + "\t" + otherVector.polarTransform()[1]);
+        System.out.println(otherVector.relativeTransform(otherVector.polarTransform()[0], otherVector.polarTransform()[1], otherVector.s));
 	}
 }

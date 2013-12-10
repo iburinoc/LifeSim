@@ -1,0 +1,13 @@
+Math to determine screen width:
+75deg
+distance = 1
+75/2 = 37.5
+|_
+
+tan 37.5 = w/2 / 1
+w = 2 * tan37.5
+
+so width = 2 * tan37.5
+width = 2 * 0.76732698797
+width = 1.53465397596
+height= 1.15099048197

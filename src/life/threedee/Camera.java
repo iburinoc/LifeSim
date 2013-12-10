@@ -3,6 +3,8 @@ package life.threedee;
 import java.awt.Graphics;
 import java.util.List;
 
+import static java.lang.Math.PI;
+
 public class Camera{
 
 	private Point loc;
@@ -30,10 +32,24 @@ public class Camera{
 	
 	public void draw(Graphics g, List<Plane> objects){
 		double[] dirPolar = dir.polarTransform();
-		double[] rightPolar = Vector.UNIT_X.polarTransform();
+		
+		double yaw = Double.NaN;
+		
+		if(dirPolar[1] < 0){
+			yaw = PI/2;
+		}else if(dirPolar[1] > 0){
+			yaw = 3*PI/2;
+		}
+		Vector upU = Vector.fromPolarTransform(yaw, PI/2 + dirPolar[1], 1);
+		
+		Vector rightU = Vector.fromPolarTransform(dirPolar[0], 0, 1);
+		
 		for(int x = 0; x < screenWidth; x++){
 			for(int y = 0; y < screenHeight; y++){
-				Vector dir = getVector
+				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
+				Plane draw = closestInFront(objects, v, loc);
+				g.setColor(draw.c);
+				g.fillRect(x, y, 1, 1);
 			}
 		}
 	}

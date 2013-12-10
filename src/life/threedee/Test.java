@@ -25,5 +25,7 @@ public class Test{
         System.out.println(Vector.fromPolarTransform(Vector.UNIT_Y.polarTransform()[0], Vector.UNIT_Y.polarTransform()[1], 1));
         System.out.println(Vector.fromPolarTransform(Vector.UNIT_Z.polarTransform()[0], Vector.UNIT_Z.polarTransform()[1], 1));
         System.out.println(Double.NaN == Double.NaN);
+        System.out.println(-6%5);
+        System.out.println(-3%5);
 	}
 }

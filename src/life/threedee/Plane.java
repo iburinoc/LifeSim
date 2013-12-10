@@ -1,5 +1,7 @@
 package life.threedee;
 
+import java.awt.Color;
+
 public class Plane{
 
 	/*
@@ -10,17 +12,23 @@ public class Plane{
 	double c; // constant
 	*/
 	
-	Point origin; // Origin point on plane
-	Vector normal; // Normal
+	private Point origin; // Origin point on plane
+	private Vector normal; // Normal
 
+	public Color c;
+	
 	public Plane(Point a, Point b, Point c){
 		origin = a;
 		normal = new Vector(a, b).crossProduct(new Vector(a, c));
+		
+		this.c = new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
 	}
 
 	public Plane(Point origin, Vector normal){
 		this.origin = origin;
 		this.normal = normal;
+		
+		this.c = new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
 	}
 
 	/*

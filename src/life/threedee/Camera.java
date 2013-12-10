@@ -14,13 +14,24 @@ public class Camera{
 			screenWidth  = 480,
 			screenHeight = 360;
 	
-	public Camera(double x,double y,double z){
-		
+	private double dx,dy;
+	
+	public Camera(Point loc, Vector dir){
+		dx = width/screenWidth;
+		dy = height/screenHeight;
+		this.loc = loc;
+		this.dir = dir;
+	}
+	
+	public Camera(){
+		this(new Point(0,0,0),new Vector(0,0,1));
 	}
 	
 	private Vector getVectorForPixel(int x,int y){
 		int rx = screenWidth / 2 - x;
 		int ry = screenHeight / 2 - y;
+		double px = rx * dx;
+		double py = ry * dy;
 	}
 
 	private Plane closestInFront(){

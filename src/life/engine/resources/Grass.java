@@ -2,67 +2,67 @@ package life.engine.resources;
 
 import life.engine.land.Land;
 
-public class Grass implements Resource {
-    private double energy;
-    private int x;
-    private int y;    
-    private Land land;
+public class Grass implements Resource{
+	private double energy;
+	private int x;
+	private int y;
+	private Land land;
 
-    public Grass (int x, int y) {
-        this.energy = 1;
-        this.x = x;
-        this.y = y;
-    }
-    
-    @Override
-    public void step () {
-        energy += 1;
-    }
-    
-    @Override
-    public void consume () {
-        
-    }
+	public Grass(int x, int y){
+		this.energy = 1;
+		this.x = x;
+		this.y = y;
+	}
 
-    @Override
-    public void getValue () {
-        
-    }
+	@Override
+	public void step(){
+		energy += 1;
+	}
 
-    @Override
-    public double getEnergy () {
-        return this.energy;
-    }
-    
-    public int getX () {
-        return x;
-    }
+	@Override
+	public void consume(){
 
-    public void setX (int x) {
-        this.x = x;
-    }
+	}
 
-    public int getY () {
-        return y;
-    }
+	@Override
+	public void getValue(){
 
-    public void setY (int y) {
-        this.y = y;
-    }
+	}
 
-    public void setEnergy (double energy) {
-        this.energy = energy;
-    }
+	@Override
+	public double getEnergy(){
+		return this.energy;
+	}
 
-    public Land getLand () {
-        return this.land;
-    }
-    
-    public void setLand (Land land) {
-        this.land = land;
-    }
-    
-    public String getString() {
-        return ".";
-    }
+	public int getX(){
+		return x;
+	}
+
+	public void setX(int x){
+		this.x = x;
+	}
+
+	public int getY(){
+		return y;
+	}
+
+	public void setY(int y){
+		this.y = y;
+	}
+
+	public void setEnergy(double energy){
+		this.energy = energy;
+	}
+
+	public Land getLand(){
+		return this.land;
+	}
+
+	public void setLand(Land land){
+		this.land = land;
+	}
+
+	public String getString(){
+		return ".";
+	}
 }

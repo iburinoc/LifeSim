@@ -60,6 +60,11 @@ public class Vector{
 
     public static Vector fromPolarTransform(double yaw, double pitch, double scalar){
         double x = Math.cos(yaw), z = Math.sin(yaw), y = Math.tan(pitch) * Math.sqrt(x * x + z * z);
+        if (yaw != yaw) {
+            x = 0;
+            y = 2 * pitch / Math.PI;
+            z = 0;
+        }
         return new Vector(x, y, z).setScalar(scalar);
     }
 

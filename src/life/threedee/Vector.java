@@ -62,4 +62,13 @@ public class Vector{
 	public Vector add(Vector v){
 		return new Vector(x + v.x, y + v.y, z + v.z);
 	}
+	
+	public Vector scalProduct(double scalar){
+		return new Vector(x * scalar, y * scalar, z * scalar);
+	}
+	
+	public Vector setScal(double scalar){
+		double mod = scalar / s;
+		return new Vector(x * mod, y * mod, z * mod);
+	}
 }

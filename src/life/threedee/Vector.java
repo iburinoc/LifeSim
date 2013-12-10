@@ -53,7 +53,7 @@ public class Vector{
         return new double[] {yaw, pitch};
     }
 
-    public static Vector relativeTransform(double yaw, double pitch, double scalar){
+    public static Vector fromPolarTransform(double yaw, double pitch, double scalar){
         double x = Math.cos(yaw), z = Math.sin(yaw), y = Math.tan(pitch) * Math.sqrt(x * x + z * z);
         return new Vector(x, y, z).setScalar(scalar);
     }

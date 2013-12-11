@@ -4,6 +4,7 @@ import static java.lang.Math.PI;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Camera{
@@ -20,11 +21,21 @@ public class Camera{
 	
 	private double dx,dy;
 	
+	private List<CameraSlave> slaves;
+	
 	public Camera(Point loc, Vector dir){
 		dx = width/screenWidth;
 		dy = height/screenHeight;
 		this.loc = loc;
 		this.dir = dir;
+		int numProc = Runtime.getRuntime().availableProcessors();
+		slaves = new ArrayList<CameraSlave>();
+		int d = screenWidth / numProc;
+		for(int i = 0; i < numProc; i++){
+			CameraSlave c = new CameraSlave(this, d * i, 0, d * (i + 1), screenHeight);
+			c.start();
+			slaves.add(c);
+		}
 	}
 	
 	public Camera(){
@@ -49,6 +60,14 @@ public class Camera{
 		System.out.println("rightU:"+rightU);
 		System.out.println("dir"+dir);
 		
+//		drawRange(g,objects,0,0,screenWidth,screenHeight,rightU,upU);
+		for(CameraSlave c : slaves){
+			c.draw(g, objects, rightU, upU);
+		}
+		//System.out.println(System.)
+	}
+	
+	public void drawRange(Graphics g, List<Plane> objects, int x1, int y1, int x2, int y2, Vector rightU, Vector upU){
 		for(int x = 0; x < screenWidth; x++){
 			for(int y = 0; y < screenHeight; y++){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
@@ -74,17 +93,17 @@ public class Camera{
 	}
 
 	private Plane closestInFront(List<Plane> objects, Vector dir, Point px, int x, int y){
-
+		final boolean debug = false;
 		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
 		Plane minPlane = null;
-		if(x == 240 && y == 180){
+		if(x == 240 && y == 180 && debug){
 			System.out.println("Center:" + dir);
 		}
-		if(x == 0 && y == 0){
+		if(x == 0 && y == 0 && debug){
 			System.out.println("Top Left:" + dir);
 		}
-		if(x == 478 && y == 358){
+		if(x == 478 && y == 358 && debug){
 			System.out.println("Bot Right:" + dir);
 		}
 		for(Plane p : objects){

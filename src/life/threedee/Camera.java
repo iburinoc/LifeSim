@@ -50,7 +50,7 @@ public class Camera{
 	}
 	
 	public Camera(){
-		this(new Point(0,1,0),new Vector(0,0.000001,1).setScalar(1));
+		this(new Point(0,1,0),new Vector(0,0.5,1).setScalar(1));
 	}
 	
 	private int count;
@@ -114,7 +114,7 @@ public class Camera{
 	}
 	
 	public void drawRange(Graphics g, List<Plane> objects, int x1, int y1, int x2, int y2, int xOff, Vector rightU, Vector upU){
-		int inc = 2;
+		int inc = 1;
 		for(int x = 0; x < screenWidth; x+=inc){
 			for(int y = 0; y < screenHeight; y+=inc){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));

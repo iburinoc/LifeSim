@@ -28,7 +28,7 @@ public class Camera{
 	}
 	
 	public Camera(){
-		this(new Point(0,0,0),new Vector(0,0,1));
+		this(new Point(0,1,0),new Vector(0,0,1).setScalar(1));
 	}
 	
 	public void draw(Graphics g, List<Plane> objects){
@@ -51,7 +51,7 @@ public class Camera{
 		for(int x = 0; x < screenWidth; x++){
 			for(int y = 0; y < screenHeight; y++){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
-				Plane draw = closestInFront(objects, v, loc);
+				Plane draw = closestInFront(objects, v, loc, x, y);
 				if(draw != null)
 					g.setColor(draw.c);
 				else
@@ -72,10 +72,22 @@ public class Camera{
 		return nup.add(nright);
 	}
 
-	private Plane closestInFront(List<Plane> objects, Vector dir, Point px){
-		System.out.println(dir + " : " + px);
+	private Plane closestInFront(List<Plane> objects, Vector dir, Point px, int x, int y){
+		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
 		Plane minPlane = null;
+		if(x == 240 && y == 180){
+			System.out.println("Center:" + dir);
+		}
+		if(x == 0 && y == 0){
+			System.out.println("Top Left:" + dir);
+		}
+		if(x == 0 && y == 358){
+			System.out.println("Bot Left:" + dir);
+		}
+		if(x == 478 && y == 358){
+			System.out.println("Bot Right:" + dir);
+		}
 		for(Plane p : objects){
 			double t = p.calculateT(dir, px);
 			if(minT > t && t >= 0 && t == t){
@@ -83,7 +95,7 @@ public class Camera{
 				minPlane = p;
 			}
 		}
-		System.out.println(minPlane);
+		//System.out.println(minPlane);
 		return minPlane;
 	}
 }

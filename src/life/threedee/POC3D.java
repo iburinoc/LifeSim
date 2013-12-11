@@ -34,10 +34,10 @@ public class POC3D extends JPanel implements Runnable{
 	@Override
 	public void run(){
 		objects = new ArrayList<Plane>();
-		Plane p0 = new Plane(new Point(0,0,1),new Vector(1,0,1));
-		Plane p1 = new Plane(new Point(0,0,1),new Vector(-1,0,1));
+		Plane p0 = new Plane(new Point(0,0,2),new Vector(1,0,1));
+		Plane p1 = new Plane(new Point(0,0,2),new Vector(-1,0,1));
 		objects.add(p0);
-		//objects.add(p1);
+		objects.add(p1);
 		//Plane p1 = new Plane(new Point(0,0,0),new Vector(0,1,0));
 		//objects.add(p1);
 		c = new Camera();

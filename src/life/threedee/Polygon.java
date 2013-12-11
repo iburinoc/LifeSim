@@ -4,15 +4,18 @@ import java.awt.*;
 
 public class Polygon extends Plane{
     private Point[] vertices;
+    private Vector up;
 
-    public Polygon(Point[] vertices, Point3D origin, Vector normal) {
+    public Polygon(Point[] vertices, Vector up, Point3D origin, Vector normal) {
         super (origin, normal);
         this.vertices = vertices;
+        this.up = up;
     }
 
-    public Polygon(Point[] vertices, Point3D origin, Vector normal, Color colour) {
+    public Polygon(Point[] vertices, Vector up, Point3D origin, Vector normal, Color colour) {
         super (origin, normal, colour);
         this.vertices = vertices;
+        this.up = up;
     }
 
     public boolean inside(Point point) {
@@ -33,5 +36,14 @@ public class Polygon extends Plane{
             }
         }
         return inside;
+    }
+
+    @Override
+    public Point3D intersection(Vector vector, Point3D point3D) {
+        double t = super.calculateT(vector, point3D);
+        double nx = point3D.x + vector.x * t;
+        double ny = point3D.y + vector.y * t;
+        double nz = point3D.z + vector.z * t;
+        return inside(new Point(nx, ny)) ? new Point3D(nx, ny, nz) : null;
     }
 }

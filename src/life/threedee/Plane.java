@@ -94,15 +94,13 @@ public class Plane{
 	 */
 	public Point3D evaluate(double x, double y, double z) {
 		//x=(-(yn(y-y0)+zn(z-z0))+xn*x0)/xn
-		if(x != x){
+		if(x != x) {
 			x = (-(normal.y * (y - origin.y) + normal.z * (z - origin.z)) + normal.x * origin.x) / normal.x;
 			return new Point3D(x,y,z);
-		}
-		if(y != y){
+		} else if(y != y) {
 			y = (-(normal.x * (x - origin.x) + normal.z * (z - origin.z)) + normal.y * origin.y) / normal.y;
 			return new Point3D(x,y,z);
-		}
-		if(z != z){
+		} else if(z != z) {
 			z = (-(normal.y * (y - origin.y) + normal.x * (x - origin.x)) + normal.z * origin.z) / normal.z;
 			return new Point3D(x,y,z);
 		}

@@ -80,11 +80,13 @@ public class Camera{
 		System.out.println("dir"+dir);
 		
 //		drawRange(g,objects,0,0,screenWidth,screenHeight,rightU,upU);
+		
 		threadsDone = 0;
 		cur = Thread.currentThread();
 		for(CameraSlave c : slaves){
 			c.draw(g, objects, rightU, upU);
 		}
+		/*
 		while(threadsDone < 4){
 			try{
 				Thread.sleep(1000);
@@ -95,6 +97,7 @@ public class Camera{
 		for(CameraSlave c : slaves){
 			g.drawImage(c.getBuffer(), c.getX(), c.getY(), null);
 		}
+		*/
 	}
 	
 	public void threadDone(){

@@ -116,15 +116,16 @@ public class Camera{
 	}
 	
 	public void drawRange(Graphics g, List<Plane> objects, int x1, int y1, int x2, int y2, int xOff, Vector rightU, Vector upU){
-		for(int x = 0; x < screenWidth; x++){
-			for(int y = 0; y < screenHeight; y++){
+		int inc = 2;
+		for(int x = 0; x < screenWidth; x+=inc){
+			for(int y = 0; y < screenHeight; y+=inc){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
 				Plane draw = closestInFront(objects, v, loc, x, y);
 				if(draw != null)
 					g.setColor(draw.c);
 				else
 					g.setColor(Color.WHITE);
-				g.fillRect(x - xOff, y, 1, 1);
+				g.fillRect(x - xOff, y, inc, inc);
 			}
 		}
 	}

@@ -104,4 +104,8 @@ public class Plane{
 		}
 		return null;
 	}
+	
+	public String toString(){
+		return "Plane: " + origin + ";" + normal;
+	}
 }

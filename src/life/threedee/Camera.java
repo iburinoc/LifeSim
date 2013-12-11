@@ -1,9 +1,10 @@
 package life.threedee;
 
+import static java.lang.Math.PI;
+
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
-
-import static java.lang.Math.PI;
 
 public class Camera{
 
@@ -42,13 +43,19 @@ public class Camera{
 		}
 		Vector upU = Vector.fromPolarTransform(yaw, PI/2 + dirPolar[1], 1);
 		
-		Vector rightU = Vector.fromPolarTransform(dirPolar[0], 0, 1);
+		Vector rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
+		
+		System.out.println("upU:"+upU);
+		System.out.println("rightU:"+rightU);
 		
 		for(int x = 0; x < screenWidth; x++){
 			for(int y = 0; y < screenHeight; y++){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
 				Plane draw = closestInFront(objects, v, loc);
-				g.setColor(draw.c);
+				if(draw != null)
+					g.setColor(draw.c);
+				else
+					g.setColor(Color.WHITE);
 				g.fillRect(x, y, 1, 1);
 			}
 		}
@@ -66,16 +73,17 @@ public class Camera{
 	}
 
 	private Plane closestInFront(List<Plane> objects, Vector dir, Point px){
+		System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
 		Plane minPlane = null;
 		for(Plane p : objects){
 			double t = p.calculateT(dir, px);
-			if(minT > t){
+			if(minT > t && t >= 0 && t == t){
 				minT = t;
 				minPlane = p;
 			}
 		}
-		
+		System.out.println(minPlane);
 		return minPlane;
 	}
 }

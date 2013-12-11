@@ -7,8 +7,8 @@ public class Plane{
 	/*
 	// z = ax + by + colour
 
-	double a; // x coeff
-	double b; // y coeff
+	double a; // x coefficient
+	double b; // y coefficient
 	double colour; // constant
 	*/
 	

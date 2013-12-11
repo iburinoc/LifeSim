@@ -1,5 +1,6 @@
 package life.threedee;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -42,12 +43,12 @@ public class POC3D extends JPanel implements Runnable{
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		this.setCursor(transparent);
 		objects = new ArrayList<Plane>();
-		Plane p0 = new Plane(new Point(0,2,0),new Vector(0,1,0));
-		Plane p1 = new Plane(new Point(2,0,2),new Vector(1,0,0));
-		Plane p2 = new Plane(new Point(-2,0,2),new Vector(1,0,0));
-		Plane p3 = new Plane(new Point(0,0,5),new Vector(0,0,1));
-		Plane p4 = new Plane(new Point(0,0,0),new Vector(0,1,0));
-		Plane p5 = new Plane(new Point(0,0,-5),new Vector(0,0,1));
+		Plane p0 = new Plane(new Point(0,2,0),new Vector(0,1,0),Color.red);
+		Plane p1 = new Plane(new Point(2,0,2),new Vector(1,0,0),Color.black);
+		Plane p2 = new Plane(new Point(-2,0,2),new Vector(1,0,0),Color.blue);
+		Plane p3 = new Plane(new Point(0,0,5),new Vector(0,0,1),Color.cyan);
+		Plane p4 = new Plane(new Point(0,0,0),new Vector(0,1,0),Color.orange);
+		Plane p5 = new Plane(new Point(0,0,-5),new Vector(0,0,1),Color.green);
 		objects.add(p0);
 		objects.add(p1);
 		objects.add(p2);

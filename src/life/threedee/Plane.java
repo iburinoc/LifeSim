@@ -25,10 +25,14 @@ public class Plane{
 	}
 
 	public Plane(Point origin, Vector normal){
+		this(origin,normal,new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256)));
+	}
+	
+	public Plane(Point origin, Vector normal, Color col){
 		this.origin = origin;
 		this.normal = normal;
 		
-		this.c = new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
+		this.c = col;
 	}
 
 	/*

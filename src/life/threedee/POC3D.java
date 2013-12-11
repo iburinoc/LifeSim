@@ -1,7 +1,12 @@
 package life.threedee;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +38,9 @@ public class POC3D extends JPanel implements Runnable{
 
 	@Override
 	public void run(){
+		Toolkit tk= getToolkit();
+		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
+		this.setCursor(transparent);
 		objects = new ArrayList<Plane>();
 		Plane p0 = new Plane(new Point(0,2,0),new Vector(0,1,0));
 		Plane p1 = new Plane(new Point(2,0,2),new Vector(1,0,0));
@@ -72,5 +80,49 @@ public class POC3D extends JPanel implements Runnable{
 
 	public static void main(String[] args){
 		new Thread(new POC3D()).start();
+	}
+	
+	class MouseMovementListener implements MouseListener,MouseMotionListener{
+
+		@Override
+		public void mouseDragged(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+		}
+		
 	}
 }

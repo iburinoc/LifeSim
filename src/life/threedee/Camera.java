@@ -47,6 +47,7 @@ public class Camera{
 		
 		System.out.println("upU:"+upU);
 		System.out.println("rightU:"+rightU);
+		System.out.println("dir"+dir);
 		
 		for(int x = 0; x < screenWidth; x++){
 			for(int y = 0; y < screenHeight; y++){
@@ -68,7 +69,7 @@ public class Camera{
 		double py = ry * dy;
 		
 		Vector nright = right.setScalar(px);
-		Vector nup = right.setScalar(py);
+		Vector nup = up.setScalar(py);
 		return nup.add(nright);
 	}
 
@@ -88,6 +89,9 @@ public class Camera{
 		}
 		if(x == 478 && y == 358){
 			System.out.println("Bot Right:" + dir);
+		}
+		if(x == 240 && y == 58){
+			System.out.println("Bottom Mid:" + dir);
 		}
 		for(Plane p : objects){
 			double t = p.calculateT(dir, px);

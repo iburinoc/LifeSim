@@ -63,8 +63,8 @@ public class Camera{
 	}
 	
 	private Vector getVectorForPixel(int x,int y, Vector right, Vector up){
-		int rx = screenWidth / 2 - x;
-		int ry = screenHeight / 2 - y;
+		int rx = x - screenWidth / 2;
+		int ry = screenHeight / 2 - y; // y is negated because for graphics top is 0, whereas in real life bottom is -
 		double px = rx * dx;
 		double py = ry * dy;
 		
@@ -84,14 +84,8 @@ public class Camera{
 		if(x == 0 && y == 0){
 			System.out.println("Top Left:" + dir);
 		}
-		if(x == 0 && y == 358){
-			System.out.println("Bot Left:" + dir);
-		}
 		if(x == 478 && y == 358){
 			System.out.println("Bot Right:" + dir);
-		}
-		if(x == 240 && y == 58){
-			System.out.println("Bottom Mid:" + dir);
 		}
 		for(Plane p : objects){
 			double t = p.calculateT(dir, px);

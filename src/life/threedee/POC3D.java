@@ -36,16 +36,26 @@ public class POC3D extends JPanel implements Runnable{
 		objects = new ArrayList<Plane>();
 		Plane p0 = new Plane(new Point(0,2,0),new Vector(0,1,0));
 		Plane p1 = new Plane(new Point(2,0,2),new Vector(1,0,0));
+		Plane p2 = new Plane(new Point(-2,0,2),new Vector(1,0,0));
+		Plane p3 = new Plane(new Point(0,0,5),new Vector(0,0,1));
+		Plane p4 = new Plane(new Point(0,0,0),new Vector(0,1,0));
+		Plane p5 = new Plane(new Point(0,0,-5),new Vector(0,0,1));
 		objects.add(p0);
 		objects.add(p1);
+		objects.add(p2);
+		objects.add(p3);
+		objects.add(p4);
+		objects.add(p5);
 		//Plane p1 = new Plane(new Point(0,0,0),new Vector(0,1,0));
 		//objects.add(p1);
 		c = new Camera();
 		while(true){
-			c.draw(j.getContentPane().getGraphics(),objects);
-			
+			long startT = System.currentTimeMillis();
+			c.draw(this.getGraphics(),objects);
+			long time = System.currentTimeMillis() - startT;
+			System.out.println(time);
 			try{
-				Thread.sleep(1000);
+				Thread.sleep((int) Math.max(0,66 - time));
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();

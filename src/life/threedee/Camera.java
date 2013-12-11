@@ -50,7 +50,7 @@ public class Camera{
 	}
 	
 	public Camera(){
-		this(new Point(0,1,0),new Vector(0,0.000001,1).setScalar(1));
+		this(new Point(0,1,0),new Vector(0,0,1).setScalar(1));
 	}
 	
 	private int count;
@@ -87,8 +87,8 @@ public class Camera{
 		System.out.println("rightU:"+rightU);
 		System.out.println("dir"+dir);
 		
-//		drawRange(g,objects,0,0,screenWidth,screenHeight,rightU,upU);
-		
+		drawRange(g,objects,0,0,screenWidth,screenHeight,0,rightU,upU);
+		/*
 		threadsDone = 0;
 		cur = Thread.currentThread();
 		for(CameraSlave c : slaves){

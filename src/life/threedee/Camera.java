@@ -23,6 +23,9 @@ public class Camera{
 	
 	private List<CameraSlave> slaves;
 	
+	private int threadsDone;
+	private Thread cur;
+	
 	public Camera(Point loc, Vector dir){
 		dx = width/screenWidth;
 		dy = height/screenHeight;
@@ -77,10 +80,26 @@ public class Camera{
 		System.out.println("dir"+dir);
 		
 //		drawRange(g,objects,0,0,screenWidth,screenHeight,rightU,upU);
+		threadsDone = 0;
+		cur = Thread.currentThread();
 		for(CameraSlave c : slaves){
 			c.draw(g, objects, rightU, upU);
 		}
-		//System.out.println(System.)
+		while(threadsDone < 4){
+			try{
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException e){
+			}
+		}
+		for(CameraSlave c : slaves){
+			g.drawImage(c.getBuffer(), c.getX(), c.getY(), null);
+		}
+	}
+	
+	public void threadDone(){
+		threadsDone++;
+		cur.interrupt();
 	}
 	
 	public void drawRange(Graphics g, List<Plane> objects, int x1, int y1, int x2, int y2, int xOff, Vector rightU, Vector upU){

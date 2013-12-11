@@ -177,4 +177,11 @@ public class Camera{
 		dir = dir.add(getVectorForPixel(x,y,rightU,upU)).setScalar(1);
 		*/
 	}
+	
+	public void move(int d){
+		double yaw = dir.polarTransform()[0];
+		yaw -= PI / 2 * d;
+		Vector mov = Vector.fromPolarTransform(yaw, 0, 1);
+		loc = new Point(loc.x+mov.x,loc.y,loc.z+mov.z);
+	}
 }

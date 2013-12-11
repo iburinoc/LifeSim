@@ -31,6 +31,8 @@ public class POC3D extends JPanel implements Runnable{
 	
 	private MouseMovementListener m;
 	
+	private boolean w,d,s,a;
+	
 	public POC3D(){
 		j = new JFrame("Proof of Concept");
 
@@ -55,11 +57,11 @@ public class POC3D extends JPanel implements Runnable{
 //		this.setCursor(transparent);
 		objects = new ArrayList<Plane>();
 		Plane p0 = new Plane(new Point(0,2,0),new Vector(0,1,0),Color.red);
-		Plane p1 = new Plane(new Point(2,0,2),new Vector(1,0,0),Color.black);
-		Plane p2 = new Plane(new Point(-2,0,2),new Vector(1,0,0),Color.blue);
-		Plane p3 = new Plane(new Point(0,0,2),new Vector(0,0,1),Color.cyan);
+		Plane p1 = new Plane(new Point(20,0,20),new Vector(1,0,0),Color.black);
+		Plane p2 = new Plane(new Point(-20,0,20),new Vector(1,0,0),Color.blue);
+		Plane p3 = new Plane(new Point(0,0,20),new Vector(0,0,1),Color.cyan);
 		Plane p4 = new Plane(new Point(0,0,0),new Vector(0,1,0),Color.orange);
-		Plane p5 = new Plane(new Point(0,0,-2),new Vector(0,0,1),Color.green);
+		Plane p5 = new Plane(new Point(0,0,-20),new Vector(0,0,1),Color.green);
 		objects.add(p0);
 		objects.add(p1);
 		objects.add(p2);
@@ -82,6 +84,15 @@ public class POC3D extends JPanel implements Runnable{
 			}
 //			System.out.println("frame");
 			m.recenter();
+			if(w){
+				c.move(0);
+			}if(d){
+				c.move(1);
+			}if(s){
+				c.move(2);
+			}if(a){
+				c.move(3);
+			}
 		}
 	}
 	
@@ -103,11 +114,12 @@ public class POC3D extends JPanel implements Runnable{
 		
 		private int oldX, oldY;
 	
-		private boolean reset;
+		private boolean reset, recentered;
 		
 		public MouseMovementListener(){
 			try{
 				recenter = new Robot();
+				
 			}
 			catch (AWTException e){
 				e.printStackTrace();
@@ -117,8 +129,10 @@ public class POC3D extends JPanel implements Runnable{
 		}
 		
 		public void recenter(){
-			if(mouseCaptured);
-//				recenter.mouseMove(j.getX() + j.getWidth()/2, j.getY() + j.getHeight()/2);
+			if(mouseCaptured && false){
+				recentered = true;
+				recenter.mouseMove(j.getX() + j.getWidth()/2, j.getY() + j.getHeight()/2);
+			}
 		}
 		
 		@Override
@@ -128,8 +142,10 @@ public class POC3D extends JPanel implements Runnable{
 
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
-			if(!mouseCaptured)
+			if(!mouseCaptured || recentered){
+				recentered = false;
 				return;
+			}
 			if(reset){
 				oldX = arg0.getX();
 				oldY = arg0.getY();
@@ -167,6 +183,7 @@ public class POC3D extends JPanel implements Runnable{
 
 		@Override
 		public void keyTyped(KeyEvent e){
+			
 		}
 
 		@Override
@@ -175,10 +192,28 @@ public class POC3D extends JPanel implements Runnable{
 			if(e.getKeyCode() == 27){
 				this.mouseCaptured = !mouseCaptured;
 			}
+			if(e.getKeyChar() == 'w'){
+				w = true;
+			}else if(e.getKeyChar() == 'd'){
+				d = true;
+			}else if(e.getKeyChar() == 's'){
+				s = true;
+			}else if(e.getKeyChar() == 'a'){
+				a = true;
+			}
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e){	
+			if(e.getKeyChar() == 'w'){
+				w = false;
+			}else if(e.getKeyChar() == 'd'){
+				d = false;
+			}else if(e.getKeyChar() == 's'){
+				s = false;
+			}else if(e.getKeyChar() == 'a'){
+				a = false;
+			}
 		}
 		
 	}

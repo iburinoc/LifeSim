@@ -9,10 +9,10 @@ public class Test{
 
 	public static void main(String[] args){
 		System.out.println(new Matrix(new double[][]{{1,5,3},{2,4,7},{4,6,2}}).determinant());
-		Plane plane = new Plane(new Point(0, 0, 1), new Vector(0, 0, 1));
-		Point point = new Point(0, 1, 0);
+		Plane plane = new Plane(new Point3D(0, 0, 1), new Vector(0, 0, 1));
+		Point3D point3D = new Point3D(0, 1, 0);
 		Vector vector = new Vector(0, 0, 1);
-		System.out.println(plane.intersection(vector, point) + "\n\n");
+		System.out.println(plane.intersection(vector, point3D) + "\n\n");
         Vector otherVector = new Vector(1, 1, 1);
         System.out.println(otherVector.polarTransform()[0] + "\t" + otherVector.polarTransform()[1]);
         System.out.println(Vector.fromPolarTransform(otherVector.polarTransform()[0], otherVector.polarTransform()[1], otherVector.s));

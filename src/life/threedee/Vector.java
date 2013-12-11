@@ -16,10 +16,10 @@ public class Vector{
 		this.z = z;
 	}
 
-	public Vector(Point point0, Point point1){
-		this.x = (point1.x - point0.x);
-		this.y = (point1.y - point0.y);
-		this.z = (point1.z - point0.z);
+	public Vector(Point3D point3D0, Point3D point3D1){
+		this.x = (point3D1.x - point3D0.x);
+		this.y = (point3D1.y - point3D0.y);
+		this.z = (point3D1.z - point3D0.z);
 		double mag = Math.sqrt(x * x + y * y + z * z);
 		this.s = mag;
 	}

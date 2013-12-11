@@ -2,9 +2,9 @@ d e f
 g h i
 j k l
 
-z = ax + by + c
-f = ad + be + c
-c = f - ad + be
+z = ax + by + colour
+f = ad + be + colour
+colour = f - ad + be
 i = ag + bh + f - ad - be
 i = a(g - d) + b(h - e) + f
 b = (i - a(g - d)-f)/(h-e)
@@ -15,4 +15,4 @@ l = aj + (k(i-a(g-d)-f))/(h-e) + f - ad - (e(i-a(g-d)-f))/(h-e)
 result:
 a = (l*h - l*e - k*i + k*f - f*h + f*e + e*i - e*f)/(j*h - j*e - k*g + k*d - d*h + d*e + e*g - e*d)
 b = (i - a*(g-d) - f)/(h - e)
-c = f - a*d - b*e
+colour = f - a*d - b*e

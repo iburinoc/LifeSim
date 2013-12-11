@@ -47,7 +47,8 @@ public class CameraSlave extends Thread{
 			}
 			if(job){
 				master.drawRange(offG, objects, x1, y1, x2, y2, x1, rightU, upU);
-				master.threadDone();
+//				master.threadDone();
+				g.drawImage(buffer, x1, y1, null);
 				job = false;
 			}
 		}

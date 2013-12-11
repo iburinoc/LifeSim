@@ -87,16 +87,14 @@ public class Camera{
 		System.out.println("rightU:"+rightU);
 		System.out.println("dir"+dir);
 		
-		//bufg.fillRect(0, 0, 50, 50);
-		drawRange(g,objects,0,0,screenWidth,screenHeight, 0, rightU,upU);
-		g.drawImage(buffer, 0, 0, null);
+//		drawRange(g,objects,0,0,screenWidth,screenHeight,rightU,upU);
 		
-		/*
 		threadsDone = 0;
 		cur = Thread.currentThread();
 		for(CameraSlave c : slaves){
 			c.draw(g, objects, rightU, upU);
 		}
+		/*
 		while(threadsDone < 4){
 			try{
 				Thread.sleep(1000);

@@ -16,6 +16,11 @@ public class EngineTest{
 		objects.add(new Hare(5, 5));
 		objects.add(new Grass(7, 3));
 		objects.add(new Grass(7, 2));
+		objects.add(new Wolf(9, 9));
+		objects.add(new Wolf(0, 9));
+		objects.add(new Wolf(9, 0));
+		objects.add(new Hare(4, 4));
+		objects.add(new Hare(6, 6));
 		ArrayList<Structure> structures = new ArrayList<Structure>(0);
 		ArrayList<ArrayList<Tile>> land = new ArrayList<ArrayList<Tile>>(0);
 		Land l = new Land(objects, structures, land);

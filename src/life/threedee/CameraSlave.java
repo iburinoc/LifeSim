@@ -1,6 +1,7 @@
 package life.threedee;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class CameraSlave extends Thread{
@@ -18,6 +19,9 @@ public class CameraSlave extends Thread{
 	private Vector rightU;
 	private Vector upU;
 	
+	private BufferedImage buffer;
+	private Graphics offG;
+	
 	public CameraSlave(Camera master, int x1, int y1, int x2, int y2){
 		super();
 		this.master = master;
@@ -26,6 +30,8 @@ public class CameraSlave extends Thread{
 		this.x2 = x2;
 		this.y2 = y2;
 		this.running = true;
+		this.buffer = new BufferedImage(x2-x1, y2-y1, BufferedImage.TYPE_INT_ARGB);
+		this.offG = buffer.getGraphics();
 		this.setDaemon(true);
 	}
 	
@@ -39,7 +45,8 @@ public class CameraSlave extends Thread{
 				
 			}
 			if(job){
-				master.drawRange(g, objects, x1, y1, x2, y2, rightU, upU);
+				master.drawRange(offG, objects, x1, y1, x2, y2, x1, rightU, upU);
+				g.drawImage(buffer, x1, y1, null);
 				job = false;
 			}
 		}

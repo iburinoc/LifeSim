@@ -67,7 +67,7 @@ public class Camera{
 		//System.out.println(System.)
 	}
 	
-	public void drawRange(Graphics g, List<Plane> objects, int x1, int y1, int x2, int y2, Vector rightU, Vector upU){
+	public void drawRange(Graphics g, List<Plane> objects, int x1, int y1, int x2, int y2, int xOff, Vector rightU, Vector upU){
 		for(int x = 0; x < screenWidth; x++){
 			for(int y = 0; y < screenHeight; y++){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
@@ -76,7 +76,7 @@ public class Camera{
 					g.setColor(draw.c);
 				else
 					g.setColor(Color.WHITE);
-				g.fillRect(x, y, 1, 1);
+				g.fillRect(x - xOff, y, 1, 1);
 			}
 		}
 	}

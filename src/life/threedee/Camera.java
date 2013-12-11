@@ -42,7 +42,23 @@ public class Camera{
 		this(new Point(0,1,0),new Vector(0,0,1).setScalar(1));
 	}
 	
+	private int count;
+	private void modDir(){
+		count++;
+		if(count == 2){
+			count = 0;
+			double[] dirPolar = dir.polarTransform();
+			double s = dir.s;
+			dirPolar[0] += PI/48;
+			dirPolar[0]%= 2 * PI;
+			dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], s);
+		}
+	}
+	
 	public void draw(Graphics g, List<Plane> objects){
+		
+		modDir();
+		
 		double[] dirPolar = dir.polarTransform();
 		
 		double yaw = Double.NaN;

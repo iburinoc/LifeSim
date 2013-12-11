@@ -73,6 +73,7 @@ public class Camera{
 	}
 
 	private Plane closestInFront(List<Plane> objects, Vector dir, Point px, int x, int y){
+
 		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
 		Plane minPlane = null;

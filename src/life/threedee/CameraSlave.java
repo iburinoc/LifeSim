@@ -1,6 +1,7 @@
 package life.threedee;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class CameraSlave extends Thread{
 			}
 			if(job){
 				master.drawRange(offG, objects, x1, y1, x2, y2, x1, rightU, upU);
-				g.drawImage(buffer, x1, y1, null);
+				master.threadDone();
 				job = false;
 			}
 		}
@@ -63,5 +64,17 @@ public class CameraSlave extends Thread{
 		this.rightU = rightU;
 		this.upU = upU;
 		this.interrupt();
+	}
+	
+	public Image getBuffer(){
+		return buffer;
+	}
+	
+	public int getX(){
+		return x1;
+	}
+	
+	public int getY(){
+		return y1;
 	}
 }

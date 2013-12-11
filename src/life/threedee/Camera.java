@@ -50,7 +50,7 @@ public class Camera{
 	}
 	
 	public Camera(){
-		this(new Point(0,1,0),new Vector(0,0,1).setScalar(1));
+		this(new Point(0,1,0),new Vector(1,0.5,1).setScalar(1));
 	}
 	
 	private int count;
@@ -72,17 +72,11 @@ public class Camera{
 		
 		double[] dirPolar = dir.polarTransform();
 
-		double yaw = Double.NaN;
-		
-		if(dirPolar[1] < 0){
-			yaw = PI/2;
-		}else if(dirPolar[1] > 0){
-			yaw = 3*PI/2;
-		}
-		Vector upU = Vector.fromPolarTransform(yaw, PI/2 + dirPolar[1], 1);
+		Vector upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
 		
 		Vector rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
 		
+		System.out.println("Polar Dir: yaw:" + dirPolar[0] + "; pitch: " + dirPolar[1]);
 		System.out.println("upU:"+upU);
 		System.out.println("rightU:"+rightU);
 		System.out.println("dir"+dir);

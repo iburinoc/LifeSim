@@ -4,6 +4,8 @@ import static java.lang.Math.PI;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,9 @@ public class Camera{
 	
 	private List<CameraSlave> slaves;
 	
+	private Image buffer;
+	private Graphics bufg;
+	
 	private int threadsDone;
 	private Thread cur;
 	
@@ -39,6 +44,9 @@ public class Camera{
 			c.start();
 			slaves.add(c);
 		}
+		
+		buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+		bufg = buffer.getGraphics();
 	}
 	
 	public Camera(){
@@ -79,7 +87,11 @@ public class Camera{
 		System.out.println("rightU:"+rightU);
 		System.out.println("dir"+dir);
 		
-//		drawRange(g,objects,0,0,screenWidth,screenHeight,rightU,upU);
+		//bufg.fillRect(0, 0, 50, 50);
+		drawRange(g,objects,0,0,screenWidth,screenHeight, 0, rightU,upU);
+		g.drawImage(buffer, 0, 0, null);
+		
+		/*
 		threadsDone = 0;
 		cur = Thread.currentThread();
 		for(CameraSlave c : slaves){
@@ -95,6 +107,7 @@ public class Camera{
 		for(CameraSlave c : slaves){
 			g.drawImage(c.getBuffer(), c.getX(), c.getY(), null);
 		}
+		*/
 	}
 	
 	public void threadDone(){

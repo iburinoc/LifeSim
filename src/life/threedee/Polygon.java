@@ -4,28 +4,27 @@ import java.awt.*;
 
 public class Polygon extends Plane{
     private Point[] vertices;
-    private Vector up;
+    private Vector right, up;
 
-    public Polygon(Point[] vertices, Vector up, Point3D origin, Vector normal) {
+    public Polygon(Point[] vertices, Vector right, Vector up, Point3D origin, Vector normal) {
         super (origin, normal);
         this.vertices = vertices;
+        this.right = right;
         this.up = up;
     }
 
-    public Polygon(Point[] vertices, Vector up, Point3D origin, Vector normal, Color colour) {
+    public Polygon(Point[] vertices, Vector right, Point3D origin, Vector normal, Color colour) {
         super (origin, normal, colour);
         this.vertices = vertices;
-        this.up = up;
+        this.right = right;
     }
 
     public boolean inside(Point point) {
         boolean inside = true;
         for (int i = 0; i < vertices.length; i++) {
             try {
-                double m = (vertices[i].y - vertices[(i + 1) % vertices.length].y) / (vertices[i].x - vertices[(i + 1) % vertices.length].x);
-                double b = vertices[i].y - m * vertices[i].x;
-                boolean above = vertices[(i + 2) % vertices.length].y > m * vertices[(i + 2) % vertices.length].x + b;
-                if (above != point.y > m * point.x + b) {
+                Line side = new Line((vertices[i].y - vertices[(i + 1) % vertices.length].y) / (vertices[i].x - vertices[(i + 1) % vertices.length].x), vertices[i].y - (vertices[i].y - vertices[(i + 1) % vertices.length].y) / (vertices[i].x - vertices[(i + 1) % vertices.length].x) * vertices[i].x);
+                if (side.over(vertices[(i + 2) % vertices.length]) != side.over(point)) {
                     inside = false;
                 }
             } catch (ArithmeticException  e) {
@@ -44,6 +43,6 @@ public class Polygon extends Plane{
         double nx = point3D.x + vector.x * t;
         double ny = point3D.y + vector.y * t;
         double nz = point3D.z + vector.z * t;
-        return inside(new Point(nx, ny)) ? new Point3D(nx, ny, nz) : null;
+        return inside(new Point(new Plane (super.intersection(vector, point3D), right).calculateT(right, super.intersection(vector, point3D)), new Plane (super.intersection(vector, point3D), up).calculateT(up, super.intersection(vector, point3D)))) ? new Point3D(nx, ny, nz) : null;
     }
 }

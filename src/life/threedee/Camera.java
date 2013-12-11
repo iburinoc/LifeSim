@@ -50,7 +50,7 @@ public class Camera{
 	}
 	
 	public Camera(){
-		this(new Point(0,1,0),new Vector(0,0,1).setScalar(1));
+		this(new Point(0,1,0),new Vector(0,0.000001,1).setScalar(1));
 	}
 	
 	private int count;
@@ -71,7 +71,7 @@ public class Camera{
 		modDir();
 		
 		double[] dirPolar = dir.polarTransform();
-		
+
 		double yaw = Double.NaN;
 		
 		if(dirPolar[1] < 0){

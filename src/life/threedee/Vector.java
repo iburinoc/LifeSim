@@ -55,11 +55,18 @@ public class Vector{
 	}
 
     public double[] polarTransform() {
-        double yaw = Math.atan(z / x), pitch = Math.atan(y / Math.sqrt(x * x + z * z));
-        if (x < 0) {
-            yaw += Math.PI;
-        }
-        return new double[] {yaw, pitch};
+    	return new double[]{yaw(),pitch()};
+    }
+    
+    public double yaw() {
+    	double d = Math.atan(z / x);
+    	if(x < 0)
+    		d += Math.PI;
+    	return d;
+    }
+    
+    public double pitch() {
+    	return Math.atan(y / Math.sqrt(x * x + z * z));
     }
 
     public static Vector fromPolarTransform(double yaw, double pitch, double scalar){

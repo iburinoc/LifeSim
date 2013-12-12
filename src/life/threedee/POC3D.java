@@ -180,7 +180,7 @@ public class POC3D extends JPanel implements Runnable{
 			reset = true;
 			recenter();
 			if(arg0.getX() != c.screenWidth / 2 || arg0.getY() != c.screenWidth / 2)
-			c.mouseMoved(arg0.getX()-oldX, arg0.getY()-oldY);
+				c.mouseMoved(arg0.getX()-oldX, arg0.getY()-oldY);
 			oldX = arg0.getX();
 			oldY = arg0.getY();
 		}

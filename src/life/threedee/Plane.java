@@ -75,6 +75,10 @@ public class Plane{
 				/ (normal.x * vector.x + normal.y * vector.y + normal.z * vector.z);
 	}
 
+    public boolean over(Point3D point3D) {
+        return point3D.z > evaluate(point3D.x, point3D.y, Double.NaN).z;
+    }
+
 	public Point3D intersection(Vector vector, Point3D point3D){
 		double t = calculateT(vector, point3D);
 		double nx = point3D.x + vector.x * t;

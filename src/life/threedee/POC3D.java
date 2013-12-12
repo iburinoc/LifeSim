@@ -62,6 +62,12 @@ public class POC3D extends JPanel implements Runnable{
 		Plane p3 = new Plane(new Point3D(0,0,20),new Vector(0,0,1),Color.cyan);
 		Plane p4 = new Plane(new Point3D(0,0,0),new Vector(0,1,0),Color.orange);
 		Plane p5 = new Plane(new Point3D(0,0,-20),new Vector(0,0,1),Color.green);
+		{
+			Point a = new Point(0,0), b = new Point(0,1), c = new Point(1,0);
+			
+			Plane p6 = new Polygon(new Point[]{a,b,c},Vector.UNIT_X,Vector.UNIT_Y, new Point3D(0,0,1), Vector.UNIT_Z);
+			objects.add(p6);
+		}
 		objects.add(p0);
 		objects.add(p1);
 		objects.add(p2);

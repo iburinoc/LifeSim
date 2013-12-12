@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Camera{
 
-	private Point loc;
+	private Point3D loc;
 	private Vector dir;
 	
 	private double 
@@ -31,7 +31,7 @@ public class Camera{
 	private int threadsDone;
 	private Thread cur;
 	
-	public Camera(Point loc, Vector dir){
+	public Camera(Point3D loc, Vector dir){
 		dx = width/screenWidth;
 		dy = height/screenHeight;
 		this.loc = loc;
@@ -50,7 +50,7 @@ public class Camera{
 	}
 	
 	public Camera(){
-		this(new Point(0,1,0),new Vector(1,0,1).setScalar(1));
+		this(new Point3D(0,1,0),new Vector(1,0,1).setScalar(1));
 	}
 	
 	private int count;
@@ -85,13 +85,13 @@ public class Camera{
 		}
 		
 //		bufg.clearRect(0, 0, 1280, 720);
-		drawRange(g,objects,0,0,screenWidth,screenHeight,0,rightU,upU);
+		drawRange(g, objects, 0, 0, screenWidth, screenHeight, 0, rightU, upU);
 		g.drawImage(buffer, 0, 0, null);
 		/*
 		threadsDone = 0;
 		cur = Thread.currentThread();
-		for(CameraSlave c : slaves){
-			c.draw(g, objects, rightU, upU);
+		for(CameraSlave colour : slaves){
+			colour.draw(g, objects, rightU, upU);
 		}
 		/*
 		while(threadsDone < 4){
@@ -101,8 +101,8 @@ public class Camera{
 			catch (InterruptedException e){
 			}
 		}
-		for(CameraSlave c : slaves){
-			g.drawImage(c.getBuffer(), c.getX(), c.getY(), null);
+		for(CameraSlave colour : slaves){
+			g.drawImage(colour.getBuffer(), colour.getX(), colour.getY(), null);
 		}
 		*/
 	}
@@ -119,7 +119,7 @@ public class Camera{
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
 				Plane draw = closestInFront(objects, v, loc, x, y);
 				if(draw != null)
-					g.setColor(draw.c);
+					g.setColor(draw.colour);
 				else
 					g.setColor(Color.WHITE);
 				g.fillRect(x - xOff, y, inc, inc);
@@ -138,7 +138,7 @@ public class Camera{
 		return nup.add(nright);
 	}
 
-	private Plane closestInFront(List<Plane> objects, Vector dir, Point px, int x, int y){
+	private Plane closestInFront(List<Plane> objects, Vector dir, Point3D px, int x, int y){
 		final boolean debug = false;
 		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
@@ -182,6 +182,6 @@ public class Camera{
 		double yaw = dir.polarTransform()[0];
 		yaw -= PI / 2 * d;
 		Vector mov = Vector.fromPolarTransform(yaw, 0, 1);
-		loc = new Point(loc.x+mov.x,loc.y,loc.z+mov.z);
+		loc = new Point3D(loc.x+mov.x,loc.y,loc.z+mov.z);
 	}
 }

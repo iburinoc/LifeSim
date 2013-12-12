@@ -1,7 +1,6 @@
 package life.threedee;
 
 import static java.lang.Math.PI;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -63,7 +62,6 @@ public class Camera{
 			double s = dir.s;
 			dirPolar[0] += PI/48;
 			dirPolar[0]%= 2 * PI;
-			//dirPolar[1] = (dirPolar[0] % PI) - PI/2;
 			dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], s);
 		}
 	}

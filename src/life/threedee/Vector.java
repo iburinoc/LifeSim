@@ -1,7 +1,6 @@
 package life.threedee;
 
-public class Vector{
-	
+public class Vector {
 	public static final Vector UNIT_X = new Vector(1,0,0);
 	public static final Vector UNIT_Y = new Vector(0,1,0);
 	public static final Vector UNIT_Z = new Vector(0,0,1);
@@ -60,8 +59,9 @@ public class Vector{
     
     public double yaw() {
     	double d = Math.atan(z / x);
-    	if(x < 0)
+    	if (x < 0) {
     		d += Math.PI;
+        }
     	return d;
     }
     

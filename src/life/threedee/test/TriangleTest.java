@@ -2,7 +2,6 @@ package life.threedee.test;
 
 import life.threedee.Point3D;
 import life.threedee.Triangle;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

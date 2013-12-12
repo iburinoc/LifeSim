@@ -10,7 +10,7 @@ import java.awt.Color;
  *
  */
 
-public class Triangle extends Plane{
+public class Triangle extends Plane {
 
 	private Point3D a, b, c;
     private double[] yaw = new double[6];
@@ -36,7 +36,6 @@ public class Triangle extends Plane{
 	public double calculateT(Vector vector, Point3D point3D){
 		double t = super.calculateT(vector, point3D);
 		Point3D inter = super.intersection(vector, point3D, t);
-		
 		if(inside(inter)){
 			return t;
 		} else {

@@ -191,6 +191,7 @@ public class POC3D extends JPanel implements Runnable{
 			System.out.println("Key:" + e.getKeyCode());
 			if(e.getKeyCode() == 27){
 				this.mouseCaptured = !mouseCaptured;
+				this.reset = true;
 			}
 			if(e.getKeyChar() == 'w'){
 				w = true;

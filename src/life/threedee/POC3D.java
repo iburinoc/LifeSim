@@ -64,7 +64,25 @@ public class POC3D extends JPanel implements Runnable{
 		Plane p4 = new Plane(new Point3D(0,0,0),new Vector(0,1,0),Color.orange);
 		Plane p5 = new Plane(new Point3D(0,0,-20),new Vector(0,0,1),Color.green);
 		{
-			Point3D a = new Point3D(0,0,0), b = new Point3D(0,1,1), c = new Point3D(1,0,0);
+			Point3D a = new Point3D(0,0,0), b = new Point3D(0,1,0.0000000000001), c = new Point3D(1,0,0);
+			
+			Plane p6 = new Triangle(a,b,c,Color.pink);
+			objects.add(p6);
+		}
+		{
+			Point3D a = new Point3D(5,1,5), b = new Point3D(5,1,1.5), c = new Point3D(1,0,5);
+			
+			Plane p6 = new Triangle(a,b,c,Color.pink);
+			objects.add(p6);
+		}
+		{
+			Point3D a = new Point3D(0,1,0), b = new Point3D(0,1,1), c = new Point3D(1,1,0);
+			
+			Plane p6 = new Triangle(a,b,c,Color.pink);
+			objects.add(p6);
+		}
+		{
+			Point3D a = new Point3D(1,1,0), b = new Point3D(1,1,1), c = new Point3D(0,1,1);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
 			objects.add(p6);
@@ -161,6 +179,7 @@ public class POC3D extends JPanel implements Runnable{
 			}
 			reset = true;
 			recenter();
+			if(arg0.getX() != c.screenWidth / 2 || arg0.getY() != c.screenWidth / 2)
 			c.mouseMoved(arg0.getX()-oldX, arg0.getY()-oldY);
 			oldX = arg0.getX();
 			oldY = arg0.getY();

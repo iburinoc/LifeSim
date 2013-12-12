@@ -2,6 +2,14 @@ package life.threedee;
 
 import java.awt.Color;
 
+/**
+ * 
+ * @author gud wizard
+ * @author eclipse
+ * @author a bit of zeus hammer
+ *
+ */
+
 public class Triangle extends Plane{
 
 	private Point3D a, b, c;

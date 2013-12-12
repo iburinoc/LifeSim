@@ -17,7 +17,7 @@ public class Camera{
 	private double 
 			width  = 1.53465397596, 
 			height = 1.15099048197;
-	private int
+	public int
 			screenWidth  = 960,
 			screenHeight = 720;
 	

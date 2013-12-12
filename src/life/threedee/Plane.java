@@ -2,7 +2,7 @@ package life.threedee;
 
 import java.awt.Color;
 
-public class Plane{
+public class Plane implements ThreeDeeObject{
 
 	/*
 	// z = ax + by + c
@@ -74,6 +74,7 @@ public class Plane{
 	}
 	*/
 
+	@Override
 	public double calculateT(Vector vector, Point3D point3D){
 		return -(normal.x * point3D.x - normal.x * origin.x + normal.y * point3D.y - normal.y * origin.y + normal.z * point3D.z - normal.z * origin.z)
 				/ (normal.x * vector.x + normal.y * vector.y + normal.z * vector.z);
@@ -83,11 +84,13 @@ public class Plane{
         return point3D.z > evaluate(point3D.x, point3D.y, Double.NaN).z;
     }
 
+    @Override
 	public Point3D intersection(Vector vector, Point3D point3D){
 		double t = calculateT(vector, point3D);
 		return intersection(vector, point3D, t);
 	}
 	
+	@Override
 	public Point3D intersection(Vector vector, Point3D point3D, double t){
 		double nx = point3D.x + vector.x * t;
 		double ny = point3D.y + vector.y * t;
@@ -119,7 +122,13 @@ public class Plane{
 		return null;
 	}
 	
+	@Override
 	public String toString(){
 		return "Plane: " + origin + ";" + normal;
+	}
+	
+	@Override
+	public void translate(Vector v){
+		origin = new Point3D(origin.x + v.x, origin.y + v.y, origin.z + v.z);
 	}
 }

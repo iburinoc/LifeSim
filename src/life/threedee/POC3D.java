@@ -87,6 +87,14 @@ public class POC3D extends JPanel implements Runnable{
 			Plane p6 = new Triangle(a,b,c,Color.pink);
 			objects.add(p6);
 		}
+		{
+            WorldObject wo = WorldObject.generateObject("(2, 2, 2);"
+                    + "((1,1,1),(3,1,1), (2, 1, 3)); "
+                    + "((2,3,2),  (3,1,1),  (2,1, 3))  ;"
+                    + "((1,1,   1),(2 ,3,2), (2, 1,  3));"
+                    + "((1,1\t,1),(3,   1,1), (2, 3, 2))");
+            objects.add(wo);
+        }
 		objects.add(p0);
 		objects.add(p1);
 		objects.add(p2);

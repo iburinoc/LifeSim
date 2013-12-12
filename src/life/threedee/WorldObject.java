@@ -6,6 +6,11 @@ public class WorldObject implements ThreeDeeObject{
     private ThreeDeeObject[] planes;
     private Point3D center;
     
+    public WorldObject(ThreeDeeObject[] planes, Point3D center) {
+        this.planes = planes;
+        this.center = center;
+    }
+
     /* String is in format of (a, b, c);((a, b, c), (a, b, c), (a, b, c));...
      * First Point is center/origin point. All subsequent point triplets are corners of triangles.*/
     public static WorldObject generateObject(String str){
@@ -16,12 +21,20 @@ public class WorldObject implements ThreeDeeObject{
         double cy = Double.parseDouble(pointStr[1]); 
         double cz = Double.parseDouble(pointStr[2]);
         Point3D center = new Point3D(cx, cy, cz);
-        Plane[] planes = new Plane[strPoints.length-1];
+        ThreeDeeObject[] planes = new ThreeDeeObject[strPoints.length-1];
         for (int i = 1; i < strPoints.length; i++) {
             String[] subPointStr = strPoints[i].split("),(");
-            pointStr = strPoints[0].replaceAll("(", "").replaceAll(")", "").split(",");
+            Point3D[] points = new Point3D[3];
+            for (int j = 0; j < subPointStr.length; j++) {
+                pointStr = subPointStr[j].replaceAll("(", "").replaceAll(")", "").split(",");
+                double x = Double.parseDouble(pointStr[0]); 
+                double y = Double.parseDouble(pointStr[1]); 
+                double z = Double.parseDouble(pointStr[2]);
+                points[j] = new Point3D(x, y, z);
+            }
+            planes[i-1] = new Triangle(points[0], points[1], points[2]);
         }
-        return null;
+        return new WorldObject(planes, center);
     }
 
 	@Override

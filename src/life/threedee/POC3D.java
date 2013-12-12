@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class POC3D extends JPanel implements Runnable{
+public class POC3D implements Runnable{
 
 	private JFrame j;
 	private List<ThreeDeeObject> objects;
@@ -38,25 +38,25 @@ public class POC3D extends JPanel implements Runnable{
 	public POC3D(){
 		j = new JFrame("Proof of Concept");
 
-		this.setPreferredSize(new Dimension(960,720));
+		c = new Camera();
+		c.setPreferredSize(new Dimension(c.screenWidth,c.screenHeight));
 
-		j.add(this);
+		j.add(c);
 		j.pack();
 		j.setVisible(true);
 		j.setResizable(false);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		c = new Camera();
 		m = new MouseMovementListener();
-		this.addMouseListener(m);
-		this.addMouseMotionListener(m);
+		c.addMouseListener(m);
+		c.addMouseMotionListener(m);
 		j.addKeyListener(m);
 	}
 
 	@Override
 	public void run(){
-		Toolkit tk= getToolkit();
+		Toolkit tk= c.getToolkit();
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
-		this.setCursor(transparent);
+		j.setCursor(transparent);
 		objects = new ArrayList<ThreeDeeObject>();
 		Plane p0 = new Plane(new Point3D(0,5,0),new Vector(0,1,0),Color.red);
 		Plane p1 = new Plane(new Point3D(20,0,20),new Vector(1,0,0),Color.black);
@@ -68,25 +68,25 @@ public class POC3D extends JPanel implements Runnable{
 			Point3D a = new Point3D(0,0,0), b = new Point3D(0,1,0.0000000000001), c = new Point3D(1,0,0);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			objects.add(p6);
+			this.c.add(p6);
 		}
 		{
 			Point3D a = new Point3D(5,1,5), b = new Point3D(5,1,1.5), c = new Point3D(1,0,5);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			objects.add(p6);
+			this.c.add(p6);
 		}
 		{
 			Point3D a = new Point3D(0,1,0), b = new Point3D(0,1,1), c = new Point3D(1,1,0);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			objects.add(p6);
+			this.c.add(p6);
 		}
 		{
 			Point3D a = new Point3D(1,1,0), b = new Point3D(1,1,1), c = new Point3D(0,1,1);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			objects.add(p6);
+			this.c.add(p6);
 		}
 		{
             WorldObject wo = WorldObject.generateObject("(2, 2, 2);"
@@ -94,19 +94,19 @@ public class POC3D extends JPanel implements Runnable{
                     + "((2,3,2),  (3,1,1),  (2,1, 3))  ;"
                     + "((1,1,   1),(2 ,3,2), (2, 1,  3));"
                     + "((1,1\t,1),(3,   1,1), (2, 3, 2))");
-            objects.add(wo);
+            this.c.add(wo);
         }
-		objects.add(p0);
-		objects.add(p1);
-		objects.add(p2);
-		objects.add(p3);
-		objects.add(p4);
-		objects.add(p5);
+		this.c.add(p0);
+		this.c.add(p1);
+		this.c.add(p2);
+		this.c.add(p3);
+		this.c.add(p4);
+		this.c.add(p5);
 		//Plane p1 = new Plane(new Point3D(0,0,0),new Vector(0,1,0));
 		//objects.add(p1);
 		while(true){
 			long startT = System.currentTimeMillis();
-			this.repaint();
+			c.repaint();
 			long time = System.currentTimeMillis() - startT;
 //			System.out.println(time);
 			try{
@@ -127,12 +127,6 @@ public class POC3D extends JPanel implements Runnable{
 				c.move(3);
 			}
 		}
-	}
-	
-	@Override
-	public void paintComponent(Graphics g){
-		if(c != null)
-			c.draw(g, objects);
 	}
 
 	public static void main(String[] args){
@@ -161,7 +155,7 @@ public class POC3D extends JPanel implements Runnable{
 		public void recenter(){
 			if(mouseCaptured){
 				java.awt.Point p = new java.awt.Point(c.screenWidth / 2, c.screenHeight / 2);
-				SwingUtilities.convertPointToScreen(p, POC3D.this);
+				SwingUtilities.convertPointToScreen(p, c);
 				recenter.mouseMove(p.x,p.y);
 			}
 		}

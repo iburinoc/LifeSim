@@ -47,8 +47,8 @@ public class Camera extends JPanel{
 		int d = screenWidth / numProc;
 		for(int i = 0; i < numProc; i++){
 			CameraSlave c = new CameraSlave(this, d * i, 0, d * (i + 1), screenHeight);
+			//c.start();
 			slaves.add(c);
-			this.add(c);
 		}
 		
 		objects = new ArrayList<ThreeDeeObject>();
@@ -92,7 +92,7 @@ public class Camera extends JPanel{
 			System.out.println("dir"+dir);
 		}
 
-		//drawRange(g, 0, 0, screenWidth, screenHeight, 0, rightU, upU);
+		drawRange(g, 0, 0, screenWidth, screenHeight, 0);
 	}
 	
 	public void drawRange(Graphics g, int x1, int y1, int x2, int y2, int xOff){

@@ -4,7 +4,7 @@ import static java.lang.Math.PI;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,8 @@ public class Camera{
 	
 	private List<CameraSlave> slaves;
 	
-	private Image buffer;
-	private Graphics bufg;
+	private BufferedImage buffer;
+	private Graphics2D bufg;
 	
 	private int threadsDone;
 	private Thread cur;
@@ -46,7 +46,7 @@ public class Camera{
 		}
 		
 		buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
-		bufg = buffer.getGraphics();
+		bufg = buffer.createGraphics();
 	}
 	
 	public Camera(){
@@ -83,28 +83,9 @@ public class Camera{
 			System.out.println("rightU:"+rightU);
 			System.out.println("dir"+dir);
 		}
-		
 //		bufg.clearRect(0, 0, 1280, 720);
-		drawRange(g, objects, 0, 0, screenWidth, screenHeight, 0, rightU, upU);
+		drawRange(bufg, objects, 0, 0, screenWidth, screenHeight, 0, rightU, upU);
 		g.drawImage(buffer, 0, 0, null);
-		/*
-		threadsDone = 0;
-		cur = Thread.currentThread();
-		for(CameraSlave c : slaves){
-			c.draw(g, objects, rightU, upU);
-		}
-		/*
-		while(threadsDone < 4){
-			try{
-				Thread.sleep(1000);
-			}
-			catch (InterruptedException e){
-			}
-		}
-		for(CameraSlave c : slaves){
-			g.drawImage(c.getBuffer(), c.getX(), c.getY(), null);
-		}
-		*/
 	}
 	
 	public void threadDone(){
@@ -114,8 +95,8 @@ public class Camera{
 	
 	public void drawRange(Graphics g, List<Plane> objects, int x1, int y1, int x2, int y2, int xOff, Vector rightU, Vector upU){
 		int inc = 4;
-		for(int x = 0; x < screenWidth; x+=inc){
-			for(int y = 0; y < screenHeight; y+=inc){
+		for(int x = x1; x < x2; x+=inc){
+			for(int y = y1; y < y2; y+=inc){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
 				Plane draw = closestInFront(objects, v, loc, x, y);
 				if(draw != null)

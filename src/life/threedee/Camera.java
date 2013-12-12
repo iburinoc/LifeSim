@@ -9,7 +9,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Camera{
+import javax.swing.JPanel;
+
+public class Camera extends JPanel{
 
 	private Point3D loc;
 	private Vector dir;
@@ -31,6 +33,8 @@ public class Camera{
 	private int threadsDone;
 	private Thread cur;
 	
+	private List<ThreeDeeObject> objects;
+	
 	public Camera(Point3D loc, Vector dir){
 		dx = width/screenWidth;
 		dy = height/screenHeight;
@@ -45,8 +49,7 @@ public class Camera{
 			slaves.add(c);
 		}
 		
-		buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
-		bufg = buffer.createGraphics();
+		objects = new ArrayList<ThreeDeeObject>();
 	}
 	
 	public Camera(){
@@ -68,9 +71,13 @@ public class Camera{
 		}
 	}
 	
-	public void draw(Graphics g, List<ThreeDeeObject> objects){
+	@Override
+	public void paintComponent(Graphics g){
+		draw(g);
+	}
+	
+	public void draw(Graphics g){
 		
-//		modDir();
 		
 		double[] dirPolar = dir.polarTransform();
 
@@ -83,9 +90,8 @@ public class Camera{
 			System.out.println("rightU:"+rightU);
 			System.out.println("dir"+dir);
 		}
-//		bufg.clearRect(0, 0, 1280, 720);
-		drawRange(bufg, objects, 0, 0, screenWidth, screenHeight, 0, rightU, upU);
-		g.drawImage(buffer, 0, 0, null);
+
+		drawRange(g, 0, 0, screenWidth, screenHeight, 0, rightU, upU);
 	}
 	
 	public void threadDone(){
@@ -93,12 +99,12 @@ public class Camera{
 		cur.interrupt();
 	}
 	
-	public void drawRange(Graphics g, List<ThreeDeeObject> objects, int x1, int y1, int x2, int y2, int xOff, Vector rightU, Vector upU){
+	public void drawRange(Graphics g, int x1, int y1, int x2, int y2, int xOff, Vector rightU, Vector upU){
 		int inc = 4;
 		for(int x = x1; x < x2; x+=inc){
 			for(int y = y1; y < y2; y+=inc){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
-				ThreeDeeObject draw = closestInFront(objects, v, loc, x, y);
+				ThreeDeeObject draw = closestInFront(v, loc, x, y);
 				if(draw != null)
 					g.setColor(draw.c());
 				else
@@ -119,7 +125,7 @@ public class Camera{
 		return nup.add(nright);
 	}
 
-	private ThreeDeeObject closestInFront(List<ThreeDeeObject> objects, Vector dir, Point3D px, int x, int y){
+	private ThreeDeeObject closestInFront(Vector dir, Point3D px, int x, int y){
 		final boolean debug = false;
 		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
@@ -167,5 +173,13 @@ public class Camera{
 		pt[0] -= PI / 2 * d;
 		Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
 		loc = new Point3D(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
+	}
+	
+	public void add(ThreeDeeObject o){
+		objects.add(o);
+	}
+	
+	public void setObjects(List<ThreeDeeObject> o){
+		objects = o;
 	}
 }

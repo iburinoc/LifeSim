@@ -90,8 +90,8 @@ public class Camera{
 		/*
 		threadsDone = 0;
 		cur = Thread.currentThread();
-		for(CameraSlave colour : slaves){
-			colour.draw(g, objects, rightU, upU);
+		for(CameraSlave c : slaves){
+			c.draw(g, objects, rightU, upU);
 		}
 		/*
 		while(threadsDone < 4){
@@ -101,8 +101,8 @@ public class Camera{
 			catch (InterruptedException e){
 			}
 		}
-		for(CameraSlave colour : slaves){
-			g.drawImage(colour.getBuffer(), colour.getX(), colour.getY(), null);
+		for(CameraSlave c : slaves){
+			g.drawImage(c.getBuffer(), c.getX(), c.getY(), null);
 		}
 		*/
 	}
@@ -119,7 +119,7 @@ public class Camera{
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
 				Plane draw = closestInFront(objects, v, loc, x, y);
 				if(draw != null)
-					g.setColor(draw.colour);
+					g.setColor(draw.c);
 				else
 					g.setColor(Color.WHITE);
 				g.fillRect(x - xOff, y, inc, inc);

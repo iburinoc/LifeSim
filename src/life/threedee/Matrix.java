@@ -45,6 +45,8 @@ public class Matrix{
 		}
 		if(matrix.length == 1){
 			return _(0, 0);
+		}else if(matrix.length == 2){
+			return _(0,0)*_(1,1)-_(0,1)*_(1,0);
 		}else{
 			double determinantSum = 0;
 			for (int i = 0; i < matrix.length; i++){

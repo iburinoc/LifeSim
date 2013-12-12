@@ -5,8 +5,7 @@ import java.awt.Color;
 public class Triangle extends Plane{
 
 	private Point3D a, b, c;
-    private Vector ab, ac;
-    private double[] yaw = new double[2];
+    private double[] yaw = new double[3];
 
 	public Triangle(Point3D a, Point3D b, Point3D c) {
 		this(a, b, c, new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256)));
@@ -17,10 +16,9 @@ public class Triangle extends Plane{
 		this.a = a;
 		this.b = b;
 		this.c = c;
-        ab = new Vector(a, b);
-        ac = new Vector(a, c);
-        yaw[0] = ab.polarTransform()[0];
-        yaw[1] = ac.polarTransform()[0];
+        yaw[0] = new Vector(a, b).polarTransform()[0];
+        yaw[1] = new Vector(a, c).polarTransform()[0];
+        yaw[2] = new Vector(b, c).polarTransform()[0];
 	}
 	
 	@Override
@@ -36,14 +34,27 @@ public class Triangle extends Plane{
 	}
 	
     public boolean inside(Point3D point) {
-        boolean inside = true;
         double yawPoint = new Vector(a, point).polarTransform()[0];
         if ((Math.max(yaw[0], yaw[1]) - Math.min(yaw[0], yaw[1]) < Math.PI &&
                 (yawPoint > Math.max(yaw[0], yaw[1]) || yawPoint < Math.min(yaw[0], yaw[1]))) ||
                 (Math.max(yaw[0], yaw[1]) - Math.min(yaw[0], yaw[1]) > Math.PI &&
                         (yawPoint < Math.max(yaw[0], yaw[1]) && yawPoint > Math.min(yaw[0], yaw[1])))) {
-            inside = false;
+            return false;
         }
-        return inside;
+        yawPoint = new Vector(b, point).polarTransform()[0];
+        if ((Math.max(yaw[0], yaw[2]) - Math.min(yaw[0], yaw[2]) < Math.PI &&
+                (yawPoint > Math.max(yaw[0], yaw[2]) || yawPoint < Math.min(yaw[0], yaw[2]))) ||
+                (Math.max(yaw[0], yaw[2]) - Math.min(yaw[0], yaw[2]) > Math.PI &&
+                        (yawPoint < Math.max(yaw[0], yaw[2]) && yawPoint > Math.min(yaw[0], yaw[2])))) {
+            return false;
+        }
+        yawPoint = new Vector(c, point).polarTransform()[0];
+        if ((Math.max(yaw[1], yaw[2]) - Math.min(yaw[1], yaw[2]) < Math.PI &&
+                (yawPoint > Math.max(yaw[1], yaw[2]) || yawPoint < Math.min(yaw[1], yaw[2]))) ||
+                (Math.max(yaw[1], yaw[2]) - Math.min(yaw[1], yaw[2]) > Math.PI &&
+                        (yawPoint < Math.max(yaw[1], yaw[2]) && yawPoint > Math.min(yaw[1], yaw[2])))) {
+            return false;
+        }
+        return true;
     }
 }

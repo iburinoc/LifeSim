@@ -1,11 +1,13 @@
 package life.threedee;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
-public class CameraSlave extends Thread{
+import javax.swing.JPanel;
+
+public class CameraSlave extends JPanel{
 	private Camera master;
 	
 	private int x1,y1,x2,y2;
@@ -14,8 +16,6 @@ public class CameraSlave extends Thread{
 	
 	private boolean job;
 	private Graphics g;
-	
-	private List<ThreeDeeObject> objects;
 	
 	private Vector rightU;
 	private Vector upU;
@@ -32,39 +32,13 @@ public class CameraSlave extends Thread{
 		this.y2 = y2;
 		this.running = true;
 		this.buffer = new BufferedImage(x2-x1, y2-y1, BufferedImage.TYPE_INT_ARGB);
+		this.setPreferredSize(new Dimension(x2 - x1, y2 - y1));
 		this.offG = buffer.getGraphics();
-		this.setDaemon(true);
 	}
 	
 	@Override
-	public void run(){
-		while(running){
-			try{
-				Thread.sleep(1000);
-			}
-			catch (InterruptedException e){
-				
-			}
-			if(job){
-				master.drawRange(offG, objects, x1, y1, x2, y2, x1, rightU, upU);
-//				master.threadDone();
-				g.drawImage(buffer, x1, y1, null);
-				job = false;
-			}
-		}
-	}
-	
-	public void halt(){
-		running = false;
-	}
-	
-	public void draw(Graphics g, List<ThreeDeeObject> objects, Vector rightU, Vector upU){
-		job = true;
-		this.g = g;
-		this.objects = objects;
-		this.rightU = rightU;
-		this.upU = upU;
-		this.interrupt();
+	public void paintComponent(Graphics g){
+		master.drawRange(g, x1, y1, x2, y2, x1);
 	}
 	
 	public Image getBuffer(){

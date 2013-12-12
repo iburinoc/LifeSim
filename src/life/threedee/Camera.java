@@ -35,6 +35,9 @@ public class Camera extends JPanel{
 	
 	private List<ThreeDeeObject> objects;
 	
+	private Vector rightU;
+	private Vector upU;
+	
 	public Camera(Point3D loc, Vector dir){
 		dx = width/screenWidth;
 		dy = height/screenHeight;
@@ -45,8 +48,8 @@ public class Camera extends JPanel{
 		int d = screenWidth / numProc;
 		for(int i = 0; i < numProc; i++){
 			CameraSlave c = new CameraSlave(this, d * i, 0, d * (i + 1), screenHeight);
-			//c.start();
 			slaves.add(c);
+			this.add(c);
 		}
 		
 		objects = new ArrayList<ThreeDeeObject>();
@@ -81,9 +84,9 @@ public class Camera extends JPanel{
 		
 		double[] dirPolar = dir.polarTransform();
 
-		Vector upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
+		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
 		
-		Vector rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
+		rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
 		if(false){
 			System.out.println("Polar Dir: yaw:" + dirPolar[0] + "; pitch: " + dirPolar[1]);
 			System.out.println("upU:"+upU);
@@ -91,15 +94,10 @@ public class Camera extends JPanel{
 			System.out.println("dir"+dir);
 		}
 
-		drawRange(g, 0, 0, screenWidth, screenHeight, 0, rightU, upU);
+		//drawRange(g, 0, 0, screenWidth, screenHeight, 0, rightU, upU);
 	}
 	
-	public void threadDone(){
-		threadsDone++;
-		cur.interrupt();
-	}
-	
-	public void drawRange(Graphics g, int x1, int y1, int x2, int y2, int xOff, Vector rightU, Vector upU){
+	public void drawRange(Graphics g, int x1, int y1, int x2, int y2, int xOff){
 		int inc = 4;
 		for(int x = x1; x < x2; x+=inc){
 			for(int y = y1; y < y2; y+=inc){

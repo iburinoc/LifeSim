@@ -47,8 +47,8 @@ public class POC3D implements Runnable{
 		j.setResizable(false);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		m = new MouseMovementListener();
-		c.addMouseListener(m);
-		c.addMouseMotionListener(m);
+		j.addMouseListener(m);
+		j.addMouseMotionListener(m);
 		j.addKeyListener(m);
 	}
 
@@ -116,7 +116,6 @@ public class POC3D implements Runnable{
 				e.printStackTrace();
 			}
 //			System.out.println("frame");
-			m.recenter();
 			if(w){
 				c.move(0);
 			}if(d){
@@ -154,8 +153,8 @@ public class POC3D implements Runnable{
 		
 		public void recenter(){
 			if(mouseCaptured){
-				java.awt.Point p = new java.awt.Point(c.screenWidth / 2, c.screenHeight / 2);
-				SwingUtilities.convertPointToScreen(p, c);
+				java.awt.Point p = new java.awt.Point(j.getWidth() / 2, j.getHeight() / 2);
+				SwingUtilities.convertPointToScreen(p, j);
 				recenter.mouseMove(p.x,p.y);
 			}
 		}
@@ -171,9 +170,11 @@ public class POC3D implements Runnable{
 				return;
 			}
 			
-			System.out.println(arg0.getX() + ";" + arg0.getY());
-			if(arg0.getX() != c.screenWidth / 2 || arg0.getY() != c.screenHeight / 2)
-				c.mouseMoved(arg0.getX()-c.screenWidth / 2, arg0.getY()-c.screenHeight / 2);
+			System.out.println(arg0.getX() + ";" + arg0.getY() + ";" + j.getWidth() / 2 + ";" + j.getHeight() / 2);
+			if(arg0.getX() != j.getWidth() / 2 || arg0.getY() != j.getHeight() / 2){
+				c.mouseMoved(arg0.getX()-j.getWidth() / 2, arg0.getY()-j.getHeight() / 2);
+				recenter();
+			}
 		}
 
 		@Override

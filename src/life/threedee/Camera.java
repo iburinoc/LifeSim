@@ -50,7 +50,7 @@ public class Camera{
 	}
 	
 	public Camera(){
-		this(new Point3D(0,1,0),new Vector(1,0,1).setScalar(1));
+		this(new Point3D(0,1,0),new Vector(1,0,1).setScalar(01));
 	}
 	
 	private int count;
@@ -151,6 +151,9 @@ public class Camera{
 		
 		dirPolar[0] += -PI/180 * x;
 		dirPolar[1] += -PI/360 * y;
+		if(Math.abs(dirPolar[1]) > PI/2){
+			dirPolar[1] = PI / 2 * Math.signum(dirPolar[1]);
+		}
 		dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], dir.s);
 		/*
 		Vector upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
@@ -160,9 +163,9 @@ public class Camera{
 	}
 	
 	public void move(int d){
-		double yaw = dir.polarTransform()[0];
-		yaw -= PI / 2 * d;
-		Vector mov = Vector.fromPolarTransform(yaw, 0, 1);
-		loc = new Point3D(loc.x+mov.x,loc.y,loc.z+mov.z);
+		double[] pt = dir.polarTransform();
+		pt[0] -= PI / 2 * d;
+		Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
+		loc = new Point3D(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
 	}
 }

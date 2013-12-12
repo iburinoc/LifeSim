@@ -33,6 +33,8 @@ public class POC3D extends JPanel implements Runnable{
 	
 	private boolean w,d,s,a;
 	
+	public Thread main;
+	
 	public POC3D(){
 		j = new JFrame("Proof of Concept");
 
@@ -47,25 +49,24 @@ public class POC3D extends JPanel implements Runnable{
 		this.addMouseListener(m);
 		this.addMouseMotionListener(m);
 		j.addKeyListener(m);
-		
 	}
 
 	@Override
 	public void run(){
 		Toolkit tk= getToolkit();
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
-//		this.setCursor(transparent);
+		this.setCursor(transparent);
 		objects = new ArrayList<Plane>();
-		Plane p0 = new Plane(new Point3D(0,2,0),new Vector(0,1,0),Color.red);
+		Plane p0 = new Plane(new Point3D(0,5,0),new Vector(0,1,0),Color.red);
 		Plane p1 = new Plane(new Point3D(20,0,20),new Vector(1,0,0),Color.black);
 		Plane p2 = new Plane(new Point3D(-20,0,20),new Vector(1,0,0),Color.blue);
 		Plane p3 = new Plane(new Point3D(0,0,20),new Vector(0,0,1),Color.cyan);
 		Plane p4 = new Plane(new Point3D(0,0,0),new Vector(0,1,0),Color.orange);
 		Plane p5 = new Plane(new Point3D(0,0,-20),new Vector(0,0,1),Color.green);
 		{
-			Point a = new Point(0,0), b = new Point(0,1), c = new Point(1,0);
+			Point3D a = new Point3D(0,0,0), b = new Point3D(0,1,0), c = new Point3D(1,0,0);
 			
-			Plane p6 = new Polygon(new Point[]{a,b,c},Vector.UNIT_X,Vector.UNIT_Y, new Point3D(0,0,1), Vector.UNIT_Z);
+			Plane p6 = new Triangle(a,b,c,Color.pink);
 			objects.add(p6);
 		}
 		objects.add(p0);
@@ -135,8 +136,8 @@ public class POC3D extends JPanel implements Runnable{
 		}
 		
 		public void recenter(){
-			if(mouseCaptured && false){
-				recentered = true;
+			if(mouseCaptured){
+				reset = true;
 				recenter.mouseMove(j.getX() + j.getWidth()/2, j.getY() + j.getHeight()/2);
 			}
 		}

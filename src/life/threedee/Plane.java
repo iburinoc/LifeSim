@@ -18,10 +18,14 @@ public class Plane{
 	public Color c;
 	
 	public Plane(Point3D a, Point3D b, Point3D c){
+		this(a,b,c,new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256)));
+	}
+	
+	public Plane(Point3D a, Point3D b, Point3D c, Color colour){
 		origin = a;
 		normal = new Vector(a, b).crossProduct(new Vector(a, c));
 		
-		this.c = new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
+		this.c = colour;
 	}
 
 	public Plane(Point3D origin, Vector normal){
@@ -81,6 +85,10 @@ public class Plane{
 
 	public Point3D intersection(Vector vector, Point3D point3D){
 		double t = calculateT(vector, point3D);
+		return intersection(vector, point3D, t);
+	}
+	
+	public Point3D intersection(Vector vector, Point3D point3D, double t){
 		double nx = point3D.x + vector.x * t;
 		double ny = point3D.y + vector.y * t;
 		double nz = point3D.z + vector.z * t;

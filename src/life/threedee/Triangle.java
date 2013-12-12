@@ -67,7 +67,9 @@ public class Triangle extends Plane{
                         (yawPoint < Math.max(yaw1, yaw2) && yawPoint > Math.min(yaw1, yaw2)));
     }
     
+    @Override
     public void translate(Vector v){
+    	super.translate(v);
     	a = new Point3D(a.x + v.x, a.y + v.y, a.z + v.z);
     	b = new Point3D(b.x + v.x, b.y + v.y, b.z + v.z);
     	c = new Point3D(c.x + v.x, c.y + v.y, c.z + v.z);

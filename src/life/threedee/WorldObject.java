@@ -1,5 +1,7 @@
 package life.threedee;
 
+import java.awt.Color;
+
 public class WorldObject implements ThreeDeeObject{
     private ThreeDeeObject[] planes;
     private Point3D center;
@@ -21,7 +23,6 @@ public class WorldObject implements ThreeDeeObject{
         }
         return null;
     }
-    public static WorldObject generateObject(String str){return null;}
 
 	@Override
 	public double calculateT(Vector v, Point3D p){
@@ -55,5 +56,10 @@ public class WorldObject implements ThreeDeeObject{
 		for(ThreeDeeObject o : planes){
 			o.translate(v);
 		}
+	}
+	
+	@Override
+	public Color c(){
+		return new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
 	}
 }

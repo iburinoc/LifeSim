@@ -68,7 +68,7 @@ public class Camera{
 		}
 	}
 	
-	public void draw(Graphics g, List<Plane> objects){
+	public void draw(Graphics g, List<ThreeDeeObject> objects){
 		
 //		modDir();
 		
@@ -93,14 +93,14 @@ public class Camera{
 		cur.interrupt();
 	}
 	
-	public void drawRange(Graphics g, List<Plane> objects, int x1, int y1, int x2, int y2, int xOff, Vector rightU, Vector upU){
+	public void drawRange(Graphics g, List<ThreeDeeObject> objects, int x1, int y1, int x2, int y2, int xOff, Vector rightU, Vector upU){
 		int inc = 4;
 		for(int x = x1; x < x2; x+=inc){
 			for(int y = y1; y < y2; y+=inc){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
-				Plane draw = closestInFront(objects, v, loc, x, y);
+				ThreeDeeObject draw = closestInFront(objects, v, loc, x, y);
 				if(draw != null)
-					g.setColor(draw.c);
+					g.setColor(draw.c());
 				else
 					g.setColor(Color.WHITE);
 				g.fillRect(x - xOff, y, inc, inc);
@@ -119,11 +119,11 @@ public class Camera{
 		return nup.add(nright);
 	}
 
-	private Plane closestInFront(List<Plane> objects, Vector dir, Point3D px, int x, int y){
+	private ThreeDeeObject closestInFront(List<ThreeDeeObject> objects, Vector dir, Point3D px, int x, int y){
 		final boolean debug = false;
 		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
-		Plane minPlane = null;
+		ThreeDeeObject minPlane = null;
 		if(x == 240 && y == 180 && debug){
 			System.out.println("Center:" + dir);
 		}
@@ -133,7 +133,7 @@ public class Camera{
 		if(x == 478 && y == 358 && debug){
 			System.out.println("Bot Right:" + dir);
 		}
-		for(Plane p : objects){
+		for(ThreeDeeObject p : objects){
 			double t = p.calculateT(dir, px);
 			if(minT > t && t >= 0 && t == t){
 				minT = t;

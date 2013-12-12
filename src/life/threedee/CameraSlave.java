@@ -15,7 +15,7 @@ public class CameraSlave extends Thread{
 	private boolean job;
 	private Graphics g;
 	
-	private List<Plane> objects;
+	private List<ThreeDeeObject> objects;
 	
 	private Vector rightU;
 	private Vector upU;
@@ -58,7 +58,7 @@ public class CameraSlave extends Thread{
 		running = false;
 	}
 	
-	public void draw(Graphics g, List<Plane> objects, Vector rightU, Vector upU){
+	public void draw(Graphics g, List<ThreeDeeObject> objects, Vector rightU, Vector upU){
 		job = true;
 		this.g = g;
 		this.objects = objects;

@@ -131,4 +131,8 @@ public class Plane implements ThreeDeeObject{
 	public void translate(Vector v){
 		origin = new Point3D(origin.x + v.x, origin.y + v.y, origin.z + v.z);
 	}
+	
+	public Color c(){
+		return c;
+	}
 }

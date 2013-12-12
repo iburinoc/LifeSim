@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 public class POC3D extends JPanel implements Runnable{
 
 	private JFrame j;
-	private List<Plane> objects;
+	private List<ThreeDeeObject> objects;
 
 	private double x;
 	private double y;
@@ -56,7 +56,7 @@ public class POC3D extends JPanel implements Runnable{
 		Toolkit tk= getToolkit();
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		this.setCursor(transparent);
-		objects = new ArrayList<Plane>();
+		objects = new ArrayList<ThreeDeeObject>();
 		Plane p0 = new Plane(new Point3D(0,5,0),new Vector(0,1,0),Color.red);
 		Plane p1 = new Plane(new Point3D(20,0,20),new Vector(1,0,0),Color.black);
 		Plane p2 = new Plane(new Point3D(-20,0,20),new Vector(1,0,0),Color.blue);

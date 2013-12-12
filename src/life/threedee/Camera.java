@@ -41,7 +41,7 @@ public class Camera{
 		int d = screenWidth / numProc;
 		for(int i = 0; i < numProc; i++){
 			CameraSlave c = new CameraSlave(this, d * i, 0, d * (i + 1), screenHeight);
-			c.start();
+			//c.start();
 			slaves.add(c);
 		}
 		

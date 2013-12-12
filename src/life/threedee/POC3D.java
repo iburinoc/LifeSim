@@ -79,16 +79,16 @@ public class POC3D extends JPanel implements Runnable{
 		c = new Camera();
 		while(true){
 			long startT = System.currentTimeMillis();
-			c.draw(this.getGraphics(),objects);
+			this.repaint();
 			long time = System.currentTimeMillis() - startT;
-//			System.out.println(time);
+			System.out.println(time);
 			try{
 				Thread.sleep((int) Math.max(0,66 - time));
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();
 			}
-//			System.out.println("frame");
+			System.out.println("frame");
 			m.recenter();
 			if(w){
 				c.move(0);

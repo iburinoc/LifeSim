@@ -145,7 +145,7 @@ public class Camera{
 	}
 	
 	public void mouseMoved(int x,int y){
-		System.out.println(x + ";" + y);
+//		System.out.println(x + ";" + y);
 		
 		double[] dirPolar = dir.polarTransform();
 		

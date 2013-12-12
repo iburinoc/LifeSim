@@ -17,6 +17,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class POC3D extends JPanel implements Runnable{
 
@@ -45,6 +46,7 @@ public class POC3D extends JPanel implements Runnable{
 		j.setVisible(true);
 		j.setResizable(false);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		c = new Camera();
 		m = new MouseMovementListener();
 		this.addMouseListener(m);
 		this.addMouseMotionListener(m);
@@ -103,19 +105,18 @@ public class POC3D extends JPanel implements Runnable{
 		objects.add(p5);
 		//Plane p1 = new Plane(new Point3D(0,0,0),new Vector(0,1,0));
 		//objects.add(p1);
-		c = new Camera();
 		while(true){
 			long startT = System.currentTimeMillis();
 			this.repaint();
 			long time = System.currentTimeMillis() - startT;
-			System.out.println(time);
+//			System.out.println(time);
 			try{
 				Thread.sleep((int) Math.max(0,66 - time));
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();
 			}
-			System.out.println("frame");
+//			System.out.println("frame");
 			m.recenter();
 			if(w){
 				c.move(0);
@@ -145,9 +146,6 @@ public class POC3D extends JPanel implements Runnable{
 		
 		private Robot recenter;
 		
-		private int oldX, oldY;
-	
-		private boolean reset, recentered;
 		
 		public MouseMovementListener(){
 			try{
@@ -163,8 +161,9 @@ public class POC3D extends JPanel implements Runnable{
 		
 		public void recenter(){
 			if(mouseCaptured){
-				reset = true;
-				recenter.mouseMove(j.getX() + j.getWidth()/2, j.getY() + j.getHeight()/2);
+				java.awt.Point p = new java.awt.Point(c.screenWidth / 2, c.screenHeight / 2);
+				SwingUtilities.convertPointToScreen(p, POC3D.this);
+				recenter.mouseMove(p.x,p.y);
 			}
 		}
 		
@@ -175,22 +174,13 @@ public class POC3D extends JPanel implements Runnable{
 
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
-			if(!mouseCaptured || recentered){
-				recentered = false;
+			if(!mouseCaptured){
 				return;
 			}
-			if(reset){
-				oldX = arg0.getX();
-				oldY = arg0.getY();
-				reset = false;
-				return;
-			}
-			reset = true;
-			recenter();
-			if(arg0.getX() != c.screenWidth / 2 || arg0.getY() != c.screenWidth / 2)
-				c.mouseMoved(arg0.getX()-oldX, arg0.getY()-oldY);
-			oldX = arg0.getX();
-			oldY = arg0.getY();
+			
+			System.out.println(arg0.getX() + ";" + arg0.getY());
+			if(arg0.getX() != c.screenWidth / 2 || arg0.getY() != c.screenHeight / 2)
+				c.mouseMoved(arg0.getX()-c.screenWidth / 2, arg0.getY()-c.screenHeight / 2);
 		}
 
 		@Override
@@ -204,7 +194,6 @@ public class POC3D extends JPanel implements Runnable{
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			reset = true;
 		}
 
 		@Override
@@ -225,7 +214,6 @@ public class POC3D extends JPanel implements Runnable{
 			System.out.println("Key:" + e.getKeyCode());
 			if(e.getKeyCode() == 27){
 				this.mouseCaptured = !mouseCaptured;
-				this.reset = true;
 			}
 			if(e.getKeyChar() == 'w'){
 				w = true;

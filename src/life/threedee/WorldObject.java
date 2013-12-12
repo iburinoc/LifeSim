@@ -15,18 +15,18 @@ public class WorldObject implements ThreeDeeObject{
      * First Point is center/origin point. All subsequent point triplets are corners of triangles.*/
     public static WorldObject generateObject(String str){
         str = str.replaceAll(" ", "");
-        String[] strPoints = str.split(");(");
-        String[] pointStr = strPoints[0].replaceAll("(", "").replaceAll(")", "").split(",");
+        String[] strPoints = str.split("\\);\\(");
+        String[] pointStr = strPoints[0].replaceAll("\\(", "").replaceAll("\\)", "").split(",");
         double cx = Double.parseDouble(pointStr[0]); 
         double cy = Double.parseDouble(pointStr[1]); 
         double cz = Double.parseDouble(pointStr[2]);
         Point3D center = new Point3D(cx, cy, cz);
         ThreeDeeObject[] planes = new ThreeDeeObject[strPoints.length-1];
         for (int i = 1; i < strPoints.length; i++) {
-            String[] subPointStr = strPoints[i].split("),(");
+            String[] subPointStr = strPoints[i].split("\\),\\(");
             Point3D[] points = new Point3D[3];
             for (int j = 0; j < subPointStr.length; j++) {
-                pointStr = subPointStr[j].replaceAll("(", "").replaceAll(")", "").split(",");
+                pointStr = subPointStr[j].replaceAll("\\(", "").replaceAll("\\)", "").split(",");
                 double x = Double.parseDouble(pointStr[0]); 
                 double y = Double.parseDouble(pointStr[1]); 
                 double z = Double.parseDouble(pointStr[2]);
@@ -39,7 +39,7 @@ public class WorldObject implements ThreeDeeObject{
 
 	@Override
 	public double calculateT(Vector v, Point3D p){
-		double minT = 0;
+		double minT = Double.MAX_VALUE;
 		for(int i = 0; i < planes.length; i++){
 			double t = planes[i].calculateT(v, p);
 			if(t >= 0 && t < minT && t == t){
@@ -73,6 +73,6 @@ public class WorldObject implements ThreeDeeObject{
 	
 	@Override
 	public Color c(){
-		return new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
+		return Color.magenta;
 	}
 }

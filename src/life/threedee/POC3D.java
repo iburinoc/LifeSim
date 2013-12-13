@@ -142,7 +142,7 @@ public class POC3D implements Runnable{
             }if(d){
                 p.move(3);
             }if(up){
-                p.move(4);
+                p.jump();
             }
 		}
 	}

@@ -180,6 +180,13 @@ public class Camera extends JPanel{
         }
     }
 
+    /*
+    public void move(int d){
+        Vector mov = Vector.fromPolarTransform(dir.polarTransform() += PI / 2 * d, 0, 1);
+        loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
+    }
+    */
+
 	public void scroll(int d){
 		dir = dir.setScalar(Math.max(Math.min(dir.s + -d / 10.0, 5), 1e-100));
 		System.out.println(dir.s);

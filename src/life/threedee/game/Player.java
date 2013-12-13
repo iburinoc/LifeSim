@@ -10,9 +10,20 @@ import life.threedee.Vector;
 public class Player extends Camera implements Tickable{
     private Vector v;
 
+    public Player() {
+        super();
+        this.v = new Vector(0, 0, 0);
+    }
+
     public Player(Point loc, Vector dir, Vector v) {
         super(loc, dir);
         this.v = v;
+    }
+
+    public void jump(){
+        if (v.y == 0) {
+            v = new Vector(v.x, 9.81, v.z);
+        }
     }
 
     public void tick(){

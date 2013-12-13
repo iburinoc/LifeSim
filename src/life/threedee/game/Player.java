@@ -41,6 +41,7 @@ public class Player extends Camera implements Tickable{
         for (ThreeDeeObject object : objects) {
             /*if (object.sameSide(loc, newLoc)) {
                 newLoc = loc;
+                v = new Vector();
             }*/
         }
         loc = newLoc;

@@ -12,4 +12,6 @@ public interface ThreeDeeObject{
 	public void translate(Vector v);
 	
 	public Color c();
+	
+	public boolean sameSide(Point a, Point b);
 }

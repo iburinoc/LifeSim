@@ -27,13 +27,11 @@ public class Player extends Camera implements Tickable{
     }
 
     @Override
-    public void move(int d) throws JumpException {
+    public void move(int d) {
         if (d < 4) {
             super.move(d);
         } else {
-            //if(canJump) {
-                jump();
-            //}
+        	jump();
         }
     }
 

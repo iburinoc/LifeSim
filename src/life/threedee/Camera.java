@@ -15,8 +15,8 @@ import life.lib.Tickable;
 
 public class Camera extends JPanel{
 
-	private Point loc;
-	private Vector dir;
+	protected Point loc;
+	protected Vector dir;
 	
 	private double 
 			width  = 1.53465397596, 
@@ -60,7 +60,7 @@ public class Camera extends JPanel{
 	}
 	
 	public Camera(){
-		this(new Point(0,1,0),new Vector(1,0,1).setScalar(01));
+		this(new Point(0,1,0),new Vector(1,0,1).setScalar(1));
 	}
 	
 	private int count;
@@ -182,6 +182,10 @@ public class Camera extends JPanel{
 		Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
 		loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
 	}
+
+    public void translate(Vector shift){
+        loc = new Point(new Vector(loc).add(shift));
+    }
 	
 	public synchronized void add(ThreeDeeObject o){
 		objects.add(o);

@@ -75,4 +75,9 @@ public class WorldObject implements ThreeDeeObject{
 	public Color c(){
 		return Color.magenta;
 	}
+
+	@Override
+	public boolean sameSide(Point a, Point b) {
+		return true;
+	}
 }

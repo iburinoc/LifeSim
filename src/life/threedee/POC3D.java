@@ -258,7 +258,7 @@ public class POC3D implements Runnable{
 
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent e){
-			System.out.println(e.getPreciseWheelRotation());
+			//System.out.println(e.getPreciseWheelRotation());
 			p.scroll(e.getWheelRotation());
 		}
 		

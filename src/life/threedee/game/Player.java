@@ -21,20 +21,14 @@ public class Player extends Camera implements Tickable{
     }
 
     public void jump(){
-        if (v.y == 0) {
+        //if (v.y == 0 && canJump) {
             v = new Vector(v.x, 9.81, v.z);
-        }
+        //}
     }
 
     @Override
     public void move(int d) {
-        if (d < 4) {
-            super.move(d);
-        } else {
-            //if(canJump) {
-                jump();
-            //}
-        }
+        super.move(d);
     }
 
     public void tick(){
@@ -43,7 +37,7 @@ public class Player extends Camera implements Tickable{
         for (ThreeDeeObject object : objects) {
             /*if (object.sameSide(loc, newLoc)) {
                 newLoc = loc;
-                v = new Vector();
+                v = new Vector(0, 0, 0);
             }*/
         }
         loc = newLoc;

@@ -187,8 +187,8 @@ public class Camera extends JPanel{
 
     /*
     public void move(int d){
-            Vector mov = Vector.fromPolarTransform(dir.polarTransform() += PI / 2 * d, 0, 1);
-            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
+        Vector mov = Vector.fromPolarTransform(dir.polarTransform() += PI / 2 * d, 0, 1);
+        loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
     }
     */
 

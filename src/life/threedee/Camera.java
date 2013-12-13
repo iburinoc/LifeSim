@@ -184,7 +184,7 @@ public class Camera extends JPanel{
 	}
 
 	public void scroll(int d){
-		dir = dir.setScalar(Math.max(dir.s + -d / 10.0, 1e-100));
+		dir = dir.setScalar(Math.max(Math.min(dir.s + -d / 10.0, 5), 1e-100));
 		System.out.println(dir.s);
 	}
 	

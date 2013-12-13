@@ -61,5 +61,8 @@ public class Triangle extends Plane {
     }
 
     public void stretch(Point origin, double elasticity) {
+        a = new Point(new Vector(a).add(new Vector(origin).scalarProduct(-1)).scalarProduct(elasticity).add(new Vector(origin)));
+        b = new Point(new Vector(b).add(new Vector(origin).scalarProduct(-1)).scalarProduct(elasticity).add(new Vector(origin)));
+        c = new Point(new Vector(c).add(new Vector(origin).scalarProduct(-1)).scalarProduct(elasticity).add(new Vector(origin)));
     }
 }

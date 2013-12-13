@@ -39,10 +39,10 @@ public class WorldObject implements ThreeDeeObject{
 
 	@Override
 	public double calculateT(Vector v, Point p){
-		double minT = Double.MAX_VALUE;
+		double minT = Double.NaN;
 		for(int i = 0; i < planes.length; i++){
 			double t = planes[i].calculateT(v, p);
-			if(t >= 0 && t < minT && t == t){
+			if(minT != minT || t >= 0 && t < minT && t == t){
 				minT = t;
 			}
 		}

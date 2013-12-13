@@ -15,6 +15,8 @@ public class Triangle extends Plane {
 	private Point3D a, b, c;
     private double[] yaw = new double[6];
 
+    private Vector ab, ac;
+    
 	public Triangle(Point3D a, Point3D b, Point3D c) {
 		this(a, b, c, new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256)));
 	}
@@ -30,6 +32,9 @@ public class Triangle extends Plane {
         yaw[3] = new Vector(b, c).yaw();
         yaw[4] = new Vector(c, a).yaw();
         yaw[5] = new Vector(c, b).yaw();
+        
+        ab = new Vector(a,b);
+        ac = new Vector(a,c);
 	}
 	
 	@Override
@@ -43,7 +48,7 @@ public class Triangle extends Plane {
 		}
 	}
 	
-    public boolean inside(Point3D point) {
+    public boolean insideYaws(Point3D point) {
         double yawPoint = new Vector(a, point).yaw();
         if (inYaws(yawPoint, yaw[0], yaw[1])) {
             return false;
@@ -57,6 +62,31 @@ public class Triangle extends Plane {
             return false;
         }
         return true;
+    }
+    
+    public boolean inside(Point3D point) {
+    	Vector u = ab;
+    	Vector v = ac;
+    	Vector w = new Vector(a,point);
+    	
+    	double
+    		uv = u.dotProduct(v),
+    		wv = w.dotProduct(v),
+    		wu = w.dotProduct(u),
+    		uu = u.dotProduct(u),
+    		vv = v.dotProduct(v),
+    		D = uv * uv - uu * vv;
+    	
+    	double s = (uv * wv - vv * wu) / D;
+    	if(s < 0 || s > 1){
+    		return false;
+    	}
+    	double t = (uv * wu - uu * wv) / D;
+    	if(t < 0 || t + s > 1){
+    		return false;
+    	}
+    	
+    	return true;
     }
     
     private boolean inYaws(double yawPoint, double yaw1, double yaw2){

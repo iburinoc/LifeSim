@@ -1,4 +1,9 @@
-package life.threedee;
+package life.threedee.test;
+
+import life.threedee.Matrix;
+import life.threedee.Plane;
+import life.threedee.Point;
+import life.threedee.Vector;
 
 public class Test{
 	public static void mainCrossProduct(String[] args){

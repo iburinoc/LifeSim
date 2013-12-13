@@ -13,8 +13,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
+import life.threedee.objects.BulletGun;
 
 public class POC3D implements Runnable{
 
@@ -102,6 +105,7 @@ public class POC3D implements Runnable{
 		this.c.add(p5);
 		//Plane p1 = new Plane(new Point(0,0,0),new Vector(0,1,0));
 		//objects.add(p1);
+		this.c.addTickable(new BulletGun(c));
 		while(true){
 			long startT = System.currentTimeMillis();
 			c.repaint();

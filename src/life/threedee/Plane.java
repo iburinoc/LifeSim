@@ -136,6 +136,8 @@ public class Plane implements ThreeDeeObject{
 	}
 	
 	public Color c(){
+//		return new Color(0,0,0,0);
 		return c;
+//		return new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
 	}
 }

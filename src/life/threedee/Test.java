@@ -29,5 +29,10 @@ public class Test{
         System.out.println(-3%5);
         
         System.out.println(0115);
+        
+        System.out.println(Double.NaN <= Double.NaN);
+        System.out.println(5 > Double.NaN);
+        System.out.println(-5 < Double.NaN);
+        System.out.println(-5 > Double.NaN);
 	}
 }

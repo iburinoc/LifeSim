@@ -1,6 +1,7 @@
 package life.threedee;
 
 import static java.lang.Math.PI;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
+
+import life.lib.Tickable;
 
 public class Camera extends JPanel{
 
@@ -33,6 +36,7 @@ public class Camera extends JPanel{
 	private Thread cur;
 	
 	private List<ThreeDeeObject> objects;
+	private List<Tickable> tickables;
 	
 	private Vector rightU;
 	private Vector upU;
@@ -52,6 +56,7 @@ public class Camera extends JPanel{
 		}
 		
 		objects = new ArrayList<ThreeDeeObject>();
+		tickables = new ArrayList<Tickable>();
 	}
 	
 	public Camera(){
@@ -77,9 +82,16 @@ public class Camera extends JPanel{
 		draw(g);
 	}
 	
+	public synchronized void tick(){
+		for(int i = 0; i < tickables.size(); i++){
+			Tickable t = tickables.get(i);
+			t.tick();
+		}
+	}
+	
 	public void draw(Graphics g){
 		
-		
+		tick();
 		double[] dirPolar = dir.polarTransform();
 
 		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
@@ -121,7 +133,7 @@ public class Camera extends JPanel{
 		return nup.add(nright);
 	}
 
-	private ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){
+	private synchronized ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){
 		final boolean debug = false;
 		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
@@ -175,11 +187,15 @@ public class Camera extends JPanel{
         loc = new Point(new Vector(loc).add(shift));
     }
 	
-	public void add(ThreeDeeObject o){
+	public synchronized void add(ThreeDeeObject o){
 		objects.add(o);
 	}
 	
-	public void setObjects(List<ThreeDeeObject> o){
+	public synchronized void setObjects(List<ThreeDeeObject> o){
 		objects = o;
+	}
+	
+	public synchronized void addTickable(Tickable t){
+		tickables.add(t);
 	}
 }

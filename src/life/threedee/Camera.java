@@ -169,11 +169,6 @@ public class Camera extends JPanel{
 			dirPolar[1] = PI / 2 * Math.signum(dirPolar[1]);
 		}
 		dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], dir.s);
-		/*
-		Vector upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
-		Vector rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
-		dir = dir.add(getVectorForPixel(x,y,rightU,upU)).setScalar(1);
-		*/
     }
 
     public void move(int d) {

@@ -12,27 +12,27 @@ public class Plane implements ThreeDeeObject{
 	double c; // constant
 	*/
 	
-	private Point3D origin; // Origin point on plane
+	private Point origin; // Origin point on plane
 	private Vector normal; // Normal
 
 	public Color c;
 	
-	public Plane(Point3D a, Point3D b, Point3D c){
+	public Plane(Point a, Point b, Point c){
 		this(a,b,c,new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256)));
 	}
 	
-	public Plane(Point3D a, Point3D b, Point3D c, Color colour){
+	public Plane(Point a, Point b, Point c, Color colour){
 		origin = a;
 		normal = new Vector(a, b).crossProduct(new Vector(a, c));
 		
 		this.c = colour;
 	}
 
-	public Plane(Point3D origin, Vector normal){
+	public Plane(Point origin, Vector normal){
 		this(origin,normal,new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256)));
 	}
 	
-	public Plane(Point3D origin, Vector normal, Color c){
+	public Plane(Point origin, Vector normal, Color c){
 		this.origin = origin;
 		this.normal = normal;
 		
@@ -52,7 +52,7 @@ public class Plane implements ThreeDeeObject{
 	 * * e; Here for reference. no longer needed.
 	 */
 	/*
-	private boolean collinear(Point3D a, Point3D b, Point3D c){
+	private boolean collinear(Point a, Point b, Point c){
 		boolean condition1 = false, condition2 = false;
 		try{
 			double dxy1 = (a.x - b.x) / (a.y - b.y);
@@ -75,27 +75,27 @@ public class Plane implements ThreeDeeObject{
 	*/
 
 	@Override
-	public double calculateT(Vector vector, Point3D point3D){
-		return -(normal.x * point3D.x - normal.x * origin.x + normal.y * point3D.y - normal.y * origin.y + normal.z * point3D.z - normal.z * origin.z)
+	public double calculateT(Vector vector, Point point){
+		return -(normal.x * point.x - normal.x * origin.x + normal.y * point.y - normal.y * origin.y + normal.z * point.z - normal.z * origin.z)
 				/ (normal.x * vector.x + normal.y * vector.y + normal.z * vector.z);
 	}
 
-    public boolean over(Point3D point3D) {
-        return point3D.z > evaluate(point3D.x, point3D.y, Double.NaN).z;
+    public boolean over(Point point) {
+        return point.z > evaluate(point.x, point.y, Double.NaN).z;
     }
 
     @Override
-	public Point3D intersection(Vector vector, Point3D point3D){
-		double t = calculateT(vector, point3D);
-		return intersection(vector, point3D, t);
+	public Point intersection(Vector vector, Point point){
+		double t = calculateT(vector, point);
+		return intersection(vector, point, t);
 	}
 	
 	@Override
-	public Point3D intersection(Vector vector, Point3D point3D, double t){
-		double nx = point3D.x + vector.x * t;
-		double ny = point3D.y + vector.y * t;
-		double nz = point3D.z + vector.z * t;
-		return new Point3D(nx, ny, nz);
+	public Point intersection(Vector vector, Point point, double t){
+		double nx = point.x + vector.x * t;
+		double ny = point.y + vector.y * t;
+		double nz = point.z + vector.z * t;
+		return new Point(nx, ny, nz);
 	}
 
 	/**
@@ -107,17 +107,17 @@ public class Plane implements ThreeDeeObject{
 	 * @param z
 	 * @return
 	 */
-	public Point3D evaluate(double x, double y, double z) {
+	public Point evaluate(double x, double y, double z) {
 		//x=(-(yn(y-y0)+zn(z-z0))+xn*x0)/xn
 		if(x != x) {
 			x = (-(normal.y * (y - origin.y) + normal.z * (z - origin.z)) + normal.x * origin.x) / normal.x;
-			return new Point3D(x,y,z);
+			return new Point(x,y,z);
 		} else if(y != y) {
 			y = (-(normal.x * (x - origin.x) + normal.z * (z - origin.z)) + normal.y * origin.y) / normal.y;
-			return new Point3D(x,y,z);
+			return new Point(x,y,z);
 		} else if(z != z) {
 			z = (-(normal.y * (y - origin.y) + normal.x * (x - origin.x)) + normal.z * origin.z) / normal.z;
-			return new Point3D(x,y,z);
+			return new Point(x,y,z);
 		}
 		return null;
 	}
@@ -129,7 +129,7 @@ public class Plane implements ThreeDeeObject{
 	
 	@Override
 	public void translate(Vector v){
-		origin = new Point3D(origin.x + v.x, origin.y + v.y, origin.z + v.z);
+		origin = new Point(origin.x + v.x, origin.y + v.y, origin.z + v.z);
 	}
 	
 	public Color c(){

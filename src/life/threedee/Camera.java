@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class Camera extends JPanel{
 
-	private Point3D loc;
+	private Point loc;
 	private Vector dir;
 	
 	private double 
@@ -37,7 +37,7 @@ public class Camera extends JPanel{
 	private Vector rightU;
 	private Vector upU;
 	
-	public Camera(Point3D loc, Vector dir){
+	public Camera(Point loc, Vector dir){
 		dx = width/screenWidth;
 		dy = height/screenHeight;
 		this.loc = loc;
@@ -55,7 +55,7 @@ public class Camera extends JPanel{
 	}
 	
 	public Camera(){
-		this(new Point3D(0,1,0),new Vector(1,0,1).setScalar(01));
+		this(new Point(0,1,0),new Vector(1,0,1).setScalar(01));
 	}
 	
 	private int count;
@@ -121,7 +121,7 @@ public class Camera extends JPanel{
 		return nup.add(nright);
 	}
 
-	private ThreeDeeObject closestInFront(Vector dir, Point3D px, int x, int y){
+	private ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){
 		final boolean debug = false;
 		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
@@ -168,7 +168,7 @@ public class Camera extends JPanel{
 		double[] pt = dir.polarTransform();
 		pt[0] -= PI / 2 * d;
 		Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
-		loc = new Point3D(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
+		loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
 	}
 	
 	public void add(ThreeDeeObject o){

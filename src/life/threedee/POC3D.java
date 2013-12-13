@@ -4,7 +4,6 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -15,7 +14,6 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class POC3D implements Runnable{
@@ -58,32 +56,32 @@ public class POC3D implements Runnable{
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		j.setCursor(transparent);
 		objects = new ArrayList<ThreeDeeObject>();
-		Plane p0 = new Plane(new Point3D(0,5,0),new Vector(0,1,0),Color.red);
-		Plane p1 = new Plane(new Point3D(20,0,20),new Vector(1,0,0),Color.black);
-		Plane p2 = new Plane(new Point3D(-20,0,20),new Vector(1,0,0),Color.blue);
-		Plane p3 = new Plane(new Point3D(0,0,20),new Vector(0,0,1),Color.cyan);
-		Plane p4 = new Plane(new Point3D(0,0,0),new Vector(0,1,0),Color.orange);
-		Plane p5 = new Plane(new Point3D(0,0,-20),new Vector(0,0,1),Color.green);
+		Plane p0 = new Plane(new Point(0,5,0),new Vector(0,1,0),Color.red);
+		Plane p1 = new Plane(new Point(20,0,20),new Vector(1,0,0),Color.black);
+		Plane p2 = new Plane(new Point(-20,0,20),new Vector(1,0,0),Color.blue);
+		Plane p3 = new Plane(new Point(0,0,20),new Vector(0,0,1),Color.cyan);
+		Plane p4 = new Plane(new Point(0,0,0),new Vector(0,1,0),Color.orange);
+		Plane p5 = new Plane(new Point(0,0,-20),new Vector(0,0,1),Color.green);
 		{
-			Point3D a = new Point3D(0,0,0), b = new Point3D(0,1,0.0000000000001), c = new Point3D(1,0,0);
+			Point a = new Point(0,0,0), b = new Point(0,1,0.0000000000001), c = new Point(1,0,0);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
 			this.c.add(p6);
 		}
 		{
-			Point3D a = new Point3D(5,1,5), b = new Point3D(5,1,1.5), c = new Point3D(1,0,5);
+			Point a = new Point(5,1,5), b = new Point(5,1,1.5), c = new Point(1,0,5);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
 			this.c.add(p6);
 		}
 		{
-			Point3D a = new Point3D(0,1,0), b = new Point3D(0,1,1), c = new Point3D(1,1,0);
+			Point a = new Point(0,1,0), b = new Point(0,1,1), c = new Point(1,1,0);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
 			this.c.add(p6);
 		}
 		{
-			Point3D a = new Point3D(1,1,0), b = new Point3D(1,1,1), c = new Point3D(0,1,1);
+			Point a = new Point(1,1,0), b = new Point(1,1,1), c = new Point(0,1,1);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
 			this.c.add(p6);
@@ -102,7 +100,7 @@ public class POC3D implements Runnable{
 		this.c.add(p3);
 		this.c.add(p4);
 		this.c.add(p5);
-		//Plane p1 = new Plane(new Point3D(0,0,0),new Vector(0,1,0));
+		//Plane p1 = new Plane(new Point(0,0,0),new Vector(0,1,0));
 		//objects.add(p1);
 		while(true){
 			long startT = System.currentTimeMillis();

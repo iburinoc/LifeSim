@@ -12,16 +12,16 @@ import java.awt.Color;
 
 public class Triangle extends Plane {
 
-	private Point3D a, b, c;
+	private Point a, b, c;
     private double[] yaw = new double[6];
 
     private Vector ab, ac;
     
-	public Triangle(Point3D a, Point3D b, Point3D c) {
+	public Triangle(Point a, Point b, Point c) {
 		this(a, b, c, new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256)));
 	}
 
-	public Triangle(Point3D a, Point3D b, Point3D c, Color colour){
+	public Triangle(Point a, Point b, Point c, Color colour){
 		super(a, new Vector(a,b).crossProduct(new Vector(a,c)), colour);
 		this.a = a;
 		this.b = b;
@@ -38,9 +38,9 @@ public class Triangle extends Plane {
 	}
 	
 	@Override
-	public double calculateT(Vector vector, Point3D point3D){
-		double t = super.calculateT(vector, point3D);
-		Point3D inter = super.intersection(vector, point3D, t);
+	public double calculateT(Vector vector, Point point){
+		double t = super.calculateT(vector, point);
+		Point inter = super.intersection(vector, point, t);
 		if(inside(inter)){
 			return t;
 		} else {
@@ -48,7 +48,7 @@ public class Triangle extends Plane {
 		}
 	}
 	
-    public boolean insideYaws(Point3D point) {
+    public boolean insideYaws(Point point) {
         double yawPoint = new Vector(a, point).yaw();
         if (inYaws(yawPoint, yaw[0], yaw[1])) {
             return false;
@@ -64,7 +64,7 @@ public class Triangle extends Plane {
         return true;
     }
     
-    public boolean inside(Point3D point) {
+    public boolean inside(Point point) {
     	Vector u = ab;
     	Vector v = ac;
     	Vector w = new Vector(a,point);
@@ -99,8 +99,8 @@ public class Triangle extends Plane {
     @Override
     public void translate(Vector v){
     	super.translate(v);
-    	a = new Point3D(a.x + v.x, a.y + v.y, a.z + v.z);
-    	b = new Point3D(b.x + v.x, b.y + v.y, b.z + v.z);
-    	c = new Point3D(c.x + v.x, c.y + v.y, c.z + v.z);
+    	a = new Point(a.x + v.x, a.y + v.y, a.z + v.z);
+    	b = new Point(b.x + v.x, b.y + v.y, b.z + v.z);
+    	c = new Point(c.x + v.x, c.y + v.y, c.z + v.z);
     }
 }

@@ -1,6 +1,6 @@
 package life.threedee.test;
 
-import life.threedee.Point3D;
+import life.threedee.Point;
 import life.threedee.Triangle;
 import org.junit.After;
 import org.junit.Before;
@@ -12,7 +12,7 @@ public class TriangleTest {
 
     @Before
     public void setUp() throws Exception{
-        t = new Triangle(new Point3D(0,0,0),new Point3D(0,1,0),new Point3D(1,0,0));
+        t = new Triangle(new Point(0,0,0),new Point(0,1,0),new Point(1,0,0));
     }
 
     @After

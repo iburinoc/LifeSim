@@ -4,9 +4,9 @@ import java.awt.Color;
 
 public class WorldObject implements ThreeDeeObject{
     private ThreeDeeObject[] planes;
-    private Point3D center;
+    private Point center;
     
-    public WorldObject(ThreeDeeObject[] planes, Point3D center) {
+    public WorldObject(ThreeDeeObject[] planes, Point center) {
         this.planes = planes;
         this.center = center;
     }
@@ -20,17 +20,17 @@ public class WorldObject implements ThreeDeeObject{
         double cx = Double.parseDouble(pointStr[0]); 
         double cy = Double.parseDouble(pointStr[1]); 
         double cz = Double.parseDouble(pointStr[2]);
-        Point3D center = new Point3D(cx, cy, cz);
+        Point center = new Point(cx, cy, cz);
         ThreeDeeObject[] planes = new ThreeDeeObject[strPoints.length-1];
         for (int i = 1; i < strPoints.length; i++) {
             String[] subPointStr = strPoints[i].split("\\),\\(");
-            Point3D[] points = new Point3D[3];
+            Point[] points = new Point[3];
             for (int j = 0; j < subPointStr.length; j++) {
                 pointStr = subPointStr[j].replaceAll("\\(", "").replaceAll("\\)", "").split(",");
                 double x = Double.parseDouble(pointStr[0]); 
                 double y = Double.parseDouble(pointStr[1]); 
                 double z = Double.parseDouble(pointStr[2]);
-                points[j] = new Point3D(x, y, z);
+                points[j] = new Point(x, y, z);
             }
             planes[i-1] = new Triangle(points[0], points[1], points[2]);
         }
@@ -38,7 +38,7 @@ public class WorldObject implements ThreeDeeObject{
     }
 
 	@Override
-	public double calculateT(Vector v, Point3D p){
+	public double calculateT(Vector v, Point p){
 		double minT = Double.MAX_VALUE;
 		for(int i = 0; i < planes.length; i++){
 			double t = planes[i].calculateT(v, p);
@@ -50,22 +50,22 @@ public class WorldObject implements ThreeDeeObject{
 	}
 
 	@Override
-	public Point3D intersection(Vector vector, Point3D point3D){
-		double t = calculateT(vector, point3D);
-		return intersection(vector, point3D, t);
+	public Point intersection(Vector vector, Point point){
+		double t = calculateT(vector, point);
+		return intersection(vector, point, t);
 	}
 	
 	@Override
-	public Point3D intersection(Vector vector, Point3D point3D, double t){
-		double nx = point3D.x + vector.x * t;
-		double ny = point3D.y + vector.y * t;
-		double nz = point3D.z + vector.z * t;
-		return new Point3D(nx, ny, nz);
+	public Point intersection(Vector vector, Point point, double t){
+		double nx = point.x + vector.x * t;
+		double ny = point.y + vector.y * t;
+		double nz = point.z + vector.z * t;
+		return new Point(nx, ny, nz);
 	}
 
 	@Override
 	public void translate(Vector v){
-		center = new Point3D(center.x + v.x, center.y + v.y, center.z + v.z);
+		center = new Point(center.x + v.x, center.y + v.y, center.z + v.z);
 		for(ThreeDeeObject o : planes){
 			o.translate(v);
 		}

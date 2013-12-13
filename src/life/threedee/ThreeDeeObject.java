@@ -3,11 +3,11 @@ package life.threedee;
 import java.awt.Color;
 
 public interface ThreeDeeObject{
-	public double calculateT(Vector v, Point3D p);
+	public double calculateT(Vector v, Point p);
 	
-	public Point3D intersection(Vector v, Point3D p);
+	public Point intersection(Vector v, Point p);
 	
-	public Point3D intersection(Vector v, Point3D p, double t);
+	public Point intersection(Vector v, Point p, double t);
 	
 	public void translate(Vector v);
 	

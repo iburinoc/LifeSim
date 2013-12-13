@@ -81,10 +81,7 @@ public class Plane implements ThreeDeeObject{
 	}
 
     public boolean sameSide(Point point1, Point point2) {
-        double solutionX = evaluate(Double.NaN, point1.y, point1.z).x;
-        double solutionY = evaluate(point1.x, Double.NaN, point1.z).y;
-        double solutionZ = evaluate(point1.x, point1.y, Double.NaN).z;
-        return (point1.x > solutionX == point2.x > evaluate(Double.NaN, point2.y, point2.z).x || solutionX != solutionX) && (point1.y > solutionY == point2.y > evaluate(point2.x, Double.NaN, point2.z).y || solutionY != solutionY) && (point1.z > solutionZ == point2.z > evaluate(point2.x, point2.y, Double.NaN).z || solutionZ != solutionZ);
+        return !(Math.abs(calculateT(new Vector(point2), point1)) < 1);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package life.threedee;
 
+import life.threedee.game.Player;
+
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -28,21 +30,21 @@ public class POC3D implements Runnable{
 	private double y;
 	private double z;
 
-	private Camera c;
+	private Player p;
 	
 	private MouseMovementListener m;
 	
-	private boolean w,d,s,a;
+	private boolean w,d,s,a,up;
 	
 	public Thread main;
 	
 	public POC3D(){
 		j = new JFrame("Proof of Concept");
 
-		c = new Camera();
-		c.setPreferredSize(new Dimension(c.screenWidth,c.screenHeight));
+		p = new Player();
+		p.setPreferredSize(new Dimension(p.screenWidth, p.screenHeight));
 
-		j.add(c);
+		j.add(p);
 		j.pack();
 		j.setVisible(true);
 		j.setResizable(false);
@@ -56,7 +58,7 @@ public class POC3D implements Runnable{
 
 	@Override
 	public void run(){
-		Toolkit tk= c.getToolkit();
+		Toolkit tk= p.getToolkit();
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		j.setCursor(transparent);
 		objects = new ArrayList<ThreeDeeObject>();
@@ -70,25 +72,25 @@ public class POC3D implements Runnable{
 			Point a = new Point(0,0,0), b = new Point(0,1,0), c = new Point(1,0,0);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			this.c.add(p6);
+			this.p.add(p6);
 		}
 		{
 			Point a = new Point(5,1,5), b = new Point(5,1,1.5), c = new Point(1,0,5);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			this.c.add(p6);
+			this.p.add(p6);
 		}
 		{
 			Point a = new Point(0,1,0), b = new Point(0,1,1), c = new Point(1,1,0);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			this.c.add(p6);
+			this.p.add(p6);
 		}
 		{
 			Point a = new Point(1,1,0), b = new Point(1,1,1), c = new Point(0,1,1);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			this.c.add(p6);
+			this.p.add(p6);
 		}
 		{
             WorldObject wo = WorldObject.generateObject("(2, 2, 2);"
@@ -96,20 +98,20 @@ public class POC3D implements Runnable{
                     + "((2,3,2),  (3,1,1),  (2,1, 3))  ;"
                     + "((1,1,   1),(2 ,3,2), (2, 1,  3));"
                     + "((1,1\t,1),(3,   1,1), (2, 3, 2))");
-            this.c.add(wo);
+            this.p.add(wo);
         }
-		this.c.add(p0);
-		this.c.add(p1);
-		this.c.add(p2);
-		this.c.add(p3);
-		this.c.add(p4);
-		this.c.add(p5);
+		this.p.add(p0);
+		this.p.add(p1);
+		this.p.add(p2);
+		this.p.add(p3);
+		this.p.add(p4);
+		this.p.add(p5);
 		//Plane p1 = new Plane(new Point(0,0,0),new Vector(0,1,0));
 		//objects.add(p1);
-//		this.c.addTickable(new BulletGun(c));
-		while(true){
+//		this.p.addTickable(new BulletGun(p));
+		while(true) {
 			long startT = System.currentTimeMillis();
-			c.repaint();
+			p.repaint();
 			long time = System.currentTimeMillis() - startT;
 //			System.out.println(time);
 			try{
@@ -118,16 +120,30 @@ public class POC3D implements Runnable{
 			catch (InterruptedException e){
 				e.printStackTrace();
 			}
-//			System.out.println("frame");
+			//			System.out.println("frame");
 			if(w){
-				c.move(0);
-			}if(d){
-				c.move(1);
-			}if(s){
-				c.move(2);
+				p.move(0);
 			}if(a){
-				c.move(3);
+				p.move(1);
+			}if(s){
+				p.move(2);
+			}if(d){
+				p.move(3);
+			}if(up){
+				p.jump();
 			}
+//			System.out.println("frame");
+            if(w){
+                p.move(0);
+            }if(a){
+                p.move(1);
+            }if(s){
+                p.move(2);
+            }if(d){
+                p.move(3);
+            }if(up){
+                p.move(4);
+            }
 		}
 	}
 
@@ -175,7 +191,7 @@ public class POC3D implements Runnable{
 			
 			System.out.println(arg0.getX() + ";" + arg0.getY() + ";" + j.getWidth() / 2 + ";" + j.getHeight() / 2);
 			if(arg0.getX() != j.getWidth() / 2 || arg0.getY() != j.getHeight() / 2){
-				c.mouseMoved(arg0.getX()-j.getWidth() / 2, arg0.getY()-j.getHeight() / 2);
+				p.mouseMoved(arg0.getX() - j.getWidth() / 2, arg0.getY() - j.getHeight() / 2);
 				recenter();
 			}
 		}
@@ -214,32 +230,36 @@ public class POC3D implements Runnable{
 			}
 			if(e.getKeyChar() == 'w'){
 				w = true;
-			}else if(e.getKeyChar() == 'd'){
-				d = true;
-			}else if(e.getKeyChar() == 's'){
-				s = true;
 			}else if(e.getKeyChar() == 'a'){
 				a = true;
-			}
+			}else if(e.getKeyChar() == 's'){
+				s = true;
+			}else if(e.getKeyChar() == 'd'){
+                d = true;
+            }else if(e.getKeyChar() == ' '){
+                up = true;
+            }
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e){	
 			if(e.getKeyChar() == 'w'){
 				w = false;
-			}else if(e.getKeyChar() == 'd'){
-				d = false;
-			}else if(e.getKeyChar() == 's'){
-				s = false;
 			}else if(e.getKeyChar() == 'a'){
 				a = false;
-			}
+			}else if(e.getKeyChar() == 's'){
+				s = false;
+			}else if(e.getKeyChar() == 'd'){
+                d = false;
+            }else if(e.getKeyChar() == ' '){
+                up = false;
+            }
 		}
 
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent e){
 			System.out.println(e.getPreciseWheelRotation());
-			c.scroll(e.getWheelRotation());
+			p.scroll(e.getWheelRotation());
 		}
 		
 	}

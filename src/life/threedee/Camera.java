@@ -35,7 +35,7 @@ public class Camera extends JPanel{
 	private int threadsDone;
 	private Thread cur;
 	
-	private List<ThreeDeeObject> objects;
+	protected List<ThreeDeeObject> objects;
 	private List<Tickable> tickables;
 	
 	private Vector rightU;
@@ -60,7 +60,7 @@ public class Camera extends JPanel{
 	}
 	
 	public Camera(){
-		this(new Point(0,1,0),new Vector(1,0,1).setScalar(1));
+		this(new Point(0,1.65,0),new Vector(1,0,1).setScalar(1));
 	}
 	
 	private int count;
@@ -174,17 +174,19 @@ public class Camera extends JPanel{
 		Vector rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
 		dir = dir.add(getVectorForPixel(x,y,rightU,upU)).setScalar(1);
 		*/
-	}
-	
-	public void move(int d){
-		double[] pt = dir.polarTransform();
-		pt[0] -= PI / 2 * d;
-		Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
-		loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
-	}
+    }
+
+    public void move(int d) {
+        if (d < 4) {
+            double[] pt = dir.polarTransform();
+            pt[0] += PI / 2 * d;
+            Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
+            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
+        }
+    }
 
 	public void scroll(int d){
-		dir = dir.setScalar(Math.max(dir.s + -d / 10.0, 1e-100));
+		dir = dir.setScalar(Math.max(Math.min(dir.s + -d / 10.0, 5), 1e-100));
 		System.out.println(dir.s);
 	}
 	

@@ -16,6 +16,6 @@ public class Player extends Camera implements Tickable{
 
     public void tick(){
         v = v.add(g);
-        loc = new Point(new Vector(loc).add(v));
+        Point newLoc = new Point(new Vector(loc).add(v));
     }
 }

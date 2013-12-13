@@ -26,6 +26,17 @@ public class Player extends Camera implements Tickable{
         }
     }
 
+    @Override
+    public void move(int d) throws JumpException {
+        if (d < 4) {
+            super.move(d);
+        } else {
+            //if(canJump) {
+                jump();
+            //}
+        }
+    }
+
     public void tick(){
         v = v.add(G);
         Point newLoc = new Point(new Vector(loc).add(v));

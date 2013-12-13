@@ -60,7 +60,7 @@ public class Camera extends JPanel{
 	}
 	
 	public Camera(){
-		this(new Point(0,1.75,0),new Vector(1,0,1).setScalar(1));
+		this(new Point(0,1.65,0),new Vector(1,0,1).setScalar(1));
 	}
 	
 	private int count;

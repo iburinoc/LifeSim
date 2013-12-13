@@ -63,7 +63,7 @@ public class POC3D implements Runnable{
 		Plane p4 = new Plane(new Point(0,0,0),new Vector(0,1,0),Color.orange);
 		Plane p5 = new Plane(new Point(0,0,-20),new Vector(0,0,1),Color.green);
 		{
-			Point a = new Point(0,0,0), b = new Point(0,1,0.0000000000001), c = new Point(1,0,0);
+			Point a = new Point(0,0,0), b = new Point(0,1,0), c = new Point(1,0,0);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
 			this.c.add(p6);

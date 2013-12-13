@@ -8,6 +8,13 @@ public class Vector {
 	public final double x, y, z;
 	public final double s;
 
+    public Vector(Point point) {
+        this.s = Math.sqrt(point.x * point.x + point.y * point.y + point.z * point.z);
+        this.x = point.x;
+        this.y = point.y;
+        this.z = point.z;
+    }
+
 	public Vector(double x, double y, double z){
 		this.s = Math.sqrt(x * x + y * y + z * z);
 		this.x = x;

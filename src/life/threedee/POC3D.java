@@ -11,13 +11,13 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-
-import life.threedee.objects.BulletGun;
 
 public class POC3D implements Runnable{
 
@@ -51,6 +51,7 @@ public class POC3D implements Runnable{
 		j.addMouseListener(m);
 		j.addMouseMotionListener(m);
 		j.addKeyListener(m);
+		j.addMouseWheelListener(m);
 	}
 
 	@Override
@@ -105,7 +106,7 @@ public class POC3D implements Runnable{
 		this.c.add(p5);
 		//Plane p1 = new Plane(new Point(0,0,0),new Vector(0,1,0));
 		//objects.add(p1);
-		this.c.addTickable(new BulletGun(c));
+//		this.c.addTickable(new BulletGun(c));
 		while(true){
 			long startT = System.currentTimeMillis();
 			c.repaint();
@@ -134,7 +135,7 @@ public class POC3D implements Runnable{
 		new Thread(new POC3D()).start();
 	}
 	
-	class MouseMovementListener implements MouseListener,MouseMotionListener, KeyListener{
+	class MouseMovementListener implements MouseListener, MouseMotionListener, KeyListener, MouseWheelListener{
 
 		private boolean mouseCaptured;
 		
@@ -233,6 +234,12 @@ public class POC3D implements Runnable{
 			}else if(e.getKeyChar() == 'a'){
 				a = false;
 			}
+		}
+
+		@Override
+		public void mouseWheelMoved(MouseWheelEvent e){
+			System.out.println(e.getPreciseWheelRotation());
+			c.scroll(e.getWheelRotation());
 		}
 		
 	}

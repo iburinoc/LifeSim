@@ -35,7 +35,7 @@ public class Camera extends JPanel{
 	private int threadsDone;
 	private Thread cur;
 	
-	private List<ThreeDeeObject> objects;
+	protected List<ThreeDeeObject> objects;
 	private List<Tickable> tickables;
 	
 	private Vector rightU;

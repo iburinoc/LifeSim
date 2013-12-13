@@ -183,6 +183,11 @@ public class Camera extends JPanel{
 		loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
 	}
 
+	public void scroll(int d){
+		dir = dir.setScalar(Math.max(dir.s + -d / 10.0, 1e-100));
+		System.out.println(dir.s);
+	}
+	
     public void translate(Vector shift){
         loc = new Point(new Vector(loc).add(shift));
     }

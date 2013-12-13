@@ -176,7 +176,7 @@ public class Camera extends JPanel{
 		*/
     }
 
-    public void move(int d) throws JumpException{
+    public void move(int d){
         if (d < 4) {
             double[] pt = dir.polarTransform();
             pt[0] += PI / 2 * d;
@@ -187,12 +187,8 @@ public class Camera extends JPanel{
 
     /*
     public void move(int d){
-        if (d < 4) {
             Vector mov = Vector.fromPolarTransform(dir.polarTransform() += PI / 2 * d, 0, 1);
             loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
-        } else {
-            throw new JumpException();
-        }
     }
     */
 
@@ -216,6 +212,4 @@ public class Camera extends JPanel{
 	public synchronized void addTickable(Tickable t){
 		tickables.add(t);
 	}
-
-    public class JumpException extends Throwable {}
 }

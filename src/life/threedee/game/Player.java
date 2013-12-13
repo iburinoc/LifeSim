@@ -27,7 +27,7 @@ public class Player extends Camera implements Tickable{
     }
 
     @Override
-    public void move(int d) throws JumpException {
+    public void move(int d) {
         if (d < 4) {
             super.move(d);
         } else {
@@ -43,6 +43,7 @@ public class Player extends Camera implements Tickable{
         for (ThreeDeeObject object : objects) {
             /*if (object.sameSide(loc, newLoc)) {
                 newLoc = loc;
+                v = new Vector();
             }*/
         }
         loc = newLoc;

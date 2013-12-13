@@ -121,32 +121,16 @@ public class POC3D implements Runnable{
 				e.printStackTrace();
 			}
 //			System.out.println("frame");
-			if(w){
-                try {
-                    p.move(0);
-                } catch (Camera.JumpException e) {
-                }
+            if(w){
+                p.move(0);
             }if(a){
-                try {
-                    p.move(1);
-                } catch (Camera.JumpException e) {
-                }
+                p.move(1);
             }if(s){
-                try {
-                    p.move(2);
-                } catch (Camera.JumpException e) {
-                }
+                p.move(2);
             }if(d){
-                try {
-                    p.move(3);
-                } catch (Camera.JumpException e) {
-                }
+                p.move(3);
             }if(up){
-                try {
-                    p.move(4);
-                } catch (Camera.JumpException e) {
-                    p.jump();
-                }
+                p.move(4);
             }
 		}
 	}

@@ -42,7 +42,7 @@ public class WorldObject implements ThreeDeeObject{
 		double minT = Double.NaN;
 		for(int i = 0; i < planes.length; i++){
 			double t = planes[i].calculateT(v, p);
-			if(minT != minT || t >= 0 && t < minT && t == t){
+			if(minT != minT || (t >= 0 && t < minT && t == t)){
 				minT = t;
 			}
 		}

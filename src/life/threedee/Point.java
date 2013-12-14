@@ -23,4 +23,12 @@ public class Point {
     public Point add(Point a){
     	return new Point(x + a.x, y + a.y, z + a.z);
     }
+
+    public Point subtract(Point a){
+        return new Point(x - a.x, y - a.y, z - a.z);
+    }
+
+    public Point stretch(double elasticity) {
+        return new Point(x * elasticity, y * elasticity, z * elasticity);
+    }
 }

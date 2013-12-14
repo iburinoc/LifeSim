@@ -94,7 +94,7 @@ public class POC3D implements Runnable{
 			this.p.add(p6);
 		}
 		{
-            Point a = new Point(-3,1,-3), b = new Point(-2,1,-2), c = new Point(-1,1,-4);
+            Point a = new Point(-3,1,-3), b = new Point(-2,1,-2), c = new Point(-1,0.5,-4);
             
             Triangle p6 = new Triangle(a,b,c,Color.magenta);
             MovementTester mt = new MovementTester(p6);

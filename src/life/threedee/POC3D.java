@@ -1,6 +1,7 @@
 package life.threedee;
 
 import life.threedee.game.Player;
+import life.threedee.objects.MovementTester;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -92,6 +93,14 @@ public class POC3D implements Runnable{
 			Plane p6 = new Triangle(a,b,c,Color.pink);
 			this.p.add(p6);
 		}
+		{
+            Point a = new Point(-3,1,-3), b = new Point(-2,1,-2), c = new Point(-1,1,-4);
+            
+            Triangle p6 = new Triangle(a,b,c,Color.magenta);
+            MovementTester mt = new MovementTester(p6);
+            this.p.addTickable(mt);
+            this.p.add(p6);
+        }
 		{
             WorldObject wo = WorldObject.generateObject("(2, 2, 2);"
                     + "((1,1,1),(3,1,1), (2, 1, 3)); "

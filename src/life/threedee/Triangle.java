@@ -52,6 +52,18 @@ public class Triangle extends Plane {
     	return true;
     }
     
+    public void translateA(Vector v) {
+        a = new Point(a.x + v.x, a.y + v.y, a.z + v.z);
+    }
+    
+    public void translateB(Vector v) {
+        b = new Point(b.x + v.x, b.y + v.y, b.z + v.z);
+    }
+    
+    public void translateC(Vector v) {
+        c = new Point(c.x + v.x, c.y + v.y, c.z + v.z);
+    }
+    
     @Override
     public void translate(Vector v){
     	super.translate(v);

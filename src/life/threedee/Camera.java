@@ -108,7 +108,7 @@ public class Camera extends JPanel{
 	}
 	
 	public void drawRange(Graphics g, int x1, int y1, int x2, int y2, int xOff){
-		int inc = 4;
+		int inc = 8;
 		for(int x = x1; x < x2; x+=inc){
 			for(int y = y1; y < y2; y+=inc){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));

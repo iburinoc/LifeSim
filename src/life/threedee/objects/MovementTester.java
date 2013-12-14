@@ -16,7 +16,7 @@ public class MovementTester implements Tickable {
     @Override
     public void tick() {
         tick++;
-        t.translateA(new Vector(0, 0, Math.signum(50 - tick)));
+        t.translateC(new Vector(0, 0, Math.signum(50 - tick)/10));
         if (tick == 100) {
             tick = 0;
         }

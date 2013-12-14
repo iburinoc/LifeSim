@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-public class CameraSlave extends JPanel{
+public class CameraSlave extends Thread{
 	private Camera master;
 	
 	private int x1,y1,x2,y2;
@@ -20,8 +20,7 @@ public class CameraSlave extends JPanel{
 	private Vector rightU;
 	private Vector upU;
 	
-	private BufferedImage buffer;
-	private Graphics offG;
+	private boolean done;
 	
 	public CameraSlave(Camera master, int x1, int y1, int x2, int y2){
 		super();
@@ -31,18 +30,31 @@ public class CameraSlave extends JPanel{
 		this.x2 = x2;
 		this.y2 = y2;
 		this.running = true;
-		this.buffer = new BufferedImage(x2-x1, y2-y1, BufferedImage.TYPE_INT_ARGB);
-		this.setPreferredSize(new Dimension(x2 - x1, y2 - y1));
-		this.offG = buffer.getGraphics();
+		this.setDaemon(true);
 	}
 	
 	@Override
-	public void paintComponent(Graphics g){
-		master.drawRange(g, x1, y1, x2, y2, x1);
+	public void run(){
+		while(running){
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+			}
+			if(job) {
+				master.drawRange(x1, y1, x2, y2, x1);
+				done = true;
+			}
+		}
 	}
 	
-	public Image getBuffer(){
-		return buffer;
+	public void draw(){
+		job = true;
+		done = false;
+		this.interrupt();
+	}
+	
+	public boolean done(){
+		return done;
 	}
 	
 	public int getX(){

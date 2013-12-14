@@ -15,6 +15,8 @@ import life.lib.Tickable;
 
 public class Camera extends JPanel{
 
+	public final int INC = 4;
+	
 	protected Point loc;
 	protected Vector dir;
 	
@@ -41,6 +43,8 @@ public class Camera extends JPanel{
 	private Vector rightU;
 	private Vector upU;
 	
+	protected Color[][] fbuf;
+	
 	public Camera(Point loc, Vector dir){
 		dx = width/screenWidth;
 		dy = height/screenHeight;
@@ -51,9 +55,11 @@ public class Camera extends JPanel{
 		int d = screenWidth / numProc;
 		for(int i = 0; i < numProc; i++){
 			CameraSlave c = new CameraSlave(this, d * i, 0, d * (i + 1), screenHeight);
-			//c.start();
+			c.start();
 			slaves.add(c);
 		}
+		
+		fbuf = new Color[screenWidth][screenHeight];
 		
 		objects = new ArrayList<ThreeDeeObject>();
 		tickables = new ArrayList<Tickable>();
@@ -91,34 +97,45 @@ public class Camera extends JPanel{
 	}
 	
 	public void draw(Graphics g){
-		
-		tickTickables();
 		double[] dirPolar = dir.polarTransform();
 
 		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
-		
 		rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
-		if(false){
-			System.out.println("Polar Dir: yaw:" + dirPolar[0] + "; pitch: " + dirPolar[1]);
-			System.out.println("upU:"+upU);
-			System.out.println("rightU:"+rightU);
-			System.out.println("dir"+dir);
-		}
 
-		drawRange(g, 0, 0, screenWidth, screenHeight, 0);
+		for(CameraSlave c : slaves){
+			c.draw();
+		}
+		while(notDone());
+		paintBuffer(g);
 	}
 	
-	public void drawRange(Graphics g, int x1, int y1, int x2, int y2, int xOff){
-		int inc = 4;
-		for(int x = x1; x < x2; x+=inc){
-			for(int y = y1; y < y2; y+=inc){
+	public boolean notDone(){
+		for(CameraSlave c : slaves){
+			if(c.done() == false){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public void drawRange(int x1, int y1, int x2, int y2, int xOff){
+		for(int x = x1; x < x2; x+=INC){
+			for(int y = y1; y < y2; y+=INC){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
 				ThreeDeeObject draw = closestInFront(v, loc, x, y);
 				if(draw != null)
-					g.setColor(draw.c());
+					setfbuf(x,y,draw.c());
 				else
-					g.setColor(Color.WHITE);
-				g.fillRect(x - xOff, y, inc, inc);
+					setfbuf(x,y,Color.white);
+			}
+		}
+	}
+	
+	public void paintBuffer(Graphics g){
+		for(int x = 0; x < screenWidth; x += INC){
+			for(int y = 0; y < screenHeight; y += INC){
+				g.setColor(fbuf[x][y]);
+				g.fillRect(x, y, INC, INC);
 			}
 		}
 	}
@@ -132,6 +149,12 @@ public class Camera extends JPanel{
 		Vector nright = right.setScalar(px);
 		Vector nup = up.setScalar(py);
 		return nup.add(nright);
+	}
+	
+	private void setfbuf(int x,int y, Color c){
+		synchronized(fbuf){
+			fbuf[x][y] = c;
+		}
 	}
 
 	private synchronized ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){

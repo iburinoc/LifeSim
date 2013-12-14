@@ -96,7 +96,10 @@ public class Camera extends JPanel{
 		}
 	}
 	
+	private long last;
+	
 	public void draw(Graphics g){
+		long t = System.currentTimeMillis();
 		double[] dirPolar = dir.polarTransform();
 
 		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
@@ -107,6 +110,10 @@ public class Camera extends JPanel{
 		}
 		while(notDone());
 		paintBuffer(g);
+		long t2 = System.currentTimeMillis();
+		System.out.println("Time: " + (t2 - t));
+		System.out.println("Last: " + (last - t2));
+		last = t2;
 	}
 	
 	public boolean notDone(){

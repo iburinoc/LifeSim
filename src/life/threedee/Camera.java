@@ -82,7 +82,8 @@ public class Camera extends JPanel{
 		draw(g);
 	}
 	
-	public synchronized void tick(){
+	public void tickTickables(){
+		int b = 0;
 		for(int i = 0; i < tickables.size(); i++){
 			Tickable t = tickables.get(i);
 			t.tick();
@@ -91,7 +92,7 @@ public class Camera extends JPanel{
 	
 	public void draw(Graphics g){
 		
-		tick();
+		tickTickables();
 		double[] dirPolar = dir.polarTransform();
 
 		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
@@ -108,7 +109,7 @@ public class Camera extends JPanel{
 	}
 	
 	public void drawRange(Graphics g, int x1, int y1, int x2, int y2, int xOff){
-		int inc = 8;
+		int inc = 4;
 		for(int x = x1; x < x2; x+=inc){
 			for(int y = y1; y < y2; y+=inc){
 				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));

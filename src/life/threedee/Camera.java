@@ -45,6 +45,9 @@ public class Camera extends JPanel{
 	
 	protected Color[][] fbuf;
 	
+	protected Vector rdir;
+	protected Point rloc;
+	
 	public Camera(Point loc, Vector dir){
 		dx = width/screenWidth;
 		dy = height/screenHeight;
@@ -107,12 +110,13 @@ public class Camera extends JPanel{
 		last = t2;
 	}
 	
-	public synchronized void calcBuffer(){
+	public void calcBuffer(){
 		double[] dirPolar = dir.polarTransform();
 
 		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
 		rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
-
+		rdir = dir;
+		rloc = loc;
 		for(CameraSlave c : slaves){
 			c.draw();
 		}
@@ -131,8 +135,8 @@ public class Camera extends JPanel{
 	public void drawRange(int x1, int y1, int x2, int y2, int xOff){
 		for(int x = x1; x < x2; x+=INC){
 			for(int y = y1; y < y2; y+=INC){
-				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
-				ThreeDeeObject draw = closestInFront(v, loc, x, y);
+				Vector v = rdir.add(getVectorForPixel(x, y, rightU, upU));
+				ThreeDeeObject draw = closestInFront(v, rloc, x, y);
 				if(draw != null)
 					setfbuf(x,y,draw.c());
 				else

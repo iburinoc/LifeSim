@@ -23,7 +23,6 @@ public class Player extends Camera implements Tickable{
     public void jump(){
         //if (canJump())  {
             v = new Vector(v.x, 9.81, v.z);
-        System.out.println(v + "hai v");
         //}
     }
 

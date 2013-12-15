@@ -130,22 +130,9 @@ public class POC3D implements Runnable{
 			}if(d){
 				p.move(3);
 			}if(up){
-                System.out.println("boolean cleared 1");
 				p.jump();
 			}
 //			System.out.println("frame");
-            if(w){
-                p.move(0);
-            }if(a){
-                p.move(1);
-            }if(s){
-                p.move(2);
-            }if(d){
-                p.move(3);
-            }if(up){
-                System.out.println("boolean cleared 2");
-                p.jump();
-            }
 		}
 	}
 
@@ -159,11 +146,9 @@ public class POC3D implements Runnable{
 		
 		private Robot recenter;
 		
-		
 		public MouseMovementListener(){
 			try{
 				recenter = new Robot();
-				
 			}
 			catch (AWTException e){
 				e.printStackTrace();

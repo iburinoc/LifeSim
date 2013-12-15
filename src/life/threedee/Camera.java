@@ -13,6 +13,12 @@ import javax.swing.JPanel;
 
 import life.lib.Tickable;
 
+
+/**
+ * From now on dis class is mine.  Don't change it w/o asking pls.
+ * @author Iburinoc
+ *
+ */
 public class Camera extends JPanel{
 
 	protected Point loc;

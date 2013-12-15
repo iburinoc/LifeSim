@@ -1,5 +1,6 @@
 package life.threedee.game;
 
+import static java.lang.Math.PI;
 import static life.threedee.game.GameUtilities.G;
 import life.lib.Tickable;
 import life.threedee.Camera;
@@ -18,6 +19,11 @@ public class Player extends Camera implements Tickable{
     public Player(Point loc, Vector dir, Vector v) {
         super(loc, dir);
         this.v = v;
+    }
+
+    public void move(int d){
+        Vector mov = Vector.fromPolarTransform(dir.polarTransform()[0] + PI / 2 * d, 0, 0.1);
+        v = v.add(mov);
     }
 
     public void jump(){

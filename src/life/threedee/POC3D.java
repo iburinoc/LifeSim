@@ -131,7 +131,9 @@ public class POC3D implements Runnable{
 				p.move(3);
 			}if(up){
 				p.jump();
-			}
+			}if(!w && !a && !s && !d && !up){
+                p.stop();
+            }
 //			System.out.println("frame");
 		}
 	}

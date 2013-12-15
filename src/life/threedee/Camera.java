@@ -15,6 +15,8 @@ import life.lib.Tickable;
 
 public class Camera extends JPanel{
 
+	public final int INC = 4;
+	
 	protected Point loc;
 	protected Vector dir;
 	
@@ -41,6 +43,11 @@ public class Camera extends JPanel{
 	private Vector rightU;
 	private Vector upU;
 	
+	protected Color[][] fbuf;
+	
+	protected Vector rdir;
+	protected Point rloc;
+	
 	public Camera(Point loc, Vector dir){
 		dx = width/screenWidth;
 		dy = height/screenHeight;
@@ -51,9 +58,11 @@ public class Camera extends JPanel{
 		int d = screenWidth / numProc;
 		for(int i = 0; i < numProc; i++){
 			CameraSlave c = new CameraSlave(this, d * i, 0, d * (i + 1), screenHeight);
-			//c.start();
+			c.start();
 			slaves.add(c);
 		}
+		
+		fbuf = new Color[screenWidth][screenHeight];
 		
 		objects = new ArrayList<ThreeDeeObject>();
 		tickables = new ArrayList<Tickable>();
@@ -79,7 +88,7 @@ public class Camera extends JPanel{
 	
 	@Override
 	public void paintComponent(Graphics g){
-		draw(g);
+		paintBuffer(g);
 	}
 	
 	public void tickTickables(){
@@ -90,37 +99,64 @@ public class Camera extends JPanel{
 		}
 	}
 	
+	private long last;
+	
 	public void draw(Graphics g){
-		
-		tickTickables();
+		long t = System.currentTimeMillis();
+		paintBuffer(g);
+		long t2 = System.currentTimeMillis();
+		System.out.println("Time: " + (t2 - t));
+		System.out.println("Last: " + (last - t2));
+		last = t2;
+	}
+	
+	public void calcBuffer(){
 		double[] dirPolar = dir.polarTransform();
 
 		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
-		
 		rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
-		if(false){
-			System.out.println("Polar Dir: yaw:" + dirPolar[0] + "; pitch: " + dirPolar[1]);
-			System.out.println("upU:"+upU);
-			System.out.println("rightU:"+rightU);
-			System.out.println("dir"+dir);
+		rdir = dir;
+		rloc = loc;
+		for(CameraSlave c : slaves){
+			c.draw();
 		}
-
-		drawRange(g, 0, 0, screenWidth, screenHeight, 0);
+		while(notDone());
 	}
 	
-	public void drawRange(Graphics g, int x1, int y1, int x2, int y2, int xOff){
-		int inc = 4;
-		for(int x = x1; x < x2; x+=inc){
-			for(int y = y1; y < y2; y+=inc){
-				Vector v = dir.add(getVectorForPixel(x, y, rightU, upU));
-				ThreeDeeObject draw = closestInFront(v, loc, x, y);
-				if(draw != null)
-					g.setColor(draw.c());
-				else
-					g.setColor(Color.WHITE);
-				g.fillRect(x - xOff, y, inc, inc);
+	public boolean notDone(){
+		for(CameraSlave c : slaves){
+			if(c.done() == false){
+				return true;
 			}
 		}
+		return false;
+	}
+	
+	public void drawRange(int x1, int y1, int x2, int y2, int xOff){
+		for(int x = x1; x < x2; x+=INC){
+			for(int y = y1; y < y2; y+=INC){
+				Vector v = rdir.add(getVectorForPixel(x, y, rightU, upU));
+				ThreeDeeObject draw = closestInFront(v, rloc, x, y);
+				if(draw != null)
+					setfbuf(x,y,draw.c());
+				else
+					setfbuf(x,y,Color.white);
+			}
+		}
+	}
+	
+	public void paintBuffer(Graphics g){
+		for(int x = 0; x < screenWidth; x += INC){
+			for(int y = 0; y < screenHeight; y += INC){
+				g.setColor(fbuf[x][y]);
+				g.fillRect(x, y, INC, INC);
+			}
+		}
+		
+		g.setColor(Color.black);
+		int d = screenWidth / 4;
+		for(int i = 0; i < 4; i++);
+			//g.drawLine(d * i, 0, d * (i ), screenHeight);
 	}
 	
 	private Vector getVectorForPixel(int x,int y, Vector right, Vector up){
@@ -133,8 +169,14 @@ public class Camera extends JPanel{
 		Vector nup = up.setScalar(py);
 		return nup.add(nright);
 	}
+	
+	private void setfbuf(int x,int y, Color c){
+		synchronized(fbuf){
+			fbuf[x][y] = c;
+		}
+	}
 
-	private synchronized ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){
+	private ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){
 		final boolean debug = false;
 		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
@@ -159,7 +201,7 @@ public class Camera extends JPanel{
 		return minPlane;
 	}
 	
-	public void mouseMoved(int x,int y){
+	public synchronized void mouseMoved(int x,int y){
 //		System.out.println(x + ";" + y);
 		
 		double[] dirPolar = dir.polarTransform();
@@ -172,7 +214,7 @@ public class Camera extends JPanel{
 		dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], dir.s);
     }
 
-    public void move(int d) {
+    public synchronized void move(int d) {
         if (d < 4) {
             double[] pt = dir.polarTransform();
             pt[0] += PI / 2 * d;
@@ -188,12 +230,12 @@ public class Camera extends JPanel{
     }
     */
 
-	public void scroll(int d){
+	public synchronized void scroll(int d){
 		dir = dir.setScalar(Math.max(Math.min(dir.s + -d / 10.0, 5), 1e-100));
 		System.out.println(dir.s);
 	}
 	
-    public void translate(Vector shift){
+    public synchronized void translate(Vector shift){
         loc = new Point(new Vector(loc).add(shift));
     }
 	

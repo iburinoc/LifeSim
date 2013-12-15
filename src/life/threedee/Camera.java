@@ -171,21 +171,21 @@ public class Camera extends JPanel{
 		dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], dir.s);
     }
 
-    public void move(int d) {
+    /*public void move(int d) {
         if (d < 4) {
             double[] pt = dir.polarTransform();
             pt[0] += PI / 2 * d;
             Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
             loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
         }
-    }
+    }           */
 
-    /*
+
     public void move(int d){
-        Vector mov = Vector.fromPolarTransform(dir.polarTransform() += PI / 2 * d, 0, 1);
+        Vector mov = Vector.fromPolarTransform(dir.polarTransform()[0] + PI / 2 * d, 0, 1);
         loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
     }
-    */
+
 
 	public void scroll(int d){
 		dir = dir.setScalar(Math.max(Math.min(dir.s + -d / 10.0, 5), 1e-100));

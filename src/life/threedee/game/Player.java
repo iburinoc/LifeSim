@@ -26,11 +26,6 @@ public class Player extends Camera implements Tickable{
         //}
     }
 
-    @Override
-    public void move(int d) {
-        super.move(d);
-    }
-
     public void tick(){
         v = v.add(G);
         Point newLoc = new Point(new Vector(loc).add(v));

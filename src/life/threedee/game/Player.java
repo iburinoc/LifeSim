@@ -21,8 +21,9 @@ public class Player extends Camera implements Tickable{
     }
 
     public void jump(){
-        //if (v.y == 0 && canJump) {
+        //if (canJump())  {
             v = new Vector(v.x, 9.81, v.z);
+        System.out.println(v + "hai v");
         //}
     }
 
@@ -30,7 +31,7 @@ public class Player extends Camera implements Tickable{
         v = v.add(G);
         Point newLoc = new Point(new Vector(loc).add(v));
         for (ThreeDeeObject object : objects) {
-            if (!object.sameSide(loc, newLoc)) {
+            if (!object.sameSide(new Point(loc.x, loc.y - 1.65, loc.z), new Point(newLoc.x, newLoc.y - 1.65, newLoc.z))) {
                 newLoc = loc;
                 v = new Vector(0, 0, 0);
             }

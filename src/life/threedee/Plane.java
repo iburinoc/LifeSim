@@ -81,7 +81,11 @@ public class Plane implements ThreeDeeObject{
 	}
 
     public boolean sameSide(Point point1, Point point2) {
-        return !(Math.abs(calculateT(new Vector(point2.subtract(point1)), point1)) < 1);
+        System.out.println(point1 + "\t\t" + point2 + "\thai points");
+        System.out.println(point2.subtract(point1) + "\thai diff");
+        System.out.println(calculateT(new Vector(point2.subtract(point1)), point1) + "\thai t");
+        double toReturn = calculateT(new Vector(point2.subtract(point1)), point1);
+        return !(toReturn < 1 && toReturn >= Double.MIN_VALUE);
     }
 
     @Override

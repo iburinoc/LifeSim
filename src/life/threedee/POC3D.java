@@ -62,7 +62,7 @@ public class POC3D implements Runnable{
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		j.setCursor(transparent);
 		objects = new ArrayList<ThreeDeeObject>();
-		Plane p0 = new Plane(new Point(0,5,0),new Vector(0,1,0),Color.red);
+		Plane p0 = new Plane(new Point(0,15,0),new Vector(0,1,0),Color.red);
 		Plane p1 = new Plane(new Point(20,0,20),new Vector(1,0,0),Color.black);
 		Plane p2 = new Plane(new Point(-20,0,20),new Vector(1,0,0),Color.blue);
 		Plane p3 = new Plane(new Point(0,0,20),new Vector(0,0,1),Color.cyan);
@@ -130,6 +130,7 @@ public class POC3D implements Runnable{
 			}if(d){
 				p.move(3);
 			}if(up){
+                System.out.println("boolean cleared 1");
 				p.jump();
 			}
 //			System.out.println("frame");
@@ -142,6 +143,7 @@ public class POC3D implements Runnable{
             }if(d){
                 p.move(3);
             }if(up){
+                System.out.println("boolean cleared 2");
                 p.jump();
             }
 		}

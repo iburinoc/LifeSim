@@ -107,7 +107,7 @@ public class Camera extends JPanel{
 		last = t2;
 	}
 	
-	public void calcBuffer(){
+	public synchronized void calcBuffer(){
 		double[] dirPolar = dir.polarTransform();
 
 		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
@@ -172,7 +172,7 @@ public class Camera extends JPanel{
 		}
 	}
 
-	private synchronized ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){
+	private ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){
 		final boolean debug = false;
 		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
@@ -197,7 +197,7 @@ public class Camera extends JPanel{
 		return minPlane;
 	}
 	
-	public void mouseMoved(int x,int y){
+	public synchronized void mouseMoved(int x,int y){
 //		System.out.println(x + ";" + y);
 		
 		double[] dirPolar = dir.polarTransform();
@@ -210,7 +210,7 @@ public class Camera extends JPanel{
 		dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], dir.s);
     }
 
-    public void move(int d) {
+    public synchronized void move(int d) {
         if (d < 4) {
             double[] pt = dir.polarTransform();
             pt[0] += PI / 2 * d;
@@ -226,12 +226,12 @@ public class Camera extends JPanel{
     }
     */
 
-	public void scroll(int d){
+	public synchronized void scroll(int d){
 		dir = dir.setScalar(Math.max(Math.min(dir.s + -d / 10.0, 5), 1e-100));
 		System.out.println(dir.s);
 	}
 	
-    public void translate(Vector shift){
+    public synchronized void translate(Vector shift){
         loc = new Point(new Vector(loc).add(shift));
     }
 	

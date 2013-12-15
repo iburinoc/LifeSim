@@ -122,10 +122,10 @@ public class Camera extends JPanel{
 	public boolean notDone(){
 		for(CameraSlave c : slaves){
 			if(c.done() == false){
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	public void drawRange(int x1, int y1, int x2, int y2, int xOff){
@@ -148,6 +148,11 @@ public class Camera extends JPanel{
 				g.fillRect(x, y, INC, INC);
 			}
 		}
+		
+		g.setColor(Color.black);
+		int d = screenWidth / 4;
+		for(int i = 0; i < 4; i++);
+			//g.drawLine(d * i, 0, d * (i ), screenHeight);
 	}
 	
 	private Vector getVectorForPixel(int x,int y, Vector right, Vector up){

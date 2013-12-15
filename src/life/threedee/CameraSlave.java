@@ -42,19 +42,23 @@ public class CameraSlave extends Thread{
 			}
 			if(job) {
 				master.drawRange(x1, y1, x2, y2, x1);
-				done = true;
+				setDone(true);
 			}
 		}
 	}
 	
 	public void draw(){
+		setDone(false);
 		job = true;
-		done = false;
 		this.interrupt();
 	}
 	
-	public boolean done(){
+	public synchronized boolean done(){
 		return done;
+	}
+	
+	private synchronized void setDone(boolean val){
+		done = val;
 	}
 	
 	public int getX(){

@@ -120,11 +120,12 @@ public class POC3D implements Runnable{
 //		this.p.addTickable(new BulletGun(p));
 		while(true) {
 			long startT = System.currentTimeMillis();
+			p.calcBuffer();
 			p.repaint();
 			long time = System.currentTimeMillis() - startT;
 //			System.out.println(time);
 			try{
-				Thread.sleep((int) Math.max(0,66 - time));
+				Thread.sleep((int) Math.max(0,66));
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();

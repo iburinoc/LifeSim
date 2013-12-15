@@ -85,7 +85,7 @@ public class Camera extends JPanel{
 	
 	@Override
 	public void paintComponent(Graphics g){
-		draw(g);
+		paintBuffer(g);
 	}
 	
 	public void tickTickables(){
@@ -100,6 +100,14 @@ public class Camera extends JPanel{
 	
 	public void draw(Graphics g){
 		long t = System.currentTimeMillis();
+		paintBuffer(g);
+		long t2 = System.currentTimeMillis();
+		System.out.println("Time: " + (t2 - t));
+		System.out.println("Last: " + (last - t2));
+		last = t2;
+	}
+	
+	public void calcBuffer(){
 		double[] dirPolar = dir.polarTransform();
 
 		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
@@ -109,11 +117,6 @@ public class Camera extends JPanel{
 			c.draw();
 		}
 		while(notDone());
-		paintBuffer(g);
-		long t2 = System.currentTimeMillis();
-		System.out.println("Time: " + (t2 - t));
-		System.out.println("Last: " + (last - t2));
-		last = t2;
 	}
 	
 	public boolean notDone(){

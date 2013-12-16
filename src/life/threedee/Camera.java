@@ -111,12 +111,12 @@ public class Camera extends JPanel{
 	}
 	
 	public void calcBuffer(){
-		double[] dirPolar = dir.polarTransform();
-
-		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
-		rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
 		rdir = dir;
 		rloc = loc;
+		double[] dirPolar = dir.polarTransform();
+		
+		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
+		rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
 		for(CameraSlave c : slaves){
 			c.draw();
 		}
@@ -171,9 +171,7 @@ public class Camera extends JPanel{
 	}
 	
 	private void setfbuf(int x,int y, Color c){
-//		synchronized(fbuf){
-			fbuf[x][y] = c;
-//		}
+		fbuf[x][y] = c;
 	}
 
 	private ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){

@@ -143,9 +143,7 @@ public class POC3D implements Runnable{
 	}
 	
 	class MouseMovementListener implements MouseListener, MouseMotionListener, KeyListener, MouseWheelListener{
-
 		private boolean mouseCaptured;
-		
 		private Robot recenter;
 		
 		public MouseMovementListener(){

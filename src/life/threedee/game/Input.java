@@ -18,18 +18,19 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	private Player p;
 	private Game g;
 	private JFrame j;
-	
+
+	private boolean mouseCaptured;
+
+	private Robot recenter;
+
 	public Input(Player p, Game g, JFrame j){
+		this();
 		this.p = p;
 		this.g = g;
 		this.j = j;
 	}
-	private boolean mouseCaptured;
 	
-	private Robot recenter;
-	
-	
-	public Input(){
+	private Input(){
 		try{
 			recenter = new Robot();
 			
@@ -42,10 +43,13 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	}
 	
 	public void recenter(){
+		if(j == null)
+			return;
 		if(mouseCaptured){
 			java.awt.Point p = new java.awt.Point(j.getWidth() / 2, j.getHeight() / 2);
 			SwingUtilities.convertPointToScreen(p, j);
 			recenter.mouseMove(p.x,p.y);
+			
 		}
 	}
 	

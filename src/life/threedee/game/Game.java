@@ -24,6 +24,8 @@ public class Game implements Runnable{
 	
 	private JFrame j;
 	
+	private Input i;
+	
 	private boolean running;
 	
 	public Game() {
@@ -32,7 +34,14 @@ public class Game implements Runnable{
 		setObjects(new ArrayList<ThreeDeeObject>());
 		setTickables(new ArrayList<Tickable>());
 		
+		i = new Input(p, this, j);
+		
 		running = true;
+		
+		j.addMouseListener(i);
+		j.addMouseMotionListener(i);
+		j.addMouseWheelListener(i);
+		j.addKeyListener(i);
 		
 		j.add(p);
 		j.pack();

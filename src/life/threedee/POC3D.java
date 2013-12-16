@@ -128,7 +128,7 @@ public class POC3D implements Runnable{
 			long time = System.currentTimeMillis() - startT;
 			System.out.println(time);
 			try{
-				Thread.sleep((int) Math.max(33,33-time));
+				Thread.sleep((int) Math.max(0,33-time));
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();

@@ -64,42 +64,9 @@ public class Camera extends JPanel{
 		this(new Point(0,3.65,0),new Vector(1,0,1).setScalar(1));
 	}
 	
-	private int count;
-	
-	private void modDir(){
-		count++;
-		if(count == 2){
-			count = 0;
-			double[] dirPolar = dir.polarTransform();
-			double s = dir.s;
-			dirPolar[0] += PI/48;
-			dirPolar[0]%= 2 * PI;
-			dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], s);
-		}
-	}
-	
 	@Override
 	public void paintComponent(Graphics g){
 		paintBuffer(g);
-	}
-	
-	public void tickTickables(){
-		int b = 0;
-		for(int i = 0; i < tickables.size(); i++){
-			Tickable t = tickables.get(i);
-			t.tick(0);
-		}
-	}
-	
-	private long last;
-	
-	public void draw(Graphics g){
-		long t = System.currentTimeMillis();
-		paintBuffer(g);
-		long t2 = System.currentTimeMillis();
-		System.out.println("Time: " + (t2 - t));
-		System.out.println("Last: " + (last - t2));
-		last = t2;
 	}
 	
 	public void calcBuffer(){
@@ -144,11 +111,6 @@ public class Camera extends JPanel{
 				g.fillRect(x, y, R_INC, R_INC);
 			}
 		}
-		
-		g.setColor(Color.white);
-		int d = SC_WIDTH / 4;
-		for(int i = 0; i < 4; i++);
-//			g.drawLine(d * i, 0, d * (i), SC_HEIGHT);
 	}
 	
 	private Vector getVectorForPixel(int x,int y, Vector right, Vector up){
@@ -173,15 +135,6 @@ public class Camera extends JPanel{
 		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
 		ThreeDeeObject minPlane = null;
-		if(x == 240 && y == 180 && debug){
-			System.out.println("Center:" + dir);
-		}
-		if(x == 0 && y == 0 && debug){
-			System.out.println("Top Left:" + dir);
-		}
-		if(x == 478 && y == 358 && debug){
-			System.out.println("Bot Right:" + dir);
-		}
 		for(ThreeDeeObject p : objects){
 			double t = p.calculateT(dir, px);
 			if(minT > t && t >= 0 && t == t){
@@ -189,13 +142,10 @@ public class Camera extends JPanel{
 				minPlane = p;
 			}
 		}
-		//System.out.println(minPlane);
 		return minPlane;
 	}
 	
-	public synchronized void mouseMoved(int x,int y){
-//		System.out.println(x + ";" + y);
-		
+	public synchronized void mouseMoved(int x,int y){		
 		double[] dirPolar = dir.polarTransform();
 		
 		dirPolar[0] += -PI/180 * x;

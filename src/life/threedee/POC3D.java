@@ -2,7 +2,6 @@ package life.threedee;
 
 import life.threedee.game.Player;
 import life.threedee.objects.MovementTester;
-
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -23,20 +22,14 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class POC3D implements Runnable{
-
 	private JFrame j;
 	private List<ThreeDeeObject> objects;
-
 	private double x;
 	private double y;
 	private double z;
-
 	private Player p;
-	
 	private MouseMovementListener m;
-	
-	private boolean w,d,s,a,up;
-	
+	private boolean w,d,s,a;
 	public Thread main;
 	
 	public POC3D(){
@@ -139,9 +132,7 @@ public class POC3D implements Runnable{
 				p.move(2);
 			}if(d){
 				p.move(3);
-			}if(up){
-				p.jump();
-			}
+            }
 		}
 	}
 
@@ -150,16 +141,12 @@ public class POC3D implements Runnable{
 	}
 	
 	class MouseMovementListener implements MouseListener, MouseMotionListener, KeyListener, MouseWheelListener{
-
 		private boolean mouseCaptured;
-		
 		private Robot recenter;
-		
 		
 		public MouseMovementListener(){
 			try{
 				recenter = new Robot();
-				
 			}
 			catch (AWTException e){
 				e.printStackTrace();
@@ -217,7 +204,6 @@ public class POC3D implements Runnable{
 
 		@Override
 		public void keyTyped(KeyEvent e){
-			
 		}
 
 		@Override
@@ -234,8 +220,6 @@ public class POC3D implements Runnable{
 				s = true;
 			}else if(e.getKeyChar() == 'd'){
                 d = true;
-            }else if(e.getKeyChar() == ' '){
-                up = true;
             }
 		}
 
@@ -249,8 +233,6 @@ public class POC3D implements Runnable{
 				s = false;
 			}else if(e.getKeyChar() == 'd'){
                 d = false;
-            }else if(e.getKeyChar() == ' '){
-                up = false;
             }
 		}
 

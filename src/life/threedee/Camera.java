@@ -69,7 +69,7 @@ public class Camera extends JPanel{
 	}
 	
 	public Camera(){
-		this(new Point(0,3.65,0),new Vector(1,0,1).setScalar(1));
+		this(new Point(8,1.65,8),new Vector(1,0,1).setScalar(1));
 	}
 	
 	private int count;
@@ -202,21 +202,18 @@ public class Camera extends JPanel{
 		dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], dir.s);
     }
 
-    public synchronized void move(int d) {
-        if (d < 4) {
-            double[] pt = dir.polarTransform();
-            pt[0] += PI / 2 * d;
-            Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
-            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
-        }
-    }
+    /*public synchronized void move(int d) {
+        double[] pt = dir.polarTransform();
+        pt[0] += PI / 2 * d;
+        Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
+        loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
+    }*/
 
-    /*
-    public void move(int d){
-        Vector mov = Vector.fromPolarTransform(dir.polarTransform() += PI / 2 * d, 0, 1);
+    public void move(int key){
+        //int q = (key == 'w' ? 0 : (key == 'a' ? 1 : (key == 's' ? 2 : 3)));
+        Vector mov = Vector.fromPolarTransform(dir.polarTransform()[0] += PI / 2 * key, 0, 1);
         loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
     }
-    */
 
 	public synchronized void scroll(int d){
 		dir = dir.setScalar(Math.max(Math.min(dir.s + -d / 10.0, 5), 1e-100));

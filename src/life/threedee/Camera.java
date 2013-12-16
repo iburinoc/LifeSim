@@ -8,6 +8,7 @@ import static life.threedee.game.GameUtilities.SC_WIDTH;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,11 @@ public class Camera extends JPanel{
 	protected Vector rdir;
 	protected Point rloc;
 	
+	private BufferedImage buf;
+	private Graphics bufg;
+	
+	private boolean doneRender;
+	
 	public Camera(Point loc, Vector dir){
 		dx = width/SC_WIDTH;
 		dy = height/SC_HEIGHT;
@@ -57,6 +63,9 @@ public class Camera extends JPanel{
 			c.start();
 			slaves.add(c);
 		}
+		
+		buf = new BufferedImage(SC_WIDTH, SC_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		bufg = buf.createGraphics();
 		
 		fbuf = new Color[SC_WIDTH][SC_HEIGHT];
 		
@@ -76,6 +85,8 @@ public class Camera extends JPanel{
 	public void calcBuffer(){
 		double[] dirPolar = dir.polarTransform();
 
+		doneRender = false;
+		
 		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
 		rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
 		rdir = dir;
@@ -95,6 +106,10 @@ public class Camera extends JPanel{
 		return false;
 	}
 
+	public boolean notDoneR() {
+		return !doneRender;
+	}
+	
 	public void drawRange(int x1, int y1, int x2, int y2){
 		for(int x = x1; x < x2; x+=R_INC){
 			for(int y = y1; y < y2; y+=R_INC){
@@ -111,8 +126,19 @@ public class Camera extends JPanel{
 	public void paintBuffer(Graphics g){
 		for(int x = 0; x < SC_WIDTH; x += R_INC){
 			for(int y = 0; y < SC_HEIGHT; y += R_INC){
-				g.setColor(fbuf[x][y]);
-				g.fillRect(x, y, R_INC, R_INC);
+				bufg.setColor(fbuf[x][y]);
+				bufg.fillRect(x, y, R_INC, R_INC);
+			}
+		}
+		
+		g.drawImage(buf, 0, 0, null);
+		
+		doneRender = true;
+		
+		if(false){
+			g.setColor(Color.gray);
+			for(int i = 0; i < 4; i++){
+				g.drawLine(i * SC_WIDTH / 4, 0, i * SC_WIDTH / 4, SC_HEIGHT);
 			}
 		}
 	}
@@ -129,7 +155,7 @@ public class Camera extends JPanel{
 	}
 	
 	private void setfbuf(int x,int y, Color c){
-			fbuf[x][y] = c;
+		fbuf[x][y] = c;
 	}
 
 	private ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){

@@ -1,12 +1,10 @@
 package life.threedee;
 
-import life.threedee.game.Player;
-import life.threedee.objects.MovementTester;
-
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -16,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,7 @@ import javax.swing.SwingUtilities;
 
 import life.threedee.game.GameUtilities;
 import life.threedee.game.Player;
+import life.threedee.objects.MovementTester;
 
 public class POC3D implements Runnable{
 
@@ -118,9 +118,6 @@ public class POC3D implements Runnable{
 		this.p.add(p3);
 		this.p.add(p4);
 		this.p.add(p5);
-		//Plane p1 = new Plane(new Point(0,0,0),new Vector(0,1,0));
-		//objects.add(p1);
-//		this.p.addTickable(new BulletGun(p));
 		while(true) {
 			long startT = System.currentTimeMillis();
 			p.calcBuffer();
@@ -128,7 +125,7 @@ public class POC3D implements Runnable{
 			long time = System.currentTimeMillis() - startT;
 			System.out.println(time);
 			try{
-				Thread.sleep((int) Math.max(0,33-time));
+				Thread.sleep(Math.max(0, 33-time));
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();
@@ -148,6 +145,11 @@ public class POC3D implements Runnable{
 		}
 	}
 
+	private void paint() {
+		p.repaint();
+		while(p.notDoneR());
+	}
+	
 	public static void main(String[] args){
 		new Thread(new POC3D()).start();
 	}

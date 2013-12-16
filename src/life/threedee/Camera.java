@@ -177,33 +177,21 @@ public class Camera extends JPanel{
 	}
 
 	private ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){
-		final boolean debug = false;
-		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
 		ThreeDeeObject minPlane = null;
-		if(x == 240 && y == 180 && debug){
-			System.out.println("Center:" + dir);
-		}
-		if(x == 0 && y == 0 && debug){
-			System.out.println("Top Left:" + dir);
-		}
-		if(x == 478 && y == 358 && debug){
-			System.out.println("Bot Right:" + dir);
-		}
+		
 		for(ThreeDeeObject p : objects){
-			double t = p.calculateT(dir, px);
+			double t = p.calculateT(rdir, px);
 			if(minT > t && t >= 0 && t == t){
 				minT = t;
 				minPlane = p;
 			}
 		}
-		//System.out.println(minPlane);
+		
 		return minPlane;
 	}
 	
 	public synchronized void mouseMoved(int x,int y){
-//		System.out.println(x + ";" + y);
-		
 		double[] dirPolar = dir.polarTransform();
 		
 		dirPolar[0] += -PI/180 * x;

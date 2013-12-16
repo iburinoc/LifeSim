@@ -1,18 +1,22 @@
 package life.threedee.game;
 
 import static life.threedee.game.GameUtilities.G;
-import life.lib.Tickable;
 import life.threedee.Camera;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 
 public class Player extends Camera implements Tickable{
+    private Game g;
+    
     private Vector v;
-
-    public Player() {
+    
+    protected boolean w,d,s,a,up;
+    
+    public Player(Game g) {
         super();
         this.v = new Vector(0, 0, 0);
+        this.g = g;
     }
 
     public Player(Point loc, Vector dir, Vector v) {
@@ -31,7 +35,7 @@ public class Player extends Camera implements Tickable{
         super.move(d);
     }
 
-    public void tick(){
+    public void tick(int delta){
         v = v.add(G);
         Point newLoc = new Point(new Vector(loc).add(v));
         for (ThreeDeeObject object : objects) {

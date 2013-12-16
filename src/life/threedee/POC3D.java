@@ -45,7 +45,7 @@ public class POC3D implements Runnable{
 	public POC3D(){
 		j = new JFrame("Proof of Concept");
 
-		p = new Player();
+		p = new Player(null);
 		p.setPreferredSize(new Dimension(GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT));
 
 		j.add(p);

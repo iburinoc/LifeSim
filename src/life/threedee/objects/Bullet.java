@@ -2,10 +2,10 @@ package life.threedee.objects;
 
 import java.awt.Color;
 
-import life.lib.Tickable;
 import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
+import life.threedee.game.Tickable;
 
 public class Bullet extends Triangle implements Tickable{
 
@@ -16,7 +16,7 @@ public class Bullet extends Triangle implements Tickable{
 		movement = new Vector(Math.random()*2-1,Math.random()*2-1,Math.random()*2-1).setScalar(0.1);
 	}
 
-	public void tick(){
+	public void tick(int delta){
 		super.translate(movement);
 	}
 }

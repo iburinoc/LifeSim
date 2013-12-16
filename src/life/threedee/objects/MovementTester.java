@@ -1,8 +1,8 @@
 package life.threedee.objects;
 
-import life.lib.Tickable;
 import life.threedee.Triangle;
 import life.threedee.Vector;
+import life.threedee.game.Tickable;
 
 public class MovementTester implements Tickable {
     private Triangle t;
@@ -14,7 +14,7 @@ public class MovementTester implements Tickable {
     }
     
     @Override
-    public void tick() {
+    public void tick(int delta) {
         tick++;
         t.translateC(new Vector(0, 0, Math.signum(50 - tick)/10));
         if (tick == 100) {

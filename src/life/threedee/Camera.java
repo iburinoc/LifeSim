@@ -1,7 +1,6 @@
 package life.threedee;
 
 import static java.lang.Math.PI;
-
 import static life.threedee.game.GameUtilities.*;
 
 import java.awt.Color;
@@ -13,7 +12,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import life.lib.Tickable;
+import life.threedee.game.Tickable;
 
 public class Camera extends JPanel{
 
@@ -29,12 +28,6 @@ public class Camera extends JPanel{
 	private double dx,dy;
 	
 	private List<CameraSlave> slaves;
-	
-	private BufferedImage buffer;
-	private Graphics2D bufg;
-	
-	private int threadsDone;
-	private Thread cur;
 	
 	protected List<ThreeDeeObject> objects;
 	private List<Tickable> tickables;
@@ -94,7 +87,7 @@ public class Camera extends JPanel{
 		int b = 0;
 		for(int i = 0; i < tickables.size(); i++){
 			Tickable t = tickables.get(i);
-			t.tick();
+			t.tick(0);
 		}
 	}
 	
@@ -221,13 +214,6 @@ public class Camera extends JPanel{
             loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
         }
     }
-
-    /*
-    public void move(int d){
-        Vector mov = Vector.fromPolarTransform(dir.polarTransform() += PI / 2 * d, 0, 1);
-        loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
-    }
-    */
 
 	public synchronized void scroll(int d){
 		dir = dir.setScalar(Math.max(Math.min(dir.s + -d / 10.0, 5), 1e-100));

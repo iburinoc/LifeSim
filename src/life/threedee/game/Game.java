@@ -35,26 +35,47 @@ public class Game implements Runnable{
 		running = true;
 		
 		j.add(p);
+		j.pack();
 		j.setVisible(true);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	@Override
 	public void run() {
-		long time = System.currentTimeMillis();
+		long tick_time = System.currentTimeMillis();
 		int tick_delta = 0;
+		
+		long frame_time = System.currentTimeMillis();
 		int frame_delta = 0;
 		
 		int tickRateMillis = 1000/TICK_RATE;
 		int frameRateMillis = 1000/FRAME_RATE;
 		while(running) {
-			long t = System.currentTimeMillis();
-			delta = 
+			long frameT = System.currentTimeMillis();
+			frame_delta = (int) (frameT - frame_time);
+			if(frame_delta >= frameRateMillis) {
+				drawFrame();
+				frame_time = frameT;
+			}
+			
+			long tickT = System.currentTimeMillis();
+			tick_delta = (int) (tickT - tick_time);
+			if(tick_delta >= tickRateMillis) {
+				tickTickables(tick_delta);
+				tick_time = tickT;
+			}
 		}
 	}
 	
-	private void tickTickables() {
-		
+	private void drawFrame() {
+		p.calcBuffer();
+		p.repaint();
+	}
+	
+	private void tickTickables(int delta) {
+		for(int i = 0; i < tickables.size(); i++){
+			tickables.get(i).tick(delta);
+		}
 	}
 	
 	public void addTickable(Tickable t) {

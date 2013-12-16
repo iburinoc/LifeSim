@@ -1,12 +1,13 @@
 package life.threedee;
 
 import static java.lang.Math.PI;
-import static life.threedee.game.GameUtilities.*;
+import static life.threedee.game.GameUtilities.R_INC;
+import static life.threedee.game.GameUtilities.SC_HEIGHT;
+import static life.threedee.game.GameUtilities.SC_WIDTH;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,9 @@ public class Camera extends JPanel{
 		dy = height/SC_HEIGHT;
 		this.loc = loc;
 		this.dir = dir;
+		
+		this.setPreferredSize(new Dimension(SC_WIDTH, SC_HEIGHT));
+		
 		int numProc = Runtime.getRuntime().availableProcessors();
 		slaves = new ArrayList<CameraSlave>();
 		int d = SC_WIDTH / numProc;

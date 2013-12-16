@@ -94,8 +94,8 @@ public class Camera extends JPanel{
 		}
 		return false;
 	}
-	
-	public void drawRange(int x1, int y1, int x2, int y2, int xOff){
+
+	public void drawRange(int x1, int y1, int x2, int y2){
 		for(int x = x1; x < x2; x+=R_INC){
 			for(int y = y1; y < y2; y+=R_INC){
 				Vector v = rdir.add(getVectorForPixel(x, y, rightU, upU));
@@ -129,14 +129,10 @@ public class Camera extends JPanel{
 	}
 	
 	private void setfbuf(int x,int y, Color c){
-		synchronized(fbuf){
 			fbuf[x][y] = c;
-		}
 	}
 
 	private ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){
-		final boolean debug = false;
-		//System.out.println(dir + " : " + px);
 		double minT = Double.POSITIVE_INFINITY;
 		ThreeDeeObject minPlane = null;
 		for(ThreeDeeObject p : objects){

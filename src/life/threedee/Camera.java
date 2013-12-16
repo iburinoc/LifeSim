@@ -171,9 +171,9 @@ public class Camera extends JPanel{
 	}
 	
 	private void setfbuf(int x,int y, Color c){
-		synchronized(fbuf){
+//		synchronized(fbuf){
 			fbuf[x][y] = c;
-		}
+//		}
 	}
 
 	private ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){

@@ -1,12 +1,24 @@
 package life.threedee.game;
 
+<<<<<<< HEAD
+=======
+import java.awt.Cursor;
+import java.awt.Toolkit;
+>>>>>>> 2b19f47... Pacman hallway
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JFrame;
 
+<<<<<<< HEAD
 import life.threedee.ThreeDeeObject;
+=======
+import life.threedee.Point;
+import life.threedee.ThreeDeeObject;
+import life.threedee.Vector;
+import life.threedee.game.maps.PacmanWorldTest;
+>>>>>>> 2b19f47... Pacman hallway
 
 public class Game implements Runnable{
 	
@@ -30,7 +42,11 @@ public class Game implements Runnable{
 	
 	public Game() {
 		j = new JFrame("Game");
+<<<<<<< HEAD
 		p = new Player(this);
+=======
+		p = new Player(new Point(0,1,0), new Vector(0,0,1), new Vector(0,0,0), this);
+>>>>>>> 2b19f47... Pacman hallway
 		setObjects(new ArrayList<ThreeDeeObject>());
 		setTickables(new ArrayList<Tickable>());
 		
@@ -49,8 +65,26 @@ public class Game implements Runnable{
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+<<<<<<< HEAD
 	@Override
 	public void run() {
+=======
+	private void removeCursor() {
+		Toolkit tk= p.getToolkit();
+		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
+		j.setCursor(transparent);
+	}
+	
+	private void test() {
+		PacmanWorldTest.genTunnel(objects);
+	}
+	
+	@Override
+	public void run() {
+		test();
+		removeCursor();
+		
+>>>>>>> 2b19f47... Pacman hallway
 		long tick_time = System.currentTimeMillis();
 		int tick_delta = 0;
 		
@@ -79,6 +113,10 @@ public class Game implements Runnable{
 	private void drawFrame() {
 		p.calcBuffer();
 		p.repaint();
+<<<<<<< HEAD
+=======
+		j.repaint();
+>>>>>>> 2b19f47... Pacman hallway
 	}
 	
 	private void tickTickables(int delta) {

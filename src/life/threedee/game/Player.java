@@ -19,9 +19,10 @@ public class Player extends Camera implements Tickable{
         this.g = g;
     }
 
-    public Player(Point loc, Vector dir, Vector v) {
+    public Player(Point loc, Vector dir, Vector v, Game g) {
         super(loc, dir);
         this.v = v;
+        this.g = g;
     }
 
     public void jump(){
@@ -30,6 +31,14 @@ public class Player extends Camera implements Tickable{
         //}
     }
 
+    @Override
+    public void calcBuffer() {
+    	if(g == null)
+    		return;
+    	this.objects = g.objects();
+    	super.calcBuffer();
+    }
+    
     @Override
     public void move(int d) {
         super.move(d);

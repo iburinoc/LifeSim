@@ -181,7 +181,7 @@ public class Camera extends JPanel{
 		ThreeDeeObject minPlane = null;
 		
 		for(ThreeDeeObject p : objects){
-			double t = p.calculateT(rdir, px);
+			double t = p.calculateT(dir, px);
 			if(minT > t && t >= 0 && t == t){
 				minT = t;
 				minPlane = p;

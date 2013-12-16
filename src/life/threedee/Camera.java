@@ -102,6 +102,7 @@ public class Camera extends JPanel{
 	private long last;
 	
 	public void draw(Graphics g){
+        tick();
 		long t = System.currentTimeMillis();
 		paintBuffer(g);
 		long t2 = System.currentTimeMillis();
@@ -109,6 +110,13 @@ public class Camera extends JPanel{
 		System.out.println("Last: " + (last - t2));
 		last = t2;
 	}
+
+    public synchronized void tick(){
+        for(int i = 0; i < tickables.size(); i++){
+            Tickable t = tickables.get(i);
+            t.tick();
+        }
+    }
 	
 	public void calcBuffer(){
 		double[] dirPolar = dir.polarTransform();

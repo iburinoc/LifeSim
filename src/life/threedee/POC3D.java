@@ -22,6 +22,9 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import life.threedee.game.GameUtilities;
+import life.threedee.game.Player;
+
 public class POC3D implements Runnable{
 
 	private JFrame j;
@@ -43,7 +46,7 @@ public class POC3D implements Runnable{
 		j = new JFrame("Proof of Concept");
 
 		p = new Player();
-		p.setPreferredSize(new Dimension(p.screenWidth, p.screenHeight));
+		p.setPreferredSize(new Dimension(GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT));
 
 		j.add(p);
 		j.pack();
@@ -125,12 +128,12 @@ public class POC3D implements Runnable{
 			long time = System.currentTimeMillis() - startT;
 			System.out.println(time);
 			try{
-				Thread.sleep((int) Math.max(15,33-time));
+				Thread.sleep((int) Math.max(33,33-time));
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();
 			}
-			//			System.out.println("frame");
+			//System.out.println("frame");
 			if(w){
 				p.move(0);
 			}if(a){

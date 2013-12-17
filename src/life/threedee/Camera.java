@@ -177,7 +177,7 @@ public class Camera extends JPanel{
 		if(Math.abs(dirPolar[1]) > PI/2){
 			dirPolar[1] = PI / 2 * Math.signum(dirPolar[1]);
 		}
-		dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], dir.s);
+		dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], dir.s());
     }
 
     public synchronized void move(int d) {
@@ -190,8 +190,8 @@ public class Camera extends JPanel{
     }
 
 	public synchronized void scroll(int d){
-		dir = dir.setScalar(Math.max(Math.min(dir.s + -d / 10.0, 5), 1e-100));
-		System.out.println(dir.s);
+		dir = dir.setScalar(Math.max(Math.min(dir.s() + -d / 10.0, 5), 1e-100));
+		System.out.println(dir.s());
 	}
 	
     public synchronized void translate(Vector shift){

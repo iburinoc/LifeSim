@@ -16,6 +16,7 @@ public class Plane implements ThreeDeeObject{
 	private Vector normal; // Normal
 
 	public Color c;
+	private Color c2;
 	
 	public Plane(Point a, Point b, Point c){
 		this(a,b,c,new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256)));
@@ -26,6 +27,7 @@ public class Plane implements ThreeDeeObject{
 		normal = new Vector(a, b).crossProduct(new Vector(a, c));
 		
 		this.c = colour;
+		this.c2 = new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
 	}
 
 	public Plane(Point origin, Vector normal){
@@ -37,12 +39,13 @@ public class Plane implements ThreeDeeObject{
 		this.normal = normal;
 		
 		this.c = c;
+		this.c2 = new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
 	}
 
 	@Override
 	public TColorTransfer getRData(Vector vector, Point point) {
 		double t = calculateT(vector, point);
-		return new TColorTransfer(t, this.c);
+		return new TColorTransfer(t, this.c(intersection(vector, point, t)));
 	}
 
 	@Override
@@ -104,8 +107,18 @@ public class Plane implements ThreeDeeObject{
 	}
 	
 	public Color c(){
-//		return new Color(0,0,0,0);
 		return c;
-//		return new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
+	}
+	
+	public Color c(Point inter) {
+		int i = ((int) inter.x) + ((int) inter.z) + ((int) inter.y);
+		switch((i%2 + 2) % 2) {
+		case 0:
+			return c;
+		case 1:
+			return c2;
+		default:
+			return null;
+		}
 	}
 }

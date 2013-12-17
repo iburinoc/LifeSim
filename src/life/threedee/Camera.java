@@ -37,6 +37,8 @@ public class Camera extends JPanel{
 	private Vector rightU;
 	private Vector upU;
 	
+	private int numProc;
+	
 	protected Color[][] fbuf;
 	
 	protected Vector rdir;
@@ -55,7 +57,7 @@ public class Camera extends JPanel{
 		
 		this.setPreferredSize(new Dimension(SC_WIDTH, SC_HEIGHT));
 		
-		int numProc = Runtime.getRuntime().availableProcessors();
+		numProc = Runtime.getRuntime().availableProcessors();
 		slaves = new ArrayList<CameraSlave>();
 		int d = SC_WIDTH / numProc;
 		for(int i = 0; i < numProc; i++){
@@ -113,8 +115,8 @@ public class Camera extends JPanel{
 	public void drawRange(int x1, int y1, int x2, int y2){
 		for(int x = x1; x < x2; x+=R_INC){
 			for(int y = y1; y < y2; y+=R_INC){
-				Vector v = rdir.add(getVectorForPixel(x, y, rightU, upU));
-				Color c = closestInFront(v, rloc, x, y);
+				Vector v = rdir.add(getVectorForPixel(x+R_INC/2, y+R_INC/2, rightU, upU));
+				Color c = closestInFront(v, rloc, x+R_INC/2, y+R_INC/2);
 				if(c != null)
 					setfbuf(x,y,c);
 				else

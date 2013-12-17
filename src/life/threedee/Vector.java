@@ -8,17 +8,17 @@ public class Vector {
 	public static final Vector UNIT_Z = new Vector(0,0,1);
 	
 	public final double x, y, z;
-	public final double s;
+	private double s;
 
     public Vector(Point point) {
-        this.s = Math.sqrt(point.x * point.x + point.y * point.y + point.z * point.z);
+        this.s = Double.NaN;
         this.x = point.x;
         this.y = point.y;
         this.z = point.z;
     }
 
 	public Vector(double x, double y, double z){
-		this.s = Math.sqrt(x * x + y * y + z * z);
+		this.s = Double.NaN;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -28,17 +28,24 @@ public class Vector {
 		this.x = (point2.x - point1.x);
 		this.y = (point2.y - point1.y);
 		this.z = (point2.z - point1.z);
-		double mag = Math.sqrt(x * x + y * y + z * z);
-		this.s = mag;
+		this.s = Double.NaN;
 	}
 
+	public double s(){
+		if(s != s){
+			s =  Math.sqrt(x*x + y*y + z*z);
+		}
+		
+		return s;
+	}
+	
 	public Vector unitVector(){
-		return new Vector(x / s, y / s, z / s);
+		return new Vector(x / s(), y / s(), z / s());
 	}
 
     @Override
 	public String toString(){
-		return "(" + x + ", " + y + ", " + z + ", " + s + ")";
+		return "(" + x + ", " + y + ", " + z + ", " + s() + ")";
 	}
 
 	public Vector crossProduct(Vector v){
@@ -106,7 +113,7 @@ public class Vector {
 	}
 	
 	public Vector setScalar(double scalar){
-		double mod = scalar / s;
+		double mod = scalar / s();
 		return new Vector(x * mod, y * mod, z * mod);
 	}
 	

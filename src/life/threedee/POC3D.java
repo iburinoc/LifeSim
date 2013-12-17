@@ -34,7 +34,7 @@ public class POC3D implements Runnable{
 	private double y;
 	private double z;
 
-	private Player p;
+	private Camera p;
 	
 	private MouseMovementListener m;
 	
@@ -45,7 +45,7 @@ public class POC3D implements Runnable{
 	public POC3D(){
 		j = new JFrame("Proof of Concept");
 
-		p = new Player(null);
+		p = new Camera();
 		p.setPreferredSize(new Dimension(GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT));
 
 		j.add(p);
@@ -139,8 +139,6 @@ public class POC3D implements Runnable{
 				p.move(2);
 			}if(d){
 				p.move(3);
-			}if(up){
-				p.jump();
 			}
 		}
 	}

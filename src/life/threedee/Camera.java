@@ -114,9 +114,9 @@ public class Camera extends JPanel{
 		for(int x = x1; x < x2; x+=R_INC){
 			for(int y = y1; y < y2; y+=R_INC){
 				Vector v = rdir.add(getVectorForPixel(x, y, rightU, upU));
-				ThreeDeeObject draw = closestInFront(v, rloc, x, y);
-				if(draw != null)
-					setfbuf(x,y,draw.c());
+				Color c = closestInFront(v, rloc, x, y);
+				if(c != null)
+					setfbuf(x,y,c);
 				else
 					setfbuf(x,y,Color.WHITE);
 			}
@@ -158,17 +158,15 @@ public class Camera extends JPanel{
 		fbuf[x][y] = c;
 	}
 
-	private ThreeDeeObject closestInFront(Vector dir, Point px, int x, int y){
-		double minT = Double.POSITIVE_INFINITY;
-		ThreeDeeObject minPlane = null;
+	private Color closestInFront(Vector dir, Point px, int x, int y){
+		TColorTransfer min = new TColorTransfer(Double.MAX_VALUE, Color.white);
 		for(ThreeDeeObject p : objects){
-			double t = p.calculateT(dir, px);
-			if(minT > t && t >= 0 && t == t){
-				minT = t;
-				minPlane = p;
+			TColorTransfer o = p.getRData(dir, px);
+			if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c.getAlpha() != 0){
+				min = o;
 			}
 		}
-		return minPlane;
+		return min.c;
 	}
 	
 	public synchronized void mouseMoved(int x,int y){		

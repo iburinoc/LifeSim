@@ -1,5 +1,7 @@
 package life.threedee;
 
+import life.threedee.game.GameUtilities;
+
 public class Vector {
 	public static final Vector UNIT_X = new Vector(1,0,0);
 	public static final Vector UNIT_Y = new Vector(0,1,0);
@@ -106,5 +108,16 @@ public class Vector {
 	public Vector setScalar(double scalar){
 		double mod = scalar / s;
 		return new Vector(x * mod, y * mod, z * mod);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		try{
+			Vector v = (Vector) o;
+			return GameUtilities.equals(v.x, this.x) && GameUtilities.equals(v.y, this.y) && GameUtilities.equals(v.z, this.z);
+		}
+		catch(ClassCastException e){
+			return false;
+		}
 	}
 }

@@ -8,4 +8,8 @@ public class GameUtilities{
 	public static final int R_INC = 3;
 	
 	public static final Vector G = new Vector(0, -0.981, 0);
+	
+	public static boolean equals(double a, double b) {
+		return Math.abs(a - b) < 1e-15;
+	}
 }

@@ -39,40 +39,11 @@ public class Plane implements ThreeDeeObject{
 		this.c = c;
 	}
 
-	/*
-	 * double d = a.x; double e = a.y; double f = a.z;
-	 * 
-	 * double g = b.x; double h = b.y; double i = b.z;
-	 * 
-	 * double j = c.x; double k = c.y; double l = c.z;
-	 * 
-	 * this.a = (l * h - l * e - k * i + k * f - f * h + f * e + e * i - e * f)
-	 * / (j * h - j * e - k * g + k * d - d * h + d * e + e * g - e * d); this.b
-	 * = (i - this.a * (g - d) - f) / (h - e); this.c = f - this.a * d - this.b
-	 * * e; Here for reference. no longer needed.
-	 */
-	/*
-	private boolean collinear(Point a, Point b, Point c){
-		boolean condition1 = false, condition2 = false;
-		try{
-			double dxy1 = (a.x - b.x) / (a.y - b.y);
-			double dxy2 = (b.x - c.x) / (b.y - c.y);
-			condition1 = Math.abs(dxy1 - dxy2) < 0.0000001;
-		}
-		catch (ArithmeticException e){
-			condition1 = a.y == b.y && b.y == c.y;
-		}
-		try{
-			double dxz1 = (a.x - b.x) / (a.z - b.z);
-			double dxz2 = (b.x - c.x) / (b.z - b.z);
-			condition2 = Math.abs(dxz1 - dxz2) < 0.0000001;
-		}
-		catch (ArithmeticException e){
-			condition2 = a.z == b.z && b.z == c.z;
-		}
-		return condition1 && condition2;
+	@Override
+	public TColorTransfer getRData(Vector vector, Point point) {
+		double t = calculateT(vector, point);
+		return new TColorTransfer(t, this.c);
 	}
-	*/
 
 	@Override
 	public double calculateT(Vector vector, Point point){

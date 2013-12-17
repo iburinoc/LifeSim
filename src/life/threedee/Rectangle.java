@@ -12,6 +12,17 @@ public class Rectangle implements ThreeDeeObject {
 	}
 	
 	@Override
+	public TColorTransfer getRData(Vector vector, Point point) {
+		TColorTransfer at = a.getRData(vector, point);
+		TColorTransfer bt = b.getRData(vector, point);
+		if(at.t <= bt.t) {
+			return at;
+		} else {
+			return bt;
+		}
+	}
+	
+	@Override
 	public double calculateT(Vector v, Point p) {
 		return Math.min(a.calculateT(v, p), b.calculateT(v, p));
 	}

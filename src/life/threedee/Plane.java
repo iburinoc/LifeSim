@@ -12,8 +12,8 @@ public class Plane implements ThreeDeeObject{
 	double c; // constant
 	*/
 	
-	private Point origin; // Origin point on plane
-	private Vector normal; // Normal
+	protected Point origin; // Origin point on plane
+	protected Vector normal; // Normal
 
 	public Color c;
 	

@@ -24,8 +24,13 @@ public class TexturedPlane extends Plane{
 		
 		double[] dirPolar = this.normal.polarTransform();
 		
+		if(dirPolar[0] == dirPolar[0]){
 		up = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
 		right = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
+		} else {
+			up = new Vector(0, 0, 1);
+			right = new Vector(1, 0, 0);
+		}
 	}
 	
 	public Color c(Point inter) {

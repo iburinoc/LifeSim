@@ -40,8 +40,8 @@ public class Plane implements ThreeDeeObject{
 	}
 
 	@Override
-	public TColorTransfer getRData(Vector vector, Point point) {
-		double t = calculateT(vector, point);
+	public TColorTransfer getRData(Vector vector, Point point, double minT) {
+		double t = calculateT(vector, point, minT);
 		return new TColorTransfer(t, this.c);
 	}
 
@@ -49,6 +49,10 @@ public class Plane implements ThreeDeeObject{
 	public double calculateT(Vector vector, Point point){
 		return -(normal.x * point.x - normal.x * origin.x + normal.y * point.y - normal.y * origin.y + normal.z * point.z - normal.z * origin.z)
 				/ (normal.x * vector.x + normal.y * vector.y + normal.z * vector.z);
+	}
+	
+	public double calculateT(Vector vector, Point point, double minT) {
+		return calculateT(vector, point);
 	}
 
     public boolean sameSide(Point point1, Point point2) {

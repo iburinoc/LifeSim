@@ -163,7 +163,7 @@ public class Camera extends JPanel{
 	private Color closestInFront(Vector dir, Point px, int x, int y){
 		TColorTransfer min = new TColorTransfer(Double.MAX_VALUE, Color.white);
 		for(ThreeDeeObject p : objects){
-			TColorTransfer o = p.getRData(dir, px);
+			TColorTransfer o = p.getRData(dir, px, min.t);
 			if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c.getAlpha() != 0){
 				min = o;
 			}

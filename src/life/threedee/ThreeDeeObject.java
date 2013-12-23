@@ -5,7 +5,7 @@ import java.awt.Color;
 public interface ThreeDeeObject{
 	public double calculateT(Vector v, Point p);
 	
-	public TColorTransfer getRData(Vector v, Point p);
+	public TColorTransfer getRData(Vector v, Point p, double minT);
 	
 	public Point intersection(Vector v, Point p);
 	

@@ -38,10 +38,11 @@ public class WorldObject implements ThreeDeeObject{
     }
     
     @Override
-    public TColorTransfer getRData(Vector vector, Point point) {
+    public TColorTransfer getRData(Vector vector, Point point, double minT) {
     	TColorTransfer min = new TColorTransfer(Double.NaN, Color.WHITE);
 		for(int i = 0; i < planes.length; i++){
-			TColorTransfer t = planes[i].getRData(vector, point);
+			double m = (minT == minT) ? (min.t == min.t ? Math.min(minT, min.t) : minT) : min.t;
+			TColorTransfer t = planes[i].getRData(vector, point, m);
 			if(min.t != min.t || (t.t >= 0 && t.t < min.t && t.t == t.t)){
 				min = t;
 			}

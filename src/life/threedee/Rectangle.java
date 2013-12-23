@@ -2,6 +2,11 @@ package life.threedee;
 
 import java.awt.Color;
 
+/**
+ * This class really shouldn't be used, it doesn't work AFAIK.
+ * @author Ibur
+ *
+ */
 public class Rectangle implements ThreeDeeObject {
 
 	private Triangle a, b;
@@ -12,9 +17,9 @@ public class Rectangle implements ThreeDeeObject {
 	}
 	
 	@Override
-	public TColorTransfer getRData(Vector vector, Point point) {
-		TColorTransfer at = a.getRData(vector, point);
-		TColorTransfer bt = b.getRData(vector, point);
+	public TColorTransfer getRData(Vector vector, Point point, double minT) {
+		TColorTransfer at = a.getRData(vector, point, minT);
+		TColorTransfer bt = b.getRData(vector, point, minT);
 		if(at.t <= bt.t) {
 			return at;
 		} else {

@@ -17,6 +17,19 @@ public class Triangle extends Plane {
 	}
 	
 	@Override
+	public double calculateT(Vector vector, Point point, double minT) {
+		double t = super.calculateT(vector, point);
+		Point inter = super.intersection(vector, point, t);
+		//min.t > o.t && o.t >= 0 && o.t == o.t && o.c.getAlpha() != 0
+		boolean check = (minT == minT) ? (t == t && minT > t && t >= 0) : true; 
+		if(check && inside(inter)){
+			return t;
+		} else {
+			return Double.NaN;
+		}
+	}
+	
+	@Override
 	public double calculateT(Vector vector, Point point){
 		double t = super.calculateT(vector, point);
 		Point inter = super.intersection(vector, point, t);

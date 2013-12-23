@@ -46,7 +46,7 @@ public class TexturedPlane extends Plane{
 	@Override
 	public TColorTransfer getRData(Vector vector, Point point, double minT) {
 		double t = calculateT(vector, point, minT);
-		if(t == t) {
+		if(t == t && t > 0 && (minT != minT || t < minT)) {
 			Color c = this.c(this.intersection(vector, point, t));
 			return new TColorTransfer(t, c);
 		} else {

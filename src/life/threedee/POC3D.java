@@ -72,6 +72,7 @@ public class POC3D implements Runnable{
 		Plane p3 = new Plane(new Point(0,0,20),new Vector(0,0,1),Color.cyan);
 		Plane p4 = new Plane(new Point(0,0,0),new Vector(0,1,0),Color.orange);
 		Plane p5 = new Plane(new Point(0,0,-20),new Vector(0,0,1),Color.green);
+		Plane p7 = new TexturedPlane(new Point(1, 0.25, 1), new Vector(1, 1, 0), GameUtilities.loadImage("resources/kitten.jpg"));
 		{
 			Point a = new Point(0,0,0), b = new Point(0,1,0), c = new Point(1,0,0);
 			
@@ -118,6 +119,7 @@ public class POC3D implements Runnable{
 		this.p.add(p3);
 		this.p.add(p4);
 		this.p.add(p5);
+		this.p.add(p7);
 		while(true) {
 			long startT = System.currentTimeMillis();
 			p.calcBuffer();

@@ -39,5 +39,15 @@ public class Test{
         System.out.println(5 > Double.NaN);
         System.out.println(-5 < Double.NaN);
         System.out.println(-5 > Double.NaN);
+        
+        Vector a = new Vector(1,1,0);
+        Vector b = new Vector(1,-0.5,0);
+        System.out.println(a.dotProduct(b));
+        
+        Vector u = new Vector(0, 1, 0);
+        Vector r = new Vector(1, 0, 0);
+        Vector p = new Vector(3, 5, 0);
+        System.out.println(p.dotProduct(u));
+        System.out.println(p.dotProduct(r));
 	}
 }

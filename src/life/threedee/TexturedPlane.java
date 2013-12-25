@@ -12,6 +12,8 @@ public class TexturedPlane extends Plane{
 	
 	private Vector right, up;
 
+	private int w, h;
+	
 	/**
 	 * Note: p is the bottom right corner of the texture, so keep that in mind.
 	 * @param p
@@ -23,14 +25,17 @@ public class TexturedPlane extends Plane{
 		this.texture = texture;
 		
 		double[] dirPolar = this.normal.polarTransform();
-		
-		if(dirPolar[0] == dirPolar[0]){
-		up = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
-		right = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
+
+		if(dirPolar[0] != dirPolar[0] || dirPolar[1] == dirPolar[1]){
+			up = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
+			right = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
 		} else {
 			up = new Vector(0, 0, 1);
 			right = new Vector(1, 0, 0);
 		}
+		
+		this.w = texture.getWidth();
+		this.h = texture.getHeight();
 	}
 	
 	public Color c(Point inter) {
@@ -39,13 +44,14 @@ public class TexturedPlane extends Plane{
 		double dr = p.dotProduct(right);
 		int px = (int) (dr * PX_METER);
 		int py = texture.getHeight() - (int) (du * PX_METER);
-		try{
-			return new Color(texture.getRGB(px, py));
+		if(px >= 0 && px < w && py >= 0 && py < h) {
+			try{
+				return new Color(texture.getRGB(px, py));
+			}
+			catch(ArrayIndexOutOfBoundsException e) {
+			}
 		}
-		catch(ArrayIndexOutOfBoundsException e) {
-			return BLANK;
-		}
-		
+		return BLANK;
 	}
 	
 	@Override

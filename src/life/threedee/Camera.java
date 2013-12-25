@@ -164,7 +164,7 @@ public class Camera extends JPanel{
 		TColorTransfer min = new TColorTransfer(Double.MAX_VALUE, Color.white);
 		for(ThreeDeeObject p : objects){
 			TColorTransfer o = p.getRData(dir, px, min.t);
-			if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c.getAlpha() != 0){
+			if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0){
 				min = o;
 			}
 		}

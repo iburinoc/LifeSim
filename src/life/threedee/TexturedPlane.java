@@ -26,7 +26,7 @@ public class TexturedPlane extends Plane{
 		
 		double[] dirPolar = this.normal.polarTransform();
 
-		if(dirPolar[0] != dirPolar[0] || dirPolar[1] == dirPolar[1]){
+		if(dirPolar[0] == dirPolar[0] && dirPolar[1] == dirPolar[1]){
 			up = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
 			right = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
 		} else {
@@ -51,7 +51,7 @@ public class TexturedPlane extends Plane{
 			catch(ArrayIndexOutOfBoundsException e) {
 			}
 		}
-		return BLANK;
+		return null;
 	}
 	
 	@Override
@@ -61,7 +61,7 @@ public class TexturedPlane extends Plane{
 			Color c = this.c(this.intersection(vector, point, t));
 			return new TColorTransfer(t, c);
 		} else {
-			return new TColorTransfer(t, BLANK);
+			return new TColorTransfer(Double.NaN, null);
 		}
 	}
 }

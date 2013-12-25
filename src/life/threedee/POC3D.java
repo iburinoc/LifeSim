@@ -21,6 +21,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import life.threedee.game.Game;
 import life.threedee.game.GameUtilities;
 import life.threedee.game.Player;
 import life.threedee.objects.MovementTester;
@@ -73,6 +74,7 @@ public class POC3D implements Runnable{
 		Plane p4 = new Plane(new Point(0,0,0),new Vector(0,1,0),Color.orange);
 		Plane p5 = new Plane(new Point(0,0,-20),new Vector(0,0,1),Color.green);
 		Plane p7 = new TexturedPlane(new Point(1, 6, 1), new Vector(0, 1, 0), GameUtilities.loadImage("resources/kitten.jpg"));
+		Plane p8 = new TexturedPlane(new Point(22, 0, 50), new Vector(0, -1, 1), GameUtilities.loadImage("resources/xmas.jpg"));
 		{
 			Point a = new Point(0,0,0), b = new Point(0,1,0), c = new Point(1,0,0);
 			
@@ -120,6 +122,7 @@ public class POC3D implements Runnable{
 		this.p.add(p4);
 		this.p.add(p5);
 		this.p.add(p7);
+		this.p.add(p8);
 		while(true) {
 			long startT = System.currentTimeMillis();
 			p.calcBuffer();

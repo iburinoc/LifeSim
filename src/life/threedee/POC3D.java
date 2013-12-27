@@ -126,7 +126,8 @@ public class POC3D implements Runnable{
 		while(true) {
 			long startT = System.currentTimeMillis();
 			p.calcBuffer();
-			p.repaint();
+			//p.repaint();
+			paint();
 			long time = System.currentTimeMillis() - startT;
 			System.out.println(time);
 			try{
@@ -151,6 +152,7 @@ public class POC3D implements Runnable{
 	private void paint() {
 		p.repaint();
 		while(p.notDoneR());
+		System.out.println("frame");
 	}
 	
 	public static void main(String[] args){

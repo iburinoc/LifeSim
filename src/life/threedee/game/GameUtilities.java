@@ -14,7 +14,7 @@ public class GameUtilities{
 	public static final int SC_HEIGHT = 540;
 	public static final int R_INC = 4;
 	
-	public static final int PX_METER = 25;
+	public static final int PX_METER = 10;
 	
 	public static final Vector G = new Vector(0, -0.981, 0);
 	

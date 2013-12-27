@@ -82,6 +82,7 @@ public class Camera extends JPanel{
 	@Override
 	public void paintComponent(Graphics g){
 		paintBuffer(g);
+		doneRender = true;
 	}
 	
 	public void calcBuffer(){

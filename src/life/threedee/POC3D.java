@@ -151,7 +151,13 @@ public class POC3D implements Runnable{
 
 	private void paint() {
 		p.repaint();
-		while(p.notDoneR());
+		p.registerWait(Thread.currentThread());
+		try{
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException e){
+			
+		}
 		System.out.println("frame");
 	}
 	

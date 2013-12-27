@@ -47,7 +47,7 @@ public class Camera extends JPanel{
 	private BufferedImage buf;
 	private Graphics bufg;
 	
-	private boolean doneRender;
+	private Thread waiter;
 	
 	public Camera(Point loc, Vector dir){
 		dx = width/SC_WIDTH;
@@ -82,13 +82,12 @@ public class Camera extends JPanel{
 	@Override
 	public void paintComponent(Graphics g){
 		paintBuffer(g);
-		doneRender = true;
+		if(waiter != null)
+			waiter.interrupt();
 	}
 	
 	public void calcBuffer(){
 		double[] dirPolar = dir.polarTransform();
-
-		doneRender = false;
 		
 		upU = Vector.fromPolarTransform(dirPolar[0], PI/2 + dirPolar[1], 1);
 		rightU = Vector.fromPolarTransform(dirPolar[0] - PI/2, 0, 1);
@@ -109,8 +108,8 @@ public class Camera extends JPanel{
 		return false;
 	}
 
-	public boolean notDoneR() {
-		return !doneRender;
+	public void registerWait(Thread t) {
+		waiter = t;
 	}
 	
 	public void drawRange(int x1, int y1, int x2, int y2){
@@ -135,8 +134,6 @@ public class Camera extends JPanel{
 		}
 		
 		g.drawImage(buf, 0, 0, null);
-		
-		doneRender = true;
 		
 		if(false){
 			g.setColor(Color.gray);

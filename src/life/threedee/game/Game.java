@@ -62,7 +62,8 @@ public class Game implements Runnable{
 	}
 	
 	private void test() {
-		PacmanWorldTest.genTunnel(objects);
+//		PacmanWorldTest.genTunnel(objects);
+		PacmanWorldTest.genTexturedTunnel(objects);
 	}
 	
 	@Override

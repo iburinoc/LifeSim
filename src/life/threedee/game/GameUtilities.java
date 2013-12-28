@@ -14,11 +14,25 @@ public class GameUtilities{
 	public static final int SC_HEIGHT = 540;
 	public static final int R_INC = 4;
 	
-	public static final int PX_METER = 10;
+	public static final int PX_METER = 20;
+	
+	public static final int PX_WALL_BORDER = 2;
+	
+	// Wall height in tiles - changeable
+	public static final int WALL_HEIGHT = 2;
+	
+	// Floor width in tiles - should not be changed
+	public static final int FLOOR_WIDTH = 2;
+	
+	// meters per tile.  we can modify this if we need to.  use this in all calculations necessary so scaling is smooth
+	public static final float TPM = 1.0f;
 	
 	public static final Vector G = new Vector(0, -0.981, 0);
 	
 	public static final Color BLANK = new Color(0, 0, 0, 0);
+
+	//The color of the wall borders.  In case we ever want to change it.
+	public static final Color W_BLUE = Color.BLUE;
 	
 	public static boolean equals(double a, double b) {
 		return Math.abs(a - b) < 1e-15;

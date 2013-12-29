@@ -32,6 +32,38 @@ public class MapBuilder {
 			for(int y = 0; y < 36; y++) {
 				if(!done[x][y]) {
 					if(map[x][y] > 2) {
+						BufferedImage corner = WallTexFactory.createCornerTex();
+						double corn_x, corn_y;
+						Vector cv;
+						switch(map[x][y]) {
+							case 3:
+								corn_x = (x - 14 + 0.5) * MPT;
+								corn_y = -(y - 18) * MPT;
+								cv = new Vector(1, 0, 1);
+								break;
+							case 4:
+								corn_x = (x - 14 + 0.5) * MPT;
+								corn_y = -(y - 18 + 1) * MPT;
+								cv = new Vector(-1, 0, 1);
+								break;
+							case 5:
+								corn_x = (x - 14 + 0.5) * MPT;
+								corn_y = -(y - 18 + 1) * MPT;
+								cv = new Vector(-1, 0, -1);
+								break;
+							case 6:
+								corn_x = (x - 14 + 0.5) * MPT;
+								corn_y = -(y - 18) * MPT;
+								cv = new Vector(1, 0, -1);
+								break;
+							default:
+								corn_x = Double.NaN;
+								corn_y = Double.NaN;
+								cv = null;
+						}
+						
+						l.add(new TexturedPlane(new Point(corn_x, 0, corn_y), cv, corner));
+						
 						int dx;
 						switch(map[x][y]) {
 							case 3:
@@ -48,7 +80,7 @@ public class MapBuilder {
 
 						int cx = x + dx;
 						try{
-							while(map[cx][y] == 1 && !done[cx][y]) {
+							while(map[cx][y] == 2 && !done[cx][y]) {
 								done[cx][y] = true;
 								cx += dx;
 							}
@@ -57,13 +89,13 @@ public class MapBuilder {
 
 						}
 
-						if(cx - x + dx != 0) {
-							BufferedImage tex = WallTexFactory.createWallTex((int) Math.abs(cx - x + dx));
+						if(cx - x - dx != 0) {
+							BufferedImage tex = WallTexFactory.createWallTex((int) Math.abs(cx - x - dx));
 							double px = (x + dx - 14) * MPT;
-							double py = (y - 18 + 0.5) * MPT;
+							double py = -(y - 18 + 0.5) * MPT;
 							
-							Point p = new Point(py, 0, px);
-							Vector v = new Vector(0, 0, -cx);
+							Point p = new Point(px, 0, py);
+							Vector v = new Vector(0, 0, cx);
 							
 							l.add(new TexturedPlane(p, v, tex));
 						}
@@ -93,16 +125,18 @@ public class MapBuilder {
 
 						}
 
-						if(cy - y + dy != 0) {
-							BufferedImage tex = WallTexFactory.createWallTex((int) Math.abs(cy - y + dy));
+						if(cy - y - dy != 0) {
+							BufferedImage tex = WallTexFactory.createWallTex((int) Math.abs(cy - y - dy));
 							double px = (x - 14 + 0.5) * MPT;
-							double py = (y + dy - 18) * MPT;
+							double py = -(y + dy - 18) * MPT;
 							
-							Point p = new Point(py, 0, px);
-							Vector v = new Vector(-cy, 0, 0);
+							Point p = new Point(px, 0, py);
+							Vector v = new Vector(cy, 0, 0);
 							
 							l.add(new TexturedPlane(p, v, tex));
 						}
+						
+						done[x][y] = true;
 					}
 				}
 			}
@@ -128,11 +162,7 @@ public class MapBuilder {
 			for(int y = 0; y < 36; y++) {
 				 boolean[] walls = parseWalls(x, y);
 				 
-				 if(walls[0] && walls[2]) {
-					 map[x][y] = 1;
-				 }else if(walls[1] && walls[3]) {
-					 map[x][y] = 2;
-				 }else if(walls[0] && walls[1]) {
+				 if(walls[0] && walls[1]) {
 					 map[x][y] = 3;
 				 }else if(walls[1] && walls[2]) {
 					 map[x][y] = 4;
@@ -140,8 +170,19 @@ public class MapBuilder {
 					 map[x][y] = 5;
 				 }else if(walls[3] && walls[0]) {
 					 map[x][y] = 6;
+				 }else if(walls[0] && walls[2]) {
+					 map[x][y] = 1;
+				 }else if(walls[1] && walls[3]) {
+					 map[x][y] = 2;
 				 }
 			}
+		}
+		
+		for(int y = 0; y < 36; y++) {
+			for(int x = 0; x < 28; x++) {
+				System.out.print(map[x][y] + " ");
+			}
+			System.out.println();
 		}
 		
 		return map;

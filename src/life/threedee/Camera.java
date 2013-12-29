@@ -76,7 +76,7 @@ public class Camera extends JPanel{
 	}
 	
 	public Camera(){
-		this(new Point(0,3.65,0),new Vector(1,0,1).setScalar(1));
+		this(new Point(0,1,0),new Vector(0,0,1).setScalar(1));
 	}
 	
 	@Override
@@ -185,7 +185,7 @@ public class Camera extends JPanel{
             double[] pt = dir.polarTransform();
             pt[0] += PI / 2 * d;
             Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
-            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
+            loc = new Point(loc.x+mov.x/5,loc.y/*+mov.y*/,loc.z+mov.z/5);
         }
     }
 

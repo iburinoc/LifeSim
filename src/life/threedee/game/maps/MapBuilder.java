@@ -14,14 +14,10 @@ import life.threedee.game.GameUtilities;
 public class MapBuilder {
 	private static final BufferedImage map = GameUtilities.loadImage("resources/map.png");
 	
-	private static final int PX_TILE = 16;
+	private static final int PX_TILE = 8;
 	
 	public static List<ThreeDeeObject> createMap() {
 		
 		throw new RuntimeException("Not implemented");
-	}
-	
-	private class Wall {
-		
 	}
 }

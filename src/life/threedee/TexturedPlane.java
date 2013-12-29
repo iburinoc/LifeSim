@@ -15,7 +15,7 @@ public class TexturedPlane extends Plane{
 	private int w, h;
 	
 	/**
-	 * Note: p is the bottom right corner of the texture, so keep that in mind.
+	 * Note: p is the bottom left corner of the texture, so keep that in mind.
 	 * @param p
 	 * @param n
 	 * @param texture

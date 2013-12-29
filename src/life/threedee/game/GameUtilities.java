@@ -25,7 +25,7 @@ public class GameUtilities{
 	public static final int FLOOR_WIDTH = 2;
 	
 	// meters per tile.  we can modify this if we need to.  use this in all calculations necessary so scaling is smooth
-	public static final float TPM = 1.0f;
+	public static final float MPT = 1.0f;
 	
 	public static final Vector G = new Vector(0, -0.981, 0);
 	

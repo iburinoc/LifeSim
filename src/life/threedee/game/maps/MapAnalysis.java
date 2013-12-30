@@ -31,25 +31,30 @@ public class MapAnalysis {
 		List<ThreeDeeObject> map = MapBuilder.createMap();
 		Map<MapLocation, List<ThreeDeeObject>> m = analyseMap(map);
 		System.out.println(serializeMap(m));
+//		Map<MapLocation, List<ThreeDeeObject>> n = new HashMap<MapLocation,List<ThreeDeeObject>>();
+//		n.put(new MapLocation(0,0), map);
+//		System.out.println(serializeMap(n));
 	}
-	
+
 	private static String serializeMap(Map<MapLocation, List<ThreeDeeObject>> m) {
 		StringBuffer s = new StringBuffer();
 		for(int x = 0; x < 28; x++) {
 			for(int y = 0; y < 36; y++) {
 				MapLocation l = new MapLocation(x, y);
 				List<ThreeDeeObject> o = m.get(l);
-				for(int i = 0; i < o.size(); i++) {
-					try{
-						s.append(((MapPlane) o.get(i)).id);
-						if(i != o.size() - 1){
-							s.append(',');
-						}else{
-							s.append(';');
+				if(o != null){
+					for(int i = 0; i < o.size(); i++) {
+						try{
+							s.append(((MapPlane) (o.get(i))).id);
+							if(i != o.size() - 1){
+								s.append(',');
+							}else{
+								s.append(';');
+							}
 						}
-					}
-					catch(ClassCastException e) {
+						catch(ClassCastException e) {
 
+						}
 					}
 				}
 			}

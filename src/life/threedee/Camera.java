@@ -116,7 +116,7 @@ public class Camera extends JPanel{
 		for(int x = x1; x < x2; x+=R_INC){
 			for(int y = y1; y < y2; y+=R_INC){
 				Vector v = rdir.add(getVectorForPixel(x+R_INC/2, y+R_INC/2, rightU, upU));
-				Color c = closestInFront(v, rloc, x+R_INC/2, y+R_INC/2);
+				Color c = closestInFront(v, rloc).c;
 				if(c != null)
 					setfbuf(x,y,c);
 				else
@@ -143,7 +143,7 @@ public class Camera extends JPanel{
 		}
 	}
 	
-	private Vector getVectorForPixel(int x,int y, Vector right, Vector up){
+	protected Vector getVectorForPixel(int x,int y, Vector right, Vector up){
 		int rx = x - SC_WIDTH / 2;
 		int ry = SC_HEIGHT / 2 - y; // y is negated because for graphics top is 0, whereas in real life bottom is -
 		double px = rx * dx;
@@ -158,15 +158,15 @@ public class Camera extends JPanel{
 		fbuf[x][y] = c;
 	}
 
-	private Color closestInFront(Vector dir, Point px, int x, int y){
-		TColorTransfer min = new TColorTransfer(Double.MAX_VALUE, Color.white);
+	protected TColorTransfer closestInFront(Vector dir, Point px){
+		TColorTransfer min = new TColorTransfer(Double.MAX_VALUE, Color.white, null);
 		for(ThreeDeeObject p : objects){
 			TColorTransfer o = p.getRData(dir, px, min.t);
 			if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0){
 				min = o;
 			}
 		}
-		return min.c;
+		return min;
 	}
 	
 	public synchronized void mouseMoved(int x,int y){		

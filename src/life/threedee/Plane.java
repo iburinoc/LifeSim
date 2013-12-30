@@ -42,7 +42,7 @@ public class Plane implements ThreeDeeObject{
 	@Override
 	public TColorTransfer getRData(Vector vector, Point point, double minT) {
 		double t = calculateT(vector, point, minT);
-		return new TColorTransfer(t, this.c);
+		return new TColorTransfer(t, this.c, this);
 	}
 
 	@Override

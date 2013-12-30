@@ -10,7 +10,6 @@ import java.util.List;
 
 import life.threedee.Plane;
 import life.threedee.Point;
-import life.threedee.TexturedPlane;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.GameUtilities;
@@ -72,7 +71,7 @@ public class MapBuilder {
 								cv = null;
 						}
 						
-						l.add(new TexturedPlane(new Point(corn_x, 0, corn_y), cv, corner));
+						l.add(new MapPlane(new Point(corn_x, 0, corn_y), cv, corner));
 						
 						int dx;
 						switch(map[x][y]) {
@@ -107,7 +106,7 @@ public class MapBuilder {
 							Point p = new Point(px, 0, py);
 							Vector v = new Vector(0, 0, dx);
 							
-							l.add(new TexturedPlane(p, v, tex));
+							l.add(new MapPlane(p, v, tex));
 						}
 
 						int dy;
@@ -143,7 +142,7 @@ public class MapBuilder {
 							Point p = new Point(px, 0, py);
 							Vector v = new Vector(dy, 0, 0);
 							
-							l.add(new TexturedPlane(p, v, tex));
+							l.add(new MapPlane(p, v, tex));
 						}
 						
 						done[x][y] = true;

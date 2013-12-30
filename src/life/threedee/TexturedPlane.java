@@ -59,9 +59,9 @@ public class TexturedPlane extends Plane{
 		double t = calculateT(vector, point, minT);
 		if(t == t && t > 0 && (minT != minT || t < minT)) {
 			Color c = this.c(this.intersection(vector, point, t));
-			return new TColorTransfer(t, c);
+			return new TColorTransfer(t, c, this);
 		} else {
-			return new TColorTransfer(Double.NaN, null);
+			return new TColorTransfer(Double.NaN, null, this);
 		}
 	}
 }

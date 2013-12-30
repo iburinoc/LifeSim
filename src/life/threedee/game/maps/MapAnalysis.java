@@ -40,11 +40,16 @@ public class MapAnalysis {
 				MapLocation l = new MapLocation(x, y);
 				List<ThreeDeeObject> o = m.get(l);
 				for(int i = 0; i < o.size(); i++) {
-					s.append(((MapPlane) o.get(i)).id);
-					if(i != o.size() - 1){
-						s.append(',');
-					}else{
-						s.append(';');
+					try{
+						s.append(((MapPlane) o.get(i)).id);
+						if(i != o.size() - 1){
+							s.append(',');
+						}else{
+							s.append(';');
+						}
+					}
+					catch(ClassCastException e) {
+
 					}
 				}
 			}

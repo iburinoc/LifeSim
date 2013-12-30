@@ -73,7 +73,39 @@ public class MapAnalysis {
 				System.out.println(x + ";" + y);
 			}
 		}
-		return m;
+		
+		Map<MapLocation, List<ThreeDeeObject>> nm = new HashMap<MapLocation,List<ThreeDeeObject>>();
+		
+		for(int x = 0; x < 28; x++) {
+			for(int y = 0; y < 36; y++) {
+				MapLocation l = new MapLocation(x, y);
+				List<ThreeDeeObject> n = (List<ThreeDeeObject>) ((ArrayList<ThreeDeeObject>) m.get(l)).clone();
+				for(int i = 0; i < 4; i++) {
+					int dx = 0;
+					int dy = 0;
+					switch(i) {
+						case 0: dy = -1; break;
+						case 1: dx = 1; break;
+						case 2: dy = 1; break;
+						case 3: dx = -1; break;
+					}
+					int nx = x + dx;
+					int ny = y + dy;
+					MapLocation nl = new MapLocation(nx, ny);
+					List<ThreeDeeObject> no = m.get(nl);
+					if(no != null) {
+						for(ThreeDeeObject o : no) {
+							if(!n.contains(o)) {
+								n.add(o);
+							}
+						}
+					}
+				}
+				nm.put(l, n);
+				System.out.println(x+";"+y);
+			}
+		}
+		return nm;
 	}
 	
 	private static List<ThreeDeeObject> analyseTile(AnalysisCamera c, int x, int y, List<ThreeDeeObject> map, List<List<Vector>> dirs) {

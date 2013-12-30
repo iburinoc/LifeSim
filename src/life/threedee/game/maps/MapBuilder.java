@@ -1,11 +1,14 @@
 package life.threedee.game.maps;
 
 import static life.threedee.game.GameUtilities.MPT;
+import static life.threedee.game.GameUtilities.WALL_HEIGHT;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import life.threedee.Plane;
 import life.threedee.Point;
 import life.threedee.TexturedPlane;
 import life.threedee.ThreeDeeObject;
@@ -25,6 +28,10 @@ public class MapBuilder {
 	
 	public static List<ThreeDeeObject> createMap() {
 		List<ThreeDeeObject> l = new ArrayList<ThreeDeeObject>();
+		
+		l.add(new Plane(new Point(0, WALL_HEIGHT, 0), new Vector(0, 1, 0), Color.BLACK));
+		l.add(new Plane(new Point(0, 0, 0), new Vector(0, 1, 0), Color.BLACK));
+		
 		int[][] map = parseMap();
 		boolean[][] done = new boolean[28][36];
 		

@@ -1,7 +1,6 @@
 package life.threedee.game.maps;
 
 import java.awt.AWTException;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Robot;
@@ -13,22 +12,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import life.threedee.Camera;
-import life.threedee.Plane;
-import life.threedee.Point;
-import life.threedee.TexturedPlane;
 import life.threedee.ThreeDeeObject;
-import life.threedee.Triangle;
-import life.threedee.Vector;
-import life.threedee.WorldObject;
+import life.threedee.game.GameCamera;
 import life.threedee.game.GameUtilities;
-import life.threedee.objects.MovementTester;
 
 public class MapTest implements Runnable{
 
@@ -50,7 +42,7 @@ public class MapTest implements Runnable{
 	public MapTest(){
 		j = new JFrame("Map Test");
 
-		p = new Camera();
+		p = new GameCamera(new GameMap());
 		p.setPreferredSize(new Dimension(GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT));
 
 		j.add(p);
@@ -71,7 +63,7 @@ public class MapTest implements Runnable{
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		j.setCursor(transparent);
 		
-		this.p.setObjects(MapBuilder.createMap());
+		//this.p.setObjects(MapBuilder.createMap());
 		while(true) {
 			long startT = System.currentTimeMillis();
 			p.calcBuffer();

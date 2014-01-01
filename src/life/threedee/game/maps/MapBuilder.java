@@ -6,7 +6,9 @@ import static life.threedee.game.GameUtilities.WALL_HEIGHT;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import life.threedee.Plane;
 import life.threedee.Point;
@@ -24,6 +26,31 @@ public class MapBuilder {
 	private static final BufferedImage wall = GameUtilities.loadImage("resources/wall.png");
 	
 	private static final int PX_TILE = 8;
+	
+	public static Map<MapLocation, List<ThreeDeeObject>> deserializeMap(String s, List<ThreeDeeObject> map) {
+		Map<MapLocation, List<ThreeDeeObject>> m = new HashMap<MapLocation, List<ThreeDeeObject>>();
+		String[] mapString = s.split(";");
+		for(int x = 0; x < 28; x++) {
+			for(int y = 0; y < 36; y++) {
+				List<ThreeDeeObject> vis = new ArrayList<ThreeDeeObject>();
+				vis.add(map.get(0));
+				vis.add(map.get(1));
+				String[] walls = mapString[x * 36 + y].split(",");
+				for(int i = 0; i < walls.length; i++) {
+					try{
+						vis.add(map.get(Integer.parseInt(walls[i]) + 2));
+					}
+					catch(NumberFormatException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				m.put(new MapLocation(x, y), vis);
+			}
+		}
+		
+		return m;
+	}
 	
 	public static List<ThreeDeeObject> createMap() {
 		List<ThreeDeeObject> l = new ArrayList<ThreeDeeObject>();

@@ -53,7 +53,7 @@ public class MapAnalysis {
 							}
 						}
 						catch(ClassCastException e) {
-
+							e.printStackTrace();
 						}
 					}
 				}
@@ -120,9 +120,9 @@ public class MapAnalysis {
 	
 	private static List<ThreeDeeObject> analyseTile(AnalysisCamera c, int x, int y, List<ThreeDeeObject> map, List<List<Vector>> dirs) {
 		List<ThreeDeeObject> v = new ArrayList<ThreeDeeObject>();
-		double px = (x  - 14) * MPT;
-		double py = -(y - 18) * MPT;
-		Point loc = new Point(px, 0, py);
+		double px = (x  - 14 + 0.5) * MPT;
+		double py = -(y - 18 - 0.5) * MPT;
+		Point loc = new Point(px, 1, py);
 		c.setLoc(loc);
 		int i = 0;
 		for(List<Vector> l : dirs) {
@@ -140,7 +140,7 @@ public class MapAnalysis {
 			for(int y = 0; y < SC_HEIGHT; y+=R_INC){
 				Vector v = dir.add(c.getVectorForPixel(x+R_INC/2, y+R_INC/2, rightU, upU));
 				ThreeDeeObject o = c.closestInFront(v, loc).o;
-				if(!vis.contains(o)) {
+				if(o != null && !vis.contains(o)) {
 					vis.add(o);
 				}
 			}

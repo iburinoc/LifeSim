@@ -2,9 +2,13 @@ package life.threedee.game.maps;
 
 import static java.lang.Math.PI;
 import static life.threedee.game.GameUtilities.MPT;
-import static life.threedee.game.GameUtilities.*;
+import static life.threedee.game.GameUtilities.R_INC;
+import static life.threedee.game.GameUtilities.SC_HEIGHT;
+import static life.threedee.game.GameUtilities.SC_WIDTH;
 
-import java.awt.Color;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,29 +41,39 @@ public class MapAnalysis {
 	}
 
 	private static String serializeMap(Map<MapLocation, List<ThreeDeeObject>> m) {
-		StringBuffer s = new StringBuffer();
-		for(int x = 0; x < 28; x++) {
-			for(int y = 0; y < 36; y++) {
-				MapLocation l = new MapLocation(x, y);
-				List<ThreeDeeObject> o = m.get(l);
-				if(o != null){
-					for(int i = 0; i < o.size(); i++) {
-						try{
-							s.append(((MapPlane) (o.get(i))).id);
-							if(i != o.size() - 1){
-								s.append(',');
-							}else{
-								s.append(';');
+		//StringBuffer s = new StringBuffer();	
+		BufferedWriter bw = null;
+		try{
+			bw = new BufferedWriter(new FileWriter("resources/map.dat"));
+			for(int x = 0; x < 28; x++) {
+				for(int y = 0; y < 36; y++) {
+					MapLocation l = new MapLocation(x, y);
+					List<ThreeDeeObject> o = m.get(l);
+					if(o != null){
+						StringBuffer s = new StringBuffer();
+						for(int i = 0; i < o.size(); i++) {
+							try{
+								s.append(((MapPlane) (o.get(i))).id);
+								if(i != o.size() - 1){
+									s.append(',');
+								}
+							}
+							catch(ClassCastException e) {
+								e.printStackTrace();
 							}
 						}
-						catch(ClassCastException e) {
-							e.printStackTrace();
-						}
+						bw.write(s.toString());
+						bw.newLine();
 					}
 				}
 			}
+			bw.close();
 		}
-		return s.toString();
+		catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		return "";
 	}
 	
 	/**
@@ -90,7 +104,7 @@ public class MapAnalysis {
 			for(int y = 0; y < 36; y++) {
 				MapLocation l = new MapLocation(x, y);
 				List<ThreeDeeObject> n = (List<ThreeDeeObject>) ((ArrayList<ThreeDeeObject>) m.get(l)).clone();
-				for(int i = 0; i < 4; i++) {
+				for(int i = 0; i < 8; i++) {
 					int dx = 0;
 					int dy = 0;
 					switch(i) {
@@ -98,12 +112,16 @@ public class MapAnalysis {
 						case 1: dx = 1; break;
 						case 2: dy = 1; break;
 						case 3: dx = -1; break;
+						case 4: dy = -1; dx = -1; break;
+						case 5: dy = -1; dx = 1; break;
+						case 6: dy = 1; dx = -1; break;
+						case 7: dy = 1; dx = 1; break;
 					}
 					int nx = x + dx;
 					int ny = y + dy;
 					MapLocation nl = new MapLocation(nx, ny);
 					List<ThreeDeeObject> no = m.get(nl);
-					if(no != null) {
+					if(no != null && nl.inRange()) {
 						for(ThreeDeeObject o : no) {
 							if(!n.contains(o)) {
 								n.add(o);

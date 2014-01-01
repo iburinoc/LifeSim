@@ -40,7 +40,7 @@ public class MapLocation {
 			return -1;
 	}
 	
-	private boolean inRange(){
+	public boolean inRange(){
 		return mx >= 0 && mx < 28 && my >= 0 && my < 36;
 	}
 }

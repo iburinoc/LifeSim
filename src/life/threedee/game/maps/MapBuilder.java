@@ -1,5 +1,6 @@
 package life.threedee.game.maps;
 
+import static life.threedee.game.GameUtilities.BLANK;
 import static life.threedee.game.GameUtilities.MPT;
 import static life.threedee.game.GameUtilities.WALL_HEIGHT;
 

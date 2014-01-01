@@ -104,7 +104,7 @@ public class MapAnalysis {
 			for(int y = 0; y < 36; y++) {
 				MapLocation l = new MapLocation(x, y);
 				List<ThreeDeeObject> n = (List<ThreeDeeObject>) ((ArrayList<ThreeDeeObject>) m.get(l)).clone();
-				for(int i = 0; i < 8; i++) {
+				for(int i = 0; i < 9; i++) {
 					int dx = 0;
 					int dy = 0;
 					switch(i) {
@@ -116,6 +116,7 @@ public class MapAnalysis {
 						case 5: dy = -1; dx = 1; break;
 						case 6: dy = 1; dx = -1; break;
 						case 7: dy = 1; dx = 1; break;
+						case 8: dy = 2; break;
 					}
 					int nx = x + dx;
 					int ny = y + dy;

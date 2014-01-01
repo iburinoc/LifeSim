@@ -25,7 +25,7 @@ public class MapLocation {
 	public boolean equals(Object o) {
 		try{
 			MapLocation m = (MapLocation) o;
-			return this.mx == m.mx && this.my == m.my;
+			return (this.mx == m.mx && this.my == m.my) || (!this.inRange() && !m.inRange());
 		}
 		catch(ClassCastException e){
 			return false;
@@ -34,6 +34,14 @@ public class MapLocation {
 	
 	@Override
 	public int hashCode() {
-		return mx * 36 + my;
+		if(inRange())
+			return mx * 36 + my;
+		else
+			return -1;
+	}
+	
+	private boolean inRange(){
+		return mx >= 0 && mx < 28 && my >= 0 && my < 36;
 	}
 }
+

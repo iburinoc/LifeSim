@@ -5,6 +5,9 @@ import static life.threedee.game.GameUtilities.WALL_HEIGHT;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,28 +30,42 @@ public class MapBuilder {
 	
 	private static final int PX_TILE = 8;
 	
-	public static Map<MapLocation, List<ThreeDeeObject>> deserializeMap(String s, List<ThreeDeeObject> map) {
+	public static Map<MapLocation, List<ThreeDeeObject>> deserializeMap(List<ThreeDeeObject> map) {
 		Map<MapLocation, List<ThreeDeeObject>> m = new HashMap<MapLocation, List<ThreeDeeObject>>();
-		String[] mapString = s.split(";");
+		BufferedReader br = null;
+		try{
+			br = new BufferedReader(new FileReader("resources/map.dat"));
+		}
+		catch(IOException e){}
 		for(int x = 0; x < 28; x++) {
 			for(int y = 0; y < 36; y++) {
-				List<ThreeDeeObject> vis = new ArrayList<ThreeDeeObject>();
-				vis.add(map.get(0));
-				vis.add(map.get(1));
-				String[] walls = mapString[x * 36 + y].split(",");
-				for(int i = 0; i < walls.length; i++) {
-					try{
-						vis.add(map.get(Integer.parseInt(walls[i]) + 2));
+				try{
+					String l = br.readLine();
+					List<ThreeDeeObject> vis = new ArrayList<ThreeDeeObject>();
+					vis.add(map.get(0));
+					vis.add(map.get(1));
+					String[] walls = l.split(",");
+					for(int i = 0; i < walls.length; i++) {
+						try{
+							vis.add(map.get(Integer.parseInt(walls[i]) + 2));
+						}
+						catch(NumberFormatException e) {
+							e.printStackTrace();
+						}
 					}
-					catch(NumberFormatException e) {
-						e.printStackTrace();
-					}
+
+					m.put(new MapLocation(x, y), vis);
 				}
-				
-				m.put(new MapLocation(x, y), vis);
+				catch(IOException e){
+					e.printStackTrace();
+				}
 			}
 		}
-		
+		try{
+			br.close();
+		}
+		catch(IOException e){}
+		m.put(new MapLocation(-1,-1), map);
 		return m;
 	}
 	

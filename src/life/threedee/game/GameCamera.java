@@ -15,5 +15,6 @@ public class GameCamera extends Camera{
 	@Override
 	public void calcBuffer() {
 		this.objects = m.getObjects(this.loc);
+		super.calcBuffer();
 	}
 }

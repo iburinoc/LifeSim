@@ -37,6 +37,30 @@ public class WorldObject implements ThreeDeeObject{
         return new WorldObject(planes, center);
     }
     
+    public static WorldObject generateObject(String str, Color c){
+        str = str.replaceAll(" ", "");
+        String[] strPoints = str.split("\\);\\(");
+        String[] pointStr = strPoints[0].replaceAll("\\(", "").replaceAll("\\)", "").split(",");
+        double cx = Double.parseDouble(pointStr[0]); 
+        double cy = Double.parseDouble(pointStr[1]); 
+        double cz = Double.parseDouble(pointStr[2]);
+        Point center = new Point(cx, cy, cz);
+        ThreeDeeObject[] planes = new ThreeDeeObject[strPoints.length-1];
+        for (int i = 1; i < strPoints.length; i++) {
+            String[] subPointStr = strPoints[i].split("\\),\\(");
+            Point[] points = new Point[3];
+            for (int j = 0; j < subPointStr.length; j++) {
+                pointStr = subPointStr[j].replaceAll("\\(", "").replaceAll("\\)", "").split(",");
+                double x = Double.parseDouble(pointStr[0]); 
+                double y = Double.parseDouble(pointStr[1]); 
+                double z = Double.parseDouble(pointStr[2]);
+                points[j] = new Point(x, y, z);
+            }
+            planes[i-1] = new Triangle(points[0], points[1], points[2], c);
+        }
+        return new WorldObject(planes, center);
+    }
+    
     @Override
     public TColorTransfer getRData(Vector vector, Point point, double minT) {
     	TColorTransfer min = new TColorTransfer(Double.NaN, Color.WHITE, this);

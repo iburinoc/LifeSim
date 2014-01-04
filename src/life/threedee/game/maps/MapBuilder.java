@@ -18,6 +18,7 @@ import life.threedee.Plane;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
+import life.threedee.WorldObject;
 import life.threedee.game.GameUtilities;
 
 /**
@@ -34,6 +35,25 @@ public class MapBuilder {
 	public static Map<MapLocation, List<ThreeDeeObject>> deserializeMap(List<ThreeDeeObject> map) {
 		Map<MapLocation, List<ThreeDeeObject>> m = new HashMap<MapLocation, List<ThreeDeeObject>>();
 		BufferedReader br = null;
+		
+            WorldObject wo = WorldObject.generateObject("(0,2,0);"
+                    + "(0,4,0),(1,3,0),(0,3,1);"
+                    + "(0,4,0),(0,3,1),(-1,3,0);"
+                    + "(0,4,0),(-1,3,0),(0,3,-1);"
+                    + "(0,4,0),(0,3,-1),(1,3,0);"
+                    + "(1,1,1),(1,3,0),(0,3,1);"
+                    + "(-1,1,1),(0,3,1),(-1,3,0);"
+                    + "(-1,1,-1),(-1,3,0),(0,3,-1);"
+                    + "(1,1,-1),(0,3,-1),(1,3,0);"
+                    + "(1,3,0),(1,0,0),(1,1,1);"
+                    + "(1,3,0),(1,0,0),(1,1,-1);"
+                    + "(0,3,1),(0,0,1),(-1,1,1);"
+                    + "(0,3,1),(0,0,1),(1,1,1);"
+                    + "(-1,3,0),(-1,0,0),(-1,1,-1);"
+                    + "(-1,3,0),(-1,0,0),(-1,1,1);"
+                    + "(0,3,-1),(0,0,-1),(1,1,-1);"
+                    + "(0,3,-1),(0,0,-1),(-1,1,-1)", Color.RED);
+         
 		try{
 			br = new BufferedReader(new FileReader("resources/map.dat"));
 		}
@@ -45,6 +65,7 @@ public class MapBuilder {
 					List<ThreeDeeObject> vis = new ArrayList<ThreeDeeObject>();
 					vis.add(map.get(0));
 					vis.add(map.get(1));
+					vis.add(wo);
 					String[] walls = l.split(",");
 					for(int i = 0; i < walls.length; i++) {
 						try{

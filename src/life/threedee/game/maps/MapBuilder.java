@@ -36,6 +36,8 @@ public class MapBuilder {
 		Map<MapLocation, List<ThreeDeeObject>> m = new HashMap<MapLocation, List<ThreeDeeObject>>();
 		BufferedReader br = null;
 		
+		
+		/*BETA SCREENSHOTS BEGIN*/
             WorldObject wo = WorldObject.generateObject("(0,1,0);"
                     + "(0,2,0),(0.5,1.5,0),(0,1.5,0.5);"
                     + "(0,2,0),(0,1.5,0.5),(-0.5,1.5,0);"
@@ -53,12 +55,7 @@ public class MapBuilder {
                     + "(-0.5,1.5,0),(-0.6,0,0),(-0.425,0.5,0.425);"
                     + "(0,1.5,-0.5),(0,0,-0.6),(0.425,0.5,-0.425);"
                     + "(0,1.5,-0.5),(0,0,-0.6),(-0.425,0.5,-0.425)", Color.RED);
-         
-            WorldObject pellet = WorldObject.generateObject("(0,1,0);"
-                    + "(0,1.125,0),(0,0.875,0.25),(0.175,0.875,-0.125);"
-                    + "(0,1.125,0),(0,0.875,0.25),(-0.175,0.875,-0.125);"
-                    + "(0,1.125,0),(0.175,0.875,-0.125),(-0.175,0.875,-0.125)", Color.YELLOW);
-            pellet.translate(new Vector(new Point(0.0, 0.0, 4.0)));
+            /*BETA SCREENSHOTS END*/
 		try{
 			br = new BufferedReader(new FileReader("resources/map.dat"));
 		}
@@ -70,8 +67,17 @@ public class MapBuilder {
 					List<ThreeDeeObject> vis = new ArrayList<ThreeDeeObject>();
 					vis.add(map.get(0));
 					vis.add(map.get(1));
+					/*BETA SCREENSHOTS BEGIN*/
 					vis.add(wo);
-					vis.add(pellet);
+					for (double i = -5.0; i < 6; i++) {
+					    WorldObject pellet = WorldObject.generateObject("(0,1,0);"
+			                    + "(0,1.125,0),(0,0.875,0.25),(0.175,0.875,-0.125);"
+			                    + "(0,1.125,0),(0,0.875,0.25),(-0.175,0.875,-0.125);"
+			                    + "(0,1.125,0),(0.175,0.875,-0.125),(-0.175,0.875,-0.125)", Color.YELLOW);
+			            pellet.translate(new Vector(new Point(i+0.5, 0.0, 3.5)));
+			            vis.add(pellet);
+					}
+					/*BETA SCREENSHOTS END*/
 					String[] walls = l.split(",");
 					for(int i = 0; i < walls.length; i++) {
 						try{

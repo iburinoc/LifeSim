@@ -1,9 +1,9 @@
 package life.threedee.game;
 
 public class Location {
-    public final int x, z;
+    public final double x, z;
 
-    Location(int x, int z) {
+    Location(double x, double z) {
         this.x = x;
         this.z = z;
     }

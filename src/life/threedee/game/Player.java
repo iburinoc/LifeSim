@@ -17,7 +17,7 @@ public class Player extends Camera implements Tickable{
     
     private Vector v;
     
-    protected boolean w,d,s,a,up;
+    protected boolean w,d,s,a;
     
     private List<ThreeDeeObject> map;
     
@@ -27,7 +27,13 @@ public class Player extends Camera implements Tickable{
         this.g = g;
         this.m = m;
     }
-    
+
+    public Player(Point loc, Vector dir, Vector v, Game g) {
+        super(loc, dir);
+        this.v = v;
+        this.g = g;
+    }
+
     @Override
     public void calcBuffer() {
     	if(g != null || m != null){
@@ -42,19 +48,8 @@ public class Player extends Camera implements Tickable{
     	}
     	super.calcBuffer();
     }
-    
-    public synchronized void move(int d) {
-        if (d < 4) {
-            double[] pt = dir.polarTransform();
-            pt[0] += PI / 2 * d;
-            Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
-            loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
-//            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
-        }
-    }
 
     public void tick(int delta){
-        v = v.add(G);
         Point newLoc = new Point(new Vector(loc).add(v));
         for (ThreeDeeObject object : objects) {
             if (!object.sameSide(loc, newLoc) || true) {
@@ -63,5 +58,17 @@ public class Player extends Camera implements Tickable{
             }
         }
         loc = newLoc;
+    }
+
+    public Location getLoc(){
+        return new Location(loc.x, loc.z);
+    }
+
+    public Point getLocPoint(){
+        return loc;
+    }
+
+    public Vector getDir(){
+        return dir;
     }
 }

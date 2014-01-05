@@ -34,7 +34,7 @@ public class MapTest implements Runnable{
 	
 	private MouseMovementListener m;
 	
-	private boolean w,d,s,a,up;
+	private boolean w,d,s,a;
 	
 	public Thread main;
 	
@@ -188,8 +188,6 @@ public class MapTest implements Runnable{
 				s = true;
 			}else if(e.getKeyChar() == 'd'){
                 d = true;
-            }else if(e.getKeyChar() == ' '){
-                up = true;
             }
 		}
 
@@ -203,8 +201,6 @@ public class MapTest implements Runnable{
 				s = false;
 			}else if(e.getKeyChar() == 'd'){
                 d = false;
-            }else if(e.getKeyChar() == ' '){
-                up = false;
             }
 		}
 	}

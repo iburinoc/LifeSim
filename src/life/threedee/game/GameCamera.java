@@ -3,9 +3,7 @@ package life.threedee.game;
 import life.threedee.Camera;
 import life.threedee.game.maps.GameMap;
 
-
 public class GameCamera extends Camera{
-	
 	private GameMap m;
 	
 	public GameCamera(GameMap m) {

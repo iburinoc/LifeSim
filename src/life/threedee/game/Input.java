@@ -33,7 +33,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	private Input(){
 		try{
 			recenter = new Robot();
-			
 		}
 		catch (AWTException e){
 			e.printStackTrace();

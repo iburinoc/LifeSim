@@ -17,8 +17,8 @@ public class BulletGun implements Tickable{
 		tick++;
 		if(tick == 50){
 			Bullet b = new Bullet(new Point(0,1.5,0));
-			c.add(b);
-			c.addTickable(b);
+			//c.add(b);
+			//c.addTickable(b);
 			tick = 0;
 		}
 	}

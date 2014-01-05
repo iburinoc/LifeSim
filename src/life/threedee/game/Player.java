@@ -2,10 +2,12 @@ package life.threedee.game;
 
 import static java.lang.Math.PI;
 
+import java.awt.Color;
 import java.util.List;
 
 import life.threedee.Camera;
 import life.threedee.Point;
+import life.threedee.TColorTransfer;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
@@ -53,12 +55,16 @@ public class Player extends Camera implements Tickable{
             double[] pt = dir.polarTransform();
             pt[0] += PI / 2 * d;
             Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
-            loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
-//            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
+//            loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
+            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
         }
     }
 
     public void tick(int delta){
+    	if(w) move(0);
+    	if(d) move(1);
+    	if(s) move(2);
+    	if(a) move(3);
         Point newLoc = new Point(new Vector(loc).add(v));
         for (ThreeDeeObject object : objects) {
             if (!object.sameSide(loc, newLoc) || true) {
@@ -68,6 +74,24 @@ public class Player extends Camera implements Tickable{
         }
         loc = newLoc;
     }
+    
+    @Override
+    protected TColorTransfer closestInFront(Vector dir, Point px){
+		TColorTransfer min = new TColorTransfer(Double.MAX_VALUE, Color.white, null);
+		for(ThreeDeeObject p : objects){
+			TColorTransfer o = p.getRData(dir, px, min.t);
+			if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0){
+				min = o;
+			}
+		}
+		for(ThreeDeeObject p : map){
+			TColorTransfer o = p.getRData(dir, px, min.t);
+			if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0){
+				min = o;
+			}
+		}
+		return min;
+	}
 
     public Location getLoc(){
         return new Location(loc.x, loc.z);

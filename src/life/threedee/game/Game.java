@@ -33,8 +33,6 @@ public class Game implements Runnable{
 	private JFrame j;
 	
 	private Input i;
-
-    //private Ryan;
 	
 	private boolean running;
 	
@@ -44,8 +42,8 @@ public class Game implements Runnable{
 		m = new GameMap();
 		
 		p = new Player(this, m);
-		p = new Player(new Point(0,1,0), new Vector(0,0,1), new Vector(0,0,0), this);
-        ghosts = null;
+		
+        ghosts = new ArrayList<Ghost>();
         ghosts.add(new Blinky(this));
         ghosts.add(new Pinky(this));
         ghosts.add(new Inky(this));
@@ -65,6 +63,8 @@ public class Game implements Runnable{
 		j.pack();
 		j.setVisible(true);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		tickables.add(p);
 	}
 	
 	private void removeCursor() {
@@ -109,9 +109,18 @@ public class Game implements Runnable{
 	}
 	
 	private void drawFrame() {
+		long startT = System.currentTimeMillis();
 		p.calcBuffer();
 		p.repaint();
-		j.repaint();
+		p.registerWait(Thread.currentThread());
+		try{
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException e){
+		}
+		System.out.println("frame");
+		long time = System.currentTimeMillis() - startT;
+		System.out.println(time);
 	}
 	
 	private void tickTickables(int delta) {

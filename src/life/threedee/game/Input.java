@@ -13,7 +13,7 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class Input implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener{
+public class Input implements KeyListener, MouseListener, MouseMotionListener{
 
 	private Player p;
 	private Game g;
@@ -129,12 +129,4 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         	p.up = false;
         }
 	}
-
-	@Override
-	public void mouseWheelMoved(MouseWheelEvent e){
-		//System.out.println(e.getPreciseWheelRotation());
-		p.scroll(e.getWheelRotation());
-	}
-	
-	
 }

@@ -17,10 +17,9 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import life.threedee.Camera;
 import life.threedee.ThreeDeeObject;
-import life.threedee.game.GameCamera;
 import life.threedee.game.GameUtilities;
+import life.threedee.game.Player;
 
 public class MapTest implements Runnable{
 
@@ -31,7 +30,7 @@ public class MapTest implements Runnable{
 	private double y;
 	private double z;
 
-	private Camera p;
+	private Player p;
 	
 	private MouseMovementListener m;
 	
@@ -42,7 +41,7 @@ public class MapTest implements Runnable{
 	public MapTest(){
 		j = new JFrame("Map Test");
 
-		p = new GameCamera(new GameMap());
+		p = new Player(null, new GameMap());
 		p.setPreferredSize(new Dimension(GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT));
 
 		j.add(p);
@@ -54,7 +53,6 @@ public class MapTest implements Runnable{
 		j.addMouseListener(m);
 		j.addMouseMotionListener(m);
 		j.addKeyListener(m);
-		j.addMouseWheelListener(m);
 	}
 
 	@Override
@@ -105,7 +103,7 @@ public class MapTest implements Runnable{
 		new Thread(new MapTest()).start();
 	}
 	
-	class MouseMovementListener implements MouseListener, MouseMotionListener, KeyListener, MouseWheelListener{
+	class MouseMovementListener implements MouseListener, MouseMotionListener, KeyListener{
 
 		private boolean mouseCaptured;
 		
@@ -209,12 +207,5 @@ public class MapTest implements Runnable{
                 up = false;
             }
 		}
-
-		@Override
-		public void mouseWheelMoved(MouseWheelEvent e){
-			//System.out.println(e.getPreciseWheelRotation());
-			p.scroll(e.getWheelRotation());
-		}
-		
 	}
 }

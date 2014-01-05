@@ -4,7 +4,6 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -14,17 +13,14 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import life.threedee.game.Game;
 import life.threedee.game.GameUtilities;
 import life.threedee.game.Player;
-import life.threedee.objects.MovementTester;
 
 public class POC3D implements Runnable{
 
@@ -35,7 +31,7 @@ public class POC3D implements Runnable{
 	private double y;
 	private double z;
 
-	private Camera p;
+	private Player p;
 	
 	private MouseMovementListener m;
 	
@@ -46,7 +42,7 @@ public class POC3D implements Runnable{
 	public POC3D(){
 		j = new JFrame("Proof of Concept");
 
-		p = new Camera();
+		p = new Player(null, null);
 		p.setPreferredSize(new Dimension(GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT));
 
 		j.add(p);
@@ -58,7 +54,6 @@ public class POC3D implements Runnable{
 		j.addMouseListener(m);
 		j.addMouseMotionListener(m);
 		j.addKeyListener(m);
-		j.addMouseWheelListener(m);
 	}
 
 	@Override
@@ -178,7 +173,7 @@ public class POC3D implements Runnable{
 		new Thread(new POC3D()).start();
 	}
 	
-	class MouseMovementListener implements MouseListener, MouseMotionListener, KeyListener, MouseWheelListener{
+	class MouseMovementListener implements MouseListener, MouseMotionListener, KeyListener{
 
 		private boolean mouseCaptured;
 		
@@ -282,12 +277,5 @@ public class POC3D implements Runnable{
                 up = false;
             }
 		}
-
-		@Override
-		public void mouseWheelMoved(MouseWheelEvent e){
-			//System.out.println(e.getPreciseWheelRotation());
-			p.scroll(e.getWheelRotation());
-		}
-		
 	}
 }

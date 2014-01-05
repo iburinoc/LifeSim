@@ -13,10 +13,6 @@ public class AnalysisCamera extends Camera{
 		
 	}
 	
-	void setDir(Vector dir) {
-		this.dir = dir;
-	}
-	
 	void setLoc(Point loc) {
 		this.loc = loc;
 	}

@@ -8,7 +8,7 @@ public class Plane implements ThreeDeeObject{
 	// z = ax + by + c
 
 	double a; // x coefficient
-	double b; // y coefficient
+	double b; // z coefficient
 	double c; // constant
 	*/
 	
@@ -83,7 +83,7 @@ public class Plane implements ThreeDeeObject{
 	 * @return
 	 */
 	public Point evaluate(double x, double y, double z) {
-		//x=(-(yn(y-y0)+zn(z-z0))+xn*x0)/xn
+		//x=(-(yn(z-y0)+zn(z-z0))+xn*x0)/xn
 		if(x != x) {
 			x = (-(normal.y * (y - origin.y) + normal.z * (z - origin.z)) + normal.x * origin.x) / normal.x;
 			return new Point(x,y,z);

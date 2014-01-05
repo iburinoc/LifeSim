@@ -26,7 +26,7 @@ public class Player extends Camera implements Tickable{
     }
 
     public void jump(){
-        //if (v.y == 0 && canJump) {
+        //if (v.z == 0 && canJump) {
             v = new Vector(v.x, 9.81, v.z);
         //}
     }

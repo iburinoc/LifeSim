@@ -145,7 +145,7 @@ public class Camera extends JPanel{
 	
 	protected Vector getVectorForPixel(int x,int y, Vector right, Vector up){
 		int rx = x - SC_WIDTH / 2;
-		int ry = SC_HEIGHT / 2 - y; // z is negated because for graphics top is 0, whereas in real life bottom is -
+		int ry = SC_HEIGHT / 2 - y; // y is negated because for graphics top is 0, whereas in real life bottom is -
 		double px = rx * dx;
 		double py = ry * dy;
 		
@@ -185,8 +185,8 @@ public class Camera extends JPanel{
             double[] pt = dir.polarTransform();
             pt[0] += PI / 2 * d;
             Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
-            loc = new Point(loc.x+mov.x/10,loc.y/*+mov.z*/,loc.z+mov.z/10);
-//            loc = new Point(loc.x+mov.x,loc.z+mov.z,loc.z+mov.z);
+            loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
+//            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
         }
     }
 

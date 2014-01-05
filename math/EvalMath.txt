@@ -1,5 +1,5 @@
-xn(x-x0)+yn(z-y0)+zn(z-z0)=0
+xn(x-x0)+yn(y-y0)+zn(z-z0)=0
 
-xn*x-xn*x0=-(yn(z-y0)+zn(z-z0))
-xn*x=-(yn(z-y0)+zn(z-z0))+xn*x0
-x=-((yn(z-y0)+zn(z-z0))+xn*x0)/xn
+xn*x-xn*x0=-(yn(y-y0)+zn(z-z0))
+xn*x=-(yn(y-y0)+zn(z-z0))+xn*x0
+x=-((yn(y-y0)+zn(z-z0))+xn*x0)/xn

@@ -62,7 +62,6 @@ public class MapTest implements Runnable{
 		Toolkit tk= p.getToolkit();
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		j.setCursor(transparent);
-		
 		//this.p.setObjects(MapBuilder.createMap());
 		while(true) {
 			long startT = System.currentTimeMillis();

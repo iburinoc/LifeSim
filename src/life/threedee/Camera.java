@@ -28,7 +28,6 @@ public class Camera extends JPanel{
 	private List<CameraSlave> slaves;
 	
 	protected List<ThreeDeeObject> objects;
-	private List<Tickable> tickables;
 	
 	private Vector rightU;
 	private Vector upU;
@@ -66,9 +65,6 @@ public class Camera extends JPanel{
 		bufg = buf.createGraphics();
 		
 		fbuf = new Color[SC_WIDTH][SC_HEIGHT];
-		
-		objects = new ArrayList<ThreeDeeObject>();
-		tickables = new ArrayList<Tickable>();
 	}
 	
 	public Camera(){
@@ -194,16 +190,8 @@ public class Camera extends JPanel{
     public synchronized void translate(Vector shift){
         loc = new Point(new Vector(loc).add(shift));
     }
-	
-	public synchronized void add(ThreeDeeObject o){
-		objects.add(o);
-	}
-	
-	public synchronized void setObjects(List<ThreeDeeObject> o){
-		objects = o;
-	}
-	
-	public synchronized void addTickable(Tickable t){
-		tickables.add(t);
-	}
+    
+    public void setObjects(List<ThreeDeeObject> o) {
+    	this.objects = o;
+    }
 }

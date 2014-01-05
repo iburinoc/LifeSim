@@ -67,6 +67,7 @@ public class POC3D implements Runnable{
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		j.setCursor(transparent);
 		objects = new ArrayList<ThreeDeeObject>();
+		this.p.setObjects(objects);
 		Plane p0 = new Plane(new Point(0,5,0),new Vector(0,1,0),Color.red);
 		Plane p1 = new Plane(new Point(20,0,20),new Vector(1,0,0),Color.black);
 		Plane p2 = new Plane(new Point(-20,0,20),new Vector(1,0,0),Color.blue);
@@ -79,41 +80,33 @@ public class POC3D implements Runnable{
 			Point a = new Point(0,0,0), b = new Point(0,1,0), c = new Point(1,0,0);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			this.p.add(p6);
+			objects.add(p6);
 		}
 		{
 			Point a = new Point(5,1,5), b = new Point(5,1,1.5), c = new Point(1,0,5);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			this.p.add(p6);
+			objects.add(p6);
 		}
 		{
 			Point a = new Point(0,1,0), b = new Point(0,1,1), c = new Point(1,1,0);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			this.p.add(p6);
+			objects.add(p6);
 		}
 		{
 			Point a = new Point(1,1,0), b = new Point(1,1,1), c = new Point(0,1,1);
 			
 			Plane p6 = new Triangle(a,b,c,Color.pink);
-			this.p.add(p6);
+			objects.add(p6);
 		}
-		{
-            Point a = new Point(-3,1,-3), b = new Point(-2,1,-2), c = new Point(-1,0.5,-4);
-            
-            Triangle p6 = new Triangle(a,b,c,Color.magenta);
-            MovementTester mt = new MovementTester(p6);
-            this.p.addTickable(mt);
-            this.p.add(p6);
-        }
 		{
             WorldObject wo = WorldObject.generateObject("(2, 2, 2);"
                     + "((1,1,1),(3,1,1), (2, 1, 3)); "
                     + "((2,3,2),  (3,1,1),  (2,1, 3))  ;"
                     + "((1,1,   1),(2 ,3,2), (2, 1,  3));"
                     + "((1,1\t,1),(3,   1,1), (2, 3, 2))");
-            this.p.add(wo);
+            objects.add(wo);
         }
 		{
             WorldObject wo = WorldObject.generateObject("(0,1,0);"
@@ -133,16 +126,16 @@ public class POC3D implements Runnable{
                     + "(-0.5,1.5,0),(-0.6,0,0),(-0.425,0.5,0.425);"
                     + "(0,1.5,-0.5),(0,0,-0.6),(0.425,0.5,-0.425);"
                     + "(0,1.5,-0.5),(0,0,-0.6),(-0.425,0.5,-0.425)");
-            this.p.add(wo);
+//            objects.add(wo);
         }
-		this.p.add(p0);
-		this.p.add(p1);
-		this.p.add(p2);
-		this.p.add(p3);
-		this.p.add(p4);
-		this.p.add(p5);
-		this.p.add(p7);
-		this.p.add(p8);
+		objects.add(p0);
+		objects.add(p1);
+		objects.add(p2);
+		objects.add(p3);
+		objects.add(p4);
+		objects.add(p5);
+		objects.add(p7);
+		objects.add(p8);
 		while(true) {
 			long startT = System.currentTimeMillis();
 			p.calcBuffer();

@@ -54,6 +54,11 @@ public class MapBuilder {
                     + "(0,1.5,-0.5),(0,0,-0.6),(0.425,0.5,-0.425);"
                     + "(0,1.5,-0.5),(0,0,-0.6),(-0.425,0.5,-0.425)", Color.RED);
          
+            WorldObject pellet = WorldObject.generateObject("(0,1,0);"
+                    + "(0,1.125,0),(0,0.875,0.25),(0.175,0.875,-0.125);"
+                    + "(0,1.125,0),(0,0.875,0.25),(-0.175,0.875,-0.125);"
+                    + "(0,1.125,0),(0.175,0.875,-0.125),(-0.175,0.875,-0.125)", Color.YELLOW);
+            pellet.translate(new Vector(new Point(0.0, 0.0, 4.0)));
 		try{
 			br = new BufferedReader(new FileReader("resources/map.dat"));
 		}
@@ -66,6 +71,7 @@ public class MapBuilder {
 					vis.add(map.get(0));
 					vis.add(map.get(1));
 					vis.add(wo);
+					vis.add(pellet);
 					String[] walls = l.split(",");
 					for(int i = 0; i < walls.length; i++) {
 						try{

@@ -4,20 +4,16 @@ import static java.lang.Math.PI;
 import static life.threedee.game.GameUtilities.R_INC;
 import static life.threedee.game.GameUtilities.SC_HEIGHT;
 import static life.threedee.game.GameUtilities.SC_WIDTH;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JPanel;
-
 import life.threedee.game.Tickable;
 
 public class Camera extends JPanel{
-
 	public final int INC = 4;
 	
 	protected Point loc;

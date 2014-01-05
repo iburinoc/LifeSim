@@ -15,7 +15,6 @@ import life.threedee.Vector;
 import life.threedee.game.maps.PacmanWorldTest;
 
 public class Game implements Runnable{
-	
 	public static final int TICK_RATE = 10;
 	public static final int FRAME_RATE = 30;
 	
@@ -25,18 +24,27 @@ public class Game implements Runnable{
 	
 	private List<ThreeDeeObject> objects;
 	private List<Tickable> tickables;
+
+    private List<Ghost> ghosts;
 	
 	private Player p;
 	
 	private JFrame j;
 	
 	private Input i;
+
+    //private Ryan;
 	
 	private boolean running;
 	
 	public Game() {
 		j = new JFrame("Game");
 		p = new Player(new Point(0,1,0), new Vector(0,0,1), new Vector(0,0,0), this);
+        ghosts = null;
+        ghosts.add(new Blinky(this));
+        ghosts.add(new Pinky(this));
+        ghosts.add(new Inky(this));
+        ghosts.add(new Clyde(this));
 		setObjects(new ArrayList<ThreeDeeObject>());
 		setTickables(new ArrayList<Tickable>());
 		
@@ -131,4 +139,12 @@ public class Game implements Runnable{
 	public List<ThreeDeeObject> objects() {
 		return objects;
 	}
+
+    public Player getPlayer(){
+        return p;
+    }
+
+    public List<Ghost> getGhosts(){
+        return ghosts;
+    }
 }

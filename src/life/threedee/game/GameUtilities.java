@@ -4,10 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
-import life.threedee.Vector;
 
 public class GameUtilities{
 	public static final int SC_WIDTH = 720;
@@ -26,8 +23,6 @@ public class GameUtilities{
 	
 	// meters per tile.  we can modify this if we need to.  use this in all calculations necessary so scaling is smooth
 	public static final float MPT = 1.0f;
-	
-	public static final Vector G = new Vector(0, -0.981, 0);
 	
 	public static final Color BLANK = new Color(0, 0, 0, 0);
 

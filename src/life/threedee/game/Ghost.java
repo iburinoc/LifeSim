@@ -1,11 +1,13 @@
 package life.threedee.game;
 
-public abstract class Ghost{
+public abstract class Ghost implements Tickable{
     protected Location location, target;
     protected int direction;
+    protected Game game;
 
     public Location makeDecision(boolean[] open){
-        open[direction] = false;
+        target = findTarget();
+        open[(direction + 2) % 4] = false;
         double shortest = Double.MAX_VALUE;
         Location next = null;
         for (int i = 3; i >= 0; i--){
@@ -16,5 +18,14 @@ public abstract class Ghost{
             }
         }
         return next;
+    }
+
+    public abstract Location findTarget();
+
+    public void tick(int delta){
+    }
+
+    public Location getLocation(){
+        return location;
     }
 }

@@ -9,7 +9,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -111,8 +110,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 			p.s = true;
 		}else if(e.getKeyChar() == 'd'){
 			p.d = true;
-        }else if(e.getKeyChar() == ' '){
-        	p.up = true;
         }
 	}
 
@@ -126,8 +123,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 			p.s = false;
 		}else if(e.getKeyChar() == 'd'){
 			p.d = false;
-        }else if(e.getKeyChar() == ' '){
-        	p.up = false;
         }
 	}
 

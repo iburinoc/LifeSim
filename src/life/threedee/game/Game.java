@@ -12,6 +12,7 @@ import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
+import life.threedee.game.maps.MapBuilder;
 import life.threedee.game.maps.PacmanWorldTest;
 
 public class Game implements Runnable{
@@ -73,14 +74,13 @@ public class Game implements Runnable{
 		j.setCursor(transparent);
 	}
 	
-	private void test() {
-//		PacmanWorldTest.genTunnel(objects);
-		PacmanWorldTest.genTexturedTunnel(objects);
+	private void betaObjects() {
+		objects.addAll(MapBuilder.generateBetaScreenShotObjects());
 	}
 	
 	@Override
 	public void run() {
-		test();
+		betaObjects();
 		removeCursor();
 		
 		long tick_time = System.currentTimeMillis();

@@ -8,10 +8,10 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import life.threedee.ThreeDeeObject;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
+import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.PacmanWorldTest;
 
 public class Game implements Runnable{
@@ -28,6 +28,7 @@ public class Game implements Runnable{
     private List<Ghost> ghosts;
 	
 	private Player p;
+	private GameMap m;
 	
 	private JFrame j;
 	
@@ -39,6 +40,10 @@ public class Game implements Runnable{
 	
 	public Game() {
 		j = new JFrame("Game");
+		
+		m = new GameMap();
+		
+		p = new Player(this, m);
 		p = new Player(new Point(0,1,0), new Vector(0,0,1), new Vector(0,0,0), this);
         ghosts = null;
         ghosts.add(new Blinky(this));
@@ -54,7 +59,6 @@ public class Game implements Runnable{
 		
 		j.addMouseListener(i);
 		j.addMouseMotionListener(i);
-		j.addMouseWheelListener(i);
 		j.addKeyListener(i);
 		
 		j.add(p);

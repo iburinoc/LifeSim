@@ -126,13 +126,6 @@ public class Camera extends JPanel{
 		}
 		
 		g.drawImage(buf, 0, 0, null);
-		
-		if(false){
-			g.setColor(Color.gray);
-			for(int i = 0; i < 4; i++){
-				g.drawLine(i * SC_WIDTH / 4, 0, i * SC_WIDTH / 4, SC_HEIGHT);
-			}
-		}
 	}
 	
 	protected Vector getVectorForPixel(int x,int y, Vector right, Vector up){
@@ -171,24 +164,13 @@ public class Camera extends JPanel{
 		}
 		dir = Vector.fromPolarTransform(dirPolar[0], dirPolar[1], dir.s());
     }
-
-    public synchronized void move(int d) {
-        if (d < 4) {
-            double[] pt = dir.polarTransform();
-            pt[0] += PI / 2 * d;
-            Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
-            loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
-//            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
-        }
-    }
-
-	public synchronized void scroll(int d){
-		dir = dir.setScalar(Math.max(Math.min(dir.s() + -d / 10.0, 5), 1e-100));
-		System.out.println(dir.s());
-	}
 	
     public synchronized void translate(Vector shift){
         loc = new Point(new Vector(loc).add(shift));
+    }
+    
+    public synchronized void setDir(Vector dir){
+    	
     }
     
     public void setObjects(List<ThreeDeeObject> o) {

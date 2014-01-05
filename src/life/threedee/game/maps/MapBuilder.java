@@ -70,11 +70,11 @@ public class MapBuilder {
 					/*BETA SCREENSHOTS BEGIN*/
 					vis.add(wo);
 					for (double i = -5.0; i < 6; i++) {
-					    WorldObject pellet = WorldObject.generateObject("(0,1,0);"
-			                    + "(0,1.125,0),(0,0.875,0.25),(0.175,0.875,-0.125);"
-			                    + "(0,1.125,0),(0,0.875,0.25),(-0.175,0.875,-0.125);"
-			                    + "(0,1.125,0),(0.175,0.875,-0.125),(-0.175,0.875,-0.125)", Color.YELLOW);
-			            pellet.translate(new Vector(new Point(i+0.5, 0.0, 3.5)));
+					    WorldObject pellet = WorldObject.generateObject("(0,0.75,0);"
+			                    + "(0,0.875,0),(0,0.625,0.2),(0.14,0.625,-0.1);"
+			                    + "(0,0.875,0),(0,0.625,0.2),(-0.14,0.625,-0.1);"
+			                    + "(0,0.875,0),(0.14,0.625,-0.1),(-0.14,0.625,-0.1)", Color.YELLOW);
+			            pellet.translate(new Vector(new Point(MPT*i+0.5, 0.0, 3.5)));
 			            vis.add(pellet);
 					}
 					/*BETA SCREENSHOTS END*/

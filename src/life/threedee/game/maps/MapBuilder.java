@@ -23,6 +23,7 @@ import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.WorldObject;
 import life.threedee.game.GameUtilities;
+import life.threedee.game.GhostModelFactory;
 
 /**
  * Parses 2D pacman map image and builds the object list for it.
@@ -37,7 +38,7 @@ public class MapBuilder {
 	
 	public static List<ThreeDeeObject> generateBetaScreenShotObjects() {
 		List<ThreeDeeObject> o = new ArrayList<ThreeDeeObject>();
-		WorldObject wo = WorldObject.generateObject("(0,1,0);"
+		/*WorldObject wo = WorldObject.generateObject("(0,1,0);"
                 + "(0,2,0),(0.5,1.5,0),(0,1.5,0.5);"
                 + "(0,2,0),(0,1.5,0.5),(-0.5,1.5,0);"
                 + "(0,2,0),(-0.5,1.5,0),(0,1.5,-0.5);"
@@ -54,7 +55,7 @@ public class MapBuilder {
                 + "(-0.5,1.5,0),(-0.6,0,0),(-0.425,0.5,0.425);"
                 + "(0,1.5,-0.5),(0,0,-0.6),(0.425,0.5,-0.425);"
                 + "(0,1.5,-0.5),(0,0,-0.6),(-0.425,0.5,-0.425)", Color.RED);
-		o.add(wo);
+		o.add(wo);*/
 		for (double i = -5.0; i < 5; i++) {
 		    WorldObject pellet = WorldObject.generateObject("(0,0.75,0);"
                     + "(0,0.875,0),(0,0.625,0.2),(0.14,0.625,-0.1);"
@@ -72,6 +73,7 @@ public class MapBuilder {
         HalvedTrapezoidalTexturedPlane http = new HalvedTrapezoidalTexturedPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
         //TexturedPlane http = new TexturedPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
         o.add(http);*/
+		o.add(GhostModelFactory.generateGhostModel(0));
 		return o;
 	}
 	

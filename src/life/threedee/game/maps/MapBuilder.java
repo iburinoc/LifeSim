@@ -52,12 +52,12 @@ public class MapBuilder {
                 + "(0,1.5,-0.5),(0,0,-0.6),(0.425,0.5,-0.425);"
                 + "(0,1.5,-0.5),(0,0,-0.6),(-0.425,0.5,-0.425)", Color.RED);
 		o.add(wo);
-		for (double i = -5.0; i < 6; i++) {
+		for (double i = -5.0; i < 5; i++) {
 		    WorldObject pellet = WorldObject.generateObject("(0,0.75,0);"
                     + "(0,0.875,0),(0,0.625,0.2),(0.14,0.625,-0.1);"
                     + "(0,0.875,0),(0,0.625,0.2),(-0.14,0.625,-0.1);"
                     + "(0,0.875,0),(0.14,0.625,-0.1),(-0.14,0.625,-0.1)", /*Color.WHITE*/ Color.YELLOW);
-            pellet.translate(new Vector(new Point(MPT*i+0.5, 0.0, 3.5)));
+            pellet.translate(new Vector(new Point(MPT*i+0.5, 0.0, 3.5*MPT)));
             o.add(pellet);
 		}
 		return o;

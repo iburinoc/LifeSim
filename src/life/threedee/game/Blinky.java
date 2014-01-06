@@ -2,6 +2,7 @@ package life.threedee.game;
 
 public class Blinky extends Ghost{
     private final Location corner;
+    private boolean cruiseElroy;
 
     public Blinky(Game game){
         corner = new Location(11.5, 18.5);

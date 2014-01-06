@@ -2,22 +2,26 @@ package life.threedee.game;
 
 public abstract class Ghost implements Tickable{
     protected Location location, target;
-    protected int direction;
+    protected int direction, mode;
+    protected boolean uTurn;
     protected Game game;
 
-    public Location makeDecision(boolean[] open){
+    public int makeDecision(boolean[] open){
+        if (uTurn){
+            return (direction + 2) % 4;
+        }
         target = findTarget();
         open[(direction + 2) % 4] = false;
         double shortest = Double.MAX_VALUE;
-        Location next = null;
+        int toReturn = 0;
         for (int i = 3; i >= 0; i--){
-            Location current = new Location(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)), location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)));
-            if (open[i] && current.distanceTo(target) <= shortest){
-                next = current;
-                shortest = next.distanceTo(target);
+            Location choice = new Location(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)), location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)));
+            if (open[i] && choice.distanceTo(target) <= shortest){
+                shortest = choice.distanceTo(target);
+                toReturn = i;
             }
         }
-        return next;
+        return toReturn;
     }
 
     public abstract Location findTarget();

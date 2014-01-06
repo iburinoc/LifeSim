@@ -18,7 +18,7 @@ public class Clyde extends Ghost{
     }
 
     public Location findTarget(){
-        if (location.distanceTo(game.getPlayer().getLoc()) <= 64){
+        if (location.distanceTo(game.getPlayer().getLoc()) > 64){
             return game.getPlayer().getLoc();
         }
         return corner;

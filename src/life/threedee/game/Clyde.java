@@ -18,6 +18,11 @@ public class Clyde extends Ghost{
     }
 
     public Location findTarget(){
+        if (eaten){
+            return eyesTarget;
+        } else if (game.getMode() == 0){
+            return corner;
+        }
         if (location.distanceTo(game.getPlayer().getLoc()) > 64){
             return game.getPlayer().getLoc();
         }

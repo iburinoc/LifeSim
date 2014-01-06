@@ -19,6 +19,11 @@ public class Blinky extends Ghost{
     }
 
     public Location findTarget(){
+        if (eaten){
+            return eyesTarget;
+        } else if (game.getMode() == 0){
+            return corner;
+        }
         return game.getPlayer().getLoc();
     }
 }

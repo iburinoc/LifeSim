@@ -33,6 +33,8 @@ public class Game implements Runnable{
 	private Input i;
 	
 	private boolean running;
+
+    private int mode;
 	
 	public Game() {
 		j = new JFrame("Game");
@@ -149,6 +151,10 @@ public class Game implements Runnable{
 	public List<ThreeDeeObject> objects() {
 		return objects;
 	}
+
+    public int getMode(){
+        return mode;
+    }
 
     public Player getPlayer(){
         return p;

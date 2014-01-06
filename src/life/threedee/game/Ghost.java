@@ -2,8 +2,9 @@ package life.threedee.game;
 
 public abstract class Ghost implements Tickable{
     protected Location location, target;
-    protected int direction, mode;
-    protected boolean uTurn;
+    protected final Location eyesTarget = new Location(-0.5, 3.5);
+    protected int direction;
+    protected boolean uTurn, eaten;
     protected Game game;
 
     public int makeDecision(boolean[] open){

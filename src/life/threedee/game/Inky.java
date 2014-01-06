@@ -21,6 +21,11 @@ public class Inky extends Ghost{
     }
 
     public Location findTarget(){
+        if (eaten){
+            return eyesTarget;
+        } else if (game.getMode() == 0){
+            return corner;
+        }
         Vector dir = game.getPlayer().getDir();
         double yaw = dir.polarTransform()[0];
         Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(2)));

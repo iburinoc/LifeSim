@@ -15,7 +15,7 @@ public class GhostPlane extends TexturedPlane {
     private int textureNum, ghostNum;
     
     public GhostPlane(Point p, Vector n, int ghostNum) {
-        super(p, n, GameUtilities.loadImage("resources/Ghost"+ghostNum+"Side1.png"));
+        super(p, n, GameUtilities.loadImage("resources/Ghost"+ghostNum+"Side.png"));
         this.textureNum = 1;
         this.ghostNum=ghostNum;
     }

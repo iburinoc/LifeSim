@@ -11,8 +11,8 @@ public class Ghost implements Tickable{
     protected int direction;
     protected boolean uTurn, eaten;
     protected Game game;
-    protected GhostPlane zPlusPlane, xPlusPlane, zMinusPlane, xMinusPlane;
-    protected Triangle zPlusTriangle, xPlusTriangle, zMinusTriangle, xMinusTriangle;
+    protected GhostPlane[] facePlanes;
+    protected Triangle[] faceTriangles;
 
     public Ghost(Game g, int ghostNum) {
         Point top = new Point(0.0, 2.0, 0.0);
@@ -24,23 +24,20 @@ public class Ghost implements Tickable{
         Point lowerZMinusXPlus = new Point(0.5, 0.0, -0.5);
         Point lowerZMinusXMinus = new Point(-0.5, 0.0, -0.5);
         Point lowerZPlusXMinus = new Point(-0.5, 0.0, 0.5);
-        zPlusTriangle = new Triangle(top, zPlusXPlus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        xPlusTriangle = new Triangle(top, zPlusXPlus, zMinusXPlus, GameUtilities.GHOST_COLORS[ghostNum]);
-        zMinusTriangle = new Triangle(top, zMinusXPlus, zMinusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        xMinusTriangle = new Triangle(top, zMinusXMinus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        zPlusPlane = new GhostPlane(lowerZPlusXPlus, new Vector(lowerZPlusXPlus, zPlusXPlus).crossProduct(new Vector(lowerZPlusXPlus, lowerZMinusXPlus)), ghostNum);
-        xPlusPlane = new GhostPlane(lowerZMinusXPlus, new Vector(lowerZMinusXPlus, zMinusXPlus).crossProduct(new Vector(lowerZMinusXPlus, lowerZMinusXMinus)), ghostNum);
-        zMinusPlane = new GhostPlane(lowerZMinusXMinus, new Vector(lowerZMinusXMinus, zMinusXMinus).crossProduct(new Vector(lowerZMinusXMinus, lowerZPlusXMinus)), ghostNum);
-        xMinusPlane = new GhostPlane(lowerZPlusXMinus, new Vector(lowerZPlusXMinus, zPlusXMinus).crossProduct(new Vector(lowerZPlusXMinus, lowerZPlusXPlus)), ghostNum);
-        g.addObject(zPlusPlane);
-        g.addObject(xPlusPlane);
-        g.addObject(zMinusPlane);
-        g.addObject(xMinusPlane);
-        g.addObject(zPlusTriangle);
-        g.addObject(xPlusTriangle);
-        g.addObject(zMinusTriangle);
-        g.addObject(xMinusTriangle);
-        
+        facePlanes = new GhostPlane[4];
+        faceTriangles = new Triangle[4];
+        faceTriangles[0] = new Triangle(top, zPlusXPlus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
+        faceTriangles[1] = new Triangle(top, zPlusXPlus, zMinusXPlus, GameUtilities.GHOST_COLORS[ghostNum]);
+        faceTriangles[2] = new Triangle(top, zMinusXPlus, zMinusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
+        faceTriangles[3] = new Triangle(top, zMinusXMinus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
+        facePlanes[0] = new GhostPlane(lowerZPlusXPlus, new Vector(lowerZPlusXPlus, zPlusXPlus).crossProduct(new Vector(lowerZPlusXPlus, lowerZMinusXPlus)), ghostNum);
+        facePlanes[1] = new GhostPlane(lowerZMinusXPlus, new Vector(lowerZMinusXPlus, zMinusXPlus).crossProduct(new Vector(lowerZMinusXPlus, lowerZMinusXMinus)), ghostNum);
+        facePlanes[2] = new GhostPlane(lowerZMinusXMinus, new Vector(lowerZMinusXMinus, zMinusXMinus).crossProduct(new Vector(lowerZMinusXMinus, lowerZPlusXMinus)), ghostNum);
+        facePlanes[3] = new GhostPlane(lowerZPlusXMinus, new Vector(lowerZPlusXMinus, zPlusXMinus).crossProduct(new Vector(lowerZPlusXMinus, lowerZPlusXPlus)), ghostNum);
+        for (int i = 0; i < 3; i++) {
+            g.addObject(faceTriangles[i]);
+            g.addObject(facePlanes[i]);
+        }
         g.addTickable(this);
     }
     
@@ -74,22 +71,17 @@ public class Ghost implements Tickable{
     }
 
     public void tick(int delta){
-        zPlusPlane.shiftTexture();
-        xPlusPlane.shiftTexture();
-        zMinusPlane.shiftTexture();
-        xMinusPlane.shiftTexture();
+        for (int i = 0; i < 3; i++) {
+            facePlanes[i].shiftTexture();
+        }
     }
     
     public void move(Vector v) {
         //ANDREY, PUT MOVEMENT CODE HERE!
-        zPlusPlane.translate(v);
-        xPlusPlane.translate(v);
-        zMinusPlane.translate(v);
-        xMinusPlane.translate(v);
-        zPlusTriangle.translate(v);
-        xPlusTriangle.translate(v);
-        zMinusTriangle.translate(v);
-        xMinusTriangle.translate(v);
+        for (int i = 0; i < 3; i++) {
+            facePlanes[i].translate(v);
+            faceTriangles[i].translate(v);
+        }
     }
 
     public Location getLocation(){

@@ -46,12 +46,13 @@ public class Game implements Runnable{
 		
         ghosts = new ArrayList<Ghost>();
         ghosts.add(new Blinky(this));
-        ghosts.get(0).move(new Vector(0.0,0.0,2.0*GameUtilities.MPT));
+        ghosts.get(0).move(new Vector(0.0,0.0,3.5*GameUtilities.MPT));
         ghosts.add(new Pinky(this));
+        ghosts.get(1).move(new Vector(0.0,0.0,0.5*GameUtilities.MPT));
         ghosts.add(new Inky(this));
-        ghosts.get(2).move(new Vector(-2.0*GameUtilities.MPT, 0.0, 0.0));
+        ghosts.get(2).move(new Vector(-2.0*GameUtilities.MPT, 0.0, 0.5));
         ghosts.add(new Clyde(this));
-        ghosts.get(3).move(new Vector(2.0*GameUtilities.MPT,0.0,0.0));
+        ghosts.get(3).move(new Vector(2.0*GameUtilities.MPT,0.0,0.5));
 		
 		i = new Input(p, this, j);
 		

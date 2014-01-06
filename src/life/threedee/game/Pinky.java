@@ -7,17 +7,12 @@ public class Pinky extends Ghost{
     private final Location corner;
 
     public Pinky(Game game){
-        corner = new Location(-11.5, 18.5);
-        super.location = new Location(0, 0.5);
-        super.direction = 2;
-        super.game = game;
+        this(new Location(-11.5, 18.5), 2, game);
     }
 
     public Pinky(Location location, int direction, Game game){
+        super(location, direction, game, 1);
         corner = new Location(-11.5, 18.5);
-        super.location = location;
-        super.direction = direction;
-        super.game = game;
     }
 
     public Location findTarget(){

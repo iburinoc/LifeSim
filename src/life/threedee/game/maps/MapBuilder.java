@@ -6,7 +6,6 @@ import static life.threedee.game.GameUtilities.WALL_HEIGHT;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,17 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-
-import life.threedee.GhostPlane;
 import life.threedee.Plane;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
-import life.threedee.Triangle;
 import life.threedee.Vector;
 import life.threedee.WorldObject;
 import life.threedee.game.GameUtilities;
-import life.threedee.game.GhostModelFactory;
 
 /**
  * Parses 2D pacman map image and builds the object list for it.
@@ -75,7 +69,7 @@ public class MapBuilder {
         //TexturedPlane http = new TexturedPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
         o.add(http);*/
 		//o.add(GhostModelFactory.generateGhostModel(0));
-		Point top = new Point(0.0, 2.0, 0.0);
+		/*Point top = new Point(0.0, 2.0, 0.0);
         Point zP = new Point(0.25, 1.5, 0.25);
         Point xP = new Point(0.25, 1.5, -0.25);
         Point zM = new Point(-0.25, 1.5, -0.25);
@@ -100,7 +94,7 @@ public class MapBuilder {
         o.add(http1);
         o.add(http2);
         o.add(http3);
-        o.add(http4);
+        o.add(http4);*/
 		return o;
 	}
 	

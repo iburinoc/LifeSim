@@ -7,17 +7,12 @@ public class Inky extends Ghost{
     private final Location corner;
 
     public Inky(Game game){
-        corner = new Location(13.5, -16.5);
-        super.location = new Location(-2, 0.5);
-        super.direction = 0;
-        super.game = game;
+        this(new Location(-2, 0.5), 0, game);
     }
 
     public Inky(Location location, int direction, Game game){
+        super(location, direction, game, 2);
         corner = new Location(13.5, -16.5);
-        super.location = location;
-        super.direction = direction;
-        super.game = game;
     }
 
     public Location findTarget(){

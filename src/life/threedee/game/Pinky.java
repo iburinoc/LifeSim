@@ -5,7 +5,7 @@ import life.threedee.Vector;
 
 public class Pinky extends Ghost{
     public Pinky(Game game){
-        this(GameUtilities.GHOST_LOCATIONS[1], 2, game);
+        this(GameUtilities.GHOST_LOCATIONS[1], GameUtilities.GHOST_ORIENTATIONS[1], game);
     }
 
     public Pinky(Location location, int direction, Game game){

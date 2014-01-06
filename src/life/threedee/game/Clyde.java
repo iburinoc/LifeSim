@@ -2,7 +2,7 @@ package life.threedee.game;
 
 public class Clyde extends Ghost{
     public Clyde(Game game){
-        this(GameUtilities.GHOST_LOCATIONS[3], 0, game);
+        this(GameUtilities.GHOST_LOCATIONS[3], GameUtilities.GHOST_ORIENTATIONS[3], game);
     }
 
     public Clyde(Location location, int direction, Game game){

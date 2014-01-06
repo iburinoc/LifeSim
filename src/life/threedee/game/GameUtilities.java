@@ -74,7 +74,7 @@ public class GameUtilities{
 		return Math.abs(a - b) < 1e-15;
 	}
 	
-	public static Color[] GHOST_COLORS = new Color[] {Color.RED, new Color(240, 178, 254), new Color(95, 248, 251), Color.ORANGE}; 
+	public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76)}; 
 	
 	public static BufferedImage loadImage(String ref) {
 		try {

@@ -29,7 +29,6 @@ public class Game implements Runnable{
     private List<Ghost> ghosts;
 	
 	private Player p;
-	private GameMap m;
 	
 	private JFrame j;
 	
@@ -42,7 +41,7 @@ public class Game implements Runnable{
 	public Game() {
 		j = new JFrame("Game");
 		
-		m = new GameMap();
+		GameMap m = new GameMap();
 		
 		p = new Player(this, m);
 		
@@ -111,7 +110,7 @@ public class Game implements Runnable{
 			}
 			for (ThreeDeeObject obj: objects) { // BAD.  Replace with tickables pls
 			    if (obj instanceof GhostPlane) {
-			        ((GhostPlane) obj).shiftTexture(false); // There now you'll notice it
+			       // ((GhostPlane) obj).shiftTexture(false); // There now you'll notice it
 			    }
 			}
 		}

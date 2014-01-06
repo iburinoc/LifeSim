@@ -31,14 +31,16 @@ public class GhostModelFactory {
         Triangle t4 = new Triangle(top, xM, zP, Color.RED);
         BufferedImage texture = null;
         try {
-            texture = ImageIO.read(new File("./resources/kitten.jpg"));
+            texture = ImageIO.read(new File("./resources/GhostSide1.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        HalvedTrapezoidalTexturedPlane http1 = new HalvedTrapezoidalTexturedPlane(lZP, new Vector(lZP, lXM).crossProduct(new Vector(lZP, zP)), texture);
-        HalvedTrapezoidalTexturedPlane http2 = new HalvedTrapezoidalTexturedPlane(lXP, new Vector(lXP, lZP).crossProduct(new Vector(lXP, xP)), texture);
-        HalvedTrapezoidalTexturedPlane http3 = new HalvedTrapezoidalTexturedPlane(lZM, new Vector(lZM, lXP).crossProduct(new Vector(lZM, zM)), texture);
-        HalvedTrapezoidalTexturedPlane http4 = new HalvedTrapezoidalTexturedPlane(lXM, new Vector(lXM, lZM).crossProduct(new Vector(lXM, xM)), texture);
-        return new WorldObject(new ThreeDeeObject[] {t1, t2, t3, t4, http1, http2, http3, http4}, new Point(0.0, 1.0, 0.0));
+        HalvedTrapezoidalTexturedPlane http1 = new HalvedTrapezoidalTexturedPlane(lZP, new Vector(lZP, lXP).crossProduct(new Vector(lZP, zP)), texture);
+        HalvedTrapezoidalTexturedPlane http2 = new HalvedTrapezoidalTexturedPlane(lXP, new Vector(lXP, lZM).crossProduct(new Vector(lXP, xP)), texture);
+        HalvedTrapezoidalTexturedPlane http3 = new HalvedTrapezoidalTexturedPlane(lZM, new Vector(lZM, lXM).crossProduct(new Vector(lZM, zM)), texture);
+        HalvedTrapezoidalTexturedPlane http4 = new HalvedTrapezoidalTexturedPlane(lXM, new Vector(lXM, lZP).crossProduct(new Vector(lXM, xM)), texture);
+        WorldObject wo = new WorldObject(new ThreeDeeObject[] {t1, t2, t3, t4, http1, http2, http3, http4}, new Point(0.0, 1.0, 0.0));
+        wo.translate(new Vector(0.0, 0.0, 3.0));
+        return wo;
     }
 }

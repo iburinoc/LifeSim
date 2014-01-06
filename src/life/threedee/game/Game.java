@@ -29,7 +29,6 @@ public class Game implements Runnable{
     private List<Ghost> ghosts;
 	
 	private Player p;
-	private GameMap m;
 	
 	private JFrame j;
 	
@@ -42,7 +41,7 @@ public class Game implements Runnable{
 	public Game() {
 		j = new JFrame("Game");
 		
-		m = new GameMap();
+		GameMap m = new GameMap();
 		
 		p = new Player(this, m);
 		

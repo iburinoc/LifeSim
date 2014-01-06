@@ -90,4 +90,12 @@ public class Triangle extends Plane {
         b = b.subtract(origin).stretch(elasticity).add(origin);
         c = c.subtract(origin).stretch(elasticity).add(origin);
     }
+
+    @Override
+    public boolean sameSide(Point point1, Point point2){
+        if (!this.inside(this.intersection(new Vector(point1, point2), point1))){
+            return true;
+        }
+        return !(Math.abs(calculateT(new Vector(point2.subtract(point1)), point1)) < 1);
+    }
 }

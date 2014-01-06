@@ -47,12 +47,12 @@ public class Player extends Camera implements Tickable{
     public synchronized void move(int d) {
         double[] pt = dir.polarTransform();
         pt[0] -= PI / 2 * d;
-        Vector mov = Vector.fromPolarTransform(pt[0], 0, 1);//d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1])
+        Vector mov = Vector.fromPolarTransform(pt[0], 0, 0.1);//d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1])
         //loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
         Point newLoc = new Point(loc.x+mov.x/4,loc.y,loc.z+mov.z/4);
         if(map != null) {
         	for (ThreeDeeObject wall : map) {
-        		if (!wall.sameSide(loc, newLoc) && false) {
+        		if (!wall.sameSide(loc, newLoc)){
         			newLoc = loc;
         		}
         	}

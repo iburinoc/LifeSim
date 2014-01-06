@@ -2,11 +2,6 @@ package life.threedee;
 
 import java.awt.Color;
 
-/**
- * This class really shouldn't be used, it doesn't work AFAIK.
- * @author Ibur
- *
- */
 public class Rectangle implements ThreeDeeObject {
 
 	private Triangle a, b;
@@ -56,7 +51,6 @@ public class Rectangle implements ThreeDeeObject {
 
 	@Override
 	public boolean sameSide(Point a, Point b) {
-		return this.a.sameSide(a, b);
+		return (this.a.sameSide(a, b) && this.b.sameSide(a, b));
 	}
-
 }

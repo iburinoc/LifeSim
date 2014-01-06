@@ -11,7 +11,7 @@ public class Inky extends Ghost{
     }
 
     public Inky(Location location, int direction, Game game){
-        super(location, direction, game, 1);
+        super(location, direction, game, 2);
         corner = new Location(13.5, -16.5);
     }
 

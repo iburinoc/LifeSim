@@ -51,8 +51,9 @@ public class Game implements Runnable{
 		
         ghosts = new ArrayList<Ghost>();
         ghosts.add(new Blinky(this));
-//        ghosts.add(new Pinky(this));
-//        ghosts.add(new Inky(this));
+        ghosts.add(new Pinky(this));
+        ghosts.get(1).move(new Vector(2.0,0.0,0.0));
+//      ghosts.add(new Inky(this));
 //        ghosts.add(new Clyde(this));
 		
 		i = new Input(p, this, j);

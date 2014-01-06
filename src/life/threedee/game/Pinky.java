@@ -11,7 +11,7 @@ public class Pinky extends Ghost{
     }
 
     public Pinky(Location location, int direction, Game game){
-        super(location, direction, game, 2);
+        super(location, direction, game, 1);
         corner = new Location(-11.5, 18.5);
     }
 

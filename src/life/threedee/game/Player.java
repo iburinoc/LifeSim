@@ -49,10 +49,10 @@ public class Player extends Camera implements Tickable{
         pt[0] -= PI / 2 * d;
         Vector mov = Vector.fromPolarTransform(pt[0], 0, 1);//d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1])
         //loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
-        Point newLoc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
+        Point newLoc = new Point(loc.x+mov.x/4,loc.y,loc.z+mov.z/4);
         if(map != null) {
         	for (ThreeDeeObject wall : map) {
-        		if (!wall.sameSide(loc, newLoc)) {
+        		if (!wall.sameSide(loc, newLoc) && false) {
         			newLoc = loc;
         		}
         	}

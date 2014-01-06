@@ -12,11 +12,12 @@ import javax.imageio.ImageIO;
 import life.threedee.game.GameUtilities;
 
 public class GhostPlane extends TexturedPlane {
-    private int textureNum;
+    private int textureNum, ghostNum;
     
-    public GhostPlane(Point p, Vector n) {
-        super(p, n, GameUtilities.loadImage("resources/GhostSide1.png"));
+    public GhostPlane(Point p, Vector n, int ghostNum) {
+        super(p, n, GameUtilities.loadImage("resources/Ghost"+ghostNum+"Side1.png"));
         this.textureNum = 1;
+        this.ghostNum=ghostNum;
     }
     
     public Color c(Point inter) {
@@ -42,9 +43,7 @@ public class GhostPlane extends TexturedPlane {
     
     public void shiftTexture() {
         textureNum++; 
-        if (textureNum == 21) {
-            textureNum = 1;
-        }
-        this.setTexture(GameUtilities.loadImage("./resources/GhostSide"+textureNum+".png"));
+        textureNum %= 10;
+        this.setTexture(GameUtilities.loadImage("./resources/Ghost"+ghostNum+"Side"+textureNum+".png"));
     }
 }

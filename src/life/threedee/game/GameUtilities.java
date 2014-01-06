@@ -74,6 +74,8 @@ public class GameUtilities{
 		return Math.abs(a - b) < 1e-15;
 	}
 	
+	public static Color[] GHOST_COLORS = new Color[] {Color.RED, Color.BLUE, Color.PINK, Color.ORANGE}; 
+	
 	public static BufferedImage loadImage(String ref) {
 		try {
 			return ImageIO.read(GameUtilities.class.getResourceAsStream("/" + ref));

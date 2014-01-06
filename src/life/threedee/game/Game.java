@@ -46,13 +46,14 @@ public class Game implements Runnable{
 		
 		p = new Player(this, m);
 		
+		setObjects(new ArrayList<ThreeDeeObject>());
+        setTickables(new ArrayList<Tickable>());
+		
         ghosts = new ArrayList<Ghost>();
         ghosts.add(new Blinky(this));
-        ghosts.add(new Pinky(this));
-        ghosts.add(new Inky(this));
-        ghosts.add(new Clyde(this));
-		setObjects(new ArrayList<ThreeDeeObject>());
-		setTickables(new ArrayList<Tickable>());
+//        ghosts.add(new Pinky(this));
+//        ghosts.add(new Inky(this));
+//        ghosts.add(new Clyde(this));
 		
 		i = new Input(p, this, j);
 		
@@ -109,11 +110,11 @@ public class Game implements Runnable{
 				tickTickables(tick_delta);
 				tick_delta -= tickRateMillis;
 			}
-			for (ThreeDeeObject obj: objects) { // BAD.  Replace with tickables pls
-			    if (obj instanceof GhostPlane) {
-			        ((GhostPlane) obj).shiftTexture(false); // There now you'll notice it
-			    }
-			}
+//			for (ThreeDeeObject obj: objects) { // BAD.  Replace with tickables pls
+//			    if (obj instanceof GhostPlane) {
+//			        ((GhostPlane) obj).shiftTexture(false); // There now you'll notice it
+//			    }
+//			}
 		}
 	}
 	

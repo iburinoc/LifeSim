@@ -4,17 +4,12 @@ public class Clyde extends Ghost{
     private final Location corner;
 
     public Clyde(Game game){
-        corner = new Location(-13.5, -16.5);
-        super.location = new Location(2, 0.5);
-        super.direction = 0;
-        super.game = game;
+        this(new Location(2, 0.5), 0, game);
     }
 
     public Clyde(Location location, int direction, Game game){
+        super(location, direction, game, 3);
         corner = new Location(-13.5, -16.5);
-        super.location = location;
-        super.direction = direction;
-        super.game = game;
     }
 
     public Location findTarget(){

@@ -52,7 +52,7 @@ public class Player extends Camera implements Tickable{
         Point newLoc = new Point(loc.x+mov.x,loc.y,loc.z+mov.z);
         if(map != null) {
         	for (ThreeDeeObject wall : map) {
-        		if (!wall.sameSide(loc, newLoc) && false){
+        		if (!wall.sameSide(loc, newLoc)){
         			newLoc = loc;
         		}
         	}

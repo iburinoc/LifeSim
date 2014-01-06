@@ -57,13 +57,19 @@ public class TexturedPlane extends Plane{
 	@Override
 	public TColorTransfer getRData(Vector vector, Point point, double minT) {
 		double t = calculateT(vector, point, minT);
-		if(t == t && t > 0 && (minT != minT || t < minT)) {
+		if(t == t && t > 0 && !(t > minT)){
 			Color c = this.c(this.intersection(vector, point, t));
 			return new TColorTransfer(t, c, this);
 		} else {
 			return new TColorTransfer(Double.NaN, null, this);
 		}
 	}
+
+    @Override
+    public boolean sameSide(Point point1, Point point2){
+        Color color = getRData(new Vector(point1, point2), point1, Double.NaN).c;
+        return super.sameSide(point1, point2) || color == null || color.getAlpha() == 0;
+    }
 	
 	public void setTexture(BufferedImage texture) {
 	    this.texture = texture;

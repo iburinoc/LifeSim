@@ -11,10 +11,16 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
 import life.threedee.game.GameUtilities;
 import life.threedee.game.Player;
 
@@ -119,6 +125,16 @@ public class POC3D implements Runnable{
                     + "(0,1.5,-0.5),(0,0,-0.6),(-0.425,0.5,-0.425)");
 //            objects.add(wo);
         }
+		{
+		    BufferedImage texture = null;
+		    try {
+                texture = ImageIO.read(new File("./resources/zelda.jpg"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+		    HalvedTrapezoidalTexturedPlane http = new HalvedTrapezoidalTexturedPlane(new Point(5.0, 5.0, 5.0), new Vector(1.0, 1.0, 1.0), texture);
+		    objects.add(http);
+		}
 		objects.add(p0);
 		objects.add(p1);
 		objects.add(p2);

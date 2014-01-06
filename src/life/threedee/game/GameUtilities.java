@@ -70,15 +70,14 @@ public class GameUtilities{
 
     public static final double[][] MODE_TIMES = new double[][] {{7, 20, 7, 20, 5, 20, 5}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {5, 20, 5, 20, 5, 1037, 1 / 60}};
 
-    public static Color[] GHOST_COLORS = new Color[] {Color.RED, new Color(240, 178, 254), new Color(95, 248, 251), Color.ORANGE};
+    public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76)};
     public static final Location[] GHOST_LOCATIONS = new Location[] {new Location(0, 3.5), new Location(0, 0.5), new Location(-2, 0.5), new Location(2, 0.5)};
+    public static final int[] GHOST_ORIENTATIONS = new int[] {1, 2, 0, 0};
     public static final Location[] GHOST_CORNERS = new Location[] {new Location(11.5, 18.5), new Location(-11.5, 18.5), new Location(13.5, -16.5), new Location(-13.5, -16.5)};
 
 	public static boolean equals(double a, double b) {
 		return Math.abs(a - b) < 1e-15;
 	}
-	
-	public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76)}; 
 	
 	public static BufferedImage loadImage(String ref) {
 		try {

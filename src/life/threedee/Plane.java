@@ -55,7 +55,7 @@ public class Plane implements ThreeDeeObject{
 		return calculateT(vector, point);
 	}
 
-    public boolean sameSide(Point point1, Point point2) {
+    public boolean sameSide(Point point1, Point point2){
         return !(Math.abs(calculateT(new Vector(point2.subtract(point1)), point1)) < 1);
     }
 

@@ -5,11 +5,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.JFrame;
-
-import life.threedee.GhostPlane;
-import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
@@ -36,7 +32,7 @@ public class Game implements Runnable{
 	
 	private boolean running;
 
-    private int mode;
+    private int mode, level, dotsEaten;
 	
 	public Game() {
 		j = new JFrame("Game");

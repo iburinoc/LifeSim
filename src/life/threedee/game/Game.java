@@ -42,7 +42,7 @@ public class Game implements Runnable{
 		m = new GameMap();
 		
 		p = new Player(this, m);
-		p = new Player(new Point(0,1,0), new Vector(0,0,1), new Vector(0,0,0), this);
+		
         ghosts = new ArrayList<Ghost>();
         ghosts.add(new Blinky(this));
         ghosts.add(new Pinky(this));

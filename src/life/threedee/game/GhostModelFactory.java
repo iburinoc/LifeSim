@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import life.threedee.HalvedTrapezoidalTexturedPlane;
+import life.threedee.GhostPlane;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Triangle;
@@ -35,10 +35,10 @@ public class GhostModelFactory {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        HalvedTrapezoidalTexturedPlane http1 = new HalvedTrapezoidalTexturedPlane(lZP, new Vector(lZP, lXM).crossProduct(new Vector(lZP, zP)), texture);
-        HalvedTrapezoidalTexturedPlane http2 = new HalvedTrapezoidalTexturedPlane(lXP, new Vector(lXP, lZP).crossProduct(new Vector(lXP, xP)), texture);
-        HalvedTrapezoidalTexturedPlane http3 = new HalvedTrapezoidalTexturedPlane(lZM, new Vector(lZM, lXP).crossProduct(new Vector(lZM, zM)), texture);
-        HalvedTrapezoidalTexturedPlane http4 = new HalvedTrapezoidalTexturedPlane(lXM, new Vector(lXM, lZM).crossProduct(new Vector(lXM, xM)), texture);
+        GhostPlane http1 = new GhostPlane(lZP, new Vector(lZP, lXM).crossProduct(new Vector(lZP, zP)));
+        GhostPlane http2 = new GhostPlane(lXP, new Vector(lXP, lZP).crossProduct(new Vector(lXP, xP)));
+        GhostPlane http3 = new GhostPlane(lZM, new Vector(lZM, lXP).crossProduct(new Vector(lZM, zM)));
+        GhostPlane http4 = new GhostPlane(lXM, new Vector(lXM, lZM).crossProduct(new Vector(lXM, xM)));
         WorldObject wo = new WorldObject(new ThreeDeeObject[] {t1, t2, t3, t4, http1, http2, http3, http4}, new Point(0.0, 1.0, 0.0));
         wo.translate(new Vector(0.0, 0.0, 3.0));
         return wo;

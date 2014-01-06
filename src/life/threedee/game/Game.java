@@ -5,7 +5,10 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import javax.swing.JFrame;
+
+import life.threedee.GhostPlane;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
@@ -105,6 +108,11 @@ public class Game implements Runnable{
 			if(tick_delta >= tickRateMillis) {
 				tickTickables(tick_delta);
 				tick_delta -= tickRateMillis;
+			}
+			for (ThreeDeeObject obj: objects) {
+			    if (obj instanceof GhostPlane) {
+			        ((GhostPlane) obj).shiftTexture();
+			    }
 			}
 		}
 	}

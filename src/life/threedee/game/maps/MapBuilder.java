@@ -16,7 +16,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import life.threedee.HalvedTrapezoidalTexturedPlane;
+import life.threedee.GhostPlane;
 import life.threedee.Plane;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
@@ -71,7 +71,7 @@ public class MapBuilder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        HalvedTrapezoidalTexturedPlane http = new HalvedTrapezoidalTexturedPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
+        GhostPlane http = new GhostPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
         //TexturedPlane http = new TexturedPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
         o.add(http);*/
 		//o.add(GhostModelFactory.generateGhostModel(0));
@@ -88,16 +88,11 @@ public class MapBuilder {
         Triangle t2 = new Triangle(top, xP, zM, Color.RED);
         Triangle t3 = new Triangle(top, zM, xM, Color.RED);
         Triangle t4 = new Triangle(top, xM, zP, Color.RED);
-        BufferedImage texture = null;
-        try {
-            texture = ImageIO.read(new File("./resources/GhostSide1.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        HalvedTrapezoidalTexturedPlane http1 = new HalvedTrapezoidalTexturedPlane(lZP, new Vector(lZP, zP).crossProduct(new Vector(lZP, lXP)), texture);
-        HalvedTrapezoidalTexturedPlane http2 = new HalvedTrapezoidalTexturedPlane(lXP, new Vector(lXP, xP).crossProduct(new Vector(lXP, lZM)), texture);
-        HalvedTrapezoidalTexturedPlane http3 = new HalvedTrapezoidalTexturedPlane(lZM, new Vector(lZM, zM).crossProduct(new Vector(lZM, lXM)), texture);
-        HalvedTrapezoidalTexturedPlane http4 = new HalvedTrapezoidalTexturedPlane(lXM, new Vector(lXM, xM).crossProduct(new Vector(lXM, lZP)), texture);
+        
+        GhostPlane http1 = new GhostPlane(lZP, new Vector(lZP, zP).crossProduct(new Vector(lZP, lXP)));
+        GhostPlane http2 = new GhostPlane(lXP, new Vector(lXP, xP).crossProduct(new Vector(lXP, lZM)));
+        GhostPlane http3 = new GhostPlane(lZM, new Vector(lZM, zM).crossProduct(new Vector(lZM, lXM)));
+        GhostPlane http4 = new GhostPlane(lXM, new Vector(lXM, xM).crossProduct(new Vector(lXM, lZP)));
         o.add(t1);
         o.add(t2);
         o.add(t3);

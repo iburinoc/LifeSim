@@ -4,10 +4,19 @@ import static life.threedee.game.GameUtilities.PX_METER;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-public class HalvedTrapezoidalTexturedPlane extends TexturedPlane {
-    public HalvedTrapezoidalTexturedPlane(Point p, Vector n, BufferedImage texture){
-        super(p, n, texture);
+import javax.imageio.ImageIO;
+
+import life.threedee.game.GameUtilities;
+
+public class GhostPlane extends TexturedPlane {
+    private int textureNum;
+    
+    public GhostPlane(Point p, Vector n) {
+        super(p, n, GameUtilities.loadImage("resources/GhostSide1.png"));
+        this.textureNum = 1;
     }
     
     public Color c(Point inter) {
@@ -29,5 +38,13 @@ public class HalvedTrapezoidalTexturedPlane extends TexturedPlane {
             }
         }
         return null;
+    }
+    
+    public void shiftTexture() {
+        textureNum++; 
+        if (textureNum == 21) {
+            textureNum = 1;
+        }
+        this.setTexture(GameUtilities.loadImage("./resources/GhostSide"+textureNum+".png"));
     }
 }

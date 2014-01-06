@@ -125,16 +125,6 @@ public class POC3D implements Runnable{
                     + "(0,1.5,-0.5),(0,0,-0.6),(-0.425,0.5,-0.425)");
 //            objects.add(wo);
         }
-		{
-		    BufferedImage texture = null;
-		    try {
-                texture = ImageIO.read(new File("./resources/zelda.jpg"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-		    HalvedTrapezoidalTexturedPlane http = new HalvedTrapezoidalTexturedPlane(new Point(5.0, 5.0, 5.0), new Vector(1.0, 1.0, 1.0), texture);
-		    objects.add(http);
-		}
 		objects.add(p0);
 		objects.add(p1);
 		objects.add(p2);

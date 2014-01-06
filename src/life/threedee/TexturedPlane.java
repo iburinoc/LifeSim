@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 
 public class TexturedPlane extends Plane{
 	BufferedImage texture;
-	
-	Vector right, up;
+
+    Vector right, up;
 
 	int w, h;
 	
@@ -63,5 +63,9 @@ public class TexturedPlane extends Plane{
 		} else {
 			return new TColorTransfer(Double.NaN, null, this);
 		}
+	}
+	
+	public void setTexture(BufferedImage texture) {
+	    this.texture = texture;
 	}
 }

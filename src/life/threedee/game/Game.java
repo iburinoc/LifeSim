@@ -5,14 +5,12 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.JFrame;
-
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
-import life.threedee.game.maps.PacmanWorldTest;
+import life.threedee.game.maps.MapBuilder;
 
 public class Game implements Runnable{
 	public static final int TICK_RATE = 10;
@@ -33,8 +31,6 @@ public class Game implements Runnable{
 	private JFrame j;
 	
 	private Input i;
-
-    //private Ryan;
 	
 	private boolean running;
 	
@@ -65,6 +61,8 @@ public class Game implements Runnable{
 		j.pack();
 		j.setVisible(true);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		tickables.add(p);
 	}
 	
 	private void removeCursor() {
@@ -73,14 +71,13 @@ public class Game implements Runnable{
 		j.setCursor(transparent);
 	}
 	
-	private void test() {
-//		PacmanWorldTest.genTunnel(objects);
-		PacmanWorldTest.genTexturedTunnel(objects);
+	private void betaObjects() {
+		objects.addAll(MapBuilder.generateBetaScreenShotObjects());
 	}
 	
 	@Override
 	public void run() {
-		test();
+		betaObjects();
 		removeCursor();
 		
 		long tick_time = System.currentTimeMillis();
@@ -109,9 +106,18 @@ public class Game implements Runnable{
 	}
 	
 	private void drawFrame() {
+		long startT = System.currentTimeMillis();
 		p.calcBuffer();
 		p.repaint();
-		j.repaint();
+		p.registerWait(Thread.currentThread());
+		try{
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException e){
+		}
+		System.out.println("frame");
+		long time = System.currentTimeMillis() - startT;
+		System.out.println(time);
 	}
 	
 	private void tickTickables(int delta) {

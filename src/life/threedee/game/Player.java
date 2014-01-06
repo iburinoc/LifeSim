@@ -76,16 +76,20 @@ public class Player extends Camera implements Tickable{
     @Override
     protected TColorTransfer closestInFront(Vector dir, Point px){
 		TColorTransfer min = new TColorTransfer(Double.MAX_VALUE, Color.white, null);
-		for(ThreeDeeObject p : map){
-			TColorTransfer o = p.getRData(dir, px, min.t);
-			if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0){
-				min = o;
+		if(map != null) {
+			for(ThreeDeeObject p : map){
+				TColorTransfer o = p.getRData(dir, px, min.t);
+				if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0){
+					min = o;
+				}
 			}
 		}
-		for(ThreeDeeObject p : objects){
-			TColorTransfer o = p.getRData(dir, px, min.t);
-			if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0){
-				min = o;
+		if(objects != null) {
+			for(ThreeDeeObject p : objects){
+				TColorTransfer o = p.getRData(dir, px, min.t);
+				if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0){
+					min = o;
+				}
 			}
 		}
 		return min;

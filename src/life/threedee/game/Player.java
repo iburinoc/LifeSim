@@ -1,10 +1,6 @@
 package life.threedee.game;
 
-import static java.lang.Math.PI;
-import static life.threedee.game.GameUtilities.G;
-
 import java.util.List;
-
 import life.threedee.Camera;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;

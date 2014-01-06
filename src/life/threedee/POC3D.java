@@ -145,15 +145,6 @@ public class POC3D implements Runnable{
 				e.printStackTrace();
 			}
 			//System.out.println("frame");
-			if(w){
-				p.move(0);
-			}if(a){
-				p.move(1);
-			}if(s){
-				p.move(2);
-			}if(d){
-				p.move(3);
-			}
 		}
 	}
 

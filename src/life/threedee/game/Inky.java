@@ -4,22 +4,19 @@ import life.threedee.Point;
 import life.threedee.Vector;
 
 public class Inky extends Ghost{
-    private final Location corner;
-
     public Inky(Game game){
-        this(new Location(-2, 0.5), 0, game);
+        this(GameUtilities.GHOST_LOCATIONS[2], 0, game);
     }
 
     public Inky(Location location, int direction, Game game){
         super(location, direction, game, 2);
-        corner = new Location(13.5, -16.5);
     }
 
     public Location findTarget(){
         if (eaten){
             return eyesTarget;
         } else if (game.getMode() == 0){
-            return corner;
+            return GameUtilities.GHOST_CORNERS[2];
         }
         Vector dir = game.getPlayer().getDir();
         double yaw = dir.polarTransform()[0];

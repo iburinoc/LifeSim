@@ -33,7 +33,7 @@ public class GameUtilities{
 
     public static final boolean[] no = {f, f, f, f}, up = {t, f, f, f}, le = {f, t, f, f}, dn = {f, f, t, f}, ri = {f, f, f, t}, ud = {t, f, t, f}, rl = {f, t, f, t}, ul = {t, t, f, f}, dl = {f, t, t, f}, dr = {f, f, t, t}, ur = {t, f, f, t}, nu = {f, t, t, t}, nl = {t, f, t, t}, nd = {t, t, f, t}, nr = {t, t, t, f}, al = {t, t, t, t};
 
-    public static final boolean[][][] intersections = mirror(new boolean[][][]
+    public static final boolean[][][] INTERSECTIONS = mirror(new boolean[][][]
             {{no, no, no, no, no, no, no, no, no, no, no, no, no, no, rl, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no},
              {no, dr, ud, ud, ud, nl, ud, ud, ur, no, no, no, no, no, rl, no, no, no, no, no, dr, ud, ud, ur, no, no, dr, ud, ud, ur, no},
              {no, rl, no, no, no, rl, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, rl, no, no, rl, no, no, rl, no},
@@ -63,18 +63,20 @@ public class GameUtilities{
     }
 
     //pacman speed, ghost speed, fruit bonus, dots left for elroy
-    public static int[][] gameData = new int[][] {{80, 75, 100, 20}, {90, 85, 300, 30}, {90, 85, 500, 40}, {90, 85, 500, 40}, {100, 95, 700, 40}, {100, 95, 700, 50}, {100, 95, 1000, 50}, {100, 95, 1000, 50}, {100, 95, 2000, 60}, {100, 95, 2000, 60}, {100, 95, 3000, 60}, {100, 95, 3000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 120}, {100, 95, 5000, 120}, {90, 95, 5000, 120}};
+    public static final int[][] GAME_DATA = new int[][] {{80, 75, 100, 20}, {90, 85, 300, 30}, {90, 85, 500, 40}, {90, 85, 500, 40}, {100, 95, 700, 40}, {100, 95, 700, 50}, {100, 95, 1000, 50}, {100, 95, 1000, 50}, {100, 95, 2000, 60}, {100, 95, 2000, 60}, {100, 95, 3000, 60}, {100, 95, 3000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 120}, {100, 95, 5000, 120}, {90, 95, 5000, 120}};
 
     //fright time, warning flashes
-    public static int[][] frightData = new int[][] {{6, 5}, {5, 5}, {4, 5}, {3, 5}, {2, 5}, {5, 5}, {2, 5}, {2, 5}, {1, 3}, {5, 5}, {2, 5}, {1, 3}, {1, 3}, {3, 5}, {1, 3}, {1, 3}, {0, 0}, {1, 3}, {0, 0}};
+    public static final int[][] FRIGHTENED_DATA = new int[][] {{6, 5}, {5, 5}, {4, 5}, {3, 5}, {2, 5}, {5, 5}, {2, 5}, {2, 5}, {1, 3}, {5, 5}, {2, 5}, {1, 3}, {1, 3}, {3, 5}, {1, 3}, {1, 3}, {0, 0}, {1, 3}, {0, 0}};
 
-    public static double[][] modeTimes = new double[][] {{7, 20, 7, 20, 5, 20, 5}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {5, 20, 5, 20, 5, 1037, 1 / 60}};
+    public static final double[][] MODE_TIMES = new double[][] {{7, 20, 7, 20, 5, 20, 5}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {5, 20, 5, 20, 5, 1037, 1 / 60}};
+
+    public static final Color[] GHOST_COLORS = new Color[] {Color.RED, new Color(240, 178, 254), Color.BLUE, Color.ORANGE};
+    public static final Location[] GHOST_LOCATIONS = new Location[] {new Location(0, 3.5), new Location(0, 0.5), new Location(-2, 0.5), new Location(2, 0.5)};
+    public static final Location[] GHOST_CORNERS = new Location[] {new Location(11.5, 18.5), new Location(-11.5, 18.5), new Location(13.5, -16.5), new Location(-13.5, -16.5)};
 
 	public static boolean equals(double a, double b) {
 		return Math.abs(a - b) < 1e-15;
 	}
-	
-	public static Color[] GHOST_COLORS = new Color[] {Color.RED, new Color(240, 178, 254), Color.BLUE, Color.ORANGE}; 
 	
 	public static BufferedImage loadImage(String ref) {
 		try {

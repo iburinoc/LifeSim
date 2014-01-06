@@ -109,9 +109,9 @@ public class Game implements Runnable{
 				tickTickables(tick_delta);
 				tick_delta -= tickRateMillis;
 			}
-			for (ThreeDeeObject obj: objects) {
+			for (ThreeDeeObject obj: objects) { // BAD.  Replace with tickables pls
 			    if (obj instanceof GhostPlane) {
-			        ((GhostPlane) obj).shiftTexture();
+			        ((GhostPlane) obj).shiftTexture(false); // There now you'll notice it
 			    }
 			}
 		}

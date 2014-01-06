@@ -1,12 +1,12 @@
 package life.threedee.game.maps;
 
-import static life.threedee.game.GameUtilities.BLANK;
 import static life.threedee.game.GameUtilities.MPT;
 import static life.threedee.game.GameUtilities.WALL_HEIGHT;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+
+import life.threedee.HalvedTrapezoidalTexturedPlane;
 import life.threedee.Plane;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
@@ -60,6 +63,15 @@ public class MapBuilder {
             pellet.translate(new Vector(new Point(MPT*i+0.5, 0.0, 3.5*MPT)));
             o.add(pellet);
 		}
+		/*BufferedImage texture = null;
+        try {
+            texture = ImageIO.read(new File("./resources/zelda.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HalvedTrapezoidalTexturedPlane http = new HalvedTrapezoidalTexturedPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
+        //TexturedPlane http = new TexturedPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
+        o.add(http);*/
 		return o;
 	}
 	

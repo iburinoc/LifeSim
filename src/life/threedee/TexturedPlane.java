@@ -8,11 +8,11 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class TexturedPlane extends Plane{
-	private BufferedImage texture;
+	BufferedImage texture;
 	
-	private Vector right, up;
+	Vector right, up;
 
-	private int w, h;
+	int w, h;
 	
 	/**
 	 * Note: p is the bottom left corner of the texture, so keep that in mind.

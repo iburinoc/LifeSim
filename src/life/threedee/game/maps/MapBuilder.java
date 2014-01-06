@@ -94,10 +94,10 @@ public class MapBuilder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        HalvedTrapezoidalTexturedPlane http1 = new HalvedTrapezoidalTexturedPlane(lZP, new Vector(lZP, lXM).crossProduct(new Vector(lZP, zP)), texture);
-        HalvedTrapezoidalTexturedPlane http2 = new HalvedTrapezoidalTexturedPlane(lXP, new Vector(lXP, lZP).crossProduct(new Vector(lXP, xP)), texture);
-        HalvedTrapezoidalTexturedPlane http3 = new HalvedTrapezoidalTexturedPlane(lZM, new Vector(lZM, lXP).crossProduct(new Vector(lZM, zM)), texture);
-        HalvedTrapezoidalTexturedPlane http4 = new HalvedTrapezoidalTexturedPlane(lXM, new Vector(lXM, lZM).crossProduct(new Vector(lXM, xM)), texture);
+        HalvedTrapezoidalTexturedPlane http1 = new HalvedTrapezoidalTexturedPlane(lZP, new Vector(lZP, zP).crossProduct(new Vector(lZP, lXP)), texture);
+        HalvedTrapezoidalTexturedPlane http2 = new HalvedTrapezoidalTexturedPlane(lXP, new Vector(lXP, xP).crossProduct(new Vector(lXP, lZM)), texture);
+        HalvedTrapezoidalTexturedPlane http3 = new HalvedTrapezoidalTexturedPlane(lZM, new Vector(lZM, zM).crossProduct(new Vector(lZM, lXM)), texture);
+        HalvedTrapezoidalTexturedPlane http4 = new HalvedTrapezoidalTexturedPlane(lXM, new Vector(lXM, xM).crossProduct(new Vector(lXM, lZP)), texture);
         o.add(t1);
         o.add(t2);
         o.add(t3);

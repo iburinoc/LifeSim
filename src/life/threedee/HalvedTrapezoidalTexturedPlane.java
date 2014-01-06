@@ -13,10 +13,10 @@ public class HalvedTrapezoidalTexturedPlane extends TexturedPlane {
     public Color c(Point inter) {
         Vector p = new Vector(this.origin, inter);
         double du = p.dotProduct(super.up);
-        double dr = p.dotProduct(super.right);
+        double dr = p.dotProduct(super.right)+0.5;
         int py = texture.getHeight() - (int) (du * PX_METER);
         double pv = (((double)super.h)+((double)py))/(2*((double)super.h));
-        int px = (int) (dr * PX_METER / pv);
+        int px = (int) (dr * PX_METER / pv + super.w/2);
         /*System.out.print(":D");
         System.out.println(py);
         System.out.println(h);

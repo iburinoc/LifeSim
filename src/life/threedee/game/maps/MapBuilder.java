@@ -20,9 +20,11 @@ import life.threedee.HalvedTrapezoidalTexturedPlane;
 import life.threedee.Plane;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
+import life.threedee.Triangle;
 import life.threedee.Vector;
 import life.threedee.WorldObject;
 import life.threedee.game.GameUtilities;
+import life.threedee.game.GhostModelFactory;
 
 /**
  * Parses 2D pacman map image and builds the object list for it.
@@ -37,7 +39,7 @@ public class MapBuilder {
 	
 	public static List<ThreeDeeObject> generateBetaScreenShotObjects() {
 		List<ThreeDeeObject> o = new ArrayList<ThreeDeeObject>();
-		WorldObject wo = WorldObject.generateObject("(0,1,0);"
+		/*WorldObject wo = WorldObject.generateObject("(0,1,0);"
                 + "(0,2,0),(0.5,1.5,0),(0,1.5,0.5);"
                 + "(0,2,0),(0,1.5,0.5),(-0.5,1.5,0);"
                 + "(0,2,0),(-0.5,1.5,0),(0,1.5,-0.5);"
@@ -54,7 +56,7 @@ public class MapBuilder {
                 + "(-0.5,1.5,0),(-0.6,0,0),(-0.425,0.5,0.425);"
                 + "(0,1.5,-0.5),(0,0,-0.6),(0.425,0.5,-0.425);"
                 + "(0,1.5,-0.5),(0,0,-0.6),(-0.425,0.5,-0.425)", Color.RED);
-		o.add(wo);
+		o.add(wo);*/
 		for (double i = -5.0; i < 5; i++) {
 		    WorldObject pellet = WorldObject.generateObject("(0,0.75,0);"
                     + "(0,0.875,0),(0,0.625,0.2),(0.14,0.625,-0.1);"
@@ -72,6 +74,38 @@ public class MapBuilder {
         HalvedTrapezoidalTexturedPlane http = new HalvedTrapezoidalTexturedPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
         //TexturedPlane http = new TexturedPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
         o.add(http);*/
+		//o.add(GhostModelFactory.generateGhostModel(0));
+		Point top = new Point(0.0, 2.0, 0.0);
+        Point zP = new Point(0.25, 1.5, 0.25);
+        Point xP = new Point(0.25, 1.5, -0.25);
+        Point zM = new Point(-0.25, 1.5, -0.25);
+        Point xM = new Point(-0.25, 1.5, 0.25);
+        Point lZP = new Point(0.5, 0.0, 0.5);
+        Point lXP = new Point(0.5, 0.0, -0.5);
+        Point lZM = new Point(-0.5, 0.0, -0.5);
+        Point lXM = new Point(-0.5, 0.0, 0.5);
+        Triangle t1 = new Triangle(top, zP, xP, Color.RED);
+        Triangle t2 = new Triangle(top, xP, zM, Color.RED);
+        Triangle t3 = new Triangle(top, zM, xM, Color.RED);
+        Triangle t4 = new Triangle(top, xM, zP, Color.RED);
+        BufferedImage texture = null;
+        try {
+            texture = ImageIO.read(new File("./resources/GhostSide1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HalvedTrapezoidalTexturedPlane http1 = new HalvedTrapezoidalTexturedPlane(lZP, new Vector(lZP, lXM).crossProduct(new Vector(lZP, zP)), texture);
+        HalvedTrapezoidalTexturedPlane http2 = new HalvedTrapezoidalTexturedPlane(lXP, new Vector(lXP, lZP).crossProduct(new Vector(lXP, xP)), texture);
+        HalvedTrapezoidalTexturedPlane http3 = new HalvedTrapezoidalTexturedPlane(lZM, new Vector(lZM, lXP).crossProduct(new Vector(lZM, zM)), texture);
+        HalvedTrapezoidalTexturedPlane http4 = new HalvedTrapezoidalTexturedPlane(lXM, new Vector(lXM, lZM).crossProduct(new Vector(lXM, xM)), texture);
+        o.add(t1);
+        o.add(t2);
+        o.add(t3);
+        o.add(t4);
+        o.add(http1);
+        o.add(http2);
+        o.add(http3);
+        o.add(http4);
 		return o;
 	}
 	

@@ -1,7 +1,5 @@
 package life.threedee.game;
 
-import java.awt.Color;
-
 import life.threedee.GhostPlane;
 import life.threedee.Point;
 import life.threedee.Triangle;

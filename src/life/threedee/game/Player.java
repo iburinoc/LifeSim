@@ -53,8 +53,8 @@ public class Player extends Camera implements Tickable{
             double[] pt = dir.polarTransform();
             pt[0] -= PI / 2 * d;
             Vector mov = Vector.fromPolarTransform(pt[0], d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1]), 1);
-//            loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
-            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
+            loc = new Point(loc.x+mov.x/4,loc.y/*+mov.y*/,loc.z+mov.z/4);
+//            loc = new Point(loc.x+mov.x,loc.y+mov.y,loc.z+mov.z);
         }
     }
 
@@ -64,12 +64,14 @@ public class Player extends Camera implements Tickable{
     	if(s) move(2);
     	if(a) move(3);
         Point newLoc = new Point(new Vector(loc).add(v));
+        if(objects != null) 
         for (ThreeDeeObject object : objects) {
             if (!object.sameSide(loc, newLoc) || true) {
                 newLoc = loc;
                 v = new Vector(0, 0, 0);
             }
         }
+    
         loc = newLoc;
     }
     

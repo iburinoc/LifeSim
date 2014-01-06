@@ -13,7 +13,7 @@ import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapBuilder;
 
 public class Game implements Runnable{
-	public static final int TICK_RATE = 10;
+	public static final int TICK_RATE = 60;
 	public static final int FRAME_RATE = 30;
 	
 	public static void main(String[] args){
@@ -92,17 +92,19 @@ public class Game implements Runnable{
 		int frameRateMillis = 1000/FRAME_RATE;
 		while(running) {
 			long frameT = System.currentTimeMillis();
-			frame_delta = (int) (frameT - frame_time);
+			frame_delta += (int) (frameT - frame_time);
+			frame_time = frameT;
 			if(frame_delta >= frameRateMillis) {
 				drawFrame();
-				frame_time = frameT;
+				frame_delta -= frameRateMillis;
 			}
 			
 			long tickT = System.currentTimeMillis();
-			tick_delta = (int) (tickT - tick_time);
+			tick_delta += (int) (tickT - tick_time);
+			tick_time = tickT;
 			if(tick_delta >= tickRateMillis) {
 				tickTickables(tick_delta);
-				tick_time = tickT;
+				tick_delta -= tickRateMillis;
 			}
 		}
 	}

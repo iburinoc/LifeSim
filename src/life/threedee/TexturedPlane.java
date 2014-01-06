@@ -46,7 +46,7 @@ public class TexturedPlane extends Plane{
 		int py = texture.getHeight() - (int) (du * PX_METER);
 		if(px >= 0 && px < w && py >= 0 && py < h) {
 			try{
-				return new Color(texture.getRGB(px, py));
+				return new Color(texture.getRGB(px, py), true);
 			}
 			catch(ArrayIndexOutOfBoundsException e) {
 			}

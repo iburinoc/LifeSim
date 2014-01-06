@@ -109,6 +109,7 @@ public class Camera extends JPanel{
 			for(int y = y1; y < y2; y+=R_INC){
 				Vector v = rdir.add(getVectorForPixel(x+R_INC/2, y+R_INC/2, rightU, upU));
 				Color c = closestInFront(v, rloc).c;
+				
 				if(c != null)
 					setfbuf(x,y,c);
 				else

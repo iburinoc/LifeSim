@@ -23,7 +23,7 @@ public class HalvedTrapezoidalTexturedPlane extends TexturedPlane {
         System.out.println(pv);*/
         if(px >= 0 && px < super.w && py >= 0 && py < super.h) {
             try{
-                return new Color(super.texture.getRGB(px, py));
+                return new Color(super.texture.getRGB(px, py), true);
             }
             catch(ArrayIndexOutOfBoundsException e) {
             }

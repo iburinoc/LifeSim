@@ -33,7 +33,11 @@ public class GhostPlane extends TexturedPlane {
         System.out.println(pv);*/
         if(px >= 0 && px < super.w && py >= 0 && py < super.h) {
             try{
-                return new Color(super.texture.getRGB(px, py), true);
+                if (py > super.h-7) {
+                    return new Color(super.texture.getRGB((px+textureNum)%20, py), true);
+                } else {
+                    return new Color(super.texture.getRGB(px, py), true);
+                }
             }
             catch(ArrayIndexOutOfBoundsException e) {
             }
@@ -44,6 +48,6 @@ public class GhostPlane extends TexturedPlane {
     public void shiftTexture() {
         textureNum++; 
         textureNum %= 10;
-        this.setTexture(GameUtilities.loadImage("./resources/Ghost"+ghostNum+"Side"+textureNum+".png"));
+        //this.setTexture(GameUtilities.loadImage("./resources/Ghost"+ghostNum+"Side"+textureNum+".png"));
     }
 }

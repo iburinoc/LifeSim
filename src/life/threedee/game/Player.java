@@ -97,7 +97,11 @@ public class Player extends Camera implements Tickable{
     }
     
     @Override
-    protected TColorTransfer closestInFront(Vector dir, Point px){
+    protected TColorTransfer closestInFront(Vector dir, Point px) {
+    	return closestInFront(dir, px, this.map);
+    }
+    
+    private TColorTransfer closestInFront(Vector dir, Point px, List<ThreeDeeObject> map){
 		TColorTransfer min = new TColorTransfer(Double.MAX_VALUE, Color.white, null);
 		if(map != null) {
 			for(ThreeDeeObject p : map){
@@ -116,10 +120,8 @@ public class Player extends Camera implements Tickable{
 			}
 		}
         if (min.o instanceof TunnelPlane && Math.abs(px.x) <= 14){
-            List<ThreeDeeObject> mapTmp = map;
-            map = m.getObjects(new Point(-px.x, px.y, px.z));
-            min = closestInFront(dir, px.subtract(new Point(28 * Math.signum(px.x), 0, 0)));
-            map = mapTmp;
+            List<ThreeDeeObject> mapTmp = m.getObjects(new Point(-px.x, px.y, px.z));
+            min = closestInFront(dir, px.subtract(new Point(28 * Math.signum(px.x), 0, 0)), mapTmp);
         }
 		return min;
 	}

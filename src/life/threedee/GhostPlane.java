@@ -70,6 +70,7 @@ public class GhostPlane extends TexturedPlane {
     
     public void setGhostNum(int ghostNum) {
         this.ghostNum = ghostNum;
+        this.setFace(facePlane);
     }
     
     public void shiftTexture() {

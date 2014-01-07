@@ -73,6 +73,7 @@ public class Game implements Runnable, Tickable{
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		tickables.add(p);
+		tickables.add(this);
 	}
 	
 	private void removeCursor() {

@@ -157,13 +157,13 @@ public class Ghost implements Tickable{
         if (ghostId == 0 && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getDotsRemaining()) {
             ghostNum = 6;
             for (int i = 0; i < 4; i++) {
-                facePlanes[direction+i%4].setGhostNum(ghostNum);
+                facePlanes[(direction+i)%4].setGhostNum(ghostNum);
             }
         }
         if (ghostId == 0 && (ghostNum == 0 || ghostNum == 6) && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getDotsRemaining() * 2) {
             ghostNum = 7;
             for (int i = 0; i < 4; i++) {
-                facePlanes[direction+i%4].setGhostNum(ghostNum);
+                facePlanes[(direction+i)%4].setGhostNum(ghostNum);
             }
         }
     }

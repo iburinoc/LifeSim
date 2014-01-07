@@ -11,7 +11,7 @@ import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapBuilder;
 
-public class Game implements Runnable{
+public class Game implements Runnable, Tickable{
 	public static final int TICK_RATE = 60;
 	public static final int FRAME_RATE = 30;
 	
@@ -48,9 +48,9 @@ public class Game implements Runnable{
         ghosts.add(new Blinky(this));
         ghosts.get(0).move(new Vector(0.0,0.0,3.5*GameUtilities.MPT));
         ghosts.add(new Pinky(this));
-        ghosts.get(1).move(new Vector(0.0,0.0,0.5*GameUtilities.MPT));
+        ghosts.get(1).move(new Vector(0.0, 0.0, 0.5 * GameUtilities.MPT));
         ghosts.add(new Inky(this));
-        ghosts.get(2).move(new Vector(-2.0*GameUtilities.MPT, 0.0, 0.5));
+        ghosts.get(2).move(new Vector(-2.0 * GameUtilities.MPT, 0.0, 0.5));
         ghosts.add(new Clyde(this));
         ghosts.get(3).move(new Vector(2.0*GameUtilities.MPT,0.0,0.5));
         /* CRUISE ELROY SUMMONING RITUAL. REMOVE LATER*/
@@ -119,6 +119,13 @@ public class Game implements Runnable{
 //			}
 		}
 	}
+
+    @Override
+    public void tick(int delta){
+        if (dotsEaten == 240){
+            level++;
+        }
+    }
 	
 	private void drawFrame() {
 		long startT = System.currentTimeMillis();
@@ -163,10 +170,22 @@ public class Game implements Runnable{
 	
 	public List<ThreeDeeObject> objects() {
 		return objects;
-	}
+    }
+    
+    public int getLevel(){
+        return level;
+    }
 
     public int getMode(){
         return mode;
+    }
+
+    public int getDotsEaten(){
+        return dotsEaten;
+    }
+
+    public int getDotsRemaining(){
+        return 240 - getDotsEaten();
     }
 
     public Player getPlayer(){

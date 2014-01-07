@@ -4,6 +4,7 @@ import life.threedee.GhostPlane;
 import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
+import life.threedee.game.maps.MapLocation;
 
 public class Ghost implements Tickable{
     protected Location location, target;
@@ -166,19 +167,28 @@ public class Ghost implements Tickable{
                 facePlanes[(direction+i)%4].setGhostNum(ghostNum);
             }
         }
+        move();
+        if (Math.abs(location.x) > 14){
+            translate(new Vector(-28 * Math.signum(location.x), 0, 0));
+        }
     }
     
-    public void move(Vector v) {
+    public void move() {
         //ANDREY, PUT MOVEMENT CODE HERE!
-        translate(v);
+        translate(dirToV());
     }
     
     public void translate(Vector v) {
         // TRANSLATE ALL THE POINTS/LOCATIONS HERE AS WELL. OR SHOULD THAT BE IN MOVE?
+        location = new Location(location.x + v.x, location.z + v.z);
         for (int i = 0; i < 4; i++) {
             facePlanes[i].translate(v);
             faceTriangles[i].translate(v);
         }
+    }
+
+    public Vector dirToV(){
+        return Vector.fromPolarTransform(direction > 0 ? (direction - 1) * Math.PI / 2 : 0, 0, GameUtilities.GAME_DATA[game.getLevel()][1] / 400);
     }
 
     public Location getLocation(){

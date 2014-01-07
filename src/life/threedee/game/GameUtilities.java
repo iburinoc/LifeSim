@@ -91,6 +91,8 @@ public class GameUtilities{
                                                                                    GameUtilities.loadImage("resources/ScaredFlashFace.png"),
                                                                                    GameUtilities.loadImage("resources/CruiseElroyFace.png")};
     
+    public static final boolean SCARY_FACES = false;
+    
 	public static boolean equals(double a, double b) {
 		return Math.abs(a - b) < 1e-15;
 	}

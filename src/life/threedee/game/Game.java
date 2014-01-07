@@ -66,12 +66,10 @@ public class Game implements Runnable, Tickable{
         /* CRUISE ELROY SUMMONING RITUAL. REMOVE LATER*/
         ghosts.add(new Ghost(this, CRUISE_ELROY));
         ghosts.add(new Ghost(this, CRUISE_ELROY_2));
-        try {
+        if (false) {
             ghosts.add(new Ghost(this, SCARED));
             ghosts.add(new Ghost(this, SCARED_FLASHING));
             ghosts.add(new Ghost(this, EATEN));
-        } catch (NullPointerException e) {
-            //This is here so it doesn't auto-remove the imports. 
         }
 		
 		i = new Input(p, this, j);

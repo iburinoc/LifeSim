@@ -116,16 +116,6 @@ public class Pellet implements ThreeDeeObject, Tickable, MapFeature{
 
 	@Override
 	public boolean sameSide(Point m, Point n) {
-		for(Triangle t : this.t) {
-			if(!t.sameSide(m, n)) {
-				return false;
-			}
-		}
-		return true;
+		return true; //non-solid
 	}
-
-    @Override
-    public Vector getNormal(){
-        return null;
-    }
 }

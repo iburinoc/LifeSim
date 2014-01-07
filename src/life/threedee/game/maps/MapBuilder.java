@@ -218,7 +218,7 @@ public class MapBuilder {
 							}
 						}
 						catch(ArrayIndexOutOfBoundsException e){
-
+							cx += dx;
 						}
 
 						if(cx - x - dx != 0) {

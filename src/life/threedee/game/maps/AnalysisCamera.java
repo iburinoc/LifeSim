@@ -21,7 +21,7 @@ public class AnalysisCamera extends Camera{
 	protected Vector getVectorForPixel(int x, int y, Vector right, Vector up) {
 		return super.getVectorForPixel(x, y, right, up);
 	}
-	
+
 	@Override
 	protected TColorTransfer closestInFront(Vector v, Point p) {
 		return super.closestInFront(v, p);

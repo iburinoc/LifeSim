@@ -1,11 +1,23 @@
 package life.threedee.game;
 
+import static life.threedee.game.GameUtilities.BLINKY;
+import static life.threedee.game.GameUtilities.PINKY;
+import static life.threedee.game.GameUtilities.INKY;
+import static life.threedee.game.GameUtilities.CLYDE;
+import static life.threedee.game.GameUtilities.SCARED;
+import static life.threedee.game.GameUtilities.SCARED_FLASHING;
+import static life.threedee.game.GameUtilities.CRUISE_ELROY;
+import static life.threedee.game.GameUtilities.CRUISE_ELROY_2;
+import static life.threedee.game.GameUtilities.EATEN;
+
 import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import javax.swing.JFrame;
+
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
@@ -47,19 +59,22 @@ public class Game implements Runnable, Tickable{
         setTickables(new ArrayList<Tickable>());
 		
         ghosts = new ArrayList<Ghost>();
-        ghosts.add(new Blinky(this));
+        ghosts.add(new Ghost(this, BLINKY));
         ghosts.get(0).translate(new Vector(0.0,0.0,3.5*GameUtilities.MPT));
-        ghosts.add(new Pinky(this));
+        ghosts.add(new Ghost(this, PINKY));
         ghosts.get(1).translate(new Vector(0.0, 0.0, 0.5 * GameUtilities.MPT));
-        ghosts.add(new Inky(this));
+        ghosts.add(new Ghost(this, INKY));
         ghosts.get(2).translate(new Vector(-2.0 * GameUtilities.MPT, 0.0, 0.5));
-        ghosts.add(new Clyde(this));
+        ghosts.add(new Ghost(this, CLYDE));
         ghosts.get(3).translate(new Vector(2.0*GameUtilities.MPT,0.0,0.5));
         /* CRUISE ELROY SUMMONING RITUAL. REMOVE LATER*/
-        ghosts.add(new Ghost(GameUtilities.GHOST_LOCATIONS[6], GameUtilities.GHOST_ORIENTATIONS[6], this, 6));
+        ghosts.add(new Ghost(this, CRUISE_ELROY));
         ghosts.get(4).translate(new Vector(2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
-        ghosts.add(new Ghost(GameUtilities.GHOST_LOCATIONS[7], GameUtilities.GHOST_ORIENTATIONS[7], this, 7));
+        ghosts.add(new Ghost(this, CRUISE_ELROY_2));
         ghosts.get(5).translate(new Vector(-2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
+        ghosts.add(new Ghost(this, SCARED));
+        ghosts.add(new Ghost(this, SCARED_FLASHING));
+        ghosts.add(new Ghost(this, EATEN));
 		
 		i = new Input(p, this, j);
 		

@@ -8,13 +8,17 @@ import life.threedee.Vector;
 public class Ghost implements Tickable{
     protected Location location, target;
     protected final Location eyesTarget = new Location(-0.5, 3.5);
-    protected int direction;
+    // ghostNum is the current state of the ghost (0-6). This is used to decide textures, behaviour, etc. 
+    // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
+    protected int direction, ghostNum, ghostId;
     protected boolean uTurn, eaten;
     protected Game game;
     protected GhostPlane[] facePlanes;
     protected Triangle[] faceTriangles;
 
     public Ghost(Game g, int ghostNum) {
+        this.ghostNum=ghostNum;
+        this.ghostId=ghostNum;
         Point top = new Point(0.0, 2.0, 0.0);
         Point zPlusXPlus = new Point(0.25, 1.5, 0.25);
         Point zMinusXPlus = new Point(0.25, 1.5, -0.25);
@@ -68,7 +72,70 @@ public class Ghost implements Tickable{
     }
 
     public Location findTarget() {
-        return null;
+        switch(ghostNum) {
+        case 0:
+        {
+            if (eaten){
+                return eyesTarget;
+            } else if (game.getMode() == 0){
+                return GameUtilities.GHOST_CORNERS[0];
+            }
+            return game.getPlayer().getLoc();
+        }
+        case 1:
+        {
+            if (eaten){
+                return eyesTarget;
+            } else if (game.getMode() == 0){
+                return GameUtilities.GHOST_CORNERS[1];
+            }
+            Vector dir = game.getPlayer().getDir();
+            double yaw = dir.polarTransform()[0];
+            Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(4)));
+            if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
+                tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 4)));
+            }
+            return new Location(tar.x, tar.z);
+        }
+        case 2:
+        {
+            if (eaten){
+                return eyesTarget;
+            } else if (game.getMode() == 0){
+                return GameUtilities.GHOST_CORNERS[2];
+            }
+            Vector dir = game.getPlayer().getDir();
+            double yaw = dir.polarTransform()[0];
+            Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(2)));
+            if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
+                tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 2)));
+            }
+            Location blinkyPosition = game.getGhosts().get(0).getLocation();
+            return new Location(2 * tar.x - blinkyPosition.x, 2 * tar.z - blinkyPosition.z);
+        }
+        case 3:
+        {
+            if (eaten){
+                return eyesTarget;
+            } else if (game.getMode() == 0){
+                return GameUtilities.GHOST_CORNERS[3];
+            }
+            if (location.distanceTo(game.getPlayer().getLoc()) > 64){
+                return game.getPlayer().getLoc();
+            }
+            return GameUtilities.GHOST_CORNERS[3];
+        }
+        case 4:
+        case 5:
+            return null;
+        case 6:
+            if (eaten){
+                return eyesTarget;
+            }
+            return game.getPlayer().getLoc();
+        default:
+            return null;
+        }
     }
 
     public void tick(int delta){

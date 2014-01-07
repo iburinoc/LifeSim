@@ -28,20 +28,32 @@ public class GhostPlane extends TexturedPlane {
         double dr = p.dotProduct(super.right)+0.5;
         int py = texture.getHeight() - (int) (du * PX_METER);
         double pv = (((double)super.h)+((double)py))/(2*((double)super.h));
-        int px = (int) (dr * PX_METER / pv + super.w/2);
-        /*System.out.print(":D");
-        System.out.println(py);
-        System.out.println(h);
-        System.out.println(pv);*/
-        if(px >= 0 && px < super.w && py >= 0 && py < super.h) {
-            try{
-                if (py > super.h-7) {
-                    return new Color(super.texture.getRGB((px+offset)%20, py), true);
-                } else {
-                    return new Color(super.texture.getRGB(px, py), true);
+        if (GameUtilities.SCARY_FACES) {
+            double pxPrime = (dr * PX_METER / pv + super.w/2);
+            int px = (int) (dr * PX_METER+ super.w/2);
+            if(pxPrime >= 0 && pxPrime < super.w && py >= 0 && py < super.h) {
+                try{
+                    if (py > super.h-7) {
+                        return new Color(super.texture.getRGB((px+offset)%20, py), true);
+                    } else {
+                        return new Color(super.texture.getRGB(px, py), true);
+                    }
+                }
+                catch(ArrayIndexOutOfBoundsException e) {
                 }
             }
-            catch(ArrayIndexOutOfBoundsException e) {
+        } else {
+            int px = (int) (dr * PX_METER / pv + super.w/2);
+            if(px >= 0 && px < super.w && py >= 0 && py < super.h) {
+                try{
+                    if (py > super.h-7) {
+                        return new Color(super.texture.getRGB((px+offset)%20, py), true);
+                    } else {
+                        return new Color(super.texture.getRGB(px, py), true);
+                    }
+                }
+                catch(ArrayIndexOutOfBoundsException e) {
+                }
             }
         }
         return null;

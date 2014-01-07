@@ -71,19 +71,27 @@ public class GameUtilities{
 
     public static final double[][] MODE_TIMES = new double[][] {{7, 20, 7, 20, 5, 20, 5}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {5, 20, 5, 20, 5, 1037, 1 / 60}};
 
-    public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76)};
+    public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), Color.BLUE, Color.WHITE, new Color(230, 46, 37)};
 
-    public static final Location[] GHOST_LOCATIONS = new Location[] {new Location(0, 3.5), new Location(0, 0.5), new Location(-2, 0.5), new Location(2, 0.5)};
-    public static final int[] GHOST_ORIENTATIONS = new int[] {1, 2, 0, 0};
-    public static final Location[] GHOST_CORNERS = new Location[] {new Location(11.5, 18.5), new Location(-11.5, 18.5), new Location(13.5, -16.5), new Location(-13.5, -16.5)};
-    public static final BufferedImage[] GHOST_SIDE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/Ghost0Side.png"), 
-                                                                                   GameUtilities.loadImage("resources/Ghost1Side.png"), 
-                                                                                   GameUtilities.loadImage("resources/Ghost2Side.png"), 
-                                                                                   GameUtilities.loadImage("resources/Ghost3Side.png")};
-    public static final BufferedImage[] GHOST_FACE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/Ghost0Face.png"), 
-                                                                                   GameUtilities.loadImage("resources/Ghost1Face.png"), 
-                                                                                   GameUtilities.loadImage("resources/Ghost2Face.png"), 
-                                                                                   GameUtilities.loadImage("resources/Ghost3Face.png")};
+    public static final Location[] GHOST_LOCATIONS = new Location[] {new Location(0, 3.5), new Location(0, 0.5), new Location(-2, 0.5), new Location(2, 0.5), new Location(0.0, 0.0), new Location(0.0, 0.0), new Location(0, 3.5)};
+    public static final int[] GHOST_ORIENTATIONS = new int[] {1, 2, 0, 0, 0, 0, 1};
+    public static final Location[] GHOST_CORNERS = new Location[] {new Location(11.5, 18.5), new Location(-11.5, 18.5), new Location(13.5, -16.5), new Location(-13.5, -16.5), new Location(0.0, 0.0), new Location(0.0, 0.0), new Location(11.5, 18.5)};
+    public static final BufferedImage[] GHOST_SIDE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/BlinkySide.png"), 
+                                                                                   GameUtilities.loadImage("resources/PinkySide.png"), 
+                                                                                   GameUtilities.loadImage("resources/InkySide.png"), 
+                                                                                   GameUtilities.loadImage("resources/ClydeSide.png"),
+                                                                                   GameUtilities.loadImage("resources/ScaredSide.png"),
+                                                                                   GameUtilities.loadImage("resources/ScaredFlashSide.png"),
+                                                                                   GameUtilities.loadImage("resources/BlinkySide.png")};
+    public static final BufferedImage[] GHOST_FACE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/BlinkyFace.png"), 
+                                                                                   GameUtilities.loadImage("resources/PinkyFace.png"), 
+                                                                                   GameUtilities.loadImage("resources/InkyFace.png"), 
+                                                                                   GameUtilities.loadImage("resources/ClydeFace.png"),
+                                                                                   GameUtilities.loadImage("resources/ScaredFace.png"),
+                                                                                   GameUtilities.loadImage("resources/ScaredFlashFace.png"),
+                                                                                   GameUtilities.loadImage("resources/CruiseElroyFace.png")};
+    
+    public static final boolean SCARY_FACES = false;
     
 	public static boolean equals(double a, double b) {
 		return Math.abs(a - b) < 1e-15;

@@ -64,29 +64,45 @@ public class Player extends Camera implements Tickable{
     	Point mloc = loc.add(new Point(mov));
 
     	double yaw = mov.yaw();
-    	if(!sameSide(loc, mloc)){
+    	if(!sameSideAll(loc, mloc)){
     		double yawl = yaw, yawr = yaw;
     		while(Math.abs((yawl - yaw) % (2*PI)) < PI) {
     			yawl += PI/90;
     			yawr -= PI/90;
     			Vector l = Vector.fromPolarTransform(yawl, 0, mov.s());
-    			if(sameSide(loc, loc.add(new Point(l.setScalar(l.dotProduct(mov.setScalar(1))))))) {
+    			if(sameSideAll(loc, loc.add(new Point(l.setScalar(l.dotProduct(mov.setScalar(1))))))) {
     				mov = l.setScalar(l.dotProduct(mov.setScalar(1)));
     				mloc = loc.add(new Point(mov));
     				break;
     			}
     			Vector r = Vector.fromPolarTransform(yawr, 0, mov.s());
-    			if(sameSide(loc, loc.add(new Point(r.setScalar(r.dotProduct(mov.setScalar(1))))))) {
+    			if(sameSideAll(loc, loc.add(new Point(r.setScalar(r.dotProduct(mov.setScalar(1))))))) {
     				mov = r.setScalar(r.dotProduct(mov.setScalar(1)));
     				mloc = loc.add(new Point(mov));
     				break;
     			}
     		}
     	}
+    	if(crossTunnel(loc, mloc)) {
+    		mloc = new Point(mloc.x - 28 * Math.signum(mloc.x), mloc.y, mloc.z);
+    		mloc = mloc;
+    	}
     	loc = mloc;
+    	
     }
     
-    private boolean sameSide(Point a, Point b) {
+    private boolean crossTunnel(Point a, Point b) {
+    	if(map != null) {
+    		for(ThreeDeeObject wall : map) {
+    			if(wall instanceof TunnelPlane && !wall.sameSide(a, b)) {
+    				return true;
+    			}
+    		}
+    	}
+    	return false;
+    }
+    
+    private boolean sameSideAll(Point a, Point b) {
     	if(map != null) {
     		for (ThreeDeeObject wall : map) {
     			if(!(wall instanceof TunnelPlane)) {
@@ -137,6 +153,7 @@ public class Player extends Camera implements Tickable{
 //    	if(s) move(2);
 //    	if(a) move(3);
     	move();
+    	System.out.println(loc.x);
     }
     
     @Override

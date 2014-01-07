@@ -117,9 +117,8 @@ public class Plane implements ThreeDeeObject{
 		return c;
 //		return new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256));
 	}
-
-    @Override
-    public Vector getNormal(){
-        return normal;
-    }
+	
+	public Vector getNormal() {
+		return normal;
+	}
 }

@@ -97,7 +97,7 @@ public class Player extends Camera implements Tickable{
     
     private boolean sameSideAll(Point a, Point b) {
     	if(map != null) {
-    		for (ThreeDeeObject wall : map) {
+    		for(ThreeDeeObject wall : map) {
     			if(!(wall instanceof TunnelPlane)) {
     				if(!wall.sameSide(a, b)) {
     					return false;

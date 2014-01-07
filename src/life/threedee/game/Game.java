@@ -60,18 +60,12 @@ public class Game implements Runnable, Tickable{
 		
         ghosts = new ArrayList<Ghost>();
         ghosts.add(new Ghost(this, BLINKY));
-        ghosts.get(0).translate(new Vector(0.0,0.0,3.5*GameUtilities.MPT));
         ghosts.add(new Ghost(this, PINKY));
-        ghosts.get(1).translate(new Vector(0.0, 0.0, 0.5 * GameUtilities.MPT));
         ghosts.add(new Ghost(this, INKY));
-        ghosts.get(2).translate(new Vector(-2.0 * GameUtilities.MPT, 0.0, 0.5));
         ghosts.add(new Ghost(this, CLYDE));
-        ghosts.get(3).translate(new Vector(2.0*GameUtilities.MPT,0.0,0.5));
         /* CRUISE ELROY SUMMONING RITUAL. REMOVE LATER*/
         ghosts.add(new Ghost(this, CRUISE_ELROY));
-        ghosts.get(4).translate(new Vector(2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
         ghosts.add(new Ghost(this, CRUISE_ELROY_2));
-        ghosts.get(5).translate(new Vector(-2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
         try {
             ghosts.add(new Ghost(this, SCARED));
             ghosts.add(new Ghost(this, SCARED_FLASHING));

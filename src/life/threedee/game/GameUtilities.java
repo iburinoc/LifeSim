@@ -75,9 +75,9 @@ public class GameUtilities{
 
     public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), Color.BLUE, Color.WHITE, new Color(230, 46, 37), new Color(230, 46, 37), null};
 
-    public static final Point[] GHOST_LOCATIONS = new Point[] {new Point(0, 1, 3.5), new Point(0, 1, 0.5), new Point(-2, 1, 0.5), new Point(2, 1, 0.5), new Point(0.0, 1, 0.0), new Point(0.0, 1, 0.0), new Point(2, 1, 3.5), new Point(-2, 1, 3.5), new Point(0, 1, 3.5)};
+    public static final Point[] GHOST_LOCATIONS = new Point[] {new Point(0*MPT, 1*MPT, 3.5*MPT), new Point(0*MPT, 1*MPT, 0.5*MPT), new Point(-2*MPT, 1*MPT, 0.5*MPT), new Point(2*MPT, 1*MPT, 0.5*MPT), new Point(0.0*MPT, 1*MPT, 0.0*MPT), new Point(0.0*MPT, 1*MPT, 0.0*MPT), new Point(2*MPT, 1*MPT, 3.5*MPT), new Point(-2*MPT, 1*MPT, 3.5*MPT), new Point(0*MPT, 1*MPT, 3.5*MPT)};
     public static final int[] GHOST_ORIENTATIONS = new int[] {1, 2, 0, 0, 0, 0, 1, 1, 0};
-    public static final Point[] GHOST_CORNERS = new Point[] {new Point(11.5, 1, 18.5), new Point(-11.5, 1, 18.5), new Point(13.5, 1, -16.5), new Point(-13.5, 1, -16.5), new Point(0.0, 1, 0.0), new Point(0.0, 1, 0.0), new Point(11.5, 1, 18.5), new Point(11.5, 1, 18.5), new Point(0, 1, 3.5)};
+    public static final Point[] GHOST_CORNERS = new Point[] {new Point(11.5*MPT, 1*MPT, 18.5*MPT), new Point(-11.5*MPT, 1*MPT, 18.5*MPT), new Point(13.5*MPT, 1*MPT, -16.5*MPT), new Point(-13.5*MPT, 1*MPT, -16.5*MPT), new Point(0.0*MPT, 1*MPT, 0.0*MPT), new Point(0.0*MPT, 1*MPT, 0.0*MPT), new Point(11.5*MPT, 1*MPT, 18.5*MPT), new Point(11.5*MPT, 1*MPT, 18.5*MPT), new Point(0*MPT, 1*MPT, 3.5*MPT)};
     public static final BufferedImage[] GHOST_SIDE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/BlinkySide.png"), 
                                                                                    GameUtilities.loadImage("resources/PinkySide.png"), 
                                                                                    GameUtilities.loadImage("resources/InkySide.png"), 

@@ -83,7 +83,6 @@ public class Player extends Camera implements Tickable{
     	}
     	if(crossTunnel(loc, mloc)) {
     		mloc = new Point(mloc.x - 28 * Math.signum(mloc.x), mloc.y, mloc.z);
-    		mloc = mloc;
     	}
     	loc = mloc;
     	

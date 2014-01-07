@@ -10,6 +10,7 @@ import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapBuilder;
+import life.threedee.game.maps.MapLocation;
 
 public class Game implements Runnable, Tickable{
 	public static final int TICK_RATE = 60;
@@ -30,9 +31,9 @@ public class Game implements Runnable, Tickable{
 	
 	private Input i;
 	
-	private boolean running;
+	private boolean running, first = false, second = false;
 
-    private int mode, level, dotsEaten;
+    private int mode, level, dotsEaten, score, lives = 2;
 	
 	public Game() {
 		j = new JFrame("Game");
@@ -46,16 +47,18 @@ public class Game implements Runnable, Tickable{
 		
         ghosts = new ArrayList<Ghost>();
         ghosts.add(new Blinky(this));
-        ghosts.get(0).move(new Vector(0.0,0.0,3.5*GameUtilities.MPT));
+        ghosts.get(0).translate(new Vector(0.0,0.0,3.5*GameUtilities.MPT));
         ghosts.add(new Pinky(this));
-        ghosts.get(1).move(new Vector(0.0, 0.0, 0.5 * GameUtilities.MPT));
+        ghosts.get(1).translate(new Vector(0.0, 0.0, 0.5 * GameUtilities.MPT));
         ghosts.add(new Inky(this));
-        ghosts.get(2).move(new Vector(-2.0 * GameUtilities.MPT, 0.0, 0.5));
+        ghosts.get(2).translate(new Vector(-2.0 * GameUtilities.MPT, 0.0, 0.5));
         ghosts.add(new Clyde(this));
-        ghosts.get(3).move(new Vector(2.0*GameUtilities.MPT,0.0,0.5));
+        ghosts.get(3).translate(new Vector(2.0*GameUtilities.MPT,0.0,0.5));
         /* CRUISE ELROY SUMMONING RITUAL. REMOVE LATER*/
         ghosts.add(new Ghost(new Location(0,0), 3, this, 6));
-        ghosts.get(4).move(new Vector(2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
+        ghosts.get(4).translate(new Vector(2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
+        ghosts.add(new Ghost(new Location(0,0), 3, this, 7));
+        ghosts.get(5).translate(new Vector(-2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
 		
 		i = new Input(p, this, j);
 		
@@ -71,6 +74,7 @@ public class Game implements Runnable, Tickable{
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		tickables.add(p);
+		tickables.add(this);
 	}
 	
 	private void removeCursor() {
@@ -125,6 +129,27 @@ public class Game implements Runnable, Tickable{
         if (dotsEaten == 240){
             level++;
         }
+        if (score >= 10000 && !first){
+            first = true;
+            lives++;
+        }
+        if (score >= 100000 && !second){
+            second = true;
+            lives++;
+        }
+        for (Ghost ghost : ghosts){
+            Location loc = p.getLoc();
+            Location ghostLoc = ghost.getLocation();
+            MapLocation coords = new MapLocation(loc.x, loc.z);
+            MapLocation ghostCoords = new MapLocation(ghostLoc.x, ghostLoc.z);
+            if (coords.equals(ghostCoords) && mode != -1){
+                lives--;
+                die();
+            }
+        }
+    }
+
+    private void die(){
     }
 	
 	private void drawFrame() {
@@ -142,21 +167,21 @@ public class Game implements Runnable, Tickable{
 		System.out.println(time);
 	}
 	
-	private void tickTickables(int delta) {
+	private void tickTickables(int delta){
 		for(int i = 0; i < tickables.size(); i++){
 			tickables.get(i).tick();
 		}
 	}
 	
-	public void addTickable(Tickable t) {
+	public void addTickable(Tickable t){
 		tickables.add(t);
 	}
 	
-	public void setTickables(List<Tickable> l) {
+	public void setTickables(List<Tickable> l){
 		tickables = Collections.synchronizedList(l);
 	}
 	
-	public List<Tickable> tickables() {
+	public List<Tickable> tickables(){
 		return tickables;
 	}
 	

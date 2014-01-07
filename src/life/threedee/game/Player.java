@@ -81,15 +81,17 @@ public class Player extends Camera implements Tickable{
             boolean stop = false, tunnel = false;
         	for (ThreeDeeObject wall : map) {
                 if (!wall.sameSide(loc, newLoc)){
-        			stop = true;
                     if (wall instanceof TunnelPlane){
                         tunnel = true;
+                    } else {
+                        stop = true;
                     }
         		}
             }
             if (tunnel){
                 newLoc = newLoc.subtract(new Point(28 * Math.signum(newLoc.x), 0, 0));
-            } else if (stop){
+            }
+            if (stop){
                 newLoc = loc;
             }
         }

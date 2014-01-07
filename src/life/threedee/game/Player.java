@@ -47,26 +47,66 @@ public class Player extends Camera implements Tickable{
     }
 
     private void move() {
+    	double y = dir.yaw();
+    	if(y != y) {
+    		return;
+    	}
     	Vector mov = new Vector(0, 0, 0);
-    	if(w) mov = mov.add(getMoveVector(0));
-    	if(d) mov = mov.add(getMoveVector(1));
-    	if(s) mov = mov.add(getMoveVector(2));
-    	if(a) mov = mov.add(getMoveVector(3));
+    	if(w) mov = mov.add(getMoveVector(0, y));
+    	if(d) mov = mov.add(getMoveVector(1, y));
+    	if(s) mov = mov.add(getMoveVector(2, y));
+    	if(a) mov = mov.add(getMoveVector(3, y));
     	
     	mov = mov.setScalar(0.25);
+    	if(mov.s() != mov.s()) {
+    		return;
+    	}
     	Point mloc = loc.add(new Point(mov));
+    	
+    	double yaw = mov.yaw();
     	
     	if(map != null) {
         	for (ThreeDeeObject wall : map) {
-        		if (!wall.sameSide(loc, mloc)){
-        			
+        		if ((wall instanceof TunnelPlane)){
+                    mloc = mloc.subtract(new Point(28 * Math.signum(mloc.x), 0, 0));
+                } else if (!wall.sameSide(loc, mloc)){
+        			double yawl = yaw, yawr = yaw;
+        			while(Math.abs((yawl - yaw) % (2*PI)) < PI) {
+        				yawl += PI/45;
+        				yawr -= PI/45;
+        				Vector l = Vector.fromPolarTransform(yawl, 0, mov.s());
+        				if(wall.sameSide(loc, loc.add(new Point(l)))) {
+        					mov = l.setScalar(l.dotProduct(mov.setScalar(1)));
+        					mloc = loc.add(new Point(mov));
+        					break;
+        				}
+        				Vector r = Vector.fromPolarTransform(yawr, 0, mov.s());
+        				if(wall.sameSide(loc, loc.add(new Point(r)))) {
+        					mov = r.setScalar(r.dotProduct(mov.setScalar(1)));
+        					mloc = loc.add(new Point(mov));
+        					break;
+        				}
+        			}
         		}
         	}
         }
+    	loc = mloc;
     }
     
-    private Vector getMoveVector(int d) {
-    	 double yaw = dir.yaw();
+    private boolean sameSide(Point a, Point b) {
+    	if(map != null) {
+    		for (ThreeDeeObject wall : map) {
+    			if(!(wall instanceof TunnelPlane)) {
+    				if(!wall.sameSide(a, b)) {
+    					return false;
+    				}
+    			}
+    		}
+    	}
+    	return true;
+    }
+    
+    private Vector getMoveVector(int d, double yaw) {
          yaw -= PI / 2 * d;
          return Vector.fromPolarTransform(yaw, 0, 1);
     }
@@ -90,10 +130,11 @@ public class Player extends Camera implements Tickable{
     }
 
     public void tick(int delta){
-    	if(w) move(0);
-    	if(d) move(1);
-    	if(s) move(2);
-    	if(a) move(3);
+//    	if(w) move(0);
+//    	if(d) move(1);
+//    	if(s) move(2);
+//    	if(a) move(3);
+    	move();
     }
     
     @Override

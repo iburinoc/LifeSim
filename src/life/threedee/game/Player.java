@@ -99,9 +99,9 @@ public class Player extends Camera implements Tickable{
     	if(map != null) {
     		for (ThreeDeeObject wall : map) {
     			if(!(wall instanceof TunnelPlane)) {
-    				if(!wall.sameSide(a, b) || Math.abs(new Vector(wall.intersection(wall.getNormal(), a).subtract(a)).s()) < 0.5) {
+    				if(!wall.sameSide(a, b)) {
     					return false;
-    				}
+                    }
     			}
     		}
     	}

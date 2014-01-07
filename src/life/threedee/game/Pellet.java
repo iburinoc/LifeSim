@@ -1,5 +1,7 @@
 package life.threedee.game;
 
+import static life.threedee.game.GameUtilities.idCount;
+
 import java.awt.Color;
 
 import life.threedee.Point;
@@ -10,7 +12,7 @@ import life.threedee.Vector;
 
 public class Pellet implements ThreeDeeObject, Tickable{
 
-	private static final double A_INC = Math.PI / 60;
+	private static final double A_INC = Math.PI / 30;
 	private static final double C_THIRD = 2*Math.PI/3;
 	
 	private Triangle[] t;
@@ -23,16 +25,19 @@ public class Pellet implements ThreeDeeObject, Tickable{
 	
 	private boolean eaten;
 	
+	private final int id;
+	
 	public Pellet(Point center) {
 //		(0,0.75,0);"
 //                + "(0,0.875,0),(0,0.625,0.2),(0.14,0.625,-0.1);"
 //                + "(0,0.875,0),(0,0.625,0.2),(-0.14,0.625,-0.1);"
 //                + "(0,0.875,0),(0.14,0.625,-0.1),(-0.14,0.625,-0.1)"
 		this.center = center;
-		top = new Point(0, 0.875, 0);
+		top = new Point(0, 0.250, 0);
 		t = new Triangle[3];
 		p = new Point[3];
 		generate();
+		id = idCount++;
 	}
 	
 	private void generate() {
@@ -64,6 +69,9 @@ public class Pellet implements ThreeDeeObject, Tickable{
 
 	@Override
 	public TColorTransfer getRData(Vector v, Point p, double minT) {
+		if(eaten) {
+			return new TColorTransfer(Double.NaN, null, null);
+		}
 		double min = Double.MAX_VALUE;
 		for(Triangle t : this.t) {
 			double ct = t.calculateT(v, p, Math.min(minT, min));

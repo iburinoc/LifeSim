@@ -5,7 +5,10 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import javax.swing.JFrame;
+
+import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
@@ -85,6 +88,10 @@ public class Game implements Runnable, Tickable{
 	
 	private void betaObjects() {
 		objects.addAll(MapBuilder.generateBetaScreenShotObjects());
+		Pellet p = new Pellet(new Point(0.5, 0, 3.5));
+		objects.add(p);
+		tickables.add(p);
+		
 	}
 	
 	@Override

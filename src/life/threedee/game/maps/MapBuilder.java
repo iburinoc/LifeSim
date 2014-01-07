@@ -19,6 +19,7 @@ import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.WorldObject;
 import life.threedee.game.GameUtilities;
+import life.threedee.game.Pellet;
 import life.threedee.game.TunnelPlane;
 
 /**
@@ -58,8 +59,9 @@ public class MapBuilder {
                     + "(0,0.875,0),(0,0.625,0.2),(-0.14,0.625,-0.1);"
                     + "(0,0.875,0),(0.14,0.625,-0.1),(-0.14,0.625,-0.1)", /*Color.WHITE*/ Color.YELLOW);
             pellet.translate(new Vector(new Point(MPT*i+0.5, 0.0, 3.5*MPT)));
-            o.add(pellet);
+//            o.add(pellet);
 		}
+		
 		/*BufferedImage texture = null;
         try {
             texture = ImageIO.read(new File("./resources/zelda.jpg"));

@@ -114,4 +114,6 @@ public class GameUtilities{
 			}
 		}
 	}
+	
+	public static int idCount = 0; // for map objects
 }

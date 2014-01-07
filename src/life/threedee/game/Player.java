@@ -145,7 +145,7 @@ public class Player extends Camera implements Tickable{
         loc = newLoc;
     }
 
-    public void tick(int delta){
+    public void tick(){
 //    	if(w) move(0);
 //    	if(d) move(1);
 //    	if(s) move(2);

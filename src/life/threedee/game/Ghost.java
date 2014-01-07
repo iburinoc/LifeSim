@@ -147,7 +147,7 @@ public class Ghost implements Tickable{
         }
     }
 
-    public void tick(int delta){
+    public void tick(){
         for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
         }

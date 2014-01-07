@@ -121,7 +121,7 @@ public class Game implements Runnable, Tickable{
 	}
 
     @Override
-    public void tick(int delta){
+    public void tick(){
         if (dotsEaten == 240){
             level++;
         }
@@ -144,7 +144,7 @@ public class Game implements Runnable, Tickable{
 	
 	private void tickTickables(int delta) {
 		for(int i = 0; i < tickables.size(); i++){
-			tickables.get(i).tick(delta);
+			tickables.get(i).tick();
 		}
 	}
 	

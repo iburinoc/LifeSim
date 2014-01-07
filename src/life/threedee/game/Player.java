@@ -76,15 +76,22 @@ public class Player extends Camera implements Tickable{
         pt[0] -= PI / 2 * d;
         Vector mov = Vector.fromPolarTransform(pt[0], 0, 0.25);//d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1])
         //loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
-        Point newLoc = new Point(loc.x+mov.x,loc.y,loc.z+mov.z);
+        Point newLoc = loc.add(new Point(mov));
         if(map != null) {
+            boolean stop = false, tunnel = false;
         	for (ThreeDeeObject wall : map) {
-                if ((wall instanceof TunnelPlane)){
-                    newLoc = newLoc.subtract(new Point(28 * Math.signum(newLoc.x), 0, 0));
-                } else if (!wall.sameSide(loc, newLoc)){
-        			newLoc = loc;
+                if (!wall.sameSide(loc, newLoc)){
+        			stop = true;
+                    if (wall instanceof TunnelPlane){
+                        tunnel = true;
+                    }
         		}
-        	}
+            }
+            if (tunnel){
+                newLoc = newLoc.subtract(new Point(28 * Math.signum(newLoc.x), 0, 0));
+            } else if (stop){
+                newLoc = loc;
+            }
         }
         loc = newLoc;
     }

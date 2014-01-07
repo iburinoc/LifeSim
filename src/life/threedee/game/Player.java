@@ -46,6 +46,31 @@ public class Player extends Camera implements Tickable{
     	super.calcBuffer();
     }
 
+    private void move() {
+    	Vector mov = new Vector(0, 0, 0);
+    	if(w) mov = mov.add(getMoveVector(0));
+    	if(d) mov = mov.add(getMoveVector(1));
+    	if(s) mov = mov.add(getMoveVector(2));
+    	if(a) mov = mov.add(getMoveVector(3));
+    	
+    	mov = mov.setScalar(0.25);
+    	Point mloc = loc.add(new Point(mov));
+    	
+    	if(map != null) {
+        	for (ThreeDeeObject wall : map) {
+        		if (!wall.sameSide(loc, mloc)){
+        			
+        		}
+        	}
+        }
+    }
+    
+    private Vector getMoveVector(int d) {
+    	 double yaw = dir.yaw();
+         yaw -= PI / 2 * d;
+         return Vector.fromPolarTransform(yaw, 0, 1);
+    }
+    
     public synchronized void move(int d) {
         double[] pt = dir.polarTransform();
         pt[0] -= PI / 2 * d;

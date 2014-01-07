@@ -69,60 +69,56 @@ public class Ghost implements Tickable{
 
     public Point findTarget() {
         switch(ghostNum) {
-        case BLINKY:
-        {
-            if (game.getMode() == 0){
-                return GameUtilities.GHOST_CORNERS[0];
-            }
-            return game.getPlayer().getLoc();
-        }
-        case PINKY:
-        {
-            if (game.getMode() == 0){
-                return GameUtilities.GHOST_CORNERS[1];
-            }
-            Vector dir = game.getPlayer().getDir();
-            double yaw = dir.polarTransform()[0];
-            Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(4)));
-            if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
-                tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 4)));
-            }
-            return tar;
-        }
-        case INKY:
-        {
-            if (game.getMode() == 0){
-                return GameUtilities.GHOST_CORNERS[2];
-            }
-            Vector dir = game.getPlayer().getDir();
-            double yaw = dir.polarTransform()[0];
-            Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(2)));
-            if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
-                tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 2)));
-            }
-            Point blinkyPosition = game.getGhosts().get(0).getLocation();
-            return new Point(2 * tar.x - blinkyPosition.x, 1, 2 * tar.z - blinkyPosition.z);
-        }
-        case CLYDE:
-        {
-            if (game.getMode() == 0){
-                return GameUtilities.GHOST_CORNERS[3];
-            }
-            if (new Vector(location, game.getPlayer().getLoc()).s() > 64){
+            case BLINKY: {
+                if (game.getMode() == 0){
+                    return GameUtilities.GHOST_CORNERS[0];
+                }
                 return game.getPlayer().getLoc();
             }
-            return GameUtilities.GHOST_CORNERS[3];
-        }
-        case SCARED:
-        case SCARED_FLASHING:
-            return null;
-        case CRUISE_ELROY:
-        case CRUISE_ELROY_2:
-            return game.getPlayer().getLoc();
-        case EATEN:
-            return null;
-        default:
-            return null;
+            case PINKY: {
+                if (game.getMode() == 0){
+                    return GameUtilities.GHOST_CORNERS[1];
+                }
+                Vector dir = game.getPlayer().getDir();
+                double yaw = dir.polarTransform()[0];
+                Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(4)));
+                if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
+                    tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 4)));
+                }
+                return tar;
+            }
+            case INKY: {
+                if (game.getMode() == 0){
+                    return GameUtilities.GHOST_CORNERS[2];
+                }
+                Vector dir = game.getPlayer().getDir();
+                double yaw = dir.polarTransform()[0];
+                Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(2)));
+                if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
+                    tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 2)));
+                }
+                Point blinkyPosition = game.getGhosts().get(0).getLocation();
+                return new Point(2 * tar.x - blinkyPosition.x, 1, 2 * tar.z - blinkyPosition.z);
+            }
+            case CLYDE: {
+                if (game.getMode() == 0){
+                    return GameUtilities.GHOST_CORNERS[3];
+                }
+                if (new Vector(location, game.getPlayer().getLoc()).s() > 64){
+                    return game.getPlayer().getLoc();
+                }
+                return GameUtilities.GHOST_CORNERS[3];
+            }
+            case SCARED:
+            case SCARED_FLASHING:
+                return null;
+            case CRUISE_ELROY:
+            case CRUISE_ELROY_2:
+                return game.getPlayer().getLoc();
+            case EATEN:
+                return eyesTarget;
+            default:
+                return null;
         }
     }
 

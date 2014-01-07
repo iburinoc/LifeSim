@@ -157,6 +157,8 @@ public class Game implements Runnable, Tickable{
     }
 
     private void die(){
+        p.setLoc(new Point(0, 1, -8.5));
+        p.setDir(new Vector(-1, 0, 0));
     }
 	
 	private void drawFrame() {

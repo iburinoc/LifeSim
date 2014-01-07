@@ -47,18 +47,18 @@ public class Game implements Runnable, Tickable{
 		
         ghosts = new ArrayList<Ghost>();
         ghosts.add(new Blinky(this));
-        ghosts.get(0).move(new Vector(0.0,0.0,3.5*GameUtilities.MPT));
+        ghosts.get(0).translate(new Vector(0.0,0.0,3.5*GameUtilities.MPT));
         ghosts.add(new Pinky(this));
-        ghosts.get(1).move(new Vector(0.0, 0.0, 0.5 * GameUtilities.MPT));
+        ghosts.get(1).translate(new Vector(0.0, 0.0, 0.5 * GameUtilities.MPT));
         ghosts.add(new Inky(this));
-        ghosts.get(2).move(new Vector(-2.0 * GameUtilities.MPT, 0.0, 0.5));
+        ghosts.get(2).translate(new Vector(-2.0 * GameUtilities.MPT, 0.0, 0.5));
         ghosts.add(new Clyde(this));
-        ghosts.get(3).move(new Vector(2.0*GameUtilities.MPT,0.0,0.5));
+        ghosts.get(3).translate(new Vector(2.0*GameUtilities.MPT,0.0,0.5));
         /* CRUISE ELROY SUMMONING RITUAL. REMOVE LATER*/
         ghosts.add(new Ghost(new Location(0,0), 3, this, 6));
-        ghosts.get(4).move(new Vector(2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
+        ghosts.get(4).translate(new Vector(2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
         ghosts.add(new Ghost(new Location(0,0), 3, this, 7));
-        ghosts.get(5).move(new Vector(-2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
+        ghosts.get(5).translate(new Vector(-2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
 		
 		i = new Input(p, this, j);
 		

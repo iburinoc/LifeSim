@@ -13,6 +13,7 @@ import static life.threedee.game.GameUtilities.SCARED_FLASHING;
 import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
+import life.threedee.game.maps.MapLocation;
 
 public class Ghost implements Tickable{
     protected Point location, target;
@@ -64,24 +65,6 @@ public class Ghost implements Tickable{
         }
         facePlanes[direction].setFace(true);
         g.addTickable(this);
-    }
-    
-    public int makeDecision(boolean[] open){
-        if (uTurn){
-            return (direction + 2) % 4;
-        }
-        target = findTarget();
-        open[(direction + 2) % 4] = false;
-        double shortest = Double.MAX_VALUE;
-        int toReturn = 0;
-        for (int i = 3; i >= 0; i--){
-            Point choice = new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)));
-            if (open[i] && new Vector(choice, target).s() <= shortest){
-                shortest = new Vector(choice, target).s();
-                toReturn = i;
-            }
-        }
-        return toReturn;
     }
 
     public Point findTarget() {
@@ -167,9 +150,33 @@ public class Ghost implements Tickable{
             translate(new Vector(-28 * Math.signum(location.x), 0, 0));
         }
     }
+
+    public int makeDecision(boolean[] open){
+        MapLocation indices = new MapLocation(location);
+        open = GameUtilities.INTERSECTIONS[indices.mx][indices.my];
+        if (uTurn){
+            return (direction + 2) % 4;
+        }
+        target = findTarget();
+        open[(direction + 2) % 4] = false;
+        double shortest = Double.MAX_VALUE;
+        int toReturn = 0;
+        for (int i = 3; i >= 0; i--){
+            Point choice = new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)));
+            if (open[i] && new Vector(choice, target).s() <= shortest){
+                shortest = new Vector(choice, target).s();
+                toReturn = i;
+            }
+        }
+        return toReturn;
+    }
     
     public void move() {
-        //ANDREY, PUT MOVEMENT CODE HERE!
+        Vector v = dirToV();
+        Point newLocation = location.add(new Point(v));
+        if (new MapLocation(newLocation).equals(new MapLocation(newLocation.add(new Point(0.5, 0, 0.5))))){
+            direction = makeDecision(null);
+        }
         translate(dirToV());
     }
     

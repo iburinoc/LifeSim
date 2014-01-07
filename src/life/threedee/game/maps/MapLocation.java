@@ -9,7 +9,11 @@ public class MapLocation {
 	/**
 	 * Objects used as keys in hashmaps should probably be immutable, come to think of it.
 	 */
-	private final int mx, my;
+	public final int mx, my;
+
+    public MapLocation(Point point){
+        this(point.x, point.z);
+    }
 	
 	public MapLocation(double x, double z) {
 		this.mx = (int) (x + 14);

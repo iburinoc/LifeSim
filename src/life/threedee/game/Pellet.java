@@ -9,8 +9,9 @@ import life.threedee.TColorTransfer;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Triangle;
 import life.threedee.Vector;
+import life.threedee.game.maps.MapFeature;
 
-public class Pellet implements ThreeDeeObject, Tickable{
+public class Pellet implements ThreeDeeObject, Tickable, MapFeature{
 
 	private static final double A_INC = Math.PI / 30;
 	private static final double C_THIRD = 2*Math.PI/3;
@@ -60,6 +61,11 @@ public class Pellet implements ThreeDeeObject, Tickable{
 	
 	public boolean eaten() {
 		return eaten;
+	}
+	
+	@Override
+	public int getID() {
+		return id;
 	}
 	
 	@Override

@@ -28,8 +28,8 @@ import life.threedee.game.TunnelPlane;
  *
  */
 public class MapBuilder {
-	private static final BufferedImage map = GameUtilities.loadImage("resources/map.png");
 	private static final BufferedImage wall = GameUtilities.loadImage("resources/wall.png");
+	private static final BufferedImage pellets = GameUtilities.loadImage("resources/pellets.png");
 	
 	private static final int PX_TILE = 8;
 	
@@ -273,6 +273,28 @@ public class MapBuilder {
 				}
 			}
 		}
+		l.addAll(createPellets());
+		return l;
+	}
+	
+	private static List<ThreeDeeObject> createPellets() {
+		int[][] pel = parsePellets();
+		List<ThreeDeeObject> l = new ArrayList<ThreeDeeObject>();
+		for(int x = 0; x < 28; x++) {
+			for(int y = 0; y < 36; y++) {
+				switch(pel[x][y]) {
+				case 1:
+					double px = (x - 14 + 0.5) * MPT;
+					double py = -(y - 18 + 0.5) * MPT;
+					l.add(new Pellet(new Point(px, 0, py)));
+					break;
+				case 2: //put energizer creater here
+					break;
+				default:
+					break;
+				}
+			}
+		}
 		return l;
 	}
 	
@@ -334,5 +356,21 @@ public class MapBuilder {
 				|| (wall.getRGB(x * 8, y * 8 + 4) & 0xFFFFFF) == 0;
 
 		return walls;
+	}
+	
+	private static int[][] parsePellets() {
+		int[][] pel = new int[28][36];
+		
+		for(int x = 0; x < 28; x++) {
+			for(int y = 0; y < 36; y++) {
+				if(pellets.getRGB(x*8 + 3, y*8 + 3) == 0xfffffffd) {
+					pel[x][y]++;
+					if(pellets.getRGB(x*8, y*8 + 3) == 0xfffffffd) {
+						pel[x][y]++;
+					}
+				}
+			}
+		}
+		return pel;
 	}
 }

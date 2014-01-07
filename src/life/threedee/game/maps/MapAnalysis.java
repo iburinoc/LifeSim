@@ -53,7 +53,7 @@ public class MapAnalysis {
 						StringBuffer s = new StringBuffer();
 						for(int i = 0; i < o.size(); i++) {
 							try{
-								s.append(((MapPlane) (o.get(i))).id);
+								s.append(((MapFeature) (o.get(i))).getID());
 								if(i != o.size() - 1){
 									s.append(',');
 								}

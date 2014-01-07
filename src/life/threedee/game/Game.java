@@ -53,6 +53,8 @@ public class Game implements Runnable{
         ghosts.get(2).move(new Vector(-2.0*GameUtilities.MPT, 0.0, 0.5));
         ghosts.add(new Clyde(this));
         ghosts.get(3).move(new Vector(2.0*GameUtilities.MPT,0.0,0.5));
+        ghosts.add(new Ghost(new Location(0,0), 3, this, 6));
+        ghosts.get(4).move(new Vector(2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
 		
 		i = new Input(p, this, j);
 		

@@ -151,13 +151,15 @@ public class Ghost implements Tickable{
         for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
         }
-        // We'll need to rework this 
+        // We'll need to rework this.
+        // Andrey, you'll need to implement ALL the rules 
+        // concerning Blinky turning into his 2 Cruise Elroy forms. 
         if (ghostId == 0 && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getDotsRemaining()) {
             ghostNum = 6;
-            facePlanes[direction].setTexture(GameUtilities.GHOST_FACE_TEXTURES[ghostNum]);
-            facePlanes[direction+1%4].setTexture(GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
-            facePlanes[direction+2%4].setTexture(GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
-            facePlanes[direction+3%4].setTexture(GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
+            facePlanes[direction].setGhostNum(ghostNum);
+            facePlanes[direction+1%4].setGhostNum(ghostNum);
+            facePlanes[direction+2%4].setGhostNum(ghostNum);
+            facePlanes[direction+3%4].setGhostNum(ghostNum);
         }
     }
     

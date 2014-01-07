@@ -68,6 +68,10 @@ public class GhostPlane extends TexturedPlane {
         }
     }
     
+    public void setGhostNum(int ghostNum) {
+        this.ghostNum = ghostNum;
+    }
+    
     public void shiftTexture() {
         offset++; 
         offset %= 10;

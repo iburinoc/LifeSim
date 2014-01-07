@@ -34,6 +34,7 @@ public class Ghost implements Tickable{
     protected Triangle[] faceTriangles;
 
     public Ghost(Game g, int ghostNum) {
+        this.game=g;
         this.ghostNum=ghostNum;
         this.ghostId=ghostNum;
         this.location=GameUtilities.GHOST_LOCATIONS[ghostNum];

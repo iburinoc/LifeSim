@@ -34,7 +34,7 @@ public class Ghost implements Tickable{
         facePlanes[1] = new GhostPlane(lowerZMinusXPlus, new Vector(lowerZMinusXPlus, zMinusXPlus).crossProduct(new Vector(lowerZMinusXPlus, lowerZMinusXMinus)), ghostNum);
         facePlanes[2] = new GhostPlane(lowerZMinusXMinus, new Vector(lowerZMinusXMinus, zMinusXMinus).crossProduct(new Vector(lowerZMinusXMinus, lowerZPlusXMinus)), ghostNum);
         facePlanes[3] = new GhostPlane(lowerZPlusXMinus, new Vector(lowerZPlusXMinus, zPlusXMinus).crossProduct(new Vector(lowerZPlusXMinus, lowerZPlusXPlus)), ghostNum);
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             g.addObject(faceTriangles[i]);
             g.addObject(facePlanes[i]);
         }
@@ -46,6 +46,7 @@ public class Ghost implements Tickable{
         this.location = location;
         this.direction = direction;
         this.game = game;
+        facePlanes[direction].setFace(true);
     }
     
     public int makeDecision(boolean[] open){
@@ -71,14 +72,14 @@ public class Ghost implements Tickable{
     }
 
     public void tick(int delta){
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
         }
     }
     
     public void move(Vector v) {
         //ANDREY, PUT MOVEMENT CODE HERE!
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             facePlanes[i].translate(v);
             faceTriangles[i].translate(v);
         }

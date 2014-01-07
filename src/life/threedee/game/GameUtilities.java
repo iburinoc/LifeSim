@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 public class GameUtilities{
@@ -75,7 +76,15 @@ public class GameUtilities{
     public static final Location[] GHOST_LOCATIONS = new Location[] {new Location(0, 3.5), new Location(0, 0.5), new Location(-2, 0.5), new Location(2, 0.5)};
     public static final int[] GHOST_ORIENTATIONS = new int[] {1, 2, 0, 0};
     public static final Location[] GHOST_CORNERS = new Location[] {new Location(11.5, 18.5), new Location(-11.5, 18.5), new Location(13.5, -16.5), new Location(-13.5, -16.5)};
-
+    public static final BufferedImage[] GHOST_SIDE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/Ghost0Side.png"), 
+                                                                                   GameUtilities.loadImage("resources/Ghost1Side.png"), 
+                                                                                   GameUtilities.loadImage("resources/Ghost2Side.png"), 
+                                                                                   GameUtilities.loadImage("resources/Ghost3Side.png")};
+    public static final BufferedImage[] GHOST_FACE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/Ghost0Face.png"), 
+                                                                                   GameUtilities.loadImage("resources/Ghost1Face.png"), 
+                                                                                   GameUtilities.loadImage("resources/Ghost2Face.png"), 
+                                                                                   GameUtilities.loadImage("resources/Ghost3Face.png")};
+    
 	public static boolean equals(double a, double b) {
 		return Math.abs(a - b) < 1e-15;
 	}

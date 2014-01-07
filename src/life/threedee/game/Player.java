@@ -1,6 +1,8 @@
 package life.threedee.game;
 
 import static java.lang.Math.PI;
+import static life.threedee.game.GameUtilities.R_INC;
+
 import java.awt.Color;
 import java.util.List;
 import life.threedee.Camera;
@@ -47,7 +49,7 @@ public class Player extends Camera implements Tickable{
     public synchronized void move(int d) {
         double[] pt = dir.polarTransform();
         pt[0] -= PI / 2 * d;
-        Vector mov = Vector.fromPolarTransform(pt[0], 0, 0.1);//d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1])
+        Vector mov = Vector.fromPolarTransform(pt[0], 0, 0.25);//d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1])
         //loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
         Point newLoc = new Point(loc.x+mov.x,loc.y,loc.z+mov.z);
         if(map != null) {
@@ -73,7 +75,7 @@ public class Player extends Camera implements Tickable{
 		if(map != null) {
 			for(ThreeDeeObject p : map){
 				TColorTransfer o = p.getRData(dir, px, min.t);
-				if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0){
+				if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0 && (!(o.o instanceof TunnelPlane) || Math.abs(px.x) <= 14)){
 					min = o;
 				}
 			}
@@ -81,11 +83,14 @@ public class Player extends Camera implements Tickable{
 		if(objects != null) {
 			for(ThreeDeeObject p : objects){
 				TColorTransfer o = p.getRData(dir, px, min.t);
-				if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0){
+				if(min.t > o.t && o.t >= 0 && o.t == o.t && o.c != null && o.c.getAlpha() != 0 && (!(o.o instanceof TunnelPlane) || Math.abs(px.x) <= 14)){
 					min = o;
 				}
 			}
 		}
+        if (min.o instanceof TunnelPlane && Math.abs(px.x) <= 14){
+            min = closestInFront(dir, px.subtract(new Point(28 * Math.signum(px.x), 0, 0)));
+        }
 		return min;
 	}
 

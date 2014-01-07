@@ -12,12 +12,14 @@ import javax.imageio.ImageIO;
 import life.threedee.game.GameUtilities;
 
 public class GhostPlane extends TexturedPlane {
-    private int textureNum, ghostNum;
+    private int offset, ghostNum;
+    private boolean facePlane;
     
     public GhostPlane(Point p, Vector n, int ghostNum) {
-        super(p, n, GameUtilities.loadImage("resources/Ghost"+ghostNum+"Side.png"));
-        this.textureNum = 1;
+        super(p, n, GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
+        this.offset = 1;
         this.ghostNum=ghostNum;
+        this.facePlane=false;
     }
     
     public Color c(Point inter) {
@@ -34,7 +36,7 @@ public class GhostPlane extends TexturedPlane {
         if(px >= 0 && px < super.w && py >= 0 && py < super.h) {
             try{
                 if (py > super.h-7) {
-                    return new Color(super.texture.getRGB((px+textureNum)%20, py), true);
+                    return new Color(super.texture.getRGB((px+offset)%20, py), true);
                 } else {
                     return new Color(super.texture.getRGB(px, py), true);
                 }
@@ -45,9 +47,18 @@ public class GhostPlane extends TexturedPlane {
         return null;
     }
     
+    public void setFace(boolean face) {
+        this.facePlane=face;
+        if(facePlane) {
+            this.texture = GameUtilities.GHOST_FACE_TEXTURES[ghostNum];
+        } else {
+            this.texture = GameUtilities.GHOST_SIDE_TEXTURES[ghostNum];
+        }
+    }
+    
     public void shiftTexture() {
-        textureNum++; 
-        textureNum %= 10;
-        //this.setTexture(GameUtilities.loadImage("./resources/Ghost"+ghostNum+"Side"+textureNum+".png"));
+        offset++; 
+        offset %= 10;
+        //this.setTexture(GameUtilities.loadImage("./resources/Ghost"+ghostNum+"Side"+offset+".png"));
     }
 }

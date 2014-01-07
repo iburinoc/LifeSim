@@ -147,7 +147,7 @@ public class Ghost implements Tickable{
         }
     }
 
-    public void tick(int delta){
+    public void tick(){
         for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
         }
@@ -170,6 +170,11 @@ public class Ghost implements Tickable{
     
     public void move(Vector v) {
         //ANDREY, PUT MOVEMENT CODE HERE!
+        translate(v);
+    }
+    
+    public void translate(Vector v) {
+        // TRANSLATE ALL THE POINTS/LOCATIONS HERE AS WELL. OR SHOULD THAT BE IN MOVE?
         for (int i = 0; i < 4; i++) {
             facePlanes[i].translate(v);
             faceTriangles[i].translate(v);

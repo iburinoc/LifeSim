@@ -9,14 +9,14 @@ import static life.threedee.game.GameUtilities.INKY;
 import static life.threedee.game.GameUtilities.PINKY;
 import static life.threedee.game.GameUtilities.SCARED;
 import static life.threedee.game.GameUtilities.SCARED_FLASHING;
-import life.threedee.GhostPlane;
+
 import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
 
 public class Ghost implements Tickable{
-    protected Location location, target;
-    protected final Location eyesTarget = new Location(-0.5, 3.5);
+    protected Point location, target;
+    protected final Point eyesTarget = new Point(-0.5, 1, 3.5);
     // ghostNum is the current state of the ghost (0-7). This is used to decide textures, behaviour, etc.
     // 0 - Blinky
     // 1 - Pinky
@@ -75,16 +75,16 @@ public class Ghost implements Tickable{
         double shortest = Double.MAX_VALUE;
         int toReturn = 0;
         for (int i = 3; i >= 0; i--){
-            Location choice = new Location(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)), location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)));
-            if (open[i] && choice.distanceTo(target) <= shortest){
-                shortest = choice.distanceTo(target);
+            Point choice = new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)));
+            if (open[i] && new Vector(choice, target).s() <= shortest){
+                shortest = new Vector(choice, target).s();
                 toReturn = i;
             }
         }
         return toReturn;
     }
 
-    public Location findTarget() {
+    public Point findTarget() {
         switch(ghostNum) {
         case BLINKY:
         {
@@ -104,7 +104,7 @@ public class Ghost implements Tickable{
             if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
                 tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 4)));
             }
-            return new Location(tar.x, tar.z);
+            return tar;
         }
         case INKY:
         {
@@ -117,15 +117,15 @@ public class Ghost implements Tickable{
             if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
                 tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 2)));
             }
-            Location blinkyPosition = game.getGhosts().get(0).getLocation();
-            return new Location(2 * tar.x - blinkyPosition.x, 2 * tar.z - blinkyPosition.z);
+            Point blinkyPosition = game.getGhosts().get(0).getLocation();
+            return new Point(2 * tar.x - blinkyPosition.x, 1, 2 * tar.z - blinkyPosition.z);
         }
         case CLYDE:
         {
             if (game.getMode() == 0){
                 return GameUtilities.GHOST_CORNERS[3];
             }
-            if (location.distanceTo(game.getPlayer().getLoc()) > 64){
+            if (new Vector(location, game.getPlayer().getLoc()).s() > 64){
                 return game.getPlayer().getLoc();
             }
             return GameUtilities.GHOST_CORNERS[3];
@@ -175,7 +175,7 @@ public class Ghost implements Tickable{
     
     public void translate(Vector v) {
         // TRANSLATE ALL THE POINTS/LOCATIONS HERE AS WELL. OR SHOULD THAT BE IN MOVE?
-        location = new Location(location.x + v.x, location.z + v.z);
+        location = location.add(new Point(v));
         for (int i = 0; i < 4; i++) {
             facePlanes[i].translate(v);
             faceTriangles[i].translate(v);
@@ -186,7 +186,7 @@ public class Ghost implements Tickable{
         return Vector.fromPolarTransform(direction < 3 ? (direction + 1) * Math.PI / 2 : 0, 0, GameUtilities.GAME_DATA[game.getLevel()][1] / 400.0);
     }
 
-    public Location getLocation(){
+    public Point getLocation(){
         return location;
     }
 }

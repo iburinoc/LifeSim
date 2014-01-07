@@ -162,8 +162,8 @@ public class Game implements Runnable, Tickable{
             lives++;
         }
         for (Ghost ghost : ghosts){
-            Location loc = p.getLoc();
-            Location ghostLoc = ghost.getLocation();
+            Point loc = p.getLoc();
+            Point ghostLoc = ghost.getLocation();
             MapLocation coords = new MapLocation(loc.x, loc.z);
             MapLocation ghostCoords = new MapLocation(ghostLoc.x, ghostLoc.z);
             if (coords.equals(ghostCoords) && mode != -1){

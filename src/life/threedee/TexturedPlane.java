@@ -8,11 +8,11 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class TexturedPlane extends Plane{
-	BufferedImage texture;
+    public BufferedImage texture;
 
-    Vector right, up;
+    public Vector right, up;
 
-	int w, h;
+	public int w, h;
 	
 	/**
 	 * Note: p is the bottom left corner of the texture, so keep that in mind.
@@ -70,7 +70,7 @@ public class TexturedPlane extends Plane{
         Color color = getRData(new Vector(point1, point2), point1, Double.NaN).c;
         return super.sameSide(point1, point2) || color == null || color.getAlpha() == 0;
     }
-	
+
 	public void setTexture(BufferedImage texture) {
 	    this.texture = texture;
 	}

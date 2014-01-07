@@ -179,8 +179,8 @@ public class Player extends Camera implements Tickable{
 		return min;
 	}
 
-    public Location getLoc(){
-        return new Location(loc.x, loc.z);
+    public Point getLoc(){
+        return loc;
     }
 
     public void setLoc(Point loc){

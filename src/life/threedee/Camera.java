@@ -68,7 +68,7 @@ public class Camera extends JPanel{
 	}
 	
 	public Camera(){
-		this(new Point(5,1,0),new Vector(0,0,1).setScalar(1));
+		this(new Point(0,0,0),new Vector(0,0,1));
 	}
 	
 	@Override

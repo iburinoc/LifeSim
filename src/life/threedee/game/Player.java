@@ -15,7 +15,7 @@ public class Player extends Camera implements Tickable{
     private List<ThreeDeeObject> map;
     
     public Player(Game g, GameMap m) {
-        super();
+        super(new Point(0, 1, -8.5), new Vector(-1, 0, 0));
         this.g = g;
         this.m = m;
     }
@@ -101,7 +101,7 @@ public class Player extends Camera implements Tickable{
     			if(!(wall instanceof TunnelPlane)) {
     				if(!wall.sameSide(a, b)) {
     					return false;
-    				}
+                    }
     			}
     		}
     	}

@@ -32,7 +32,7 @@ public class Game implements Runnable, Tickable{
 	
 	private boolean running;
 
-    private int mode, level, dotsEaten;
+    private int mode, level, dotsEaten, score;
 	
 	public Game() {
 		j = new JFrame("Game");
@@ -142,21 +142,21 @@ public class Game implements Runnable, Tickable{
 		System.out.println(time);
 	}
 	
-	private void tickTickables(int delta) {
+	private void tickTickables(int delta){
 		for(int i = 0; i < tickables.size(); i++){
 			tickables.get(i).tick(delta);
 		}
 	}
 	
-	public void addTickable(Tickable t) {
+	public void addTickable(Tickable t){
 		tickables.add(t);
 	}
 	
-	public void setTickables(List<Tickable> l) {
+	public void setTickables(List<Tickable> l){
 		tickables = Collections.synchronizedList(l);
 	}
 	
-	public List<Tickable> tickables() {
+	public List<Tickable> tickables(){
 		return tickables;
 	}
 	

@@ -10,6 +10,7 @@ import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapBuilder;
+import life.threedee.game.maps.MapLocation;
 
 public class Game implements Runnable, Tickable{
 	public static final int TICK_RATE = 60;
@@ -30,9 +31,9 @@ public class Game implements Runnable, Tickable{
 	
 	private Input i;
 	
-	private boolean running;
+	private boolean running, first = false, second = false;
 
-    private int mode, level, dotsEaten, score;
+    private int mode, level, dotsEaten, score, lives = 2;
 	
 	public Game() {
 		j = new JFrame("Game");
@@ -125,6 +126,27 @@ public class Game implements Runnable, Tickable{
         if (dotsEaten == 240){
             level++;
         }
+        if (score >= 10000 && !first){
+            first = true;
+            lives++;
+        }
+        if (score >= 100000 && !second){
+            second = true;
+            lives++;
+        }
+        for (Ghost ghost : ghosts){
+            Location loc = p.getLoc();
+            Location ghostLoc = ghost.getLocation();
+            MapLocation coords = new MapLocation(loc.x, loc.z);
+            MapLocation ghostCoords = new MapLocation(ghostLoc.x, ghostLoc.z);
+            if (coords.equals(ghostCoords) && mode != -1){
+                lives--;
+                die();
+            }
+        }
+    }
+
+    private void die(){
     }
 	
 	private void drawFrame() {

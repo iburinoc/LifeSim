@@ -124,4 +124,8 @@ public class Pellet implements ThreeDeeObject, Tickable, MapFeature{
 		return true;
 	}
 
+    @Override
+    public Vector getNormal(){
+        return null;
+    }
 }

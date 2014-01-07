@@ -3,11 +3,7 @@ package life.threedee.game;
 import static java.lang.Math.PI;
 import java.awt.Color;
 import java.util.List;
-import life.threedee.Camera;
-import life.threedee.Point;
-import life.threedee.TColorTransfer;
-import life.threedee.ThreeDeeObject;
-import life.threedee.Vector;
+import life.threedee.*;
 import life.threedee.game.maps.GameMap;
 
 public class Player extends Camera implements Tickable{
@@ -103,7 +99,7 @@ public class Player extends Camera implements Tickable{
     	if(map != null) {
     		for (ThreeDeeObject wall : map) {
     			if(!(wall instanceof TunnelPlane)) {
-    				if(!wall.sameSide(a, b)) {
+    				if(!wall.sameSide(a, b) || Math.abs(new Vector(wall.intersection(wall.getNormal(), a).subtract(a)).s()) < 0.5) {
     					return false;
     				}
     			}

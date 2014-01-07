@@ -183,7 +183,7 @@ public class Ghost implements Tickable{
     }
 
     public Vector dirToV(){
-        return Vector.fromPolarTransform(direction > 0 ? (direction - 1) * Math.PI / 2 : 0, 0, GameUtilities.GAME_DATA[game.getLevel()][1] / 400);
+        return Vector.fromPolarTransform(direction < 3 ? (direction + 1) * Math.PI / 2 : 0, 0, GameUtilities.GAME_DATA[game.getLevel()][1] / 400.0);
     }
 
     public Location getLocation(){

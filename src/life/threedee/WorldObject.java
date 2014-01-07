@@ -117,4 +117,9 @@ public class WorldObject implements ThreeDeeObject{
 	public boolean sameSide(Point a, Point b) {
 		return true;
 	}
+
+    @Override
+    public Vector getNormal(){
+        return null;
+    }
 }

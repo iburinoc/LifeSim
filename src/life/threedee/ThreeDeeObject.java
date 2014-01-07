@@ -16,4 +16,6 @@ public interface ThreeDeeObject{
 	public Color c();
 	
 	public boolean sameSide(Point a, Point b);
+
+    public Vector getNormal();
 }

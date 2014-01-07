@@ -71,11 +71,11 @@ public class GameUtilities{
 
     public static final double[][] MODE_TIMES = new double[][] {{7, 20, 7, 20, 5, 20, 5}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {5, 20, 5, 20, 5, 1037, 1 / 60}};
 
-    public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), Color.BLUE, Color.WHITE, new Color(230, 46, 37), new Color(230, 46, 37)};
+    public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), Color.BLUE, Color.WHITE, new Color(230, 46, 37), new Color(230, 46, 37), null};
 
-    public static final Location[] GHOST_LOCATIONS = new Location[] {new Location(0, 3.5), new Location(0, 0.5), new Location(-2, 0.5), new Location(2, 0.5), new Location(0.0, 0.0), new Location(0.0, 0.0), new Location(2, 3.5), new Location(-2, 3.5)};
-    public static final int[] GHOST_ORIENTATIONS = new int[] {1, 2, 0, 0, 0, 0, 1, 1};
-    public static final Location[] GHOST_CORNERS = new Location[] {new Location(11.5, 18.5), new Location(-11.5, 18.5), new Location(13.5, -16.5), new Location(-13.5, -16.5), new Location(0.0, 0.0), new Location(0.0, 0.0), new Location(11.5, 18.5), new Location(11.5, 18.5)};
+    public static final Location[] GHOST_LOCATIONS = new Location[] {new Location(0, 3.5), new Location(0, 0.5), new Location(-2, 0.5), new Location(2, 0.5), new Location(0.0, 0.0), new Location(0.0, 0.0), new Location(2, 3.5), new Location(-2, 3.5), new Location(0, 3.5)};
+    public static final int[] GHOST_ORIENTATIONS = new int[] {1, 2, 0, 0, 0, 0, 1, 1, 0};
+    public static final Location[] GHOST_CORNERS = new Location[] {new Location(11.5, 18.5), new Location(-11.5, 18.5), new Location(13.5, -16.5), new Location(-13.5, -16.5), new Location(0.0, 0.0), new Location(0.0, 0.0), new Location(11.5, 18.5), new Location(11.5, 18.5), new Location(0, 3.5)};
     public static final BufferedImage[] GHOST_SIDE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/BlinkySide.png"), 
                                                                                    GameUtilities.loadImage("resources/PinkySide.png"), 
                                                                                    GameUtilities.loadImage("resources/InkySide.png"), 
@@ -83,7 +83,8 @@ public class GameUtilities{
                                                                                    GameUtilities.loadImage("resources/ScaredSide.png"),
                                                                                    GameUtilities.loadImage("resources/ScaredFlashSide.png"),
                                                                                    GameUtilities.loadImage("resources/BlinkySide.png"),
-                                                                                   GameUtilities.loadImage("resources/BlinkySide.png")};
+                                                                                   GameUtilities.loadImage("resources/BlinkySide.png"),
+                                                                                   GameUtilities.loadImage("resources/Eaten.png"),};
     public static final BufferedImage[] GHOST_FACE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/BlinkyFace.png"), 
                                                                                    GameUtilities.loadImage("resources/PinkyFace.png"), 
                                                                                    GameUtilities.loadImage("resources/InkyFace.png"), 
@@ -91,7 +92,18 @@ public class GameUtilities{
                                                                                    GameUtilities.loadImage("resources/ScaredFace.png"),
                                                                                    GameUtilities.loadImage("resources/ScaredFlashFace.png"),
                                                                                    GameUtilities.loadImage("resources/CruiseElroyFace.png"),
-                                                                                   GameUtilities.loadImage("resources/CruiseElroy2Face.png")};
+                                                                                   GameUtilities.loadImage("resources/CruiseElroy2Face.png"),
+                                                                                   GameUtilities.loadImage("resources/EatenFace.png"),};
+    
+    public static final int BLINKY = 0;
+    public static final int PINKY = 1;
+    public static final int INKY = 2;
+    public static final int CLYDE = 3;
+    public static final int SCARED = 4;
+    public static final int SCARED_FLASHING = 5;
+    public static final int CRUISE_ELROY = 6;
+    public static final int CRUISE_ELROY_2 = 7;
+    public static final int EATEN = 8;
     
     public static final boolean SCARY_FACES = false;
     

@@ -15,6 +15,10 @@ public class GhostPlane extends TexturedPlane {
     private int offset, ghostNum;
     private boolean facePlane;
     
+    public GhostPlane(Point o, Point r, Point u, int ghostNum) {
+        this(o,new Vector(o, u).crossProduct(new Vector(o, r)), ghostNum);
+    }
+    
     public GhostPlane(Point p, Vector n, int ghostNum) {
         super(p, n, GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
         this.offset = 1;

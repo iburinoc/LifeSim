@@ -19,6 +19,7 @@ import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.WorldObject;
 import life.threedee.game.GameUtilities;
+import life.threedee.game.TunnelPlane;
 
 /**
  * Parses 2D pacman map image and builds the object list for it.
@@ -113,14 +114,17 @@ public class MapBuilder {
 					List<ThreeDeeObject> vis = new ArrayList<ThreeDeeObject>();
 					vis.add(map.get(0));
 					vis.add(map.get(1));
-					
-					String[] walls = l.split(",");
-					for(int i = 0; i < walls.length; i++) {
-						try{
-							vis.add(map.get(Integer.parseInt(walls[i]) + 2));
-						}
+                    vis.add(map.get(2));
+                    vis.add(map.get(3));
+
+                    String[] walls = l.split(",");
+                    for(int i = 0; i < walls.length; i++) {
+                        try{
+                            vis.add(map.get(Integer.parseInt(walls[i]) + 4));
+                        }
 						catch(NumberFormatException e) {
-							e.printStackTrace();
+                            vis.add(map.get(1));
+                            e.printStackTrace();
 						}
 					}
 
@@ -144,7 +148,10 @@ public class MapBuilder {
 		
 		l.add(new Plane(new Point(0, WALL_HEIGHT, 0), new Vector(0, 1, 0), Color.BLACK));
 		l.add(new Plane(new Point(0, 0, 0), new Vector(0, 1, 0), Color.BLACK));
-		
+
+        l.add(new TunnelPlane(new Point(-14, 0, 0), new Vector(1, 0, 0)));
+        l.add(new TunnelPlane(new Point(14, 0, 0), new Vector(1, 0, 0)));
+
 		int[][] map = parseMap();
 		boolean[][] done = new boolean[28][36];
 		
@@ -264,7 +271,6 @@ public class MapBuilder {
 				}
 			}
 		}
-		
 		return l;
 	}
 	

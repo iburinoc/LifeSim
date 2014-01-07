@@ -9,7 +9,6 @@ import static life.threedee.game.GameUtilities.INKY;
 import static life.threedee.game.GameUtilities.PINKY;
 import static life.threedee.game.GameUtilities.SCARED;
 import static life.threedee.game.GameUtilities.SCARED_FLASHING;
-
 import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
@@ -159,8 +158,9 @@ public class Ghost implements Tickable{
         int toReturn = 0;
         for (int i = 3; i >= 0; i--){
             Point choice = new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)));
-            if (open[i] && new Vector(choice, target).s() <= shortest){
-                shortest = new Vector(choice, target).s();
+            double s;
+            if (open[i] && ((s = new Vector(choice, target).s()) <= shortest)){
+                shortest = s;
                 toReturn = i;
             }
         }

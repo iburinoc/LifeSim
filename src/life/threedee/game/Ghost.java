@@ -161,6 +161,13 @@ public class Ghost implements Tickable{
             facePlanes[direction+2%4].setGhostNum(ghostNum);
             facePlanes[direction+3%4].setGhostNum(ghostNum);
         }
+        if (ghostId == 0 && (ghostNum == 0 || ghostNum == 6) && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getDotsRemaining() * 2) {
+            ghostNum = 7;
+            facePlanes[direction].setTexture(GameUtilities.GHOST_FACE_TEXTURES[ghostNum]);
+            facePlanes[direction+1%4].setTexture(GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
+            facePlanes[direction+2%4].setTexture(GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
+            facePlanes[direction+3%4].setTexture(GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
+        }
     }
     
     public void move(Vector v) {

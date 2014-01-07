@@ -40,15 +40,15 @@ public class Ghost implements Tickable{
         this.ghostId=ghostNum;
         this.location=GameUtilities.GHOST_LOCATIONS[ghostNum];
         this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
-        Point top = new Point(0.0, 2.0, 0.0);
-        Point zPlusXPlus = new Point(0.25, 1.5, 0.25);
-        Point zMinusXPlus = new Point(0.25, 1.5, -0.25);
-        Point zMinusXMinus = new Point(-0.25, 1.5, -0.25);
-        Point zPlusXMinus = new Point(-0.25, 1.5, 0.25);
-        Point lowerZPlusXPlus = new Point(0.5, 0.0, 0.5);
-        Point lowerZMinusXPlus = new Point(0.5, 0.0, -0.5);
-        Point lowerZMinusXMinus = new Point(-0.5, 0.0, -0.5);
-        Point lowerZPlusXMinus = new Point(-0.5, 0.0, 0.5);
+        Point top = new Point(0.0, 2.0, 0.0).add(this.location);
+        Point zPlusXPlus = new Point(0.25, 1.5, 0.25).add(this.location);
+        Point zMinusXPlus = new Point(0.25, 1.5, -0.25).add(this.location);
+        Point zMinusXMinus = new Point(-0.25, 1.5, -0.25).add(this.location);
+        Point zPlusXMinus = new Point(-0.25, 1.5, 0.25).add(this.location);
+        Point lowerZPlusXPlus = new Point(0.5, 0.0, 0.5).add(this.location);
+        Point lowerZMinusXPlus = new Point(0.5, 0.0, -0.5).add(this.location);
+        Point lowerZMinusXMinus = new Point(-0.5, 0.0, -0.5).add(this.location);
+        Point lowerZPlusXMinus = new Point(-0.5, 0.0, 0.5).add(this.location);
         facePlanes = new GhostPlane[4];
         faceTriangles = new Triangle[4];
         faceTriangles[0] = new Triangle(top, zPlusXPlus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
@@ -147,7 +147,7 @@ public class Ghost implements Tickable{
         }
         move();
         if (Math.abs(location.x) > 14){
-            translate(new Vector(-28 * Math.signum(location.x), 0, 0));
+            translate(new Vector(-28*GameUtilities.MPT * Math.signum(location.x), 0, 0));
         }
     }
 

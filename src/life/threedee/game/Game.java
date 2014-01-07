@@ -57,6 +57,8 @@ public class Game implements Runnable, Tickable{
         /* CRUISE ELROY SUMMONING RITUAL. REMOVE LATER*/
         ghosts.add(new Ghost(new Location(0,0), 3, this, 6));
         ghosts.get(4).move(new Vector(2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
+        ghosts.add(new Ghost(new Location(0,0), 3, this, 7));
+        ghosts.get(5).move(new Vector(-2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
 		
 		i = new Input(p, this, j);
 		

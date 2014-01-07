@@ -46,7 +46,7 @@ public class GhostPlane extends TexturedPlane {
             int px = (int) (dr * PX_METER / pv + super.w/2);
             if(px >= 0 && px < super.w && py >= 0 && py < super.h) {
                 try{
-                    if (py > super.h-7) {
+                    if (py > super.h-6) {
                         return new Color(super.texture.getRGB((px+offset)%20, py), true);
                     } else {
                         return new Color(super.texture.getRGB(px, py), true);
@@ -66,6 +66,10 @@ public class GhostPlane extends TexturedPlane {
         } else {
             this.texture = GameUtilities.GHOST_SIDE_TEXTURES[ghostNum];
         }
+    }
+    
+    public void setGhostNum(int ghostNum) {
+        this.ghostNum = ghostNum;
     }
     
     public void shiftTexture() {

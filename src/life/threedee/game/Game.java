@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JFrame;
+
+import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
@@ -150,6 +152,8 @@ public class Game implements Runnable, Tickable{
     }
 
     private void die(){
+        p.setLoc(new Point(0, 1, -8.5));
+        p.setDir(new Vector(-1, 0, 0));
     }
 	
 	private void drawFrame() {

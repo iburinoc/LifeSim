@@ -187,6 +187,14 @@ public class Player extends Camera implements Tickable{
         return new Location(loc.x, loc.z);
     }
 
+    public void setLoc(Point loc){
+        this.loc = loc;
+    }
+
+    public void setDir(Vector dir){
+        this.dir = dir;
+    }
+
     public Point getLocPoint(){
         return loc;
     }

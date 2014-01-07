@@ -33,7 +33,7 @@ public class WallTexFactory {
 	public static BufferedImage createCornerTex() {
 		if(CORNER_TEX == null) {
 			CORNER_TEX = createGenTex(
-					(int) (0.5 * (Math.sqrt(2.0) + 0.1) * MPT * PX_METER),
+					(int) (0.5 * (Math.sqrt(2.0) + 0.09) * MPT * PX_METER),
 					(int) (WALL_HEIGHT * MPT * PX_METER));
 		}
 		

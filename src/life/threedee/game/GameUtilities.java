@@ -84,7 +84,7 @@ public class GameUtilities{
                                                                                    GameUtilities.loadImage("resources/ScaredFlashSide.png"),
                                                                                    GameUtilities.loadImage("resources/BlinkySide.png"),
                                                                                    GameUtilities.loadImage("resources/BlinkySide.png"),
-                                                                                   GameUtilities.loadImage("resources/Eaten.png"),};
+                                                                                   GameUtilities.loadImage("resources/EatenSide.png"),};
     public static final BufferedImage[] GHOST_FACE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/BlinkyFace.png"), 
                                                                                    GameUtilities.loadImage("resources/PinkyFace.png"), 
                                                                                    GameUtilities.loadImage("resources/InkyFace.png"), 

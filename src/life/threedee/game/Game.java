@@ -72,9 +72,13 @@ public class Game implements Runnable, Tickable{
         ghosts.get(4).translate(new Vector(2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
         ghosts.add(new Ghost(this, CRUISE_ELROY_2));
         ghosts.get(5).translate(new Vector(-2.0*GameUtilities.MPT,0.0,3.5*GameUtilities.MPT));
-        ghosts.add(new Ghost(this, SCARED));
-        ghosts.add(new Ghost(this, SCARED_FLASHING));
-        ghosts.add(new Ghost(this, EATEN));
+        try {
+            ghosts.add(new Ghost(this, SCARED));
+            ghosts.add(new Ghost(this, SCARED_FLASHING));
+            ghosts.add(new Ghost(this, EATEN));
+        } catch (NullPointerException e) {
+            //This is here so it doesn't auto-remove the imports. 
+        }
 		
 		i = new Input(p, this, j);
 		

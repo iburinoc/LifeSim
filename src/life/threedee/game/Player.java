@@ -1,8 +1,6 @@
 package life.threedee.game;
 
 import static java.lang.Math.PI;
-import static life.threedee.game.GameUtilities.R_INC;
-
 import java.awt.Color;
 import java.util.List;
 import life.threedee.Camera;
@@ -57,7 +55,7 @@ public class Player extends Camera implements Tickable{
     	if(s) mov = mov.add(getMoveVector(2, y));
     	if(a) mov = mov.add(getMoveVector(3, y));
     	
-    	mov = mov.setScalar(0.25);
+    	mov = mov.setScalar(GameUtilities.GAME_DATA[g.getLevel()][0] / 400.0);
     	if(mov.s() != mov.s()) {
     		return;
     	}

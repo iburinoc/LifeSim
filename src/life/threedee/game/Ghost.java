@@ -8,7 +8,15 @@ import life.threedee.Vector;
 public class Ghost implements Tickable{
     protected Location location, target;
     protected final Location eyesTarget = new Location(-0.5, 3.5);
-    // ghostNum is the current state of the ghost (0-6). This is used to decide textures, behaviour, etc. 
+    // ghostNum is the current state of the ghost (0-7). This is used to decide textures, behaviour, etc.
+    // 0 - Blinky
+    // 1 - Pinky
+    // 2 - Inky
+    // 3 - Clyde
+    // 4 - Scared
+    // 5 - ScaredFlashing
+    // 6 - Cruise Elroy
+    // 7 - Cruise Elroy MK. II
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
     protected int direction, ghostNum, ghostId;
     protected boolean uTurn, eaten;
@@ -129,6 +137,7 @@ public class Ghost implements Tickable{
         case 5:
             return null;
         case 6:
+        case 7:
             if (eaten){
                 return eyesTarget;
             }
@@ -141,6 +150,14 @@ public class Ghost implements Tickable{
     public void tick(int delta){
         for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
+        }
+        // We'll need to rework this 
+        if (ghostId == 0 && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getDotsRemaining()) {
+            ghostNum = 6;
+            facePlanes[direction].setTexture(GameUtilities.GHOST_FACE_TEXTURES[ghostNum]);
+            facePlanes[direction+1%4].setTexture(GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
+            facePlanes[direction+2%4].setTexture(GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
+            facePlanes[direction+3%4].setTexture(GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
         }
     }
     

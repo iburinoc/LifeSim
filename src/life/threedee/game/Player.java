@@ -62,34 +62,27 @@ public class Player extends Camera implements Tickable{
     		return;
     	}
     	Point mloc = loc.add(new Point(mov));
-    	
+
     	double yaw = mov.yaw();
-    	
-    	if(map != null) {
-        	for (ThreeDeeObject wall : map) {
-        		if ((wall instanceof TunnelPlane)){
-                    mloc = mloc.subtract(new Point(28 * Math.signum(mloc.x), 0, 0));
-                } else if (!wall.sameSide(loc, mloc)){
-        			double yawl = yaw, yawr = yaw;
-        			while(Math.abs((yawl - yaw) % (2*PI)) < PI) {
-        				yawl += PI/45;
-        				yawr -= PI/45;
-        				Vector l = Vector.fromPolarTransform(yawl, 0, mov.s());
-        				if(wall.sameSide(loc, loc.add(new Point(l)))) {
-        					mov = l.setScalar(l.dotProduct(mov.setScalar(1)));
-        					mloc = loc.add(new Point(mov));
-        					break;
-        				}
-        				Vector r = Vector.fromPolarTransform(yawr, 0, mov.s());
-        				if(wall.sameSide(loc, loc.add(new Point(r)))) {
-        					mov = r.setScalar(r.dotProduct(mov.setScalar(1)));
-        					mloc = loc.add(new Point(mov));
-        					break;
-        				}
-        			}
-        		}
-        	}
-        }
+    	if(!sameSide(loc, mloc)){
+    		double yawl = yaw, yawr = yaw;
+    		while(Math.abs((yawl - yaw) % (2*PI)) < PI) {
+    			yawl += PI/90;
+    			yawr -= PI/90;
+    			Vector l = Vector.fromPolarTransform(yawl, 0, mov.s());
+    			if(sameSide(loc, loc.add(new Point(l.setScalar(l.dotProduct(mov.setScalar(1))))))) {
+    				mov = l.setScalar(l.dotProduct(mov.setScalar(1)));
+    				mloc = loc.add(new Point(mov));
+    				break;
+    			}
+    			Vector r = Vector.fromPolarTransform(yawr, 0, mov.s());
+    			if(sameSide(loc, loc.add(new Point(r.setScalar(r.dotProduct(mov.setScalar(1))))))) {
+    				mov = r.setScalar(r.dotProduct(mov.setScalar(1)));
+    				mloc = loc.add(new Point(mov));
+    				break;
+    			}
+    		}
+    	}
     	loc = mloc;
     }
     

@@ -137,60 +137,30 @@ public class Ghost implements Tickable{
 
     public int makeDecision(){
         MapLocation indices = new MapLocation(location);
-//        System.out.print(GameUtilities.INTERSECTIONS[indices.mx][indices.my - 3][0]);
-//        System.out.print(GameUtilities.INTERSECTIONS[indices.mx][indices.my - 4][0]);
-//        System.out.print(GameUtilities.INTERSECTIONS[indices.mx][indices.my - 2][0]);
-        boolean[] open = new boolean[4];
-        for (int i = 0; i < 4; i++) {
-            open[i] = GameUtilities.INTERSECTIONS[indices.mx][indices.my - 3][i];
-        }
-//        for (int i = 0; i < 4; i++) {
-//            System.out.print(open[i]?1:0);
-//        }
-//        System.out.println();
+        boolean[] open = GameUtilities.INTERSECTIONS[indices.mx][indices.my - 3].clone();
         if (uTurn){
             return (direction + 2) % 4;
         }
         target = findTarget();
         open[(direction + 2) % 4] = false;
-//        System.out.println("BUBUBUGBUBUGBUGBUGBUBGUBG"+open[0]+open[2]);
         double shortest = Double.MAX_VALUE;
-//        boolean foundShortest = false;
         int toReturn = 3;
         for (int i = 0; i < 4; i++){
             Point choice = new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)));
             double s = new Vector(choice, target).s();
-//            if (open[i]) {
-//                System.out.print("ULALALLALLALALLALALALALAL!"+i);
-//            }
             if (open[i] && s < shortest){
                 shortest = s;
                 toReturn = i;
-//                foundShortest = true;
             }
         }
-//        if (foundShortest) {
-            return toReturn;
-//        } else {
-//            System.out.println("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
-//            return toReturn;
-//        }
+        return toReturn;
     }
     
     public void move() {
         Vector v = dirToV();
         Point newLocation = location.add(new Point(v));
-        boolean intersection = false;
-        if (Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5) {
-            intersection = true;
-            //newLocation = new Point ((int) newLocation.x + 0.5, newLocation.y, newLocation.z);
-        }
-        if (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5) {
-            intersection = true;
-            //newLocation = new Point (newLocation.x, newLocation.y, (int) newLocation.z + 0.5);
-        }
-        if (intersection) {
-            //translate(new Vector(location, newLocation));
+        if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
+         || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
             direction = makeDecision();
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
@@ -201,7 +171,6 @@ public class Ghost implements Tickable{
     }
     
     public void translate(Vector v) {
-        // TRANSLATE ALL THE POINTS/LOCATIONS HERE AS WELL. OR SHOULD THAT BE IN MOVE?
         location = location.add(new Point(v));
         for (int i = 0; i < 4; i++) {
             facePlanes[i].translate(v);

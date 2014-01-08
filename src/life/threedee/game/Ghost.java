@@ -28,7 +28,7 @@ public class Ghost implements Tickable{
     // 7 - Cruise Elroy MK. II
     // 8 - Eyes
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
-    protected int direction, ghostNum, ghostId;
+    protected int direction, decision, ghostNum, ghostId;
     protected boolean uTurn;
     protected Game game;
     protected GhostPlane[] facePlanes;
@@ -150,7 +150,7 @@ public class Ghost implements Tickable{
         double shortest = Double.MAX_VALUE;
         int toReturn = 3;
         for (int i = 0; i < 4; i++){
-            Point choice = new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)));
+            Point choice = new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)) + direction % 2 == 1 ? direction - 2 : 0, 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)) + direction % 2 == 0 ? -direction + 1 : 0);
             double s = new Vector(choice, target).s();
             if (open[i] && s < shortest){
                 shortest = s;
@@ -165,7 +165,8 @@ public class Ghost implements Tickable{
         Point newLocation = location.add(new Point(v));
         if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
          || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
-            direction = makeDecision();
+            direction = decision;
+            decision = makeDecision();
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
             facePlanes[(direction+2)%4].setFace(false);

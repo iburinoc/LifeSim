@@ -34,6 +34,7 @@ public class Pellet implements ThreeDeeObject, Tickable, MapFeature{
 //                + "(0,0.875,0),(0,0.625,0.2),(-0.14,0.625,-0.1);"
 //                + "(0,0.875,0),(0.14,0.625,-0.1),(-0.14,0.625,-0.1)"
 		this.center = center;
+		eaten = true;
 		top = new Point(0, 0.250, 0);
 		t = new Triangle[3];
 		p = new Point[3];

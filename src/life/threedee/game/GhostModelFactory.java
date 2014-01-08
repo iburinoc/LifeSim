@@ -7,7 +7,7 @@
 //
 //import javax.imageio.ImageIO;
 //
-//import life.threedee.GhostPlane;
+//import life.threedee.game.GhostPlane;
 //import life.threedee.Point;
 //import life.threedee.ThreeDeeObject;
 //import life.threedee.Triangle;

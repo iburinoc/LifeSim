@@ -159,7 +159,16 @@ public class Ghost implements Tickable{
     public void move() {
         Vector v = dirToV();
         Point newLocation = location.add(new Point(v));
-        if (new MapLocation(newLocation).equals(new MapLocation(newLocation.add(new Point(dirToV().setScalar(0.5)))))){
+        boolean intersection = false;
+        if (Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5) {
+            intersection = true;
+            newLocation = new Point (newLocation.x % 1 + 0.5, newLocation.y, newLocation.z);
+        }
+        if (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5) {
+            intersection = true;
+            newLocation = new Point (newLocation.x, newLocation.y, newLocation.z % 1 + 0.5);
+        }
+        if (intersection) {
             direction = makeDecision();
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);

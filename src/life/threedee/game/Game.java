@@ -57,7 +57,7 @@ public class Game implements Runnable, Tickable{
 		
 		setObjects(new ArrayList<ThreeDeeObject>());
         setTickables(new ArrayList<Tickable>());
-		
+		mode = 1;
         ghosts = new ArrayList<Ghost>();
         ghosts.add(new Ghost(this, BLINKY));
         ghosts.add(new Ghost(this, PINKY));
@@ -75,7 +75,7 @@ public class Game implements Runnable, Tickable{
 		i = new Input(p, this, j);
 		
 		running = true;
-		
+
 		j.addMouseListener(i);
 		j.addMouseMotionListener(i);
 		j.addKeyListener(i);

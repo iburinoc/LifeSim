@@ -50,12 +50,16 @@ public class Game implements Runnable, Tickable{
 
     private int mode, level, dotsEaten, score, lives = 2;
 	
+    private Object objLock;
+    
 	public Game() {
 		j = new JFrame("Game");
 		
 		m = new GameMap();
 		
 		p = new Player(this, m);
+		
+		objLock = new Object();
 		
 		setObjects(new ArrayList<ThreeDeeObject>());
         setTickables(new ArrayList<Tickable>());
@@ -119,38 +123,51 @@ public class Game implements Runnable, Tickable{
 		
 		tickablePellets();
 		
-		long tick_time = System.currentTimeMillis();
-		int tick_delta = 0;
+		RenderThread rt = new RenderThread();
+		TickThread tt = new TickThread();
+		rt.start();
+		tt.start();
 		
-		long frame_time = System.currentTimeMillis();
-		int frame_delta = 0;
-		
-		int tickRateMillis = 1000/TICK_RATE;
-		int frameRateMillis = 1000/FRAME_RATE;
-		while(running) {
-			long frameT = System.currentTimeMillis();
-			frame_delta += (int) (frameT - frame_time);
-			frame_time = frameT;
-			if(frame_delta >= frameRateMillis) {
-				drawFrame();
-				frame_delta -= frameRateMillis;
-			}
-			
-			long tickT = System.currentTimeMillis();
-			tick_delta += (int) (tickT - tick_time);
-			tick_time = tickT;
-			if(tick_delta >= tickRateMillis) {
-				tickTickables(tick_delta);
-				tick_delta -= tickRateMillis;
-			}
-//			for (ThreeDeeObject obj: objects) { // BAD.  Replace with tickables pls
-//			    if (obj instanceof GhostPlane) {
-//			        ((GhostPlane) obj).shiftTexture(false); // There now you'll notice it
-//			    }
-//			}
-		}
 	}
 
+	private class RenderThread extends Thread {
+		@Override
+		public void run() {
+			long frame_time = System.currentTimeMillis();
+			int frame_delta = 0;
+			
+			int frameRateMillis = 1000/FRAME_RATE;
+			while(running) {
+				long frameT = System.currentTimeMillis();
+				frame_delta += (int) (frameT - frame_time);
+				frame_time = frameT;
+				if(frame_delta >= frameRateMillis) {
+					drawFrame();
+					frame_delta -= frameRateMillis;
+				}
+			}
+		}
+	}
+	
+	private class TickThread extends Thread {
+		@Override
+		public void run() {
+			long tick_time = System.currentTimeMillis();
+			int tick_delta = 0;
+
+			int tickRateMillis = 1000/TICK_RATE;
+			while(running) {
+				long tickT = System.currentTimeMillis();
+				tick_delta += (int) (tickT - tick_time);
+				tick_time = tickT;
+				if(tick_delta >= tickRateMillis) {
+					tickTickables(tick_delta);
+					tick_delta -= tickRateMillis;
+				}
+			}
+		}
+	}
+	
     @Override
     public void tick(){
         if (dotsEaten == 240){
@@ -183,7 +200,9 @@ public class Game implements Runnable, Tickable{
 	
 	private void drawFrame() {
 		long startT = System.currentTimeMillis();
-		p.calcBuffer();
+		synchronized(objLock) {
+			p.calcBuffer();
+		}
 		p.repaint();
 		p.registerWait(Thread.currentThread());
 		try{
@@ -197,8 +216,10 @@ public class Game implements Runnable, Tickable{
 	}
 	
 	private void tickTickables(int delta){
-		for(int i = 0; i < tickables.size(); i++){
-			tickables.get(i).tick();
+		synchronized(objLock) {
+			for(int i = 0; i < tickables.size(); i++){
+				tickables.get(i).tick();
+			}
 		}
 	}
 	

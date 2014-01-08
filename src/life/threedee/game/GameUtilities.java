@@ -46,7 +46,7 @@ public class GameUtilities{
              {no, nu, ud, ud, ud, al, ud, ud, nr, ud, ud, ud, ud, ud, al, ud, ud, ud, ud, ud, al, ud, ud, nl, ud, ud, ul, no, no, rl, no},
              {no, rl, no, no, no, rl, no, no, no, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, rl, no, no, no, no, no, rl, no},
              {no, rl, no, no, no, rl, no, no, no, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, rl, no, no, no, no, no, rl, no},
-             {no, rl, no, no, no, nu, ud, ud, ur, no, no, dr, ud, ud, nr, ud, ud, nl, ud, ud, nd, no, no, nu, ud, ud, nr, no, no, rl, no},
+             {no, rl, no, no, no, nu, ud, ud, ur, no, no, dr, ud, ud, nr, ud, ud, nl, ud, ud, nd, no, no, nu, ud, ud, ur, no, no, rl, no},
              {no, rl, no, no, no, rl, no, no, rl, no, no, rl, no, no, no, no, no, rl, no, no, rl, no, no, rl, no, no, rl, no, no, rl, no},
              {no, rl, no, no, no, rl, no, no, rl, no, no, rl, no, no, no, no, no, rl, no, no, rl, no, no, rl, no, no, rl, no, no, rl, no},
              {no, dl, ud, ud, ud, nd, no, no, dl, ud, ud, nd, no, no, no, no, no, rl, no, no, dl, ud, ud, nd, no, no, dl, ud, ud, nd, no},

@@ -15,7 +15,7 @@ public class TunnelPlane extends Plane{
     }
 
     public TunnelPlane(Point origin, Vector normal){
-        super(origin, normal, origin.x > 0 ? Color.MAGENTA : Color.GREEN);
+        super(origin, normal, Color.BLACK);
         id = Math.signum(origin.x);
     }
 }

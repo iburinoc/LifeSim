@@ -58,6 +58,7 @@ public class Player extends Camera implements Tickable{
     	Point mloc = loc.add(new Point(mov));
 
     	double yaw = mov.yaw();
+    	slide:
     	if(!sameSideAll(loc, mloc)){
     		double yawl = yaw, yawr = yaw;
     		while(Math.abs((yawl - yaw) % (2*PI)) < PI) {
@@ -67,15 +68,16 @@ public class Player extends Camera implements Tickable{
     			if(sameSideAll(loc, loc.add(new Point(l.setScalar(l.dotProduct(mov.setScalar(1))))))) {
     				mov = l.setScalar(l.dotProduct(mov.setScalar(1)));
     				mloc = loc.add(new Point(mov));
-    				break;
+    				break slide;
     			}
     			Vector r = Vector.fromPolarTransform(yawr, 0, mov.s());
     			if(sameSideAll(loc, loc.add(new Point(r.setScalar(r.dotProduct(mov.setScalar(1))))))) {
     				mov = r.setScalar(r.dotProduct(mov.setScalar(1)));
     				mloc = loc.add(new Point(mov));
-    				break;
+    				break slide;
     			}
     		}
+    		mloc = loc;
     	}
     	if(crossTunnel(loc, mloc)) {
     		mloc = new Point(mloc.x - 28 * Math.signum(mloc.x), mloc.y, mloc.z);
@@ -112,33 +114,6 @@ public class Player extends Camera implements Tickable{
          yaw -= PI / 2 * d;
          return Vector.fromPolarTransform(yaw, 0, 1);
     }
-    
-    public synchronized void move(int d) {
-        double[] pt = dir.polarTransform();
-        pt[0] -= PI / 2 * d;
-        Vector mov = Vector.fromPolarTransform(pt[0], 0, 0.25);//d % 2 == 1 ? 0 : (d == 0 ? pt[1] : -pt[1])
-        //loc = new Point(loc.x+mov.x/10,loc.y/*+mov.y*/,loc.z+mov.z/10);
-        Point newLoc = loc.add(new Point(mov));
-        if(map != null) {
-            boolean stop = false, tunnel = false;
-        	for (ThreeDeeObject wall : map) {
-                if (!wall.sameSide(loc, newLoc)){
-                    if (wall instanceof TunnelPlane){
-                        tunnel = true;
-                    } else {
-                        stop = true;
-                    }
-        		}
-            }
-            if (tunnel){
-                newLoc = newLoc.subtract(new Point(28 * Math.signum(newLoc.x), 0, 0));
-            }
-            if (stop){
-                newLoc = loc;
-            }
-        }
-        loc = newLoc;
-    }
 
     public void tick(){
 //    	if(w) move(0);
@@ -174,7 +149,7 @@ public class Player extends Camera implements Tickable{
 		}
         if (min.o instanceof TunnelPlane && Math.abs(px.x) <= 14){
             List<ThreeDeeObject> mapTmp = m.getObjects(new Point(-px.x, px.y, px.z));
-            min = closestInFront(dir, px.subtract(new Point(28 * Math.signum(px.x), 0, 0)), mapTmp);
+           // min = closestInFront(dir, px.subtract(new Point(28 * Math.signum(px.x), 0, 0)), mapTmp);
         }
 		return min;
 	}

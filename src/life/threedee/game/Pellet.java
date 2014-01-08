@@ -50,7 +50,7 @@ public class Pellet implements ThreeDeeObject, Tickable, MapFeature{
 		for(int i = 0;i < 3; i++) {
 			t[i] = new Triangle(top, p[i], p[(i+1)%3]);
 		}
-		translate(new Vector(center.x, 0.625, center.y));
+		translate(new Vector(center.x, 0.625, center.z));
 	}
 
 	@Override

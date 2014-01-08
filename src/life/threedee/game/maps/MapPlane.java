@@ -5,6 +5,7 @@ import static life.threedee.game.GameUtilities.idCount;
 import java.awt.image.BufferedImage;
 
 import life.threedee.Point;
+import life.threedee.TColorTransfer;
 import life.threedee.TexturedPlane;
 import life.threedee.Vector;
 

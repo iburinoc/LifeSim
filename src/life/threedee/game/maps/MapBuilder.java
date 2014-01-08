@@ -61,6 +61,7 @@ public class MapBuilder {
             pellet.translate(new Vector(new Point(MPT*i+0.5, 0.0, 3.5*MPT)));
 //            o.add(pellet);
 		}
+//		o.addAll(createPelletss());
 		
 		/*BufferedImage texture = null;
         try {

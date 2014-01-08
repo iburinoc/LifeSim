@@ -13,7 +13,7 @@ import life.threedee.game.maps.MapFeature;
 
 public class Pellet implements ThreeDeeObject, Tickable, MapFeature{
 
-	private static final double A_INC = Math.PI / 30;
+	private static final double A_INC = Math.PI / 90;
 	private static final double C_THIRD = 2*Math.PI/3;
 	
 	private Triangle[] t;

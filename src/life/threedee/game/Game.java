@@ -218,7 +218,12 @@ public class Game implements Runnable, Tickable{
 	private void tickTickables(int delta){
 		synchronized(objLock) {
 			for(int i = 0; i < tickables.size(); i++){
-				tickables.get(i).tick();
+				try{
+					tickables.get(i).tick();
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

@@ -149,7 +149,7 @@ public class Player extends Camera implements Tickable{
 		}
         if (min.o instanceof TunnelPlane && Math.abs(px.x) <= 14){
             List<ThreeDeeObject> mapTmp = m.getObjects(new Point(-px.x, px.y, px.z));
-           // min = closestInFront(dir, px.subtract(new Point(28 * Math.signum(px.x), 0, 0)), mapTmp);
+            min = closestInFront(dir, px.subtract(new Point(28 * Math.signum(px.x), 0, 0)), mapTmp);
         }
 		return min;
 	}

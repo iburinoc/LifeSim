@@ -119,4 +119,8 @@ public class Pellet implements ThreeDeeObject, Tickable, MapFeature{
 	public boolean sameSide(Point m, Point n) {
 		return true; //non-solid
 	}
+
+    public Point getCenter(){
+        return center;
+    }
 }

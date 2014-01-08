@@ -10,7 +10,7 @@ public class Player extends Camera implements Tickable{
     private Game g;
     private GameMap m;
     
-    protected boolean w,d,s,a;
+    protected boolean w, d, s, a, stop;
     
     private List<ThreeDeeObject> map;
     
@@ -116,12 +116,10 @@ public class Player extends Camera implements Tickable{
     }
 
     public void tick(){
-//    	if(w) move(0);
-//    	if(d) move(1);
-//    	if(s) move(2);
-//    	if(a) move(3);
-    	move();
-    	System.out.println(loc.x);
+        if (!stop) {
+            stop = false;
+    	    move();
+        }
     }
     
     @Override
@@ -156,6 +154,10 @@ public class Player extends Camera implements Tickable{
 
     public Point getLoc(){
         return loc;
+    }
+
+    public void stop(){
+        stop = true;
     }
 
     public void setLoc(Point loc){

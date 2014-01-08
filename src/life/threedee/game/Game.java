@@ -181,10 +181,10 @@ public class Game implements Runnable, Tickable{
             second = true;
             lives++;
         }
+        Point loc = p.getLoc();
+        MapLocation coords = new MapLocation(loc.x, loc.z);
         for (Ghost ghost : ghosts){
-            Point loc = p.getLoc();
             Point ghostLoc = ghost.getLocation();
-            MapLocation coords = new MapLocation(loc.x, loc.z);
             MapLocation ghostCoords = new MapLocation(ghostLoc.x, ghostLoc.z);
             if (coords.equals(ghostCoords)) {
                 if (mode != -1){
@@ -193,6 +193,13 @@ public class Game implements Runnable, Tickable{
                 } else {
                     ghost.getAte();
                 }
+            }
+        }
+        for (Pellet food : m.pelletsList()){
+            Point foodLoc = food.getCenter();
+            MapLocation foodCoords = new MapLocation(foodLoc.x, foodLoc.z);
+            if (coords.equals(foodCoords)) {
+                food.eaten();
             }
         }
     }

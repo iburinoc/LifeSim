@@ -36,11 +36,12 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
     private void generate() {
         double cyaw = yaw;
         for(int i = 0; i < 4; i++) {
-            lowerPoints[i] = new Point(Vector.fromPolarTransform(cyaw, 0, 1/Math.sqrt(2.0)));
-            lowerPoints[i].stretch(1/Math.sqrt(2.0));
-            upperPoints[i] = lowerPoints[i].add(new Point(0, 1, 0));
+            lowerPoints[i] = new Point(Vector.fromPolarTransform(cyaw, 0, 0.5/Math.sqrt(2.0)));
+            upperPoints[i] = lowerPoints[i].add(new Point(0, 0.5, 0));
             cyaw += C_QUARTER;
         }
+        upperPoints[3].add(new Point(0, 0.25, 0));
+        upperPoints[0].add(new Point(0, 0.25, 0));
         for(int i = 0;i < 4; i++) {
             Vector n = new Vector(lowerPoints[i], lowerPoints[(i+1)%4]).crossProduct(new Vector(lowerPoints[i], upperPoints[i]));
             walls[i] = new TexturedPlane(lowerPoints[i], n, GameUtilities.ENERGIZER_SIDE_TEXTURE);

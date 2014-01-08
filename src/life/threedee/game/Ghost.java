@@ -162,11 +162,9 @@ public class Ghost implements Tickable{
         boolean intersection = false;
         if (Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5) {
             intersection = true;
-            newLocation = new Point (newLocation.x % 1 + 0.5, newLocation.y, newLocation.z);
         }
         if (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5) {
             intersection = true;
-            newLocation = new Point (newLocation.x, newLocation.y, newLocation.z % 1 + 0.5);
         }
         if (intersection) {
             direction = makeDecision();

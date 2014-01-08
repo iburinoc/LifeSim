@@ -67,7 +67,7 @@ public class Ghost implements Tickable{
     }
 
     public Point findTarget() {
-        if (game.getMode() == 0 && ghostNum < 4){
+        if (game.getMode() == 0 && (ghostNum == BLINKY || ghostNum == PINKY || ghostNum == INKY || ghostNum == CLYDE)){
             return GameUtilities.GHOST_CORNERS[ghostNum];
         }
         switch(ghostNum) {

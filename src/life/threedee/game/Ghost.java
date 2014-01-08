@@ -51,13 +51,13 @@ public class Ghost implements Tickable{
         facePlanes = new GhostPlane[4];
         faceTriangles = new Triangle[4];
         faceTriangles[0] = new Triangle(top, zPlusXPlus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        faceTriangles[1] = new Triangle(top, zPlusXPlus, zMinusXPlus, GameUtilities.GHOST_COLORS[ghostNum]);
+        faceTriangles[1] = new Triangle(top, zMinusXMinus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
         faceTriangles[2] = new Triangle(top, zMinusXPlus, zMinusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        faceTriangles[3] = new Triangle(top, zMinusXMinus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        facePlanes[0] = new GhostPlane(lowerZPlusXPlus, lowerZMinusXPlus, zPlusXPlus, ghostNum);
-        facePlanes[1] = new GhostPlane(lowerZMinusXPlus, lowerZMinusXMinus, zMinusXPlus, ghostNum);
-        facePlanes[2] = new GhostPlane(lowerZMinusXMinus, lowerZPlusXMinus, zMinusXMinus, ghostNum);
-        facePlanes[3] = new GhostPlane(lowerZPlusXMinus, lowerZPlusXPlus, zPlusXMinus, ghostNum);
+        faceTriangles[3] = new Triangle(top, zPlusXPlus, zMinusXPlus, GameUtilities.GHOST_COLORS[ghostNum]);
+        facePlanes[0] = new GhostPlane(lowerZPlusXPlus, lowerZPlusXMinus, zPlusXPlus, ghostNum);
+        facePlanes[1] = new GhostPlane(lowerZPlusXMinus, lowerZMinusXMinus, zPlusXMinus, ghostNum);
+        facePlanes[2] = new GhostPlane(lowerZMinusXMinus, lowerZMinusXPlus, zMinusXMinus, ghostNum);
+        facePlanes[3] = new GhostPlane(lowerZMinusXPlus, lowerZPlusXPlus, zMinusXPlus, ghostNum);
         for (int i = 0; i < 4; i++) {
             g.addObject(faceTriangles[i]);
             g.addObject(facePlanes[i]);

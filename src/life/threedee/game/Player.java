@@ -51,7 +51,7 @@ public class Player extends Camera implements Tickable{
     	if(s) mov = mov.add(getMoveVector(2, y));
     	if(a) mov = mov.add(getMoveVector(3, y));
     	
-    	mov = mov.setScalar(GameUtilities.GAME_DATA[g.getLevel()][0] / 400.0);
+    	mov = mov.setScalar(GameUtilities.GAME_DATA[g.getLevel()][0] / 2500.0);
     	if(mov.s() != mov.s()) {
     		return;
     	}

@@ -83,6 +83,5 @@ public class GhostPlane extends TexturedPlane {
     public void shiftTexture() {
         offset++; 
         offset %= 10;
-        //this.setTexture(GameUtilities.loadImage("./resources/Ghost"+ghostNum+"Side"+offset+".png"));
     }
 }

@@ -40,6 +40,8 @@ public class Game implements Runnable, Tickable{
 	
 	private Player p;
 	
+	private GameMap m;
+	
 	private JFrame j;
 	
 	private Input i;
@@ -51,7 +53,7 @@ public class Game implements Runnable, Tickable{
 	public Game() {
 		j = new JFrame("Game");
 		
-		GameMap m = new GameMap();
+		m = new GameMap();
 		
 		p = new Player(this, m);
 		
@@ -103,10 +105,20 @@ public class Game implements Runnable, Tickable{
 		
 	}
 	
+	private void tickablePellets() {
+		for(ThreeDeeObject o : m.getObjects()) {
+			if(o instanceof Pellet) {
+				tickables.add((Pellet)o);
+			}
+		}
+	}
+	
 	@Override
 	public void run() {
 		betaObjects();
 		removeCursor();
+		
+		tickablePellets();
 		
 		long tick_time = System.currentTimeMillis();
 		int tick_delta = 0;

@@ -168,16 +168,16 @@ public class Ghost implements Tickable{
     }
     
     public void move() {
-//        Vector v = dirToV();
-//        Point newLocation = location.add(new Point(v));
-//        if (new MapLocation(newLocation).equals(new MapLocation(newLocation.add(new Point(0.5, 0, 0.5))))){
-//            direction = makeDecision(null);
-//            facePlanes[direction].setFace(true);
-//            facePlanes[(direction+1)%4].setFace(false);
-//            facePlanes[(direction+2)%4].setFace(false);
-//            facePlanes[(direction+3)%4].setFace(false);
-//        }
-//        translate(dirToV());
+        Vector v = dirToV();
+        Point newLocation = location.add(new Point(v));
+        if (new MapLocation(newLocation).equals(new MapLocation(newLocation.add(new Point(0.5, 0, 0.5))))){
+            direction = makeDecision(null);
+            facePlanes[direction].setFace(true);
+            facePlanes[(direction+1)%4].setFace(false);
+            facePlanes[(direction+2)%4].setFace(false);
+            facePlanes[(direction+3)%4].setFace(false);
+        }
+        translate(dirToV());
     }
     
     public void translate(Vector v) {

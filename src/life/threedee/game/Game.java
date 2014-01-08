@@ -186,9 +186,13 @@ public class Game implements Runnable, Tickable{
             Point ghostLoc = ghost.getLocation();
             MapLocation coords = new MapLocation(loc.x, loc.z);
             MapLocation ghostCoords = new MapLocation(ghostLoc.x, ghostLoc.z);
-            if (coords.equals(ghostCoords) && mode != -1){
-                lives--;
-                die();
+            if (coords.equals(ghostCoords)) {
+                if (mode != -1){
+                    lives--;
+                    die();
+                } else {
+                    ghost.getAte();
+                }
             }
         }
     }

@@ -26,6 +26,7 @@ public class Ghost implements Tickable{
     // 5 - ScaredFlashing
     // 6 - Cruise Elroy
     // 7 - Cruise Elroy MK. II
+    // 8 - Eyes
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
     protected int direction, ghostNum, ghostId;
     protected boolean uTurn;
@@ -187,5 +188,9 @@ public class Ghost implements Tickable{
 
     public Point getLocation(){
         return location;
+    }
+
+    public void getAte() {
+        ghostNum = EATEN;
     }
 }

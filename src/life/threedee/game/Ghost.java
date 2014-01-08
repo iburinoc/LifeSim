@@ -51,13 +51,13 @@ public class Ghost implements Tickable{
         facePlanes = new GhostPlane[4];
         faceTriangles = new Triangle[4];
         faceTriangles[0] = new Triangle(top, zPlusXPlus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        faceTriangles[1] = new Triangle(top, zPlusXPlus, zMinusXPlus, GameUtilities.GHOST_COLORS[ghostNum]);
+        faceTriangles[1] = new Triangle(top, zMinusXMinus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
         faceTriangles[2] = new Triangle(top, zMinusXPlus, zMinusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        faceTriangles[3] = new Triangle(top, zMinusXMinus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        facePlanes[0] = new GhostPlane(lowerZPlusXPlus, lowerZMinusXPlus, zPlusXPlus, ghostNum);
-        facePlanes[1] = new GhostPlane(lowerZMinusXPlus, lowerZMinusXMinus, zMinusXPlus, ghostNum);
-        facePlanes[2] = new GhostPlane(lowerZMinusXMinus, lowerZPlusXMinus, zMinusXMinus, ghostNum);
-        facePlanes[3] = new GhostPlane(lowerZPlusXMinus, lowerZPlusXPlus, zPlusXMinus, ghostNum);
+        faceTriangles[3] = new Triangle(top, zPlusXPlus, zMinusXPlus, GameUtilities.GHOST_COLORS[ghostNum]);
+        facePlanes[0] = new GhostPlane(lowerZPlusXPlus, lowerZPlusXMinus, zPlusXPlus, ghostNum);
+        facePlanes[1] = new GhostPlane(lowerZPlusXMinus, lowerZMinusXMinus, zPlusXMinus, ghostNum);
+        facePlanes[2] = new GhostPlane(lowerZMinusXMinus, lowerZMinusXPlus, zMinusXMinus, ghostNum);
+        facePlanes[3] = new GhostPlane(lowerZMinusXPlus, lowerZPlusXPlus, zMinusXPlus, ghostNum);
         for (int i = 0; i < 4; i++) {
             g.addObject(faceTriangles[i]);
             g.addObject(facePlanes[i]);
@@ -168,16 +168,16 @@ public class Ghost implements Tickable{
     }
     
     public void move() {
-        Vector v = dirToV();
-        Point newLocation = location.add(new Point(v));
-        if (new MapLocation(newLocation).equals(new MapLocation(newLocation.add(new Point(0.5, 0, 0.5))))){
-            direction = makeDecision(null);
-            facePlanes[direction].setFace(true);
-            facePlanes[(direction+1)%4].setFace(false);
-            facePlanes[(direction+2)%4].setFace(false);
-            facePlanes[(direction+3)%4].setFace(false);
-        }
-        translate(dirToV());
+//        Vector v = dirToV();
+//        Point newLocation = location.add(new Point(v));
+//        if (new MapLocation(newLocation).equals(new MapLocation(newLocation.add(new Point(0.5, 0, 0.5))))){
+//            direction = makeDecision(null);
+//            facePlanes[direction].setFace(true);
+//            facePlanes[(direction+1)%4].setFace(false);
+//            facePlanes[(direction+2)%4].setFace(false);
+//            facePlanes[(direction+3)%4].setFace(false);
+//        }
+//        translate(dirToV());
     }
     
     public void translate(Vector v) {

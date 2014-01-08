@@ -149,7 +149,7 @@ public class MapBuilder {
 	public static List<ThreeDeeObject> createMap() {
 		List<ThreeDeeObject> l = new ArrayList<ThreeDeeObject>();
 		
-		l.add(new Plane(new Point(0, WALL_HEIGHT, 0), new Vector(0, 1, 0), GameUtilities.BLANK));
+		l.add(new Plane(new Point(0, WALL_HEIGHT, 0), new Vector(0, 1, 0), Color.BLACK));
 		l.add(new Plane(new Point(0, 0, 0), new Vector(0, 1, 0), Color.BLACK));
 
         l.add(new TunnelPlane(new Point(-14, 0, 0), new Vector(1, 0, 0)));

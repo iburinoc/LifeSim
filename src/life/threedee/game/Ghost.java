@@ -150,8 +150,7 @@ public class Ghost implements Tickable{
         double shortest = Double.MAX_VALUE;
         int toReturn = 3;
         for (int i = 0; i < 4; i++){
-            Point choice = new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)) + direction % 2 == 1 ? direction - 2 : 0, 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)) + direction % 2 == 0 ? -direction + 1 : 0);
-            double s = new Vector(choice, target).s();
+            double s = new Vector(new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)) + direction % 2 == 1 ? direction - 2 : 0, 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)) + direction % 2 == 0 ? -direction + 1 : 0), target).s();
             if (open[i] && s < shortest){
                 shortest = s;
                 toReturn = i;

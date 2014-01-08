@@ -67,17 +67,15 @@ public class Ghost implements Tickable{
     }
 
     public Point findTarget() {
+        if (game.getMode() == 0 && ghostNum < 4){
+            return GameUtilities.GHOST_CORNERS[ghostNum];
+        }
         switch(ghostNum) {
-            case BLINKY: {
-                if (game.getMode() == 0){
-                    return GameUtilities.GHOST_CORNERS[0];
-                }
+            case BLINKY:
+            case CRUISE_ELROY:
+            case CRUISE_ELROY_2:
                 return game.getPlayer().getLoc();
-            }
             case PINKY: {
-                if (game.getMode() == 0){
-                    return GameUtilities.GHOST_CORNERS[1];
-                }
                 Vector dir = game.getPlayer().getDir();
                 double yaw = dir.polarTransform()[0];
                 Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(4)));
@@ -87,9 +85,6 @@ public class Ghost implements Tickable{
                 return tar;
             }
             case INKY: {
-                if (game.getMode() == 0){
-                    return GameUtilities.GHOST_CORNERS[2];
-                }
                 Vector dir = game.getPlayer().getDir();
                 double yaw = dir.polarTransform()[0];
                 Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(2)));
@@ -100,9 +95,6 @@ public class Ghost implements Tickable{
                 return new Point(2 * tar.x - blinkyPosition.x, 1, 2 * tar.z - blinkyPosition.z);
             }
             case CLYDE: {
-                if (game.getMode() == 0){
-                    return GameUtilities.GHOST_CORNERS[3];
-                }
                 if (new Vector(location, game.getPlayer().getLoc()).s() > 64){
                     return game.getPlayer().getLoc();
                 }
@@ -111,9 +103,6 @@ public class Ghost implements Tickable{
             case SCARED:
             case SCARED_FLASHING:
                 return null;
-            case CRUISE_ELROY:
-            case CRUISE_ELROY_2:
-                return game.getPlayer().getLoc();
             case EATEN:
                 return eyesTarget;
             default:

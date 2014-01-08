@@ -1,7 +1,5 @@
 package life.threedee.game.maps;
 
-import static life.threedee.game.GameUtilities.*;
-
 import life.threedee.Point;
 
 public class MapLocation {

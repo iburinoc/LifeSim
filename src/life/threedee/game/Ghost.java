@@ -144,7 +144,7 @@ public class Ghost implements Tickable{
         target = findTarget();
         open[(direction + 2) % 4] = false;
         double shortest = Double.MAX_VALUE;
-        int toReturn = 0;
+        int toReturn = 3;
         for (int i = 3; i >= 0; i--){
             Point choice = new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)));
             double s;

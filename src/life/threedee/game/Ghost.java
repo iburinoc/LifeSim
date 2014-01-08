@@ -135,9 +135,9 @@ public class Ghost implements Tickable{
         }
     }
 
-    public int makeDecision(boolean[] open){
+    public int makeDecision(){
         MapLocation indices = new MapLocation(location);
-        open = GameUtilities.INTERSECTIONS[indices.mx][indices.my];
+        boolean[] open = GameUtilities.INTERSECTIONS[indices.mx][indices.my];
         if (uTurn){
             return (direction + 2) % 4;
         }
@@ -159,8 +159,8 @@ public class Ghost implements Tickable{
     public void move() {
         Vector v = dirToV();
         Point newLocation = location.add(new Point(v));
-        if (new MapLocation(newLocation).equals(new MapLocation(newLocation.add(new Point(0.5, 0, 0.5))))){
-            direction = makeDecision(null);
+        if (new MapLocation(newLocation).equals(new MapLocation(newLocation.add(new Point(dirToV().setScalar(0.5)))))){
+            direction = makeDecision();
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
             facePlanes[(direction+2)%4].setFace(false);

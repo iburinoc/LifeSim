@@ -15,7 +15,7 @@ public class MapLocation {
 	
 	public MapLocation(double x, double z) {
 		this.mx = (int) (x + 14);
-		this.my = (int) (-z + 18);
+		this.my = (int) (-z + 15);
 	}
 	
 	public MapLocation(int mx, int my) {

@@ -105,7 +105,9 @@ public class Game implements Runnable, Tickable{
 		Pellet p = new Pellet(new Point(0.5, 0, 3.5));
 		objects.add(p);
 		tickables.add(p);
-		
+		Energizer e = new Energizer(new Point(-0.5, 0, 3.5));
+		objects.add(e);
+		tickables.add(e);
 	}
 	
 	private void tickablePellets() {

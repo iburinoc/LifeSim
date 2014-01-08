@@ -139,7 +139,7 @@ public class Ghost implements Tickable{
 
     public int makeDecision(){
         MapLocation indices = new MapLocation(location);
-        boolean[] open = GameUtilities.INTERSECTIONS[indices.mx + (direction % 2 == 1 ? direction - 2 : 0)][indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0)].clone();
+        boolean[] open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
         if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
             open = GameUtilities.nd.clone();
         }
@@ -151,7 +151,7 @@ public class Ghost implements Tickable{
         double shortest = Double.MAX_VALUE;
         int toReturn = 3;
         for (int i = 0; i < 4; i++){
-            double s = new Vector(new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)) + direction % 2 == 1 ? direction - 2 : 0, 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)) + direction % 2 == 0 ? -direction + 1 : 0), target).s();
+            double s = new Vector(new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)) + (direction % 2 == 1 ? direction - 2 : 0), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)) + (direction % 2 == 0 ? -direction + 1 : 0)), target).s();
             if (open[i] && s < shortest){
                 shortest = s;
                 toReturn = i;

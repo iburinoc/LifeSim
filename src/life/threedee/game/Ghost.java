@@ -9,7 +9,6 @@ import static life.threedee.game.GameUtilities.INKY;
 import static life.threedee.game.GameUtilities.PINKY;
 import static life.threedee.game.GameUtilities.SCARED;
 import static life.threedee.game.GameUtilities.SCARED_FLASHING;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
@@ -138,10 +137,7 @@ public class Ghost implements Tickable{
 
     public int makeDecision(){
         MapLocation indices = new MapLocation(location);
-        boolean[] open = new boolean[4];
-        for (int i = 0; i < 4; i++) {
-            open[i] = GameUtilities.INTERSECTIONS[indices.mx][indices.my - 3][i];
-        }
+        boolean[] open = GameUtilities.INTERSECTIONS[indices.mx][indices.my - 3].clone();
         if (uTurn){
             return (direction + 2) % 4;
         }
@@ -163,17 +159,8 @@ public class Ghost implements Tickable{
     public void move() {
         Vector v = dirToV();
         Point newLocation = location.add(new Point(v));
-        boolean intersection = false;
-        if (Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5) {
-            intersection = true;
-            //newLocation = new Point ((int) newLocation.x + 0.5, newLocation.y, newLocation.z);
-        }
-        if (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5) {
-            intersection = true;
-            //newLocation = new Point (newLocation.x, newLocation.y, (int) newLocation.z + 0.5);
-        }
-        if (intersection) {
-            //translate(new Vector(location, newLocation));
+        if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
+         || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
             direction = makeDecision();
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
@@ -184,7 +171,6 @@ public class Ghost implements Tickable{
     }
     
     public void translate(Vector v) {
-        // TRANSLATE ALL THE POINTS/LOCATIONS HERE AS WELL. OR SHOULD THAT BE IN MOVE?
         location = location.add(new Point(v));
         for (int i = 0; i < 4; i++) {
             facePlanes[i].translate(v);

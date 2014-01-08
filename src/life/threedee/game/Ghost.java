@@ -137,7 +137,7 @@ public class Ghost implements Tickable{
 
     public int makeDecision(){
         MapLocation indices = new MapLocation(location);
-        boolean[] open = GameUtilities.INTERSECTIONS[indices.mx][indices.my];
+        boolean[] open = GameUtilities.INTERSECTIONS[indices.mx - 3][indices.my];
         if (uTurn){
             return (direction + 2) % 4;
         }

@@ -59,7 +59,7 @@ public class Game implements Runnable, Tickable{
 		
 		setObjects(new ArrayList<ThreeDeeObject>());
         setTickables(new ArrayList<Tickable>());
-		
+		mode = 1;
         ghosts = new ArrayList<Ghost>();
         ghosts.add(new Ghost(this, BLINKY));
         ghosts.add(new Ghost(this, PINKY));
@@ -77,11 +77,10 @@ public class Game implements Runnable, Tickable{
 		i = new Input(p, this, j);
 		
 		running = true;
-		
+
 		j.addMouseListener(i);
 		j.addMouseMotionListener(i);
 		j.addKeyListener(i);
-		
 		j.add(p);
 		j.pack();
 		j.setVisible(true);
@@ -178,8 +177,8 @@ public class Game implements Runnable, Tickable{
     }
 
     private void die(){
-        p.setLoc(new Point(0, 1, -8.5));
-        p.setDir(new Vector(-1, 0, 0));
+        //p.setLoc(new Point(0, 1, -8.5));
+        //p.setDir(new Vector(-1, 0, 0));
     }
 	
 	private void drawFrame() {

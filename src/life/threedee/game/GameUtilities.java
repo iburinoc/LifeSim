@@ -82,6 +82,9 @@ public class GameUtilities{
 
     public static final double[][] MODE_TIMES = new double[][] {{7, 20, 7, 20, 5, 20, 5}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {7, 20, 7, 20, 5, 1033, 1 / 60}, {5, 20, 5, 20, 5, 1037, 1 / 60}};
 
+    public static final BufferedImage ENERGIZER_TOP_TEXTURE = GameUtilities.loadImage("resources/EnergizerTop.png");
+    public static final BufferedImage ENERGIZER_SIDE_TEXTURE = GameUtilities.loadImage("resources/EnergizerSide.png");
+    
     public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), Color.BLUE, Color.WHITE, new Color(230, 46, 37), new Color(230, 46, 37), null};
 
     public static final Point[] GHOST_LOCATIONS = new Point[] {new Point(0*MPT, 1*MPT, 3.5*MPT), new Point(0*MPT, 1*MPT, 0.5*MPT), new Point(-2*MPT, 1*MPT, 0.5*MPT), new Point(2*MPT, 1*MPT, 0.5*MPT), new Point(0*MPT, 1*MPT, 0*MPT), new Point(0*MPT, 1*MPT, 0*MPT), new Point(2*MPT, 1*MPT, 3.5*MPT), new Point(-2*MPT, 1*MPT, 3.5*MPT), new Point(0*MPT, 1*MPT, 3.5*MPT)};

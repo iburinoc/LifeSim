@@ -19,6 +19,7 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import life.threedee.Point;
+import life.threedee.TexturedPlane;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
@@ -105,7 +106,32 @@ public class Game implements Runnable, Tickable{
 		Pellet p = new Pellet(new Point(0.5, 0, 3.5));
 		objects.add(p);
 		tickables.add(p);
+		Energizer e = new Energizer(new Point(-0.5, 0.5, 3.5));
+		objects.add(e);
+		tickables.add(e);
 		
+		double cyaw = 0;
+		TexturedPlane ceiling;
+		Point[] lowerPoints = new Point[4];
+		Point[] upperPoints = new Point[4];
+		TexturedPlane[] walls = new TexturedPlane[4];
+        for(int i = 0; i < 4; i++) {
+            lowerPoints[i] = new Point(Vector.fromPolarTransform(cyaw, 0, 0.5/Math.sqrt(2.0)));
+            upperPoints[i] = lowerPoints[i].add(new Point(0, 0.5, 0));
+            cyaw += Math.PI/2;
+        }
+        upperPoints[3] = upperPoints[3].add(new Point(0, 0.001, 0));
+        upperPoints[0] = upperPoints[0].add(new Point(0, 0.001, 0));
+        for(int i = 0;i < 4; i++) {
+            Vector n = new Vector(lowerPoints[i], lowerPoints[(i+1)%4]).crossProduct(new Vector(lowerPoints[i], upperPoints[i]));
+            walls[i] = new TexturedPlane(lowerPoints[i], n, GameUtilities.ENERGIZER_SIDE_TEXTURE);
+            objects.add(walls[i]);
+        }
+        Vector n = new Vector(upperPoints[2], upperPoints[1]).crossProduct(new Vector(upperPoints[2], upperPoints[3]));
+        System.out.println(n);
+        System.out.println("DDDDDDDDDDDDDDDDDDDD");
+        ceiling = new TexturedPlane(upperPoints[2], n, GameUtilities.ENERGIZER_TOP_TEXTURE);
+        objects.add(ceiling);
 	}
 	
 	private void tickablePellets() {

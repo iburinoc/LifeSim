@@ -9,7 +9,6 @@ import static life.threedee.game.GameUtilities.INKY;
 import static life.threedee.game.GameUtilities.PINKY;
 import static life.threedee.game.GameUtilities.SCARED;
 import static life.threedee.game.GameUtilities.SCARED_FLASHING;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;

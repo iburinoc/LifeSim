@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 public class GameUtilities{
 	public static final int SC_WIDTH = 720;
 	public static final int SC_HEIGHT = 540;
-	public static final int R_INC = 8;
+	public static final int R_INC = 4;
 	
 	public static final int PX_METER = 20;
 	

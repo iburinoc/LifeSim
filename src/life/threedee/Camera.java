@@ -119,10 +119,13 @@ public class Camera extends JPanel{
 	}
 	
 	public void paintBuffer(Graphics g){
-		for(int x = 0; x < SC_WIDTH; x += R_INC){
-			for(int y = 0; y < SC_HEIGHT; y += R_INC){
-				bufg.setColor(fbuf[x][y]);
-				bufg.fillRect(x, y, R_INC, R_INC);
+		int d = SC_WIDTH / numProc;
+		for(int i = 0; i < numProc; i++){
+			for(int x = d * i; x < d * (i + 1); x += R_INC){
+				for(int y = 0; y < SC_HEIGHT; y += R_INC){
+					bufg.setColor(fbuf[x][y]);
+					bufg.fillRect(x, y, R_INC, R_INC);
+				}
 			}
 		}
 		

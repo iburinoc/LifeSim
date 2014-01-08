@@ -40,6 +40,7 @@ public class Ghost implements Tickable{
         this.ghostId=ghostNum;
         this.location=GameUtilities.GHOST_LOCATIONS[ghostNum];
         this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
         Point top = new Point(0.0, 1.0, 0.0).add(this.location);
         Point zPlusXPlus = new Point(0.25, 0.5, 0.25).add(this.location);
         Point zMinusXPlus = new Point(0.25, 0.5, -0.25).add(this.location);
@@ -138,7 +139,7 @@ public class Ghost implements Tickable{
 
     public int makeDecision(){
         MapLocation indices = new MapLocation(location);
-        boolean[] open = GameUtilities.INTERSECTIONS[indices.mx][indices.my - 3].clone();
+        boolean[] open = GameUtilities.INTERSECTIONS[indices.mx + (direction % 2 == 1 ? direction - 2 : 0)][indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0)].clone();
         if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
             open = GameUtilities.nd.clone();
         }

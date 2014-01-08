@@ -36,13 +36,13 @@ public class GameUtilities{
 
     public static final boolean[] no = {f, f, f, f}, ud = {t, f, t, f}, rl = {f, t, f, t}, ul = {t, t, f, f}, dl = {f, t, t, f}, dr = {f, f, t, t}, ur = {t, f, f, t}, nu = {f, t, t, t}, nl = {t, f, t, t}, nd = {t, t, f, t}, nr = {t, t, t, f}, al = {t, t, t, t};
 
-    public static final boolean[][][] INTERSECTIONS = mirror(new boolean[][][] /*l*/
+    public static final boolean[][][] INTERSECTIONS = mirror(new boolean[][][]
             {{no, no, no, no, no, no, no, no, no, no, no, no, no, no, rl, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no},
              {no, dr, ud, ud, ud, nl, ud, ud, ur, no, no, no, no, no, rl, no, no, no, no, no, dr, ud, ud, ur, no, no, dr, ud, ud, ur, no},
              {no, rl, no, no, no, rl, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, rl, no, no, rl, no, no, rl, no},
              {no, rl, no, no, no, rl, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, dl, ud, ud, nd, no, no, rl, no},
              {no, rl, no, no, no, rl, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, rl, no},
-     /*u*/   {no, rl, no, no, no, rl, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, rl, no}, /*d*/
+             {no, rl, no, no, no, rl, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, rl, no},
              {no, nu, ud, ud, ud, al, ud, ud, nr, ud, ud, ud, ud, ud, al, ud, ud, ud, ud, ud, al, ud, ud, nl, ud, ud, ul, no, no, rl, no},
              {no, rl, no, no, no, rl, no, no, no, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, rl, no, no, no, no, no, rl, no},
              {no, rl, no, no, no, rl, no, no, no, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, rl, no, no, no, no, no, rl, no},
@@ -51,7 +51,7 @@ public class GameUtilities{
              {no, rl, no, no, no, rl, no, no, rl, no, no, rl, no, no, no, no, no, rl, no, no, rl, no, no, rl, no, no, rl, no, no, rl, no},
              {no, dl, ud, ud, ud, nd, no, no, dl, ud, ud, nd, no, no, no, no, no, rl, no, no, dl, ud, ud, nd, no, no, dl, ud, ud, nd, no},
              {no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no}});
-                                                                                /*r*/
+
     private static boolean[][][] mirror(boolean[][][] intersections){
         boolean[][][] toReturn = new boolean[intersections.length * 2][intersections[0].length][intersections[0][0].length];
         System.arraycopy(intersections, 0, toReturn, 0, intersections.length);

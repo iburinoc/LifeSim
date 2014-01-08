@@ -55,12 +55,21 @@ public class GameUtilities{
     private static boolean[][][] mirror(boolean[][][] intersections){
         boolean[][][] toReturn = new boolean[intersections.length * 2][intersections[0].length][intersections[0][0].length];
         System.arraycopy(intersections, 0, toReturn, 0, intersections.length);
-        for (int i = intersections.length; i < toReturn.length; i++){
-            for (int j = 0; j < toReturn[0].length; j++){
-                for (int k = 0; k < toReturn[0][0].length; k++){
-                    toReturn[i][j][k] = intersections[toReturn.length - i - 1][j][(k + (k % 2) * 2) % 4];
+        for (int i = 0; i < intersections.length; i++){
+            for (int j = 0; j < toReturn[i].length; j++){
+                for (int k = 0; k < toReturn[i][j].length; k++){
+                    toReturn[toReturn.length-1-i][j][k] = intersections[i][j][(k + ((k % 2) * 2)) % 4];
                 }
             }
+        }
+        for (int i = 0; i < toReturn.length; i++){
+            for (int j = 0; j < toReturn[i].length; j++){
+                for (int k = 0; k < toReturn[i][j].length; k++){
+                    System.out.print(toReturn[i][j][k]?1:0);
+                }
+                System.out.print(",");
+            }
+            System.out.println();
         }
         return toReturn;
     }

@@ -38,7 +38,7 @@ public class Ghost implements Tickable{
         this.game=g;
         this.ghostNum=ghostNum;
         this.ghostId=ghostNum;
-        this.location=GameUtilities.GHOST_LOCATIONS[ghostNum];
+        this.location=GameUtilities.GHOST_LOCATIONS[BLINKY];
         this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
         this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
         Point top = new Point(0.0, 1.0, 0.0).add(this.location);
@@ -160,7 +160,7 @@ public class Ghost implements Tickable{
             }
             return toReturn;
         } else {
-            throw new InternalError();
+            throw new RuntimeException();
         }
     }
     
@@ -172,7 +172,7 @@ public class Ghost implements Tickable{
         if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
          || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
             direction = decision;
-            decision = makeDecision(open[0] || open[1] || open[2] || open[3]);
+            decision = makeDecision(true);
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
             facePlanes[(direction+2)%4].setFace(false);

@@ -48,7 +48,7 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
             triangles[2*i] = new Triangle(top, points[i], points[(i+1)%4]);
             triangles[2*i+1] = new Triangle(bottom, points[i], points[(i+1)%4]);
         }
-        translate(new Vector(center.x, 0.625, center.y));
+        translate(new Vector(center.x, 0.625, center.z));
     }
     
     public boolean getEaten() {

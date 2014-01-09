@@ -18,17 +18,18 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
     
     double yaw;
     
-    private Point[] lowerPoints, upperPoints;
-    private TexturedPlane[] walls;
-    private TexturedPlane ceiling;
+    private Point[] points;
+    private Point top, bottom;
+    private Triangle[] triangles;
+    private boolean eaten;
     
     private Point center;
     
     public Energizer(Point center) {
         this.center = center;
-        lowerPoints = new Point[4];
-        upperPoints = new Point[4];
-        walls = new TexturedPlane[4];
+        this.eaten = false;
+        points = new Point[4];
+        triangles = new Triangle[8];
         generate();
         //id = idCount++;
     }
@@ -36,20 +37,16 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
     private void generate() {
         double cyaw = yaw;
         for(int i = 0; i < 4; i++) {
-            lowerPoints[i] = new Point(Vector.fromPolarTransform(cyaw, 0, 0.5/Math.sqrt(2.0)));
-            upperPoints[i] = lowerPoints[i].add(new Point(0, 0.5, 0));
+            points[i] = new Point(Vector.fromPolarTransform(cyaw, 0, 0.5/Math.sqrt(2.0)));
             cyaw += C_QUARTER;
         }
-        upperPoints[3].add(new Point(0, 0.25, 0));
-        upperPoints[0].add(new Point(0, 0.25, 0));
-        for(int i = 0;i < 4; i++) {
-            Vector n = new Vector(lowerPoints[i], lowerPoints[(i+1)%4]).crossProduct(new Vector(lowerPoints[i], upperPoints[i]));
-            walls[i] = new TexturedPlane(lowerPoints[i], n, GameUtilities.ENERGIZER_SIDE_TEXTURE);
+        top = new Point(Vector.fromPolarTransform(0, C_QUARTER, 0.5/Math.sqrt(2.0)));
+        bottom = new Point(Vector.fromPolarTransform(0, -C_QUARTER, 0.5/Math.sqrt(2.0)));
+        for (int i = 0; i < 4; i++) {
+            triangles[2*i] = new Triangle(top, points[i], points[(i+1)%4]);
+            triangles[2*i+1] = new Triangle(bottom, points[i], points[(i+1)%4]);
         }
-        Vector n = new Vector(upperPoints[2], upperPoints[3]).crossProduct(new Vector(upperPoints[2], upperPoints[1]));
-        ceiling = new TexturedPlane(upperPoints[2], n, GameUtilities.ENERGIZER_TOP_TEXTURE);
-//        translate(new Vector(center.x, 0, center.z));
-        translate(new Vector(0, 1, 0));
+        translate(new Vector(center.x, 0.625, center.y));
     }
 
     @Override
@@ -66,33 +63,21 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
 
     @Override
     public double calculateT(Vector v, Point p) {
-        return Math.min(Math.min(walls[0].calculateT(v, p), walls[1].calculateT(v, p)), Math.min(Math.min(walls[2].calculateT(v, p), walls[3].calculateT(v, p)), ceiling.calculateT(v, p)));
+        return Math.min(Math.min(Math.min(triangles[0].calculateT(v, p), triangles[1].calculateT(v, p)), Math.min(triangles[2].calculateT(v, p), triangles[3].calculateT(v, p))), Math.min(Math.min(triangles[4].calculateT(v, p), triangles[5].calculateT(v, p)), Math.min(triangles[6].calculateT(v, p), triangles[7].calculateT(v, p))));
     }
 
     @Override
     public TColorTransfer getRData(Vector v, Point p, double minT) {
-//        if(eaten) {
-//            return new TColorTransfer(Double.NaN, null, null);
-//        }
-        TexturedPlane closest = null;
-        double min = Double.MAX_VALUE;
-        for(TexturedPlane wall : this.walls) {
-            double ct = wall.calculateT(v, p, Math.min(minT, min));
-            if(ct == ct && ct < min) {
-                closest = wall;
-                min = ct;
-            }
-        }
-        double ct = ceiling.calculateT(v, p, Math.min(minT, min));
-        if(ct == ct && ct < min) {
-            closest = ceiling;
-            min = ct;
-        }
-        if(!(min > minT)) {
-            return closest.getRData(v, p, minT);
-        } else {
+        if(eaten) {
             return new TColorTransfer(Double.NaN, null, null);
         }
+        for(Triangle t : this.triangles) {
+            double ct = t.calculateT(v, p, minT);
+            if(ct == ct && !(ct > minT)) {
+                return new TColorTransfer(ct, c(), this);
+            }
+        }
+        return new TColorTransfer(Double.NaN, null, null);
     }
 
     @Override
@@ -109,15 +94,13 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
 
     @Override
     public void translate(Vector v) {
-        for (TexturedPlane tp: walls) {
-            tp.translate(v);
+        for (Triangle tri: triangles) {
+            tri.translate(v);
         }
-        ceiling.translate(v);
     }
 
     @Override
     public Color c() {
-        // TODO Auto-generated method stub
         return Color.WHITE;
     }
 

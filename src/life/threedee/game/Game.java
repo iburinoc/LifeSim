@@ -19,6 +19,7 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import life.threedee.Point;
+import life.threedee.TexturedPlane;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
@@ -48,7 +49,7 @@ public class Game implements Runnable, Tickable{
 	
 	private boolean running, first = false, second = false;
 
-    private int mode, level, dotsEaten, score, lives = 2;
+    private int mode, level, pelletsEaten, score, lives = 2;
 	
     private Object objLock;
     
@@ -70,8 +71,8 @@ public class Game implements Runnable, Tickable{
         ghosts.add(new Ghost(this, INKY));
         ghosts.add(new Ghost(this, CLYDE));
         /* CRUISE ELROY SUMMONING RITUAL. REMOVE LATER*/
-        ghosts.add(new Ghost(this, CRUISE_ELROY));
-        ghosts.add(new Ghost(this, CRUISE_ELROY_2));
+        //ghosts.add(new Ghost(this, CRUISE_ELROY));
+        //ghosts.add(new Ghost(this, CRUISE_ELROY_2));
         if (false) {
             ghosts.add(new Ghost(this, SCARED));
             ghosts.add(new Ghost(this, SCARED_FLASHING));
@@ -105,7 +106,32 @@ public class Game implements Runnable, Tickable{
 		Pellet p = new Pellet(new Point(0.5, 0, 3.5));
 		objects.add(p);
 		tickables.add(p);
+		Energizer e = new Energizer(new Point(-0.5, 0.5, 3.5));
+		objects.add(e);
+		tickables.add(e);
 		
+		double cyaw = 0;
+		TexturedPlane ceiling;
+		Point[] lowerPoints = new Point[4];
+		Point[] upperPoints = new Point[4];
+		TexturedPlane[] walls = new TexturedPlane[4];
+        for(int i = 0; i < 4; i++) {
+            lowerPoints[i] = new Point(Vector.fromPolarTransform(cyaw, 0, 0.5/Math.sqrt(2.0)));
+            upperPoints[i] = lowerPoints[i].add(new Point(0, 0.5, 0));
+            cyaw += Math.PI/2;
+        }
+        upperPoints[3] = upperPoints[3].add(new Point(0, 0.001, 0));
+        upperPoints[0] = upperPoints[0].add(new Point(0, 0.001, 0));
+        for(int i = 0;i < 4; i++) {
+            Vector n = new Vector(lowerPoints[i], lowerPoints[(i+1)%4]).crossProduct(new Vector(lowerPoints[i], upperPoints[i]));
+            walls[i] = new TexturedPlane(lowerPoints[i], n, GameUtilities.ENERGIZER_SIDE_TEXTURE);
+            objects.add(walls[i]);
+        }
+        Vector n = new Vector(upperPoints[2], upperPoints[1]).crossProduct(new Vector(upperPoints[2], upperPoints[3]));
+        System.out.println(n);
+        System.out.println("DDDDDDDDDDDDDDDDDDDD");
+        ceiling = new TexturedPlane(upperPoints[2], n, GameUtilities.ENERGIZER_TOP_TEXTURE);
+        objects.add(ceiling);
 	}
 	
 	private void tickablePellets() {
@@ -170,8 +196,15 @@ public class Game implements Runnable, Tickable{
 	
     @Override
     public void tick(){
-        if (dotsEaten == 240){
+        if (pelletsEaten == 240){
+            for(Pellet pellet : m.pelletsList()) {
+                pellet.spawn();
+            }
+            for(Ghost ghost : ghosts) {
+                ghost.reset();
+            }
             level++;
+            pelletsEaten = 0;
         }
         if (score >= 10000 && !first){
             first = true;
@@ -189,7 +222,8 @@ public class Game implements Runnable, Tickable{
             if (coords.equals(ghostCoords)) {
                 if (mode != -1){
                     lives--;
-                    die();
+                    //p.setLoc(new Point(0, 1, -8.5));
+                    //p.setDir(new Vector(-1, 0, 0));
                 } else {
                     ghost.getAte();
                 }
@@ -198,15 +232,12 @@ public class Game implements Runnable, Tickable{
         for (Pellet food : m.pelletsList()){
             Point foodLoc = food.getCenter();
             MapLocation foodCoords = new MapLocation(foodLoc.x, foodLoc.z);
-            if (coords.equals(foodCoords)) {
-                food.eaten();
+            if (coords.equals(foodCoords) && !food.getEaten()) {
+                pelletsEaten++;
+                food.eat();
+                p.stop();
             }
         }
-    }
-
-    private void die(){
-        //p.setLoc(new Point(0, 1, -8.5));
-        //p.setDir(new Vector(-1, 0, 0));
     }
 	
 	private void drawFrame() {
@@ -271,12 +302,12 @@ public class Game implements Runnable, Tickable{
         return mode;
     }
 
-    public int getDotsEaten(){
-        return dotsEaten;
+    public int getPelletsEaten(){
+        return pelletsEaten;
     }
 
-    public int getDotsRemaining(){
-        return 240 - getDotsEaten();
+    public int getPelletsRemaining(){
+        return 240 - getPelletsEaten();
     }
 
     public Player getPlayer(){

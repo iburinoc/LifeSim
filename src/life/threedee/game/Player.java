@@ -117,9 +117,9 @@ public class Player extends Camera implements Tickable{
 
     public void tick(){
         if (!stop) {
-            stop = false;
     	    move();
         }
+        stop = false;
     }
     
     @Override

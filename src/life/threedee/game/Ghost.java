@@ -40,6 +40,7 @@ public class Ghost implements Tickable{
         this.ghostId=ghostNum;
         this.location=GameUtilities.GHOST_LOCATIONS[ghostNum];
         this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
         Point top = new Point(0.0, 1.0, 0.0).add(this.location);
         Point zPlusXPlus = new Point(0.25, 0.5, 0.25).add(this.location);
         Point zMinusXPlus = new Point(0.25, 0.5, -0.25).add(this.location);
@@ -118,13 +119,13 @@ public class Ghost implements Tickable{
         // We'll need to rework this.
         // Andrey, you'll need to implement ALL the rules 
         // concerning Blinky turning into his 2 Cruise Elroy forms. 
-        if (ghostId == BLINKY && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getDotsRemaining()) {
+        if (ghostId == BLINKY && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getPelletsRemaining()) {
             ghostNum = CRUISE_ELROY;
             for (int i = 0; i < 4; i++) {
                 facePlanes[(direction+i)%4].setGhostNum(ghostNum);
             }
         }
-        if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getDotsRemaining() * 2) {
+        if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getPelletsRemaining() * 2) {
             ghostNum = CRUISE_ELROY_2;
             for (int i = 0; i < 4; i++) {
                 facePlanes[(direction+i)%4].setGhostNum(ghostNum);
@@ -136,37 +137,48 @@ public class Ghost implements Tickable{
         }
     }
 
-    public int makeDecision(){
-        MapLocation indices = new MapLocation(location);
-        boolean[] open = GameUtilities.INTERSECTIONS[indices.mx][indices.my - 3].clone();
-        if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
-            open = GameUtilities.nd.clone();
-        }
-        if (uTurn){
-            return (direction + 2) % 4;
-        }
-        target = findTarget();
-        open[(direction + 2) % 4] = false;
-        double shortest = Double.MAX_VALUE;
-        int toReturn = 3;
-        for (int i = 0; i < 4; i++){
-            Point choice = new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)) + direction % 2 == 1 ? direction - 2 : 0, 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)) + direction % 2 == 0 ? -direction + 1 : 0);
-            double s = new Vector(choice, target).s();
-            if (open[i] && s < shortest){
-                shortest = s;
-                toReturn = i;
+    public int makeDecision(boolean inHouse){
+        if (!inHouse) {
+            MapLocation indices = new MapLocation(location);
+            boolean[] open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
+            if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
+                open = GameUtilities.nd.clone();
             }
+            if (uTurn){
+                return (direction + 2) % 4;
+            }
+            target = findTarget();
+            open[(direction + 2) % 4] = false;
+            double shortest = Double.MAX_VALUE;
+            int toReturn = 3;
+            for (int i = 0; i < 4; i++){
+                double s = new Vector(new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)) + (direction % 2 == 1 ? direction - 2 : 0), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)) + (direction % 2 == 0 ? -direction + 1 : 0)), target).s();
+                if (open[i] && s < shortest){
+                    shortest = s;
+                    toReturn = i;
+                }
+            }
+            return toReturn;
+        } else {
+            throw new InternalError();
         }
-        return toReturn;
     }
     
     public void move() {
         Vector v = dirToV();
+        MapLocation indices = new MapLocation(location);
+        boolean[] open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
+        boolean inHouse = true;
+        for (boolean dirOpen : open) {
+            if (dirOpen){
+                inHouse = false;
+            }
+        }
         Point newLocation = location.add(new Point(v));
         if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
          || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
             direction = decision;
-            decision = makeDecision();
+            decision = makeDecision(inHouse);
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
             facePlanes[(direction+2)%4].setFace(false);
@@ -183,8 +195,14 @@ public class Ghost implements Tickable{
         }
     }
 
+    public void reset(){
+        this.location=GameUtilities.GHOST_LOCATIONS[ghostNum];
+        this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+    }
+    
     public Vector dirToV(){
-        return Vector.fromPolarTransform(direction < 3 ? (direction + 1) * Math.PI / 2 : 0, 0, GameUtilities.GAME_DATA[game.getLevel()][1] / 2500.0);
+        return Vector.fromPolarTransform(direction < 3 ? (direction + 1) * Math.PI / 2 : 0, 0, (GameUtilities.GAME_DATA[game.getLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0);
     }
 
     public Point getLocation(){

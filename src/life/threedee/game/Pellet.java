@@ -59,8 +59,16 @@ public class Pellet implements ThreeDeeObject, Tickable, MapFeature{
 		yaw += A_INC;
 		generate();
 	}
+
+    public void eat(){
+        eaten = true;
+    }
+    
+    public void spawn() {
+        eaten = false;
+    }
 	
-	public boolean eaten() {
+	public boolean getEaten() {
 		return eaten;
 	}
 	

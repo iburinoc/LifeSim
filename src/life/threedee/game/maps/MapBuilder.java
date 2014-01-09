@@ -18,6 +18,7 @@ import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.WorldObject;
+import life.threedee.game.Energizer;
 import life.threedee.game.GameUtilities;
 import life.threedee.game.Pellet;
 import life.threedee.game.TunnelPlane;
@@ -284,14 +285,18 @@ public class MapBuilder {
 		for(int x = 0; x < 28; x++) {
 			for(int y = 0; y < 36; y++) {
 				switch(pel[x][y]) {
-				case 1:
+				case 1:{
 					double px = (x - 14 + 0.5) * MPT;
 					double py = -(y - 18 + 0.5) * MPT;
 					l.add(new Pellet(new Point(px, 0, py)));
 					break;
-				case 2: //put energizer creater here
-					l.add(new Pellet(new Point(-32,0,0)));
-					break;
+				}
+				case 2:{ 
+				    double px = (x - 14 + 0.5) * MPT;
+                    double py = -(y - 18 + 0.5) * MPT;
+                    l.add(new Energizer(new Point(px, 0, py)));
+                    break;
+				}
 				default:
 					break;
 				}

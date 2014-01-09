@@ -71,8 +71,8 @@ public class Game implements Runnable, Tickable{
         ghosts.add(new Ghost(this, INKY));
         ghosts.add(new Ghost(this, CLYDE));
         /* CRUISE ELROY SUMMONING RITUAL. REMOVE LATER*/
-        ghosts.add(new Ghost(this, CRUISE_ELROY));
-        ghosts.add(new Ghost(this, CRUISE_ELROY_2));
+        //ghosts.add(new Ghost(this, CRUISE_ELROY));
+        //ghosts.add(new Ghost(this, CRUISE_ELROY_2));
         if (false) {
             ghosts.add(new Ghost(this, SCARED));
             ghosts.add(new Ghost(this, SCARED_FLASHING));
@@ -215,7 +215,8 @@ public class Game implements Runnable, Tickable{
             if (coords.equals(ghostCoords)) {
                 if (mode != -1){
                     lives--;
-                    die();
+                    //p.setLoc(new Point(0, 1, -8.5));
+                    //p.setDir(new Vector(-1, 0, 0));
                 } else {
                     ghost.getAte();
                 }
@@ -224,16 +225,12 @@ public class Game implements Runnable, Tickable{
         for (Pellet food : m.pelletsList()){
             Point foodLoc = food.getCenter();
             MapLocation foodCoords = new MapLocation(foodLoc.x, foodLoc.z);
-            if (coords.equals(foodCoords)) {
+            if (coords.equals(foodCoords) && !food.getEaten()) {
+                pelletsEaten++;
                 food.nom();
-
+                p.stop();
             }
         }
-    }
-
-    private void die(){
-        //p.setLoc(new Point(0, 1, -8.5));
-        //p.setDir(new Vector(-1, 0, 0));
     }
 	
 	private void drawFrame() {

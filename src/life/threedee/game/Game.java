@@ -31,6 +31,11 @@ public class Game implements Runnable, Tickable{
 	public static final int FRAME_RATE = 30;
 	
 	public static void main(String[] args){
+        for (double i = -13.25; i < 14; i += 0.25) {
+            for (double j = -17.25; j < 18; j += 0.25) {
+                System.out.println(new MapLocation(new Point(i, 1, j)).undo());
+            }
+        }
 		new Thread(new Game()).start();
 	}
 	

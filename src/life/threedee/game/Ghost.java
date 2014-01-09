@@ -28,8 +28,10 @@ public class Ghost implements Tickable{
     // 7 - Cruise Elroy MK. II
     // 8 - Eyes
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
-    protected int direction, decision, ghostNum, ghostId;
-    protected boolean uTurn;
+    protected int direction, decision, ghostNum, ghostId, pelletCounter = 0;
+    protected boolean uTurn, releasing;
+    protected boolean[] open;
+    protected MapLocation indices;
     protected Game game;
     protected GhostPlane[] facePlanes;
     protected Triangle[] faceTriangles;
@@ -41,8 +43,8 @@ public class Ghost implements Tickable{
         this.ghostNum=ghostNum;
         this.ghostId=ghostNum;
         this.location=GameUtilities.GHOST_LOCATIONS[GHOST_DEBUG];
-        this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
-        this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        this.direction=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
+        this.decision=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
         Point top = new Point(0.0, 1.0, 0.0).add(this.location);
         Point zPlusXPlus = new Point(0.25, 0.5, 0.25).add(this.location);
         Point zMinusXPlus = new Point(0.25, 0.5, -0.25).add(this.location);
@@ -115,6 +117,8 @@ public class Ghost implements Tickable{
     }
 
     public void tick(){
+        indices = new MapLocation(location);
+        open();
         for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
         }
@@ -135,10 +139,8 @@ public class Ghost implements Tickable{
         }
     }
 
-    public int makeDecision(boolean outside){
-        if (outside) {
-            MapLocation indices = new MapLocation(location);
-            boolean[] open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
+    public int makeDecision(){
+        if (open[0] || open[1] || open[2] || open[3]) {
             if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
                 open = GameUtilities.nd.clone();
             }
@@ -157,8 +159,18 @@ public class Ghost implements Tickable{
                 }
             }
             return toReturn;
+        } else if (releasing) {
+            release();
+            throw new StringIndexOutOfBoundsException();
         } else {
-            throw new RuntimeException();
+                switch (ghostNum) {
+                    case BLINKY:
+                        throw new IllegalArgumentException();
+                    case PINKY:
+                        direction = 0;
+                        decision = 0;
+                }
+            throw new IllegalArgumentException();
         }
     }
     
@@ -170,13 +182,13 @@ public class Ghost implements Tickable{
     
     public void move() {
         Vector v = dirToV();
-        MapLocation indices = new MapLocation(location);
-        boolean[] open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
         Point newLocation = location.add(new Point(v));
         if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
          || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
+            location = new MapLocation(location).undo();
             direction = decision;
-            decision = makeDecision(true);
+            open();
+            decision = makeDecision();
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
             facePlanes[(direction+2)%4].setFace(false);
@@ -195,8 +207,8 @@ public class Ghost implements Tickable{
 
     public void reset(){
         this.ghostNum=this.ghostId;
-        this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
-        this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        this.direction=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
+        this.decision=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
         Vector v = new Vector(this.location, GameUtilities.GHOST_LOCATIONS[GHOST_DEBUG]);
         translate(v);
         updatePlanes();
@@ -214,5 +226,21 @@ public class Ghost implements Tickable{
 
     public void getAte() {
         ghostNum = EATEN;
+    }
+
+    public void open() {
+        open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
+    }
+
+    public void addToCounter() {
+        pelletCounter++;
+    }
+
+    public void release() {
+        releasing = open[0] || open[1] || open[2] || open[3];
+        if (releasing) {
+            direction = location.x >= 0 ? (int) Math.signum(location.x) : 3;
+            decision = location.x >= 0 ? (int) Math.signum(location.x) : 3;
+        }
     }
 }

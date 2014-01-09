@@ -219,8 +219,7 @@ public class Game implements Runnable, Tickable{
             Point pelletLoc = pellet.getCenter();
             MapLocation pelletCoords = new MapLocation(pelletLoc.x, pelletLoc.z);
             if (coords.equals(pelletCoords) && !pellet.getEaten()) {
-                pelletsEaten++;
-                pellet.eat();
+                pellet.eat(this);
                 p.stop();
             }
         }
@@ -323,5 +322,9 @@ public class Game implements Runnable, Tickable{
     public void startFrightened() {
         // ANDREY! THIS IS WHERE THE CODE FOR STARTING AND ENDING (MAYBE) FRIGHTENED MODE GOES!
         // ANDREY! I'M USING "ANDREY!" AS TODO NOW!
+    }
+    
+    public void pelletEaten() {
+        pelletsEaten++;
     }
 }

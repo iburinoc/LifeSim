@@ -124,6 +124,7 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
     @Override
     public boolean sameSide(Point a, Point b) {
         // TODO Auto-generated method stub
-        return false;
+        return true;
+
     }
 }

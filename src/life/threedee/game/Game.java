@@ -49,7 +49,7 @@ public class Game implements Runnable, Tickable{
 	
 	private boolean running, first = false, second = false;
 
-    private int mode, level, dotsEaten, score, lives = 2;
+    private int mode, level, pelletsEaten, score, lives = 2;
 	
     private Object objLock;
     
@@ -196,7 +196,7 @@ public class Game implements Runnable, Tickable{
 	
     @Override
     public void tick(){
-        if (dotsEaten == 240){
+        if (pelletsEaten == 240){
             level++;
         }
         if (score >= 10000 && !first){
@@ -226,6 +226,7 @@ public class Game implements Runnable, Tickable{
             MapLocation foodCoords = new MapLocation(foodLoc.x, foodLoc.z);
             if (coords.equals(foodCoords)) {
                 food.nom();
+
             }
         }
     }
@@ -297,12 +298,12 @@ public class Game implements Runnable, Tickable{
         return mode;
     }
 
-    public int getDotsEaten(){
-        return dotsEaten;
+    public int getPelletsEaten(){
+        return pelletsEaten;
     }
 
-    public int getDotsRemaining(){
-        return 240 - getDotsEaten();
+    public int getPelletsRemaining(){
+        return 240 - getPelletsEaten();
     }
 
     public Player getPlayer(){

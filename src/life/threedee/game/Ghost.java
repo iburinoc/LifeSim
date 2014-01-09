@@ -119,13 +119,13 @@ public class Ghost implements Tickable{
         // We'll need to rework this.
         // Andrey, you'll need to implement ALL the rules 
         // concerning Blinky turning into his 2 Cruise Elroy forms. 
-        if (ghostId == BLINKY && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getDotsRemaining()) {
+        if (ghostId == BLINKY && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getPelletsRemaining()) {
             ghostNum = CRUISE_ELROY;
             for (int i = 0; i < 4; i++) {
                 facePlanes[(direction+i)%4].setGhostNum(ghostNum);
             }
         }
-        if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getDotsRemaining() * 2) {
+        if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getPelletsRemaining() * 2) {
             ghostNum = CRUISE_ELROY_2;
             for (int i = 0; i < 4; i++) {
                 facePlanes[(direction+i)%4].setGhostNum(ghostNum);

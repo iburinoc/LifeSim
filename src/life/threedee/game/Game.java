@@ -215,20 +215,11 @@ public class Game implements Runnable, Tickable{
                 }
             }
         }
-        for (Pellet pellet : m.pelletsList()){
-            Point pelletLoc = pellet.getCenter();
-            MapLocation pelletCoords = new MapLocation(pelletLoc.x, pelletLoc.z);
-            if (coords.equals(pelletCoords) && !pellet.getEaten()) {
-                pellet.eat(this);
-                p.stop();
-            }
-        }
-        for (Energizer energizer : m.energyList()){
-            Point energizerLoc = energizer.getCenter();
-            MapLocation energizerCoords = new MapLocation(energizerLoc.x, energizerLoc.z);
-            if (coords.equals(energizerCoords) && !energizer.getEaten()) {
-                energizer.eat(this);
-                p.stop();
+        for (Consumable c : m.consumableList()){
+            Point consumableLoc = c.getCenter();
+            MapLocation consumableCoords = new MapLocation(consumableLoc.x, consumableLoc.z);
+            if (coords.equals(consumableCoords) && !c.getEaten()) {
+                c.eat(this, p);
             }
         }
     }

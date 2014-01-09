@@ -28,9 +28,10 @@ public class Pellet extends Consumable{
 		translate(new Vector(center.x, 0.625, center.z));
 	}
 
-	public void eat(Game g){
+	public void eat(Game g, Player p){
         eaten = true;
         g.pelletEaten();
+        p.stop();
     }
 
 	@Override

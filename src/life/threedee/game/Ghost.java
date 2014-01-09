@@ -137,8 +137,8 @@ public class Ghost implements Tickable{
         }
     }
 
-    public int makeDecision(boolean inHouse){
-        if (!inHouse) {
+    public int makeDecision(boolean outside){
+        if (outside) {
             MapLocation indices = new MapLocation(location);
             boolean[] open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
             if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
@@ -168,17 +168,11 @@ public class Ghost implements Tickable{
         Vector v = dirToV();
         MapLocation indices = new MapLocation(location);
         boolean[] open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
-        boolean inHouse = true;
-        for (boolean dirOpen : open) {
-            if (dirOpen){
-                inHouse = false;
-            }
-        }
         Point newLocation = location.add(new Point(v));
         if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
          || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
             direction = decision;
-            decision = makeDecision(inHouse);
+            decision = makeDecision(open[0] || open[1] || open[2] || open[3]);
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
             facePlanes[(direction+2)%4].setFace(false);

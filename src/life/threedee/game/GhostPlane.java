@@ -68,16 +68,20 @@ public class GhostPlane extends TexturedPlane {
     
     public void setFace(boolean face) {
         this.facePlane=face;
+        reloadTexture();
+    }
+    
+    public void setGhostNum(int ghostNum) {
+        this.ghostNum = ghostNum;
+        reloadTexture();
+    }
+    
+    public void reloadTexture() {
         if(facePlane) {
             this.texture = GameUtilities.GHOST_FACE_TEXTURES[ghostNum];
         } else {
             this.texture = GameUtilities.GHOST_SIDE_TEXTURES[ghostNum];
         }
-    }
-    
-    public void setGhostNum(int ghostNum) {
-        this.ghostNum = ghostNum;
-        this.setFace(facePlane);
     }
     
     public void shiftTexture() {

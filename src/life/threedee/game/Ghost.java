@@ -195,9 +195,10 @@ public class Ghost implements Tickable{
 
     public void reset(){
         this.ghostNum=this.ghostId;
-        this.location=GameUtilities.GHOST_LOCATIONS[GHOST_DEBUG];
         this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
         this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        Vector v = new Vector(this.location, GameUtilities.GHOST_LOCATIONS[GHOST_DEBUG]);
+        translate(v);
         updatePlanes();
     }
     

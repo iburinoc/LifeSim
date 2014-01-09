@@ -33,12 +33,14 @@ public class Ghost implements Tickable{
     protected Game game;
     protected GhostPlane[] facePlanes;
     protected Triangle[] faceTriangles;
+    
+    private final int GHOST_DEBUG = 0;
 
     public Ghost(Game g, int ghostNum) {
         this.game=g;
         this.ghostNum=ghostNum;
         this.ghostId=ghostNum;
-        this.location=GameUtilities.GHOST_LOCATIONS[BLINKY];
+        this.location=GameUtilities.GHOST_LOCATIONS[GHOST_DEBUG];
         this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
         this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
         Point top = new Point(0.0, 1.0, 0.0).add(this.location);
@@ -190,7 +192,8 @@ public class Ghost implements Tickable{
     }
 
     public void reset(){
-        this.location=GameUtilities.GHOST_LOCATIONS[ghostNum];
+        this.ghostNum=this.ghostId;
+        this.location=GameUtilities.GHOST_LOCATIONS[GHOST_DEBUG];
         this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
         this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
     }

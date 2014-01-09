@@ -205,6 +205,7 @@ public class Game implements Runnable, Tickable{
             }
             level++;
             pelletsEaten = 0;
+            die();
         }
         if (score >= 10000 && !first){
             first = true;
@@ -222,8 +223,7 @@ public class Game implements Runnable, Tickable{
             if (coords.equals(ghostCoords)) {
                 if (mode != -1){
                     lives--;
-                    //p.setLoc(new Point(0, 1, -8.5));
-                    //p.setDir(new Vector(-1, 0, 0));
+                    die();
                 } else {
                     ghost.getAte();
                 }
@@ -316,5 +316,10 @@ public class Game implements Runnable, Tickable{
 
     public List<Ghost> getGhosts(){
         return ghosts;
+    }
+    
+    public void die() {
+        p.setLoc(new Point(0, 1, -8.5));
+        p.setDir(new Vector(-1, 0, 0));
     }
 }

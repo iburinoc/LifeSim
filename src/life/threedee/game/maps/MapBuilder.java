@@ -292,7 +292,7 @@ public class MapBuilder {
 					break;
 				}
 				case 2:{ 
-				    daaaaaaaaouble px = (x - 14 + 0.5) * MPT;
+				    double px = (x - 14 + 0.5) * MPT;
                     double py = -(y - 18 + 0.5) * MPT;
                     l.add(new Energizer(new Point(px, 0, py)));
                     break;

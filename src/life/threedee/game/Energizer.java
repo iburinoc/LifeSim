@@ -80,8 +80,10 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
         for(Triangle t : this.triangles) {
             double ct = t.calculateT(v, p, minT);
             if(ct == ct && !(ct > minT)) {
+            	System.out.println("yop");
                 return new TColorTransfer(ct, c(), this);
             }
+//            System.out.println("nop");
         }
         return new TColorTransfer(Double.NaN, null, null);
     }

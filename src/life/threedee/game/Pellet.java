@@ -60,8 +60,12 @@ public class Pellet implements ThreeDeeObject, Tickable, MapFeature{
 		generate();
 	}
 
-    public void nom(){
+    public void eat(){
         eaten = true;
+    }
+    
+    public void spawn() {
+        eaten = false;
     }
 	
 	public boolean getEaten() {

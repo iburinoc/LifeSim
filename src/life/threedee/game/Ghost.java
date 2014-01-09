@@ -183,6 +183,12 @@ public class Ghost implements Tickable{
         }
     }
 
+    public void reset(){
+        this.location=GameUtilities.GHOST_LOCATIONS[ghostNum];
+        this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+    }
+    
     public Vector dirToV(){
         return Vector.fromPolarTransform(direction < 3 ? (direction + 1) * Math.PI / 2 : 0, 0, (GameUtilities.GAME_DATA[game.getLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0);
     }

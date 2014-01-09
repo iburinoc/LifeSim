@@ -197,6 +197,12 @@ public class Game implements Runnable, Tickable{
     @Override
     public void tick(){
         if (pelletsEaten == 240){
+            for(Pellet pellet : m.pelletsList()) {
+                pellet.spawn();
+            }
+            for(Ghost ghost : ghosts) {
+                ghost.reset();
+            }
             level++;
         }
         if (score >= 10000 && !first){
@@ -227,7 +233,7 @@ public class Game implements Runnable, Tickable{
             MapLocation foodCoords = new MapLocation(foodLoc.x, foodLoc.z);
             if (coords.equals(foodCoords) && !food.getEaten()) {
                 pelletsEaten++;
-                food.nom();
+                food.eat();
                 p.stop();
             }
         }

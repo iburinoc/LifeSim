@@ -220,7 +220,7 @@ public class Game implements Runnable, Tickable{
             MapLocation pelletCoords = new MapLocation(pelletLoc.x, pelletLoc.z);
             if (coords.equals(pelletCoords) && !pellet.getEaten()) {
                 pellet.eat(this);
-                p.stop();
+                p.stop(1);
             }
         }
         for (Energizer energizer : m.energyList()){
@@ -228,7 +228,7 @@ public class Game implements Runnable, Tickable{
             MapLocation energizerCoords = new MapLocation(energizerLoc.x, energizerLoc.z);
             if (coords.equals(energizerCoords) && !energizer.getEaten()) {
                 energizer.eat(this);
-                p.stop();
+                p.stop(1);
             }
         }
     }

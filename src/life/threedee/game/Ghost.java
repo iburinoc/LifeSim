@@ -123,15 +123,11 @@ public class Ghost implements Tickable{
         // concerning Blinky turning into his 2 Cruise Elroy forms. 
         if (ghostId == BLINKY && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getPelletsRemaining()) {
             ghostNum = CRUISE_ELROY;
-            for (int i = 0; i < 4; i++) {
-                facePlanes[(direction+i)%4].setGhostNum(ghostNum);
-            }
+            updatePlanes();
         }
         if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getPelletsRemaining() * 2) {
             ghostNum = CRUISE_ELROY_2;
-            for (int i = 0; i < 4; i++) {
-                facePlanes[(direction+i)%4].setGhostNum(ghostNum);
-            }
+            updatePlanes();
         }
         move();
         if (Math.abs(location.x) > 14){
@@ -166,6 +162,12 @@ public class Ghost implements Tickable{
         }
     }
     
+    public void updatePlanes() {
+        for (int i = 0; i < 4; i++) {
+            facePlanes[(direction+i)%4].setGhostNum(ghostNum);
+        }
+    }
+    
     public void move() {
         Vector v = dirToV();
         MapLocation indices = new MapLocation(location);
@@ -196,6 +198,7 @@ public class Ghost implements Tickable{
         this.location=GameUtilities.GHOST_LOCATIONS[GHOST_DEBUG];
         this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
         this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        updatePlanes();
     }
     
     public Vector dirToV(){

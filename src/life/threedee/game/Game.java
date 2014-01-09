@@ -119,12 +119,21 @@ public class Game implements Runnable, Tickable{
 		}
 	}
 	
+	private void tickableEnergizers() {
+	    for (ThreeDeeObject o : m.getObjects()) {
+	        if (o instanceof Energizer) {
+	            tickables.add((Energizer)o);
+	        }
+	    }
+	}
+	
 	@Override
 	public void run() {
 		betaObjects();
 		removeCursor();
 		
 		tickablePellets();
+		tickableEnergizers();
 		
 		RenderThread rt = new RenderThread();
 		TickThread tt = new TickThread();
@@ -177,6 +186,9 @@ public class Game implements Runnable, Tickable{
             for(Pellet pellet : m.pelletsList()) {
                 pellet.spawn();
             }
+            for(Energizer energizer : m.energyList()) {
+                energizer.spawn();
+            }
             level++;
             pelletsEaten = 0;
             die();
@@ -203,12 +215,20 @@ public class Game implements Runnable, Tickable{
                 }
             }
         }
-        for (Pellet food : m.pelletsList()){
-            Point foodLoc = food.getCenter();
-            MapLocation foodCoords = new MapLocation(foodLoc.x, foodLoc.z);
-            if (coords.equals(foodCoords) && !food.getEaten()) {
+        for (Pellet pellet : m.pelletsList()){
+            Point pelletLoc = pellet.getCenter();
+            MapLocation pelletCoords = new MapLocation(pelletLoc.x, pelletLoc.z);
+            if (coords.equals(pelletCoords) && !pellet.getEaten()) {
                 pelletsEaten++;
-                food.eat();
+                pellet.eat();
+                p.stop();
+            }
+        }
+        for (Energizer energizer : m.energyList()){
+            Point energizerLoc = energizer.getCenter();
+            MapLocation energizerCoords = new MapLocation(energizerLoc.x, energizerLoc.z);
+            if (coords.equals(energizerCoords) && !energizer.getEaten()) {
+                energizer.eat();
                 p.stop();
             }
         }

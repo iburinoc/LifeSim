@@ -48,6 +48,10 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
         }
         translate(new Vector(center.x, 0.625, center.y));
     }
+    
+    public boolean getEaten() {
+        return eaten;
+    }
 
     @Override
     public int getID() {
@@ -116,5 +120,9 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
     public boolean sameSide(Point a, Point b) {
         // TODO Auto-generated method stub
         return true;
+    }
+    
+    public Point getCenter(){
+        return center;
     }
 }

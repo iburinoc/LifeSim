@@ -6,6 +6,7 @@ import java.util.Map;
 
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
+import life.threedee.game.Energizer;
 import life.threedee.game.Pellet;
 
 public class GameMap {
@@ -13,6 +14,7 @@ public class GameMap {
 	private Map<MapLocation, List<ThreeDeeObject>> map;
 	
 	private List<Pellet> pelletsList;
+	private List<Energizer> energyList;
 	
 	public GameMap() {
 		objects = MapBuilder.createMap();
@@ -37,5 +39,17 @@ public class GameMap {
 			}
 		}
 		return pelletsList;
+	}
+	
+	public List<Energizer> energyList() {
+	    if(energyList == null) {
+            energyList = new ArrayList<Energizer>();
+            for(ThreeDeeObject o : objects) {
+                if(o instanceof Energizer) {
+                    energyList.add((Energizer) o);
+                }
+            }
+        }
+        return energyList;
 	}
 }

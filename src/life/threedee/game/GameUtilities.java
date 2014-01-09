@@ -80,6 +80,7 @@ public class GameUtilities{
     //fright time, warning flashes
     public static final int[][] FRIGHTENED_DATA = new int[][] {{6, 5}, {5, 5}, {4, 5}, {3, 5}, {2, 5}, {5, 5}, {2, 5}, {2, 5}, {1, 3}, {5, 5}, {2, 5}, {1, 3}, {1, 3}, {3, 5}, {1, 3}, {1, 3}, {0, 0}, {1, 3}, {0, 0}};
 
+    //scatter, chase, scatter, chase......
     public static final double[][] MODE_TIMES = new double[][] {{7, 20, 7, 20, 5, 20, 5}, {7, 20, 7, 20, 5, 1033, 1.0 / 60}, {7, 20, 7, 20, 5, 1033, 1.0 / 60}, {7, 20, 7, 20, 5, 1033, 1.0 / 60}, {5, 20, 5, 20, 5, 1037, 1.0 / 60}};
 
     public static final BufferedImage ENERGIZER_TOP_TEXTURE = GameUtilities.loadImage("resources/EnergizerTop.png");

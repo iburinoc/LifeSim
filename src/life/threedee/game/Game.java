@@ -100,17 +100,7 @@ public class Game implements Runnable, Tickable{
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		j.setCursor(transparent);
 	}
-	
-	private void betaObjects() {
-		objects.addAll(MapBuilder.generateBetaScreenShotObjects());
-		Pellet p = new Pellet(new Point(0.5, 0, 3.5));
-		objects.add(p);
-		tickables.add(p);
-		Energizer e = new Energizer(new Point(-0.5, 0.5, 3.5));
-		objects.add(e);
-		tickables.add(e);
-	}
-	
+
 	private void tickablePellets() {
 		for(ThreeDeeObject o : m.getObjects()) {
 			if(o instanceof Pellet) {
@@ -129,7 +119,6 @@ public class Game implements Runnable, Tickable{
 	
 	@Override
 	public void run() {
-		betaObjects();
 		removeCursor();
 		
 		tickablePellets();
@@ -139,7 +128,6 @@ public class Game implements Runnable, Tickable{
 		TickThread tt = new TickThread();
 		rt.start();
 		tt.start();
-		
 	}
 
 	private class RenderThread extends Thread {

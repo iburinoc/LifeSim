@@ -17,7 +17,7 @@ public class Player extends Camera implements Tickable{
     private List<ThreeDeeObject> map;
     
     public Player(Game g, GameMap m) {
-        super(new Point(0, 1, 3.5), new Vector(-1, 0, 0));
+        super(new Point(0, 1, -8.5), new Vector(-1, 0, 0));
         this.g = g;
         this.m = m;
     }

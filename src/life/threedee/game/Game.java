@@ -204,6 +204,7 @@ public class Game implements Runnable, Tickable{
                 ghost.reset();
             }
             level++;
+            pelletsEaten = 0;
         }
         if (score >= 10000 && !first){
             first = true;

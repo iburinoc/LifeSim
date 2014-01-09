@@ -137,36 +137,48 @@ public class Ghost implements Tickable{
         }
     }
 
-    public int makeDecision(){
-        MapLocation indices = new MapLocation(location);
-        boolean[] open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
-        if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
-            open = GameUtilities.nd.clone();
-        }
-        if (uTurn){
-            return (direction + 2) % 4;
-        }
-        target = findTarget();
-        open[(direction + 2) % 4] = false;
-        double shortest = Double.MAX_VALUE;
-        int toReturn = 3;
-        for (int i = 0; i < 4; i++){
-            double s = new Vector(new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)) + (direction % 2 == 1 ? direction - 2 : 0), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)) + (direction % 2 == 0 ? -direction + 1 : 0)), target).s();
-            if (open[i] && s < shortest){
-                shortest = s;
-                toReturn = i;
+    public int makeDecision(boolean inHouse){
+        if (!inHouse) {
+            MapLocation indices = new MapLocation(location);
+            boolean[] open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
+            if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
+                open = GameUtilities.nd.clone();
             }
+            if (uTurn){
+                return (direction + 2) % 4;
+            }
+            target = findTarget();
+            open[(direction + 2) % 4] = false;
+            double shortest = Double.MAX_VALUE;
+            int toReturn = 3;
+            for (int i = 0; i < 4; i++){
+                double s = new Vector(new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)) + (direction % 2 == 1 ? direction - 2 : 0), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)) + (direction % 2 == 0 ? -direction + 1 : 0)), target).s();
+                if (open[i] && s < shortest){
+                    shortest = s;
+                    toReturn = i;
+                }
+            }
+            return toReturn;
+        } else {
+            throw new InternalError();
         }
-        return toReturn;
     }
     
     public void move() {
         Vector v = dirToV();
+        MapLocation indices = new MapLocation(location);
+        boolean[] open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
+        boolean inHouse = true;
+        for (boolean dirOpen : open) {
+            if (dirOpen){
+                inHouse = false;
+            }
+        }
         Point newLocation = location.add(new Point(v));
         if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
          || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
             direction = decision;
-            decision = makeDecision();
+            decision = makeDecision(inHouse);
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
             facePlanes[(direction+2)%4].setFace(false);

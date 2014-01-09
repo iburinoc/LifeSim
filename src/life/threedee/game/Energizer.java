@@ -98,6 +98,14 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
             tri.translate(v);
         }
     }
+    
+    public void eat(){
+        eaten = true;
+    }
+    
+    public void spawn() {
+        eaten = false;
+    }
 
     @Override
     public Color c() {
@@ -108,6 +116,5 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
     public boolean sameSide(Point a, Point b) {
         // TODO Auto-generated method stub
         return true;
-
     }
 }

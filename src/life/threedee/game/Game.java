@@ -198,6 +198,7 @@ public class Game implements Runnable, Tickable{
     public void tick(){
         if (pelletsEaten == 240){
             level++;
+            pelletsEaten = 0;
         }
         if (score >= 10000 && !first){
             first = true;

@@ -79,18 +79,13 @@ public class Pellet implements ThreeDeeObject, Tickable, MapFeature{
 		if(eaten) {
 			return new TColorTransfer(Double.NaN, null, null);
 		}
-		double min = Double.MAX_VALUE;
 		for(Triangle t : this.t) {
-			double ct = t.calculateT(v, p, Math.min(minT, min));
-			if(ct == ct && ct < min) {
-				min = ct;
+			double ct = t.calculateT(v, p, minT);
+			if(ct == ct && !(ct > minT)) {
+				return new TColorTransfer(ct, c(), this);
 			}
 		}
-		if(!(min > minT)) {
-			return new TColorTransfer(min, c(), this);
-		} else {
-			return new TColorTransfer(Double.NaN, null, null);
-		}
+		return new TColorTransfer(Double.NaN, null, null);
 	}
 
 	@Override

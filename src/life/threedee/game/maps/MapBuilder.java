@@ -290,6 +290,7 @@ public class MapBuilder {
 					l.add(new Pellet(new Point(px, 0, py)));
 					break;
 				case 2: //put energizer creater here
+					l.add(new Pellet(new Point(-32,0,0)));
 					break;
 				default:
 					break;
@@ -366,7 +367,7 @@ public class MapBuilder {
 			for(int y = 0; y < 36; y++) {
 				if(pellets.getRGB(x*8 + 3, y*8 + 3) == 0xfffffffd) {
 					pel[x][y]++;
-					if(pellets.getRGB(x*8, y*8 + 3) == 0xfffffffd) {
+					if(pellets.getRGB(x*8 + 1, y*8 + 3) == 0xfffffffd) {
 						pel[x][y]++;
 					}
 				}

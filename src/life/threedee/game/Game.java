@@ -220,7 +220,7 @@ public class Game implements Runnable, Tickable{
             MapLocation pelletCoords = new MapLocation(pelletLoc.x, pelletLoc.z);
             if (coords.equals(pelletCoords) && !pellet.getEaten()) {
                 pelletsEaten++;
-                pellet.eat();
+                pellet.eat(this);
                 p.stop();
             }
         }

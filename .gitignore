@@ -7,3 +7,5 @@ LifeSim.iml
 *.jar
 *.war
 *.ear
+
+bin/*

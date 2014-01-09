@@ -45,7 +45,7 @@ public abstract class Consumable implements ThreeDeeObject, Tickable, MapFeature
 		generate();
 	}
 
-    public abstract void eat(Game g);
+    public abstract void eat(Game g, Player p);
     
     public void spawn() {
         eaten = false;

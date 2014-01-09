@@ -31,8 +31,10 @@ public class Energizer extends Consumable {
         translate(new Vector(center.x, 0.625, center.z));
     }
 
-    public void eat(Game g){
+    public void eat(Game g, Player p){
         eaten = true;
+        g.startFrightened();
+        p.stop(3);
     }     
 
     @Override

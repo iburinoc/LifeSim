@@ -107,8 +107,9 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
         }
     }
     
-    public void eat(){
+    public void eat(Game g){
         eaten = true;
+        g.startFrightened();
     }
     
     public void spawn() {

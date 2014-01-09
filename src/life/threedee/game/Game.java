@@ -228,7 +228,7 @@ public class Game implements Runnable, Tickable{
             Point energizerLoc = energizer.getCenter();
             MapLocation energizerCoords = new MapLocation(energizerLoc.x, energizerLoc.z);
             if (coords.equals(energizerCoords) && !energizer.getEaten()) {
-                energizer.eat();
+                energizer.eat(this);
                 p.stop();
             }
         }
@@ -318,5 +318,10 @@ public class Game implements Runnable, Tickable{
         for(Ghost ghost : ghosts) {
             ghost.reset();
         }
+    }
+    
+    public void startFrightened() {
+        // ANDREY! THIS IS WHERE THE CODE FOR STARTING AND ENDING (MAYBE) FRIGHTENED MODE GOES!
+        // ANDREY! I'M USING "ANDREY!" AS TODO NOW!
     }
 }

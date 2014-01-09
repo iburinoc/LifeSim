@@ -225,7 +225,7 @@ public class Game implements Runnable, Tickable{
             Point foodLoc = food.getCenter();
             MapLocation foodCoords = new MapLocation(foodLoc.x, foodLoc.z);
             if (coords.equals(foodCoords)) {
-                food.eaten();
+                food.nom();
             }
         }
     }

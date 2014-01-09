@@ -23,6 +23,8 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
     private Triangle[] triangles;
     private boolean eaten;
     
+    private final int id;
+    
     private Point center;
     
     public Energizer(Point center) {
@@ -31,7 +33,7 @@ public class Energizer implements ThreeDeeObject, Tickable, MapFeature{
         points = new Point[4];
         triangles = new Triangle[8];
         generate();
-        //id = idCount++;
+        id = idCount++;
     }
     
     private void generate() {

@@ -1,3 +1,5 @@
+#! /bin/bash
+
 rm -rv bin
 mkdir bin
 cp -rv resources bin/resources

@@ -295,7 +295,7 @@ public class MapBuilder {
 				    double px = (x - 14 + 0.5) * MPT;
                     double py = -(y - 18 + 0.5) * MPT;
                     l.add(new Energizer(new Point(px, 0, py)));
-					break;
+                    break;
 				}
 				default:
 					break;
@@ -372,7 +372,7 @@ public class MapBuilder {
 			for(int y = 0; y < 36; y++) {
 				if(pellets.getRGB(x*8 + 3, y*8 + 3) == 0xfffffffd) {
 					pel[x][y]++;
-					if(pellets.getRGB(x*8, y*8 + 3) == 0xfffffffd) {
+					if(pellets.getRGB(x*8 + 1, y*8 + 3) == 0xfffffffd) {
 						pel[x][y]++;
 					}
 				}

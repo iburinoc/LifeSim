@@ -132,7 +132,6 @@ public class GameUtilities{
 		try {
 			return ImageIO.read(GameUtilities.class.getResourceAsStream("/" + ref));
 		} catch (Exception e) {
-
 			try {
 				System.out.println("Get as stream didnt work");
 				return ImageIO.read(new File("./" + ref));

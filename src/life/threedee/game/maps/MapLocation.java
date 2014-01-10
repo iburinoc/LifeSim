@@ -22,10 +22,6 @@ public class MapLocation {
 		this.mx = mx;
 		this.my = my;
 	}
-
-    public Point undo() {
-        return new Point(mx - 13.5, 1, -my + 17.5);
-    }
 	
 	@Override
 	public boolean equals(Object o) {

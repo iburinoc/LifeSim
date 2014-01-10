@@ -204,7 +204,7 @@ public class Ghost implements Tickable{
             direction = decision;
             open();
             decision = makeDecision();
-            translate(new Vector(new MapLocation(location).undo().subtract(location)));
+            translate(new Vector(new Point(Math.round(location.x), 1, Math.round(location.z)).subtract(location)));
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
             facePlanes[(direction+2)%4].setFace(false);

@@ -31,11 +31,6 @@ public class Game implements Runnable, Tickable{
 	public static final int FRAME_RATE = 30;
 	
 	public static void main(String[] args){
-        for (double i = -13.25; i < 14; i += 0.25) {
-            for (double j = -17.25; j < 18; j += 0.25) {
-                System.out.println(new MapLocation(new Point(i, 1, j)).undo());
-            }
-        }
 		new Thread(new Game()).start();
 	}
 	
@@ -299,10 +294,10 @@ public class Game implements Runnable, Tickable{
     }
     
     public void die() {
-        p.setLoc(new Point(0, 1, -8.5));
-        p.setDir(new Vector(-1, 0, 0));
+        //p.setLoc(new Point(0, 1, -8.5));
+        //p.setDir(new Vector(-1, 0, 0));
         for(Ghost ghost : ghosts) {
-            ghost.reset();
+            //ghost.reset();
         }
     }
     

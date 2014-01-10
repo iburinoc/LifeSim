@@ -314,10 +314,12 @@ public class Game implements Runnable, Tickable{
     public void startFrightened() {
         // ANDREY! THIS IS WHERE THE CODE FOR STARTING AND ENDING (MAYBE) FRIGHTENED MODE GOES!
         // ANDREY! I'M USING "ANDREY!" AS TODO NOW!
+        score+=50;
     }
     
     public void pelletEaten() {
         pelletsEaten++;
+        score+=10;
     }
 
     public int getTicksThisMode() {

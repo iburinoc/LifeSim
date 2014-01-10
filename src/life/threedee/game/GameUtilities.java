@@ -62,21 +62,13 @@ public class GameUtilities{
                 }
             }
         }
-        for (int i = 0; i < toReturn.length; i++){
-            for (int j = 0; j < toReturn[i].length; j++){
-                for (int k = 0; k < toReturn[i][j].length; k++){
-                    System.out.print(toReturn[i][j][k]?1:0);
-                }
-                System.out.print(",");
-            }
-            System.out.println();
-        }
         return toReturn;
     }
 
     //pacman speed, ghost speed, fruit bonus, dots left for elroy
     public static final int[][] GAME_DATA = new int[][] {{80, 75, 100, 20}, {90, 85, 300, 30}, {90, 85, 500, 40}, {90, 85, 500, 40}, {100, 95, 700, 40}, {100, 95, 700, 50}, {100, 95, 1000, 50}, {100, 95, 1000, 50}, {100, 95, 2000, 60}, {100, 95, 2000, 60}, {100, 95, 3000, 60}, {100, 95, 3000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 120}, {100, 95, 5000, 120}, {90, 95, 5000, 120}};
 
+    //pellets needed for the ghosts to exit the ghost house
     public static final int[][] EXIT_PELLETS = new int[][] {{Integer.MAX_VALUE, 0, 30, 60}, {Integer.MAX_VALUE, 0, 0, 50}, {Integer.MAX_VALUE, 0, 0, 0}};
 
     //fright time, warning flashes
@@ -133,7 +125,6 @@ public class GameUtilities{
 			return ImageIO.read(GameUtilities.class.getResourceAsStream("/" + ref));
 		} catch (Exception e) {
 			try {
-				System.out.println("Get as stream didnt work");
 				return ImageIO.read(new File("./" + ref));
 			} catch (IOException e1) {
 				e.printStackTrace();

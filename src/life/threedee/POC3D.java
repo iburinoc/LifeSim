@@ -105,26 +105,6 @@ public class POC3D implements Runnable{
                     + "((1,1\t,1),(3,   1,1), (2, 3, 2))");
             objects.add(wo);
         }
-		{
-            WorldObject wo = WorldObject.generateObject("(0,1,0);"
-                    + "(0,2,0),(0.5,1.5,0),(0,1.5,0.5);"
-                    + "(0,2,0),(0,1.5,0.5),(-0.5,1.5,0);"
-                    + "(0,2,0),(-0.5,1.5,0),(0,1.5,-0.5);"
-                    + "(0,2,0),(0,1.5,-0.5),(0.5,1.5,0);"
-                    + "(0.425,0.5,0.425),(0.5,1.5,0),(0,1.5,0.5);"
-                    + "(-0.425,0.5,0.425),(0,1.5,0.5),(-0.5,1.5,0);"
-                    + "(-0.425,0.5,-0.425),(-0.5,1.5,0),(0,1.5,-0.5);"
-                    + "(0.425,0.5,-0.425),(0,1.5,-0.5),(0.5,1.5,0);"
-                    + "(0.5,1.5,0),(0.6,0,0),(0.425,0.5,0.425);"
-                    + "(0.5,1.5,0),(0.6,0,0),(0.425,0.5,-0.425);"
-                    + "(0,1.5,0.5),(0,0,0.6),(-0.425,0.5,0.425);"
-                    + "(0,1.5,0.5),(0,0,0.6),(0.425,0.5,0.425);"
-                    + "(-0.5,1.5,0),(-0.6,0,0),(-0.425,0.5,-0.425);"
-                    + "(-0.5,1.5,0),(-0.6,0,0),(-0.425,0.5,0.425);"
-                    + "(0,1.5,-0.5),(0,0,-0.6),(0.425,0.5,-0.425);"
-                    + "(0,1.5,-0.5),(0,0,-0.6),(-0.425,0.5,-0.425)");
-//            objects.add(wo);
-        }
 		objects.add(p0);
 		objects.add(p1);
 		objects.add(p2);
@@ -136,17 +116,14 @@ public class POC3D implements Runnable{
 		while(true) {
 			long startT = System.currentTimeMillis();
 			p.calcBuffer();
-			//p.repaint();
 			paint();
 			long time = System.currentTimeMillis() - startT;
-			System.out.println(time);
 			try{
 				Thread.sleep(Math.max(0, 33-time));
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();
 			}
-			//System.out.println("frame");
 		}
 	}
 
@@ -157,9 +134,8 @@ public class POC3D implements Runnable{
 			Thread.sleep(1000);
 		}
 		catch(InterruptedException e){
-			
 		}
-		System.out.println("frame");
+
 	}
 	
 	public static void main(String[] args){
@@ -203,8 +179,6 @@ public class POC3D implements Runnable{
 			if(!mouseCaptured){
 				return;
 			}
-			
-			System.out.println(arg0.getX() + ";" + arg0.getY() + ";" + j.getWidth() / 2 + ";" + j.getHeight() / 2);
 			if(arg0.getX() != j.getWidth() / 2 || arg0.getY() != j.getHeight() / 2){
 				p.mouseMoved(arg0.getX() - j.getWidth() / 2, arg0.getY() - j.getHeight() / 2);
 				recenter();
@@ -217,7 +191,6 @@ public class POC3D implements Runnable{
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
-			//mouseCaptured = true;
 		}
 
 		@Override
@@ -239,7 +212,6 @@ public class POC3D implements Runnable{
 
 		@Override
 		public void keyPressed(KeyEvent e){
-			System.out.println("Key:" + e.getKeyCode());
 			if(e.getKeyCode() == 27){
 				this.mouseCaptured = !mouseCaptured;
 			}

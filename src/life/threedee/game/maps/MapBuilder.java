@@ -337,14 +337,6 @@ public class MapBuilder {
 				 }
 			}
 		}
-		
-		for(int y = 0; y < 36; y++) {
-			for(int x = 0; x < 28; x++) {
-				System.out.print(map[x][y] + "");
-			}
-			System.out.println();
-		}
-		
 		return map;
 	}
 	

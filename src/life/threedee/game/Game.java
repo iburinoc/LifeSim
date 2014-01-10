@@ -237,9 +237,7 @@ public class Game implements Runnable, Tickable{
 		}
 		catch(InterruptedException e){
 		}
-		System.out.println("frame");
 		long time = System.currentTimeMillis() - startT;
-		System.out.println(time);
 	}
 	
 	private void tickTickables(int delta){
@@ -324,6 +322,10 @@ public class Game implements Runnable, Tickable{
 
     public int getTicksThisMode() {
         return ticksThisMode;
+    }
+
+    public int getGameStage() {
+        return gameStage;
     }
 
     public int getPreferredGhost() {

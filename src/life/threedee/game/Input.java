@@ -61,9 +61,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
 		if(!mouseCaptured){
 			return;
 		}
-		
-		System.out.println(arg0.getX() + ";" + arg0.getY() + ";" + j.getWidth() / 2 + ";" + j.getHeight() / 2);
-		if(arg0.getX() != j.getWidth() / 2 || arg0.getY() != j.getHeight() / 2){
+        if(arg0.getX() != j.getWidth() / 2 || arg0.getY() != j.getHeight() / 2){
 			p.mouseMoved(arg0.getX() - j.getWidth() / 2, arg0.getY() - j.getHeight() / 2);
 			recenter();
 		}
@@ -97,7 +95,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
 
 	@Override
 	public void keyPressed(KeyEvent e){
-		System.out.println("Key:" + e.getKeyCode());
 		if(e.getKeyCode() == 27){
 			this.mouseCaptured = !mouseCaptured;
 		}

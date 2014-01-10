@@ -199,12 +199,13 @@ public class Ghost implements Tickable{
     public void move() {
         Vector v = dirToV();
         Point newLocation = location.add(new Point(v));
-        if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
-         || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
+        //if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
+        // || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
+        if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
             direction = decision;
             open();
             decision = makeDecision();
-            translate(new Vector(new Point(Math.round(location.x), 1, Math.round(location.z)).subtract(location)));
+            //translate(new Vector(new Point(Math.round(location.x), 1, Math.round(location.z)).subtract(location)));
             facePlanes[direction].setFace(true);
             facePlanes[(direction+1)%4].setFace(false);
             facePlanes[(direction+2)%4].setFace(false);
@@ -233,7 +234,7 @@ public class Ghost implements Tickable{
     public Vector dirToV(){
         // ANDREY! ADD THE CORRECT TUNNEL SPEEDS HERE!
         // ANDREY! DO EVERYTHING!
-        return new Vector(0, 0, 0).setScalar((GameUtilities.GAME_DATA[game.getLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0);
+        return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar((GameUtilities.GAME_DATA[game.getLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0);
     }
 
     public Point getLocation(){

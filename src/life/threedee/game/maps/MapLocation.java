@@ -30,6 +30,7 @@ public class MapLocation {
 			return (this.mx == m.mx && this.my == m.my) || (!this.inRange() && !m.inRange());
 		}
 		catch(ClassCastException e){
+            e.printStackTrace();
 			return false;
 		}
 	}

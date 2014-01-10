@@ -114,11 +114,11 @@ public class Ghost implements Tickable{
             facePlanes[(direction+1)%4].setFace(false);
             facePlanes[(direction+2)%4].setFace(false);
             facePlanes[(direction+3)%4].setFace(false);
-        }
-        if (new MapLocation(location).mx != new MapLocation(newLocation).mx) {
-            newLocation = new Point(newLocation.x, newLocation.y, Math.floor(newLocation.z) + 0.5);
-        } else {
-            newLocation = new Point(Math.floor(newLocation.x) + 0.5, newLocation.y, newLocation.z);
+            if (new MapLocation(location).mx != new MapLocation(newLocation).mx) {
+                newLocation = new Point(newLocation.x, newLocation.y, Math.floor(newLocation.z) + 0.5);
+            } else {
+                newLocation = new Point(Math.floor(newLocation.x) + 0.5, newLocation.y, newLocation.z);
+            }
         }
         translate(new Vector(newLocation.subtract(location)));
     }

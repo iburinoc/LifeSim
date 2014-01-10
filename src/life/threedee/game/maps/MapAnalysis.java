@@ -34,10 +34,6 @@ public class MapAnalysis {
 	public static void main(String[] args) {
 		List<ThreeDeeObject> map = MapBuilder.createMap();
 		Map<MapLocation, List<ThreeDeeObject>> m = analyseMap(map);
-		System.out.println(serializeMap(m));
-//		Map<MapLocation, List<ThreeDeeObject>> n = new HashMap<MapLocation,List<ThreeDeeObject>>();
-//		n.put(new MapLocation(0,0), map);
-//		System.out.println(serializeMap(n));
 	}
 
 	private static String serializeMap(Map<MapLocation, List<ThreeDeeObject>> m) {
@@ -94,7 +90,6 @@ public class MapAnalysis {
 				MapLocation l = new MapLocation(x, y);
 				List<ThreeDeeObject> visible = analyseTile(c, x, y, map, dirs);
 				m.put(l, visible);
-				System.out.println(x + ";" + y);
 			}
 		}
 		
@@ -131,7 +126,6 @@ public class MapAnalysis {
 					}
 				}
 				nm.put(l, n);
-				System.out.println(x+";"+y);
 			}
 		}
 		return nm;
@@ -147,7 +141,6 @@ public class MapAnalysis {
 		for(List<Vector> l : dirs) {
 			c.setDir(l.get(0));
 			falseRender(c, v, loc, l.get(0), l.get(1), l.get(2));
-			System.out.println("\t" + i);
 			i++;
 		}
 		

@@ -49,7 +49,7 @@ public class Game implements Runnable, Tickable{
 	
 	private boolean running, first = false, second = false;
 
-    private int mode = 0, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode = 0, gameStage = 0;
+    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage;
 	
     private Object objLock;
     
@@ -215,7 +215,10 @@ public class Game implements Runnable, Tickable{
         if (mode != -1) {
             ticksThisMode++;
         }
-        if (ticksThisMode == GameUtilities.MODE_TIMES[level][gameStage]) {
+        if (gameStage == 7) {
+            gameStage++;
+            mode = 1;
+        } else if (ticksThisMode == GameUtilities.MODE_TIMES[level][gameStage]) {
             ticksThisMode = 0;
             gameStage++;
             mode = gameStage % 2;
@@ -234,9 +237,7 @@ public class Game implements Runnable, Tickable{
 		}
 		catch(InterruptedException e){
 		}
-		System.out.println("frame");
 		long time = System.currentTimeMillis() - startT;
-		System.out.println(time);
 	}
 	
 	private void tickTickables(int delta){
@@ -311,14 +312,20 @@ public class Game implements Runnable, Tickable{
     public void startFrightened() {
         // ANDREY! THIS IS WHERE THE CODE FOR STARTING AND ENDING (MAYBE) FRIGHTENED MODE GOES!
         // ANDREY! I'M USING "ANDREY!" AS TODO NOW!
+        score+=50;
     }
     
     public void pelletEaten() {
         pelletsEaten++;
+        score+=10;
     }
 
     public int getTicksThisMode() {
         return ticksThisMode;
+    }
+
+    public int getGameStage() {
+        return gameStage;
     }
 
     public int getPreferredGhost() {

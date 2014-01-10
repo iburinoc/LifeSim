@@ -60,21 +60,17 @@ public class MapTest implements Runnable{
 		Toolkit tk= p.getToolkit();
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		j.setCursor(transparent);
-		//this.p.setObjects(MapBuilder.createMap());
 		while(true) {
 			long startT = System.currentTimeMillis();
 			p.calcBuffer();
-			//p.repaint();
 			paint();
 			long time = System.currentTimeMillis() - startT;
-			System.out.println(time);
 			try{
 				Thread.sleep(Math.max(0, 33-time));
 			}
 			catch (InterruptedException e){
 				e.printStackTrace();
 			}
-			//System.out.println("frame");
 		}
 	}
 
@@ -85,9 +81,7 @@ public class MapTest implements Runnable{
 			Thread.sleep(1000);
 		}
 		catch(InterruptedException e){
-			
 		}
-		System.out.println("frame");
 	}
 	
 	public static void main(String[] args){
@@ -131,8 +125,6 @@ public class MapTest implements Runnable{
 			if(!mouseCaptured){
 				return;
 			}
-			
-			System.out.println(arg0.getX() + ";" + arg0.getY() + ";" + j.getWidth() / 2 + ";" + j.getHeight() / 2);
 			if(arg0.getX() != j.getWidth() / 2 || arg0.getY() != j.getHeight() / 2){
 				p.mouseMoved(arg0.getX() - j.getWidth() / 2, arg0.getY() - j.getHeight() / 2);
 				recenter();

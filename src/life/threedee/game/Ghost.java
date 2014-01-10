@@ -72,56 +72,10 @@ public class Ghost implements Tickable{
         g.addTickable(this);
     }
 
-    public Point findTarget() {
-        if (game.getMode() == 0 && (ghostNum == BLINKY || ghostNum == PINKY || ghostNum == INKY || ghostNum == CLYDE)){
-            return GameUtilities.GHOST_CORNERS[ghostNum];
-        }
-        switch(ghostNum) {
-            case BLINKY:
-            case CRUISE_ELROY:
-            case CRUISE_ELROY_2:
-                return game.getPlayer().getLoc();
-            case PINKY: {
-                Vector dir = game.getPlayer().getDir();
-                double yaw = dir.polarTransform()[0];
-                Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(4)));
-                if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
-                    tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 4)));
-                }
-                return tar;
-            }
-            case INKY: {
-                Vector dir = game.getPlayer().getDir();
-                double yaw = dir.polarTransform()[0];
-                Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(2)));
-                if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
-                    tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 2)));
-                }
-                Point blinkyPosition = game.getGhosts().get(0).getLocation();
-                return new Point(2 * tar.x - blinkyPosition.x, 1, 2 * tar.z - blinkyPosition.z);
-            }
-            case CLYDE: {
-                if (new Vector(location, game.getPlayer().getLoc()).s() > 64){
-                    return game.getPlayer().getLoc();
-                }
-                return GameUtilities.GHOST_CORNERS[3];
-            }
-            case SCARED:
-            case SCARED_FLASHING:
-                return null;
-            case EATEN:
-                return eyesTarget;
-            default:
-                return null;
-        }
-    }
-
     public void tick(){
-        if (game.getTicksThisMode() == 0) {
+        if (game.getTicksThisMode() == 0 && game.getGameStage() != 0) {
             uTurn = true;
         }
-        indices = new MapLocation(location);
-        open();
         for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
         }
@@ -142,14 +96,37 @@ public class Ghost implements Tickable{
         }
     }
 
-    public int makeDecision(){
-        if (open[0] || open[1] || open[2] || open[3]) {
-            if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
-                open = GameUtilities.nd.clone();
-            }
+    public void move() {
+        if (game.getTicksThisMode() == 299)
+            System.out.println("ticks = " + game.getTicksThisMode());
+        Point newLocation = location.add(new Point(dirToV()));
+        indices = new MapLocation(newLocation);
+        if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
             if (uTurn){
                 uTurn = false;
-                return (direction + 2) % 4;
+                direction = (direction + 2) % 4;
+            } else {
+                direction = decision;
+            }
+            open(true);
+            decision = makeDecision();
+            facePlanes[direction].setFace(true);
+            facePlanes[(direction+1)%4].setFace(false);
+            facePlanes[(direction+2)%4].setFace(false);
+            facePlanes[(direction+3)%4].setFace(false);
+            if (new MapLocation(location).mx != new MapLocation(newLocation).mx) {
+                newLocation = new Point(newLocation.x, newLocation.y, Math.floor(newLocation.z) + 0.5);
+            } else {
+                newLocation = new Point(Math.floor(newLocation.x) + 0.5, newLocation.y, newLocation.z);
+            }
+        }
+        translate(new Vector(newLocation.subtract(location)));
+    }
+
+    public int makeDecision(){
+        if (atLeastOne()) {
+            if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
+                open = GameUtilities.nd.clone();
             }
             target = findTarget();
             open[(direction + 2) % 4] = false;
@@ -193,29 +170,55 @@ public class Ghost implements Tickable{
             throw new IllegalArgumentException();
         }
     }
+
+    public Point findTarget() {
+        if (game.getMode() == 0 && (ghostNum == BLINKY || ghostNum == PINKY || ghostNum == INKY || ghostNum == CLYDE)){
+            return GameUtilities.GHOST_CORNERS[ghostNum];
+        }
+        switch(ghostNum) {
+            case BLINKY:
+            case CRUISE_ELROY:
+            case CRUISE_ELROY_2:
+                return game.getPlayer().getLoc();
+            case PINKY: {
+                Vector dir = game.getPlayer().getDir();
+                double yaw = dir.polarTransform()[0];
+                Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(4)));
+                if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
+                    tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 4)));
+                }
+                return tar;
+            }
+            case INKY: {
+                Vector dir = game.getPlayer().getDir();
+                double yaw = dir.polarTransform()[0];
+                Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(2)));
+                if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
+                    tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 2)));
+                }
+                Point blinkyPosition = game.getGhosts().get(0).getLocation();
+                return new Point(2 * tar.x - blinkyPosition.x, 1, 2 * tar.z - blinkyPosition.z);
+            }
+            case CLYDE: {
+                if (new Vector(location, game.getPlayer().getLoc()).s() > 64){
+                    return game.getPlayer().getLoc();
+                }
+                return GameUtilities.GHOST_CORNERS[3];
+            }
+            case SCARED:
+            case SCARED_FLASHING:
+                return null;
+            case EATEN:
+                return eyesTarget;
+            default:
+                return null;
+        }
+    }
     
     public void updatePlanes() {
         for (int i = 0; i < 4; i++) {
             facePlanes[(direction+i)%4].setGhostNum(ghostNum);
         }
-    }
-    
-    public void move() {
-        Vector v = dirToV();
-        Point newLocation = location.add(new Point(v));
-        //if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
-        // || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
-        if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
-            direction = decision;
-            open();
-            decision = makeDecision();
-            //translate(new Vector(new Point(Math.round(location.x), 1, Math.round(location.z)).subtract(location)));
-            facePlanes[direction].setFace(true);
-            facePlanes[(direction+1)%4].setFace(false);
-            facePlanes[(direction+2)%4].setFace(false);
-            facePlanes[(direction+3)%4].setFace(false);
-        }
-        translate(dirToV());
     }
     
     public void translate(Vector v) {
@@ -249,8 +252,12 @@ public class Ghost implements Tickable{
         ghostNum = EATEN;
     }
 
-    public void open() {
-        open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
+    public void open(boolean shift) {
+        if (shift) {
+            open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
+        } else {
+            open = GameUtilities.INTERSECTIONS[indices.mx][indices.my - 3];
+        }
     }
 
     public void addToCounter() {
@@ -258,7 +265,7 @@ public class Ghost implements Tickable{
     }
 
     public int release() {
-        releasing = open[0] || open[1] || open[2] || open[3];
+        releasing = atLeastOne();
         if (releasing) {
             direction = location.x >= 0 ? (int) Math.signum(location.x) : 3;
             decision = location.x >= 0 ? (int) Math.signum(location.x) : 3;
@@ -266,8 +273,13 @@ public class Ghost implements Tickable{
         return decision;
     }
 
+    public boolean atLeastOne() {
+        open(false);
+        return open[0] || open[1] || open[2] || open[3];
+    }
+
     public boolean inside() {
-        open();
-        return !(releasing || open[0] || open[1] || open[2] || open[3]);
+        open(false);
+        return !(releasing || atLeastOne());
     }
 }

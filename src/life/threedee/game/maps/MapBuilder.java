@@ -22,6 +22,7 @@ import life.threedee.game.Energizer;
 import life.threedee.game.GameUtilities;
 import life.threedee.game.Pellet;
 import life.threedee.game.TunnelPlane;
+import life.threedee.game.GhostHouseDoor;
 
 /**
  * Parses 2D pacman map image and builds the object list for it.
@@ -276,6 +277,7 @@ public class MapBuilder {
 			}
 		}
 		l.addAll(createPellets());
+		l.add(new GhostHouseDoor(new Point(-1, 0, 2.5), new Vector(0, 0, 1)));
 		return l;
 	}
 	

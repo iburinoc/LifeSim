@@ -17,7 +17,7 @@ import life.threedee.game.maps.MapLocation;
 public class Ghost implements Tickable{
     protected Point location, target;
     protected final Point eyesTarget = new Point(-0.5, 1, 3.5);
-    // ghostNum is the current state of the ghost (0-7). This is used to decide textures, behaviour, etc.
+    // ghostNum is the current state of the ghost (0-8). This is used to decide textures, behaviour, etc.
     // 0 - Blinky
     // 1 - Pinky
     // 2 - Inky
@@ -26,7 +26,7 @@ public class Ghost implements Tickable{
     // 5 - ScaredFlashing
     // 6 - Cruise Elroy
     // 7 - Cruise Elroy MK. II
-    // 8 - Eyes
+    // 8 - Eaten
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
     protected int direction, decision, ghostNum, ghostId, pelletCounter = 0;
     protected boolean uTurn, releasing;
@@ -160,15 +160,31 @@ public class Ghost implements Tickable{
             }
             return toReturn;
         } else if (releasing) {
-            release();
-            throw new StringIndexOutOfBoundsException();
+            return release();
         } else {
                 switch (ghostNum) {
                     case BLINKY:
+                    case SCARED:
+                    case SCARED_FLASHING:
+                    case CRUISE_ELROY:
+                    case CRUISE_ELROY_2:
                         throw new IllegalArgumentException();
                     case PINKY:
-                        direction = 0;
-                        decision = 0;
+                    case INKY:
+                    case CLYDE:
+                        if (pelletCounter == GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId]) {
+                            return release();
+                        } else {
+                            //bumping up and down
+                        }
+                        break;//can comment later
+                    case EATEN:
+                        if (location.x == 0 && location.y == 0) {
+                            ghostNum = ghostId;
+                            release();
+                        } else {
+                            return 2;
+                        }
                 }
             throw new IllegalArgumentException();
         }
@@ -217,7 +233,7 @@ public class Ghost implements Tickable{
     public Vector dirToV(){
         // ANDREY! ADD THE CORRECT TUNNEL SPEEDS HERE!
         // ANDREY! DO EVERYTHING!
-        return Vector.fromPolarTransform(direction < 3 ? (direction + 1) * Math.PI / 2 : 0, 0, ((GameUtilities.GAME_DATA[game.getLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0)*(Math.abs(location.x)>9&&Math.abs(location.z)<2?0.5:1));
+        return new Vector(0, 0, 0).setScalar((GameUtilities.GAME_DATA[game.getLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0);
     }
 
     public Point getLocation(){
@@ -236,11 +252,17 @@ public class Ghost implements Tickable{
         pelletCounter++;
     }
 
-    public void release() {
+    public int release() {
         releasing = open[0] || open[1] || open[2] || open[3];
         if (releasing) {
             direction = location.x >= 0 ? (int) Math.signum(location.x) : 3;
             decision = location.x >= 0 ? (int) Math.signum(location.x) : 3;
         }
+        return decision;
+    }
+
+    public boolean inside() {
+        open();
+        return !(releasing || open[0] || open[1] || open[2] || open[3]);
     }
 }

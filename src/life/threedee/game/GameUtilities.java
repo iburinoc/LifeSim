@@ -77,6 +77,8 @@ public class GameUtilities{
     //pacman speed, ghost speed, fruit bonus, dots left for elroy
     public static final int[][] GAME_DATA = new int[][] {{80, 75, 100, 20}, {90, 85, 300, 30}, {90, 85, 500, 40}, {90, 85, 500, 40}, {100, 95, 700, 40}, {100, 95, 700, 50}, {100, 95, 1000, 50}, {100, 95, 1000, 50}, {100, 95, 2000, 60}, {100, 95, 2000, 60}, {100, 95, 3000, 60}, {100, 95, 3000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 80}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 100}, {100, 95, 5000, 120}, {100, 95, 5000, 120}, {90, 95, 5000, 120}};
 
+    public static final int[][] EXIT_PELLETS = new int[][] {{Integer.MAX_VALUE, 0, 30, 60}, {Integer.MAX_VALUE, 0, 0, 50}, {Integer.MAX_VALUE, 0, 0, 0}};
+
     //fright time, warning flashes
     public static final int[][] FRIGHTENED_DATA = new int[][] {{6, 5}, {5, 5}, {4, 5}, {3, 5}, {2, 5}, {5, 5}, {2, 5}, {2, 5}, {1, 3}, {5, 5}, {2, 5}, {1, 3}, {1, 3}, {3, 5}, {1, 3}, {1, 3}, {0, 0}, {1, 3}, {0, 0}};
 

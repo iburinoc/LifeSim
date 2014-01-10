@@ -31,6 +31,10 @@ public class Pellet extends Consumable{
 	public void eat(Game g, Player p){
         eaten = true;
         g.pelletEaten();
+        int counter = g.getPreferredGhost();
+        if (counter < 4) {
+            g.getGhosts().get(counter).addToCounter();
+        }
         p.stop(1);
     }
 

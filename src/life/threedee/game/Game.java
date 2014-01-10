@@ -54,7 +54,7 @@ public class Game implements Runnable, Tickable{
 	
 	private boolean running, first = false, second = false;
 
-    private int mode, level, pelletsEaten, score, lives = 2;
+    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1;
 	
     private Object objLock;
     
@@ -175,6 +175,9 @@ public class Game implements Runnable, Tickable{
 	
     @Override
     public void tick(){
+        if (preferredGhost < 4 && !ghosts.get(preferredGhost).inside()) {
+            preferredGhost++;
+        }
         if (pelletsEaten == 240){
             for(Pellet pellet : m.pelletsList()) {
                 pellet.spawn();
@@ -310,5 +313,9 @@ public class Game implements Runnable, Tickable{
     
     public void pelletEaten() {
         pelletsEaten++;
+    }
+
+    public int getPreferredGhost() {
+        return preferredGhost;
     }
 }

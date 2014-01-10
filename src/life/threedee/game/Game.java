@@ -49,7 +49,7 @@ public class Game implements Runnable, Tickable{
 	
 	private boolean running, first = false, second = false;
 
-    private int mode = 0, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode = 0, gameStage = 0;
+    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage;
 	
     private Object objLock;
     
@@ -215,7 +215,10 @@ public class Game implements Runnable, Tickable{
         if (mode != -1) {
             ticksThisMode++;
         }
-        if (ticksThisMode == GameUtilities.MODE_TIMES[level][gameStage]) {
+        if (gameStage == 7) {
+            gameStage++;
+            mode = 1;
+        } else if (ticksThisMode == GameUtilities.MODE_TIMES[level][gameStage]) {
             ticksThisMode = 0;
             gameStage++;
             mode = gameStage % 2;

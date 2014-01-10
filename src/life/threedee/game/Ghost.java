@@ -143,13 +143,9 @@ public class Ghost implements Tickable{
     }
 
     public int makeDecision(){
-        if (open[0] || open[1] || open[2] || open[3]) {
+        if (atLeastOne()) {
             if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
                 open = GameUtilities.nd.clone();
-            }
-            if (uTurn){
-                uTurn = false;
-                return (direction + 2) % 4;
             }
             target = findTarget();
             open[(direction + 2) % 4] = false;
@@ -206,7 +202,12 @@ public class Ghost implements Tickable{
         //if ((Math.abs(newLocation.x % 1) < 0.5 != Math.abs(location.x % 1) < 0.5 && Math.abs(newLocation.x % 1 - location.x % 1) < 0.5)
         // || (Math.abs(newLocation.z % 1) < 0.5 != Math.abs(location.z % 1) < 0.5 && Math.abs(newLocation.z % 1 - location.z % 1) < 0.5)) {
         if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
-            direction = decision;
+            if (uTurn){
+                uTurn = false;
+                direction = (direction + 2) % 4;
+            } else {
+                direction = decision;
+            }
             open();
             decision = makeDecision();
             //translate(new Vector(new Point(Math.round(location.x), 1, Math.round(location.z)).subtract(location)));
@@ -258,7 +259,7 @@ public class Ghost implements Tickable{
     }
 
     public int release() {
-        releasing = open[0] || open[1] || open[2] || open[3];
+        releasing = atLeastOne();
         if (releasing) {
             direction = location.x >= 0 ? (int) Math.signum(location.x) : 3;
             decision = location.x >= 0 ? (int) Math.signum(location.x) : 3;
@@ -266,8 +267,12 @@ public class Ghost implements Tickable{
         return decision;
     }
 
+    public boolean atLeastOne() {
+        return open[0] || open[1] || open[2] || open[3];
+    }
+
     public boolean inside() {
         open();
-        return !(releasing || open[0] || open[1] || open[2] || open[3]);
+        return !(releasing || atLeastOne());
     }
 }

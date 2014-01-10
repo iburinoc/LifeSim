@@ -117,6 +117,9 @@ public class Ghost implements Tickable{
     }
 
     public void tick(){
+        if (game.getTicksThisMode() == 0) {
+            uTurn = true;
+        }
         indices = new MapLocation(location);
         open();
         for (int i = 0; i < 4; i++) {
@@ -145,6 +148,7 @@ public class Ghost implements Tickable{
                 open = GameUtilities.nd.clone();
             }
             if (uTurn){
+                uTurn = false;
                 return (direction + 2) % 4;
             }
             target = findTarget();

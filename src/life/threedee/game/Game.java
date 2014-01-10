@@ -49,7 +49,7 @@ public class Game implements Runnable, Tickable{
 	
 	private boolean running, first = false, second = false;
 
-    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1;
+    private int mode = 0, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode = 0, gameStage = 0;
 	
     private Object objLock;
     
@@ -64,7 +64,6 @@ public class Game implements Runnable, Tickable{
 		
 		setObjects(new ArrayList<ThreeDeeObject>());
         setTickables(new ArrayList<Tickable>());
-		mode = 1;
         ghosts = new ArrayList<Ghost>();
         ghosts.add(new Ghost(this, BLINKY));
         ghosts.add(new Ghost(this, PINKY));
@@ -213,6 +212,14 @@ public class Game implements Runnable, Tickable{
                 c.eat(this, p);
             }
         }
+        if (mode != -1) {
+            ticksThisMode++;
+        }
+        if (ticksThisMode == GameUtilities.MODE_TIMES[level][gameStage]) {
+            ticksThisMode = 0;
+            gameStage++;
+            mode = gameStage % 2;
+        }
     }
 	
 	private void drawFrame() {
@@ -310,6 +317,10 @@ public class Game implements Runnable, Tickable{
     public void pelletEaten() {
         pelletsEaten++;
         score+=10;
+    }
+
+    public int getTicksThisMode() {
+        return ticksThisMode;
     }
 
     public int getPreferredGhost() {

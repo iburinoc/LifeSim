@@ -171,10 +171,6 @@ public class Player extends Camera implements Tickable{
         this.dir = dir;
     }
 
-    public Point getLocPoint(){
-        return loc;
-    }
-
     public Vector getDir(){
         return dir;
     }

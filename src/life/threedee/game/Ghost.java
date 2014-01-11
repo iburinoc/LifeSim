@@ -120,12 +120,12 @@ public class Ghost implements Tickable{
                 open = GameUtilities.nd.clone();
             }
             target = findTarget();
-            open[(direction + 2) % 4] = false;
+            open[(decision + 2) % 4] = false;
             double shortest = Double.MAX_VALUE;
             int toReturn = 3;
-            for (int i = 0; i < 4; i++){
-                double s = new Vector(new Point(location.x + (i == 1 ? -1 : (i == 3 ? 1 : 0)) + (direction % 2 == 1 ? direction - 2 : 0), 1, location.z + (i == 0 ? 1 : (i == 2 ? -1 : 0)) + (direction % 2 == 0 ? -direction + 1 : 0)), target).s();
-                if (open[i] && s < shortest){
+            for (int i = 3; i >= 0; i--){
+                double s = new Vector(new Point(location.x + (i % 2 == 0 ? 0 : i - 2) + (decision % 2 == 0 ? 0 : decision - 2), 1, location.z + (i % 2 == 0 ? -i + 1 : 0) + (decision % 2 == 0 ? -decision + 1 : 0)), target).s();
+                if (open[i] && s <= shortest){
                     shortest = s;
                     toReturn = i;
                 }
@@ -174,7 +174,7 @@ public class Ghost implements Tickable{
             case PINKY: {
                 Vector dir = game.getPlayer().getDir();
                 double yaw = dir.polarTransform()[0];
-                Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(4)));
+                Point tar = new Point(new Vector(game.getPlayer().getLoc()).add(dir.scalarProduct(4)));
                 if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
                     tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 4)));
                 }
@@ -183,7 +183,7 @@ public class Ghost implements Tickable{
             case INKY: {
                 Vector dir = game.getPlayer().getDir();
                 double yaw = dir.polarTransform()[0];
-                Point tar = new Point(new Vector(game.getPlayer().getLocPoint()).add(dir.scalarProduct(2)));
+                Point tar = new Point(new Vector(game.getPlayer().getLoc()).add(dir.scalarProduct(2)));
                 if (yaw > Math.PI / 4 && yaw < 3 * Math.PI / 4){
                     tar = tar.add(new Point(Vector.fromPolarTransform(yaw + Math.PI / 2, 0, 2)));
                 }

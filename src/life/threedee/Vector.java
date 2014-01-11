@@ -103,10 +103,6 @@ public class Vector {
 	public Vector add(Vector v){
 		return new Vector(x + v.x, y + v.y, z + v.z);
 	}
-
-    public Vector subtract(Vector v){
-        return new Vector(x - v.x, y - v.y, z - v.z);
-    }
 	
 	public Vector scalarProduct(double scalar){
 		return new Vector(x * scalar, y * scalar, z * scalar);

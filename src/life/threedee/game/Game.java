@@ -215,8 +215,7 @@ public class Game implements Runnable, Tickable{
         if (mode != -1) {
             ticksThisMode++;
         }
-        if (gameStage == 7) {
-            gameStage++;
+        if (gameStage > 6) {
             mode = 1;
         } else if (ticksThisMode == GameUtilities.MODE_TIMES[level][gameStage]) {
             ticksThisMode = 0;

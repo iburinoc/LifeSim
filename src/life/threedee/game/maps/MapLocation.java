@@ -14,7 +14,7 @@ public class MapLocation {
     }
 	
 	public MapLocation(double x, double z) {
-		this.mx = (int) (x + 14);
+		this.mx = (int) ((x + 42) % 28);
 		this.my = (int) (-z + 18);
 	}
 	

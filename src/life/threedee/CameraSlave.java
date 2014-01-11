@@ -1,13 +1,6 @@
 package life.threedee;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-
-import javax.swing.JPanel;
-
-public class CameraSlave extends Thread{
+public final class CameraSlave extends Thread{
 	private Camera master;
 	
 	private int x1,y1,x2,y2;
@@ -15,11 +8,6 @@ public class CameraSlave extends Thread{
 	private boolean running;
 	
 	private boolean job;
-	private Graphics g;
-	
-	private Vector rightU;
-	private Vector upU;
-	
 	private boolean done;
 	
 	public CameraSlave(Camera master, int x1, int y1, int x2, int y2){

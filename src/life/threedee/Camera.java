@@ -19,11 +19,11 @@ public class Camera extends JPanel{
 	protected Point loc;
 	protected Vector dir;
 	
-	private double 
+	private final double 
 			width  = 1.53465397596, 
 			height = 1.15099048197;
 	
-	private double dx,dy;
+	private final double dx,dy;
 	
 	private List<CameraSlave> slaves;
 	
@@ -38,9 +38,6 @@ public class Camera extends JPanel{
 	
 	protected Vector rdir;
 	protected Point rloc;
-	
-	private BufferedImage buf;
-	private Graphics bufg;
 	
 	private Thread waiter;
 	
@@ -60,9 +57,6 @@ public class Camera extends JPanel{
 			c.start();
 			slaves.add(c);
 		}
-		
-		buf = new BufferedImage(SC_WIDTH, SC_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-		bufg = buf.createGraphics();
 		
 		fbuf = new Color[SC_WIDTH][SC_HEIGHT];
 	}
@@ -123,13 +117,11 @@ public class Camera extends JPanel{
 		for(int i = 0; i < numProc; i++){
 			for(int x = d * i; x < d * (i + 1); x += R_INC){
 				for(int y = 0; y < SC_HEIGHT; y += R_INC){
-					bufg.setColor(fbuf[x][y]);
-					bufg.fillRect(x, y, R_INC, R_INC);
+					g.setColor(fbuf[x][y]);
+					g.fillRect(x, y, R_INC, R_INC);
 				}
 			}
 		}
-		
-		g.drawImage(buf, 0, 0, null);
 	}
 	
 	protected Vector getVectorForPixel(int x,int y, Vector right, Vector up){
@@ -174,7 +166,7 @@ public class Camera extends JPanel{
     }
     
     public synchronized void setDir(Vector dir){
-    	
+    	this.dir = dir;
     }
     
     public void setObjects(List<ThreeDeeObject> o) {

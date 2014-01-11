@@ -1,6 +1,6 @@
 package life.threedee;
 
-public class Matrix{
+public final class Matrix{
 	private double[][] matrix;
 
 	public Matrix(double[][] matrix){

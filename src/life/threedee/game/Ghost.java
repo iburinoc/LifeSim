@@ -15,7 +15,7 @@ import life.threedee.Vector;
 import life.threedee.game.maps.MapLocation;
 
 public class Ghost implements Tickable{
-    protected Point location, target;
+    protected Point location, newLocation, target;
     protected final Point eyesTarget = new Point(-0.5, 1, 3.5);
     // ghostNum is the current state of the ghost (0-8). This is used to decide textures, behaviour, etc.
     // 0 - Blinky
@@ -28,10 +28,8 @@ public class Ghost implements Tickable{
     // 7 - Cruise Elroy MK. II
     // 8 - Eaten
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
-    protected int direction, decision, ghostNum, ghostId, pelletCounter = 0;
-    protected boolean uTurn, releasing;
-    protected boolean[] open;
-    protected MapLocation indices;
+    protected int direction, decision, nextDecision, ghostNum, ghostId, pelletCounter = 0;
+    protected boolean releasing;
     protected Game game;
     protected GhostPlane[] facePlanes;
     protected Triangle[] faceTriangles;
@@ -45,6 +43,7 @@ public class Ghost implements Tickable{
         this.location=GameUtilities.GHOST_LOCATIONS[GHOST_DEBUG];
         this.direction=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
         this.decision=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
+        this.nextDecision=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
         Point top = new Point(0.0, 1.0, 0.0).add(this.location);
         Point zPlusXPlus = new Point(0.25, 0.5, 0.25).add(this.location);
         Point zMinusXPlus = new Point(0.25, 0.5, -0.25).add(this.location);
@@ -74,7 +73,7 @@ public class Ghost implements Tickable{
 
     public void tick(){
         if (game.getTicksThisMode() == 0 && game.getGameStage() != 0) {
-            uTurn = true;
+            //uTurn = true;
         }
         for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
@@ -97,34 +96,26 @@ public class Ghost implements Tickable{
     }
 
     public void move() {
-        if (game.getTicksThisMode() == 299)
-            System.out.println("ticks = " + game.getTicksThisMode());
-        Point newLocation = location.add(new Point(dirToV()));
-        indices = new MapLocation(newLocation);
+        newLocation = location.add(new Point(dirToV()));
         if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
-            if (uTurn){
-                uTurn = false;
-                direction = (direction + 2) % 4;
-            } else {
-                direction = decision;
-            }
-            open(true);
-            decision = makeDecision();
-            facePlanes[direction].setFace(true);
-            facePlanes[(direction+1)%4].setFace(false);
-            facePlanes[(direction+2)%4].setFace(false);
-            facePlanes[(direction+3)%4].setFace(false);
-            if (new MapLocation(location).mx != new MapLocation(newLocation).mx) {
-                newLocation = new Point(newLocation.x, newLocation.y, Math.floor(newLocation.z) + 0.5);
-            } else {
-                newLocation = new Point(Math.floor(newLocation.x) + 0.5, newLocation.y, newLocation.z);
-            }
+            nextDecision = makeDecision();
+            facePlanes[decision].setFace(true);
+            facePlanes[(decision+1)%4].setFace(false);
+            facePlanes[(decision+2)%4].setFace(false);
+            facePlanes[(decision+3)%4].setFace(false);
+        } else if ((location.x % 1 < 0.5 != newLocation.x < 0.5) || (location.z < 0.5 != newLocation.z < 0.5)) {
+            direction = decision;
+            decision = nextDecision;
         }
         translate(new Vector(newLocation.subtract(location)));
     }
 
     public int makeDecision(){
-        if (atLeastOne()) {
+        MapLocation coords = new MapLocation(newLocation);
+        boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my];
+        if (open[0] || open[1] || open[2] || open[3]) {
+            MapLocation indices = new MapLocation(newLocation.add(new Point(decision % 2 == 0 ? 0 : decision - 2, 0, decision % 2 == 1 ? 0 : -decision + 1)));
+            open = GameUtilities.INTERSECTIONS[indices.mx][indices.my];
             if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
                 open = GameUtilities.nd.clone();
             }
@@ -162,7 +153,7 @@ public class Ghost implements Tickable{
                     case EATEN:
                         if (location.x == 0 && location.y == 0) {
                             ghostNum = ghostId;
-                            release();
+                            return release();
                         } else {
                             return 2;
                         }
@@ -252,34 +243,24 @@ public class Ghost implements Tickable{
         ghostNum = EATEN;
     }
 
-    public void open(boolean shift) {
-        if (shift) {
-            open = GameUtilities.INTERSECTIONS[(indices.mx + (direction % 2 == 1 ? direction - 2 : 0) + 28) % 28][(indices.my - 3 + (direction % 2 == 0 ? direction - 1 : 0) + 31) % 31].clone();
-        } else {
-            open = GameUtilities.INTERSECTIONS[indices.mx][indices.my - 3];
-        }
-    }
-
     public void addToCounter() {
         pelletCounter++;
     }
 
+    public boolean inside() {
+        MapLocation coords = new MapLocation(newLocation);
+        boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my];
+        return !(open[0] || open[1] || open[2] || open[3]);
+    }
+
     public int release() {
-        releasing = atLeastOne();
+        MapLocation coords = new MapLocation(newLocation);
+        boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my];
+        releasing = !(open[0] || open[1] || open[2] || open[3]);
         if (releasing) {
             direction = location.x >= 0 ? (int) Math.signum(location.x) : 3;
             decision = location.x >= 0 ? (int) Math.signum(location.x) : 3;
         }
         return decision;
-    }
-
-    public boolean atLeastOne() {
-        open(false);
-        return open[0] || open[1] || open[2] || open[3];
-    }
-
-    public boolean inside() {
-        open(false);
-        return !(releasing || atLeastOne());
     }
 }

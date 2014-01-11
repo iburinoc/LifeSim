@@ -76,9 +76,6 @@ public class GameUtilities{
 
     //scatter, chase, scatter, chase......
     public static final int[][] MODE_TIMES = new int[][] {{420, 1200, 420, 1200, 300, 1200, 300}, {420, 1200, 420, 1200, 300, 61980, 1}, {420, 1200, 420, 1200, 300, 61980, 1}, {420, 1200, 420, 1200, 300, 61980, 1}, {300, 1200, 300, 1200, 300, 62220, 1}};
-
-    public static final BufferedImage ENERGIZER_TOP_TEXTURE = GameUtilities.loadImage("resources/EnergizerTop.png");
-    public static final BufferedImage ENERGIZER_SIDE_TEXTURE = GameUtilities.loadImage("resources/EnergizerSide.png");
     
     public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), Color.BLUE, Color.WHITE, new Color(230, 46, 37), new Color(230, 46, 37), null};
 

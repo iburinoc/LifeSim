@@ -107,7 +107,6 @@ public class Ghost implements Tickable{
             direction = decision;
             decision = nextDecision;
         }
-        newLocation = location.add(new Point(dirToV()));
         translate(new Vector(newLocation.subtract(location)));
     }
 

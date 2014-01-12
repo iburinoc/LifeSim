@@ -269,7 +269,7 @@ public class Ghost implements Tickable{
             if (Math.abs(location.x) < dirToV().s()) {
                 direction = 0;
                 decision = 0;
-                return newLocation.y > 2 ? (uTurn ? 3 : 1) : 0;
+                return newLocation.z > 2 ? (uTurn ? 3 : 1) : 0;
             } else {
                 direction = (int) Math.signum(location.x) + 2;
                 decision = direction;

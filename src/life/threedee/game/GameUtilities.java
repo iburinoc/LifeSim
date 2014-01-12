@@ -72,7 +72,7 @@ public class GameUtilities{
     public static final int[][] EXIT_PELLETS = new int[][] {{Integer.MAX_VALUE, 0, 30, 60}, {Integer.MAX_VALUE, 0, 0, 50}, {Integer.MAX_VALUE, 0, 0, 0}};
 
     //fright time, warning flashes
-    public static final int[][] FRIGHTENED_DATA = new int[][] {{6, 5}, {5, 5}, {4, 5}, {3, 5}, {2, 5}, {5, 5}, {2, 5}, {2, 5}, {1, 3}, {5, 5}, {2, 5}, {1, 3}, {1, 3}, {3, 5}, {1, 3}, {1, 3}, {0, 0}, {1, 3}, {0, 0}};
+    public static final int[][] FRIGHTENED_DATA = new int[][] {{360, 5}, {300, 5}, {240, 5}, {180, 5}, {120, 5}, {300, 5}, {120, 5}, {120, 5}, {60, 3}, {300, 5}, {120, 5}, {60, 3}, {60, 3}, {180, 5}, {60, 3}, {60, 3}, {0, 0}, {60, 3}, {0, 0}};
 
     //scatter, chase, scatter, chase......
     public static final int[][] MODE_TIMES = new int[][] {{420, 1200, 420, 1200, 300, 1200, 300}, {420, 1200, 420, 1200, 300, 61980, 1}, {420, 1200, 420, 1200, 300, 61980, 1}, {420, 1200, 420, 1200, 300, 61980, 1}, {300, 1200, 300, 1200, 300, 62220, 1}};

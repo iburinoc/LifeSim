@@ -96,7 +96,7 @@ public class Ghost implements Tickable{
     public void move() {
         newLocation = location.add(new Point(dirToV()));
         if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
-            nextDecision = makeDecision();
+            nextDecision = pelletCounter == GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId] && inside() ? release() : makeDecision();
             facePlanes[decision].setFace(true);
             facePlanes[(decision+1)%4].setFace(false);
             facePlanes[(decision+2)%4].setFace(false);
@@ -109,9 +109,7 @@ public class Ghost implements Tickable{
     }
 
     public int makeDecision(){
-        MapLocation coords = new MapLocation(newLocation);
-        boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my].clone();
-        if (open[0] || open[1] || open[2] || open[3]) {
+        if (!inside()) {
             if (uTurn) {
                 uTurn = false;
                 direction = (direction + 2) % 4;
@@ -120,7 +118,7 @@ public class Ghost implements Tickable{
                 return 0;
             }
             MapLocation indices = new MapLocation(newLocation.add(new Point(decision % 2 == 0 ? 0 : decision - 2, 0, decision % 2 == 0 ? -decision + 1 : 0)));
-            open = GameUtilities.INTERSECTIONS[indices.mx][indices.my].clone();
+            boolean[] open = GameUtilities.INTERSECTIONS[indices.mx][indices.my].clone();
             if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
                 open = GameUtilities.nd.clone();
             }
@@ -136,16 +134,12 @@ public class Ghost implements Tickable{
                 }
             }
             return toReturn;
-        } else if (releaseLock) {
-            return release();
         } else {
             switch (ghostNum) {
                 case PINKY:
                 case INKY:
                 case CLYDE:
-                    if (pelletCounter == GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId]) {
-                        return release();
-                    } else if (flipFlag) {
+                    if (flipFlag) {
                         direction = (direction + 2) % 4;
                         decision = direction;
                         flipFlag = false;
@@ -262,20 +256,21 @@ public class Ghost implements Tickable{
     }
 
     public int release() {
-        MapLocation coords = new MapLocation(newLocation);
-        boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my];
-        releaseLock = !(open[0] || open[1] || open[2] || open[3]);
-        if (releaseLock) {
-            if (Math.abs(location.x) < dirToV().s()) {
-                direction = 0;
-                decision = 0;
-                return newLocation.z > 2 ? (uTurn ? 3 : 1) : 0;
+        if (Math.abs(location.x) < dirToV().s()) {
+            direction = 0;
+            decision = 0;
+            if (newLocation.z <= 2) {
+                return 0;
+            } else if (uTurn) {
+                uTurn = false;
+                return 3;
             } else {
-                direction = (int) Math.signum(location.x) + 2;
-                decision = direction;
-                return decision;
+                return 1;
             }
+        } else {
+            direction = (int) Math.signum(-location.x) + 2;
+            decision = direction;
+            return decision;
         }
-        throw new InternalError();
     }
 }

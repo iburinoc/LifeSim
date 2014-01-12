@@ -68,7 +68,7 @@ public class TexturedPlane extends Plane{
     @Override
     public boolean sameSide(Point point1, Point point2){
         Color color = getRData(new Vector(point1, point2), point1, Double.NaN).c;
-        return super.sameSide(point1, point2) || color == null || color.getAlpha() == 0;
+        return color == null || color.getAlpha() == 0 || super.sameSide(point1, point2);
     }
 
 	public void setTexture(BufferedImage texture) {

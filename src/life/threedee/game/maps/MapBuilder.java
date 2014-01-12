@@ -121,6 +121,7 @@ public class MapBuilder {
 					vis.add(map.get(1));
                     vis.add(map.get(2));
                     vis.add(map.get(3));
+                    vis.add(map.get(map.size()-1));
 
                     String[] walls = l.split(",");
                     for(int i = 0; i < walls.length; i++) {

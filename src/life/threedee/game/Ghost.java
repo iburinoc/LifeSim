@@ -29,21 +29,19 @@ public class Ghost implements Tickable{
     // 8 - Eaten
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
     protected int direction, decision, nextDecision, ghostNum, ghostId, pelletCounter = 0;
-    protected boolean releasing, uTurn;
+    protected boolean releaseLock, uTurn, flipFlag;
     protected Game game;
     protected GhostPlane[] facePlanes;
     protected Triangle[] faceTriangles;
-    
-    private final int GHOST_DEBUG = 0;
 
     public Ghost(Game g, int ghostNum) {
         this.game=g;
         this.ghostNum=ghostNum;
         this.ghostId=ghostNum;
-        this.location=GameUtilities.GHOST_LOCATIONS[GHOST_DEBUG];
-        this.direction=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
-        this.decision=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
-        this.nextDecision=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
+        this.location=GameUtilities.GHOST_LOCATIONS[ghostNum];
+        this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        this.nextDecision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
         Point top = new Point(0.0, 1.0, 0.0).add(this.location);
         Point zPlusXPlus = new Point(0.25, 0.5, 0.25).add(this.location);
         Point zMinusXPlus = new Point(0.25, 0.5, -0.25).add(this.location);
@@ -113,7 +111,7 @@ public class Ghost implements Tickable{
     public int makeDecision(){
         MapLocation coords = new MapLocation(newLocation);
         boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my].clone();
-        //if (open[0] || open[1] || open[2] || open[3]) {
+        if (open[0] || open[1] || open[2] || open[3]) {
             if (uTurn) {
                 uTurn = false;
                 direction = (direction + 2) % 4;
@@ -138,35 +136,39 @@ public class Ghost implements Tickable{
                 }
             }
             return toReturn;
-        /*} else if (releasing) {
+        } else if (releaseLock) {
             return release();
         } else {
-                switch (ghostNum) {
-                    case BLINKY:
-                    case SCARED:
-                    case SCARED_FLASHING:
-                    case CRUISE_ELROY:
-                    case CRUISE_ELROY_2:
-                        throw new IllegalArgumentException();
-                    case PINKY:
-                    case INKY:
-                    case CLYDE:
-                        if (pelletCounter == GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId]) {
-                            return release();
-                        } else {
-                            //bumping up and down
-                        }
-                        break;//can comment later
-                    case EATEN:
-                        if (location.x == 0 && location.y == 0) {
-                            ghostNum = ghostId;
-                            return release();
-                        } else {
-                            return 2;
-                        }
-                }
-            throw new IllegalArgumentException();
-        } */
+            switch (ghostNum) {
+                case PINKY:
+                case INKY:
+                case CLYDE:
+                    if (pelletCounter == GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId]) {
+                        return release();
+                    } else if (flipFlag) {
+                        direction = (direction + 2) % 4;
+                        decision = direction;
+                        flipFlag = false;
+                        return 0;
+                    } else {
+                        flipFlag = true;
+                        return 0;
+                    }
+                case EATEN: throw new StringIndexOutOfBoundsException();
+                    /*if (location.x == 0 && location.y == 0) {
+                        ghostNum = ghostId;
+                        return release();
+                    } else {
+                        return 2;
+                    }*/
+                case BLINKY:
+                case SCARED:
+                case SCARED_FLASHING:
+                case CRUISE_ELROY:
+                case CRUISE_ELROY_2:
+                default: throw new IllegalArgumentException();
+            }
+        }
     }
 
     public Point findTarget() {
@@ -203,11 +205,10 @@ public class Ghost implements Tickable{
                 }
                 return GameUtilities.GHOST_CORNERS[3];
             }
-            case SCARED:
-            case SCARED_FLASHING:
-                return null;
             case EATEN:
                 return eyesTarget;
+            case SCARED:
+            case SCARED_FLASHING:
             default:
                 return null;
         }
@@ -229,9 +230,9 @@ public class Ghost implements Tickable{
 
     public void reset(){
         this.ghostNum=this.ghostId;
-        this.direction=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
-        this.decision=GameUtilities.GHOST_ORIENTATIONS[GHOST_DEBUG];
-        Vector v = new Vector(this.location, GameUtilities.GHOST_LOCATIONS[GHOST_DEBUG]);
+        this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        Vector v = new Vector(this.location, GameUtilities.GHOST_LOCATIONS[ghostNum]);
         translate(v);
         updatePlanes();
     }
@@ -263,11 +264,18 @@ public class Ghost implements Tickable{
     public int release() {
         MapLocation coords = new MapLocation(newLocation);
         boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my];
-        releasing = !(open[0] || open[1] || open[2] || open[3]);
-        if (releasing) {
-            direction = location.x >= 0 ? (int) Math.signum(location.x) : 3;
-            decision = location.x >= 0 ? (int) Math.signum(location.x) : 3;
+        releaseLock = !(open[0] || open[1] || open[2] || open[3]);
+        if (releaseLock) {
+            if (Math.abs(location.x) < dirToV().s()) {
+                direction = 0;
+                decision = 0;
+                return newLocation.y > 2 ? (uTurn ? 3 : 1) : 0;
+            } else {
+                direction = (int) Math.signum(location.x) + 2;
+                decision = direction;
+                return decision;
+            }
         }
-        return decision;
+        throw new InternalError();
     }
 }

@@ -152,7 +152,7 @@ public class Ghost implements Tickable{
                         flipFlag = true;
                         return 0;
                     }
-                case EATEN: throw new StringIndexOutOfBoundsException();
+                case EATEN: throw new StringIndexOutOfBoundsException(); WAI.  LIKE WAT.
                     /*if (location.x == 0 && location.y == 0) {
                         ghostNum = ghostId;
                         return release();

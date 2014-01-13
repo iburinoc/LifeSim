@@ -91,6 +91,9 @@ public class Ghost implements Tickable{
         if (Math.abs(location.x) > 14){
             translate(new Vector(-28*GameUtilities.MPT * Math.signum(location.x), 0, 0));
         }
+        if (Math.abs(location.x) > 13 && Math.abs(location.z - 0.5) > 0.5) {
+            translate(new Vector(new Point(location.x, location.y, Math.signum(location.z) / 2 + 0.5).subtract(location)));
+        }
     }
 
     public void move() {
@@ -148,6 +151,8 @@ public class Ghost implements Tickable{
                 case PINKY:
                 case INKY:
                 case CLYDE:
+                case SCARED:
+                case SCARED_FLASHING:
                     if (flipFlag) {
                         direction = (direction + 2) % 4;
                         decision = direction;
@@ -165,8 +170,6 @@ public class Ghost implements Tickable{
                         return 2;
                     }*/
                 case BLINKY:
-                case SCARED:
-                case SCARED_FLASHING:
                 case CRUISE_ELROY:
                 case CRUISE_ELROY_2:
                 default: throw new IllegalArgumentException();

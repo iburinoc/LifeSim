@@ -2,25 +2,47 @@ package life.threedee;
 
 import java.awt.Color;
 
+/**
+ * A Plane, represented with an origin point and normal vector.  Also has a color to render if it is the closest object.
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ */
 public class Plane implements ThreeDeeObject{
 
-	/*
-	// z = ax + by + c
-
-	double a; // x coefficient
-	double b; // y coefficient
-	double c; // constant
-	*/
+	/**
+	 * The origin Point of this Plane.  This can be any point on the plane, it makes no difference
+	 */
+	protected Point origin;
 	
-	protected Point origin; // Origin point on plane
-	protected Vector normal; // Normal
+	/**
+	 * The normal vector for this plane
+	 */
+	protected Vector normal;
 
+	/**
+	 * The color of the plane
+	 */
 	public Color c;
 	
+	/**
+	 * Constructs a new plane from the three points with a random color
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public Plane(Point a, Point b, Point c){
 		this(a,b,c,new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256)));
 	}
 	
+	/**
+	 * Constructs a new plane from the three points with the given color
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param colour
+	 */
 	public Plane(Point a, Point b, Point c, Color colour){
 		origin = a;
 		normal = new Vector(a, b).crossProduct(new Vector(a, c));
@@ -28,10 +50,21 @@ public class Plane implements ThreeDeeObject{
 		this.c = colour;
 	}
 
+	/**
+	 * Constructs a new plane with the given origin and normal with a random color
+	 * @param origin
+	 * @param normal
+	 */
 	public Plane(Point origin, Vector normal){
 		this(origin,normal,new Color((int) (Math.random() * 256),(int) (Math.random() * 256),(int) (Math.random() * 256)));
 	}
 	
+	/**
+	 * Constructs a new plane with the given origin and normal with the given color
+	 * @param origin
+	 * @param normal
+	 * @param c
+	 */
 	public Plane(Point origin, Vector normal, Color c){
 		this.origin = origin;
 		this.normal = normal;
@@ -108,15 +141,15 @@ public class Plane implements ThreeDeeObject{
 		origin = new Point(origin.x + v.x, origin.y + v.y, origin.z + v.z);
 	}
 
+	/**
+	 * Sets the color of this plane
+	 * @param c
+	 */
     public void setC(Color c){
         this.c = c;
     }
 	
 	public Color c(){
 		return c;
-	}
-	
-	public Vector getNormal() {
-		return normal;
 	}
 }

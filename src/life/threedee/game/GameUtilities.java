@@ -77,7 +77,7 @@ public class GameUtilities{
     //scatter, chase, scatter, chase......
     public static final int[][] MODE_TIMES = new int[][] {{420, 1200, 420, 1200, 300, 1200, 300}, {420, 1200, 420, 1200, 300, 61980, 1}, {420, 1200, 420, 1200, 300, 61980, 1}, {420, 1200, 420, 1200, 300, 61980, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}};
 
-    public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), Color.BLUE, Color.WHITE, new Color(230, 46, 37), new Color(230, 46, 37), null};
+    public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), new Color(0, 51, 255), new Color(250, 250, 250), new Color(230, 46, 37), new Color(230, 46, 37), null};
 
     public static final Point[] GHOST_LOCATIONS = new Point[] {new Point(0*MPT, 1*MPT, 3.5*MPT), new Point(0*MPT, 1*MPT, 0.5*MPT), new Point(-2*MPT, 1*MPT, 0.5*MPT), new Point(2*MPT, 1*MPT, 0.5*MPT)};
     public static final int[] GHOST_ORIENTATIONS = new int[] {1, 2, 0, 0, 0, 0, 1, 1, 0};

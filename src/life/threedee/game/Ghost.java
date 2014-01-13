@@ -282,4 +282,9 @@ public class Ghost implements Tickable{
             return decision;
         }
     }
+    
+    public void scare(int ticks) {
+        this.ghostNum = 5; 
+        this.updatePlanes();
+    }
 }

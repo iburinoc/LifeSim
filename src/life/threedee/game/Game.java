@@ -312,6 +312,9 @@ public class Game implements Runnable, Tickable{
         // ANDREY! THIS IS WHERE THE CODE FOR STARTING AND ENDING (MAYBE) FRIGHTENED MODE GOES!
         // ANDREY! I'M USING "ANDREY!" AS TODO NOW!
         score+=50;
+        for (Ghost ghost : ghosts) {
+            ghost.scare(GameUtilities.FRIGHTENED_DATA[this.getArraySafeLevel()][0]);
+        }
     }
     
     public void pelletEaten() {
@@ -329,5 +332,9 @@ public class Game implements Runnable, Tickable{
 
     public int getPreferredGhost() {
         return preferredGhost;
+    }
+    
+    public int getArraySafeLevel() {
+        return (Math.min(level, 20));
     }
 }

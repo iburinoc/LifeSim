@@ -223,6 +223,7 @@ public class Ghost implements Tickable{
     public void updatePlanes() {
         for (int i = 0; i < 4; i++) {
             facePlanes[(direction+i)%4].setGhostNum(ghostNum);
+            faceTriangles[(direction+i)%4].setC(GameUtilities.GHOST_COLORS[ghostNum]);
         }
     }
     
@@ -287,7 +288,7 @@ public class Ghost implements Tickable{
     }
     
     public void scare(int ticks) {
-        this.ghostNum = 5; 
+        this.ghostNum = 4; 
         this.updatePlanes();
         this.scaredTicksLeft = ticks;
     }

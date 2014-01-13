@@ -123,6 +123,9 @@ public class Player extends Camera implements Tickable{
         } else {
         	stop--;
         }
+        if (Math.abs(loc.x) > 13 && Math.abs(loc.z - 0.5) > 0.5) {
+            translate(new Vector(new Point(loc.x, loc.y, Math.signum(loc.z) / 2 + 0.5).subtract(loc)));
+        }
     }
     
     @Override

@@ -72,11 +72,11 @@ public class Ghost implements Tickable{
         // We'll need to rework this.
         // Andrey, you'll need to implement ALL the rules 
         // concerning Blinky turning into his 2 Cruise Elroy forms. 
-        if (ghostId == BLINKY && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getPelletsRemaining()) {
+        if (ghostId == BLINKY && GameUtilities.GAME_DATA[game.getArraySafeLevel()][3] == game.getPelletsRemaining()) {
             ghostNum = CRUISE_ELROY;
             updatePlanes();
         }
-        if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && GameUtilities.GAME_DATA[game.getLevel()][3]==game.getPelletsRemaining() * 2) {
+        if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && GameUtilities.GAME_DATA[game.getArraySafeLevel()][3] == game.getPelletsRemaining() * 2) {
             ghostNum = CRUISE_ELROY_2;
             updatePlanes();
         }
@@ -88,7 +88,7 @@ public class Ghost implements Tickable{
 
     public void move() {
         newLocation = location.add(new Point(dirToV()));
-        if (pelletCounter > GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId] && inside() && !sentRelease) {
+        if (pelletCounter > GameUtilities.EXIT_PELLETS[game.getArraySafeLevel()][ghostId] && inside() && !sentRelease) {
             sentRelease = true;
             nextDecision = release();
             facePlanes[decision].setFace(true);
@@ -96,7 +96,7 @@ public class Ghost implements Tickable{
             facePlanes[(decision+2)%4].setFace(false);
             facePlanes[(decision+3)%4].setFace(false);
         } else if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
-            nextDecision = pelletCounter > GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId] && inside() ? release() : makeDecision();
+            nextDecision = pelletCounter > GameUtilities.EXIT_PELLETS[game.getArraySafeLevel()][ghostId] && inside() ? release() : makeDecision();
             facePlanes[decision].setFace(true);
             facePlanes[(decision+1)%4].setFace(false);
             facePlanes[(decision+2)%4].setFace(false);
@@ -130,6 +130,23 @@ public class Ghost implements Tickable{
                 open = new boolean[] {true, true, false, true};
             }
             target = findTarget();
+            if (target == null) {
+                int choices = 0;
+                for (int i = 0; i < 4; i++) {
+                    if (open[i] && i != (decision + 2) % 4) {
+                        choices++;
+                    }
+                }
+                int random = (int) (Math.random() * choices) + 1;
+                for (int i = 0, counter = 0; i < 4; i++) {
+                    if (open[i] && i != (decision + 2) % 4) {
+                        counter++;
+                    }
+                    if (random == counter){
+                        return i;
+                    }
+                }
+            }
             open[(decision + 2) % 4] = false;
             double shortest = Double.MAX_VALUE;
             int toReturn = 3;
@@ -261,7 +278,7 @@ public class Ghost implements Tickable{
     public Vector dirToV(){
         // ANDREY! ADD THE CORRECT TUNNEL SPEEDS HERE!
         // ANDREY! DO EVERYTHING!
-        return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar(((Math.abs(location.x) > 9 && Math.abs(location.z - 0.5) < 0.5) ? (GAME_DATA[game.getLevel()][1] + 5) / 5000.0 : (GAME_DATA[game.getLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0));
+        return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar(((Math.abs(location.x) > 9 && Math.abs(location.z - 0.5) < 0.5) ? (GAME_DATA[game.getArraySafeLevel()][1] + 5) / 5000.0 : (GAME_DATA[game.getArraySafeLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0));
     }
 
     public Point getLocation(){

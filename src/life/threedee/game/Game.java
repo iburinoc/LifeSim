@@ -1,13 +1,5 @@
 package life.threedee.game;
 
-import static life.threedee.game.GameUtilities.BLINKY;
-import static life.threedee.game.GameUtilities.PINKY;
-import static life.threedee.game.GameUtilities.INKY;
-import static life.threedee.game.GameUtilities.CLYDE;
-import static life.threedee.game.GameUtilities.SCARED;
-import static life.threedee.game.GameUtilities.SCARED_FLASHING;
-import static life.threedee.game.GameUtilities.EATEN;
-
 import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -20,6 +12,8 @@ import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapLocation;
+
+import static life.threedee.game.GameUtilities.*;
 
 public class Game implements Runnable, Tickable{
 	public static final int TICK_RATE = 60;
@@ -207,6 +201,11 @@ public class Game implements Runnable, Tickable{
         }
         if (mode != -1) {
             ticksThisMode++;
+        } else {
+            frightTicks++;
+        }
+        if (frightTicks > FRIGHTENED_DATA[getArraySafeLevel()][0]) {
+            mode = gameStage % 2;
         }
         if (gameStage > 6) {
             mode = 1;
@@ -304,7 +303,8 @@ public class Game implements Runnable, Tickable{
     public void startFrightened() {
         // ANDREY! THIS IS WHERE THE CODE FOR STARTING AND ENDING (MAYBE) FRIGHTENED MODE GOES!
         // ANDREY! I'M USING "ANDREY!" AS TODO NOW!
-        score+=50;
+        frightTicks = 0;
+        score += 50;
         pointsPerGhost = 200;
         for (Ghost ghost : ghosts) {
             ghost.scare(GameUtilities.FRIGHTENED_DATA[this.getArraySafeLevel()][0]);
@@ -313,7 +313,7 @@ public class Game implements Runnable, Tickable{
     
     public void pelletEaten() {
         pelletsEaten++;
-        score+=10;
+        score += 10;
     }
 
     public int getTicksThisMode() {

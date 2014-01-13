@@ -4,18 +4,25 @@ import static java.lang.Math.PI;
 import static life.threedee.game.GameUtilities.R_INC;
 import static life.threedee.game.GameUtilities.SC_HEIGHT;
 import static life.threedee.game.GameUtilities.SC_WIDTH;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JPanel;
-import life.threedee.game.Tickable;
 
+import javax.swing.JPanel;
+
+/**
+ * Represents a basic camera.<br>
+ * It renders objects in the objects List using a few worker threads, 
+ * creating as many threads as processors available.
+ * 
+ * @author iburinoc
+ * @author doome
+ * @auther Andrey
+ */
 public class Camera extends JPanel{
-	public final int INC = 4;
-	
 	protected Point loc;
 	protected Vector dir;
 	

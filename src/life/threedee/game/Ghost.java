@@ -29,7 +29,7 @@ public class Ghost implements Tickable{
     // 8 - Eaten
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
     protected int direction, decision, nextDecision, ghostNum, ghostId, pelletCounter = 0;
-    protected boolean releaseLock, uTurn, flipFlag = true;
+    protected boolean uTurn, flipFlag = true;
     protected Game game;
     protected GhostPlane[] facePlanes;
     protected Triangle[] faceTriangles;
@@ -109,7 +109,9 @@ public class Ghost implements Tickable{
     }
 
     public int makeDecision(){
-        if (!inside()) {
+        if (justExited()) {
+            return nextDecision;
+        } else if (!inside()) {
             if (uTurn) {
                 uTurn = false;
                 direction = (direction + 2) % 4;
@@ -255,18 +257,18 @@ public class Ghost implements Tickable{
         return !(open[0] || open[1] || open[2] || open[3]);
     }
 
+    public boolean justExited() {
+        MapLocation coords = new MapLocation(location);
+        boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my];
+        return !(open[0] || open[1] || open[2] || open[3]) && !inside();
+    }
+
     public int release() {
         if (Math.abs(location.x) < dirToV().s()) {
             direction = 0;
             decision = 0;
-            if (newLocation.z <= 2) {
-                return 0;
-            } else if (uTurn) {
-                uTurn = false;
-                return 3;
-            } else {
-                return 1;
-            }
+            translate(new Vector(new Point(-0.000001, location.y, location.z).subtract(location)));
+            return 1;
         } else {
             direction = (int) Math.signum(-location.x) + 2;
             decision = direction;

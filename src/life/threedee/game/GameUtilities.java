@@ -62,18 +62,19 @@ public class GameUtilities{
 	 */
 	public static final Color W_BLUE = Color.BLUE;
 
-    private static final boolean[] no = {false, false, false, false}; 
-    private static final boolean[] ud = { true, false,  true, false}; 
-    private static final boolean[] rl = {false,  true, false,  true}; 
-    private static final boolean[] ul = { true,  true, false, false}; 
-    private static final boolean[] dl = {false,  true,  true, false}; 
-    private static final boolean[] dr = {false, false,  true,  true}; 
-    private static final boolean[] ur = { true, false, false,  true}; 
-    private static final boolean[] nu = {false,  true,  true,  true}; 
-    private static final boolean[] nl = { true, false,  true,  true}; 
-    private static final boolean[] nd = { true,  true, false,  true}; 
-    private static final boolean[] nr = { true,  true,  true, false}; 
-    private static final boolean[] al = { true,  true,  true,  true};
+	// These arrays refer to the possible directions a ghost can go in a given intersection. 
+    private static final boolean[] no = {false, false, false, false}; // no directions
+    private static final boolean[] ud = { true, false,  true, false}; // up/down
+    private static final boolean[] rl = {false,  true, false,  true}; // right/left
+    private static final boolean[] ul = { true,  true, false, false}; // up/left
+    private static final boolean[] dl = {false,  true,  true, false}; // down/left 
+    private static final boolean[] dr = {false, false,  true,  true}; // down/right
+    private static final boolean[] ur = { true, false, false,  true}; // up/right
+    private static final boolean[] nu = {false,  true,  true,  true}; // not up
+    private static final boolean[] nl = { true, false,  true,  true}; // not left
+    private static final boolean[] nd = { true,  true, false,  true}; // not down
+    private static final boolean[] nr = { true,  true,  true, false}; // not right
+    private static final boolean[] al = { true,  true,  true,  true}; // all
 
     /**
      * An array storing the directions in which ghosts can go at any given tile.

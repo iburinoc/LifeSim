@@ -1,18 +1,11 @@
 package life.threedee.game;
 
-import static life.threedee.game.GameUtilities.BLINKY;
-import static life.threedee.game.GameUtilities.CLYDE;
-import static life.threedee.game.GameUtilities.CRUISE_ELROY;
-import static life.threedee.game.GameUtilities.CRUISE_ELROY_2;
-import static life.threedee.game.GameUtilities.EATEN;
-import static life.threedee.game.GameUtilities.INKY;
-import static life.threedee.game.GameUtilities.PINKY;
-import static life.threedee.game.GameUtilities.SCARED;
-import static life.threedee.game.GameUtilities.SCARED_FLASHING;
 import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
 import life.threedee.game.maps.MapLocation;
+
+import static life.threedee.game.GameUtilities.*;
 
 public class Ghost implements Tickable{
     protected Point location, newLocation, target;
@@ -90,9 +83,6 @@ public class Ghost implements Tickable{
         move();
         if (Math.abs(location.x) > 14){
             translate(new Vector(-28*GameUtilities.MPT * Math.signum(location.x), 0, 0));
-        }
-        if (Math.abs(location.x) > 13 && Math.abs(location.z - 0.5) > 0.5) {
-            translate(new Vector(new Point(location.x, location.y, Math.signum(location.z) / 2 + 0.5).subtract(location)));
         }
     }
 
@@ -247,7 +237,7 @@ public class Ghost implements Tickable{
     public Vector dirToV(){
         // ANDREY! ADD THE CORRECT TUNNEL SPEEDS HERE!
         // ANDREY! DO EVERYTHING!
-        return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar(((Math.abs(location.x) > 9 && Math.abs(location.y - 0.5) < 0.5) ? (GameUtilities.GAME_DATA[game.getLevel()][1] + 5) / 2 : (GameUtilities.GAME_DATA[game.getLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0)))) / 2500.0);
+        return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar(((Math.abs(location.x) > 9 && Math.abs(location.y - 0.5) < 0.5) ? (GAME_DATA[game.getLevel()][1] + 5) / 2 : (GAME_DATA[game.getLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0));
     }
 
     public Point getLocation(){

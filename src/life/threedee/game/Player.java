@@ -123,8 +123,8 @@ public class Player extends Camera implements Tickable{
         } else {
         	stop--;
         }
-        if (Math.abs(loc.x) > 13 && Math.abs(loc.z - 0.5) < 0.5) {
-            translate(new Vector(new Point(loc.x, loc.y, Math.signum(loc.z) / 2 + 0.5).subtract(loc)));
+        if ((Math.abs(loc.x) > 13.5 && Math.abs(loc.z - 0.5) > 1) || (Math.abs(loc.x) > 13.5 && Math.abs(loc.z - 0.5) > 1)) {
+            loc = new Point(loc.x, loc.y, loc.z > 0 ? 1.499999 : -0.499999);
         }
     }
     

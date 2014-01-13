@@ -88,7 +88,7 @@ public class Ghost implements Tickable{
 
     public void move() {
         newLocation = location.add(new Point(dirToV()));
-        if (pelletCounter == GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId] && inside() && !sentRelease) {
+        if (pelletCounter > GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId] && inside() && !sentRelease) {
             sentRelease = true;
             nextDecision = release();
             facePlanes[decision].setFace(true);
@@ -96,7 +96,7 @@ public class Ghost implements Tickable{
             facePlanes[(decision+2)%4].setFace(false);
             facePlanes[(decision+3)%4].setFace(false);
         } else if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
-            nextDecision = pelletCounter == GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId] && inside() ? release() : makeDecision();
+            nextDecision = pelletCounter > GameUtilities.EXIT_PELLETS[game.getLevel()][ghostId] && inside() ? release() : makeDecision();
             facePlanes[decision].setFace(true);
             facePlanes[(decision+1)%4].setFace(false);
             facePlanes[(decision+2)%4].setFace(false);
@@ -117,6 +117,11 @@ public class Ghost implements Tickable{
                 direction = (direction + 2) % 4;
                 decision = direction;
                 decision = makeDecision();
+                return 0;
+            }
+            if (ghostNum == EATEN && Math.abs(location.x) < dirToV().s() && Math.abs(location.z - 3.5) < dirToV().s()) {
+                direction = 2;
+                decision = 2;
                 return 0;
             }
             MapLocation indices = new MapLocation(newLocation.add(new Point(decision % 2 == 0 ? 0 : decision - 2, 0, decision % 2 == 0 ? -decision + 1 : 0)));
@@ -152,13 +157,32 @@ public class Ghost implements Tickable{
                         flipFlag = true;
                         return 0;
                     }
-                case EATEN: throw new StringIndexOutOfBoundsException();
-                    /*if (location.x == 0 && location.y == 0) {
+                case EATEN:
+                    if (Math.abs(location.x) < dirToV().s()) {
+                        if (location.z > 0) {
+                            direction = 2;
+                            decision = 2;
+                            return 0;
+                        } else {
+                            if (ghostId == BLINKY || ghostId == PINKY) {
+                                ghostNum = ghostId;
+                                direction = 0;
+                                decision = 0;
+                                return 0;
+                            } else {
+                                direction = (int) (2 * (ghostId - 2.5) + 2);
+                                decision = direction;
+                                return decision;
+                            }
+                        }
+                    } else if (Math.abs(location.x) > 2) {
                         ghostNum = ghostId;
-                        return release();
+                        direction = 0;
+                        decision = 0;
+                        return 0;
                     } else {
-                        return 2;
-                    }*/
+                        return direction;
+                    }
                 case BLINKY:
                 case CRUISE_ELROY:
                 case CRUISE_ELROY_2:

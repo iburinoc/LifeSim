@@ -6,8 +6,6 @@ import static life.threedee.game.GameUtilities.INKY;
 import static life.threedee.game.GameUtilities.CLYDE;
 import static life.threedee.game.GameUtilities.SCARED;
 import static life.threedee.game.GameUtilities.SCARED_FLASHING;
-import static life.threedee.game.GameUtilities.CRUISE_ELROY;
-import static life.threedee.game.GameUtilities.CRUISE_ELROY_2;
 import static life.threedee.game.GameUtilities.EATEN;
 
 import java.awt.Cursor;
@@ -19,11 +17,8 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import life.threedee.Point;
-import life.threedee.TexturedPlane;
 import life.threedee.ThreeDeeObject;
-import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
-import life.threedee.game.maps.MapBuilder;
 import life.threedee.game.maps.MapLocation;
 
 public class Game implements Runnable, Tickable{
@@ -47,9 +42,9 @@ public class Game implements Runnable, Tickable{
 	
 	private Input i;
 	
-	private boolean running, first = false, second = false;
+	private boolean running, gotExtraLife = false;
 
-    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage;
+    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage, frightTicks, pointsPerGhost;
 	
     private Object objLock;
     
@@ -183,12 +178,8 @@ public class Game implements Runnable, Tickable{
             pelletsEaten = 0;
             die();
         }
-        if (score >= 10000 && !first){
-            first = true;
-            lives++;
-        }
-        if (score >= 100000 && !second){
-            second = true;
+        if (score >= 10000 && !gotExtraLife){
+            gotExtraLife = true;
             lives++;
         }
         Point loc = p.getLoc();
@@ -201,6 +192,8 @@ public class Game implements Runnable, Tickable{
                     lives--;
                     die();
                 } else {
+                    score += pointsPerGhost;
+                    pointsPerGhost *= 2;
                     ghost.getAte();
                 }
             }
@@ -312,6 +305,7 @@ public class Game implements Runnable, Tickable{
         // ANDREY! THIS IS WHERE THE CODE FOR STARTING AND ENDING (MAYBE) FRIGHTENED MODE GOES!
         // ANDREY! I'M USING "ANDREY!" AS TODO NOW!
         score+=50;
+        pointsPerGhost = 200;
         for (Ghost ghost : ghosts) {
             ghost.scare(GameUtilities.FRIGHTENED_DATA[this.getArraySafeLevel()][0]);
         }

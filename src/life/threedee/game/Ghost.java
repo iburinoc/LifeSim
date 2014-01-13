@@ -203,7 +203,7 @@ public class Ghost implements Tickable{
                 case BLINKY:
                 case CRUISE_ELROY:
                 case CRUISE_ELROY_2:
-                default: throw new IllegalArgumentException();
+                default: throw new IllegalArgumentException("Blinky movement not implemented here yet.");
             }
         }
     }

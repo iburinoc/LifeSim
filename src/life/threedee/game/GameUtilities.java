@@ -9,11 +9,36 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * A class containing various variables and methods that are used throughout the program. <br>
+ * This also allows for easy editing of the game rules, speeds, and resources.
+ * 
+ * @author iburinoc
+ * @author doome
+ * @auther Andrey
+ */
+
 public class GameUtilities{
+    /**
+     * The width of the display in pixels.
+     */
 	public static final int SC_WIDTH = 720;
+	/**
+	 * The height of the display in pixels.
+	 */
 	public static final int SC_HEIGHT = 540;
+	/**
+	 * The pixels incrementer value.
+	 * If it is set to a natural number x, then x screen pixels equals one in-game pixels.
+	 * This allows us to change the resolution by just altering one value. 
+	 * Note that a 2x increase in R_INC leads to a 4x decrease in game speed.
+	 */
 	public static final int R_INC = 8;
 	
+	/**
+	 * The amount of pixels per meter.
+	 * Used to convert pixels in textures to in-game distances.
+	 */
 	public static final int PX_METER = 20;
 	
 	public static final int PX_WALL_BORDER = 2;
@@ -27,15 +52,32 @@ public class GameUtilities{
 	// meters per tile.  we can modify this if we need to.  use this in all calculations necessary so scaling is smooth
 	public static final float MPT = 1.0f;
 	
+	/**
+	 * A blank, transparent color. 
+	 */
 	public static final Color BLANK = new Color(0, 0, 0, 0);
 
-	//The color of the wall borders.  In case we ever want to change it.
+	/**
+	 * The color of the wall borders.
+	 */
 	public static final Color W_BLUE = Color.BLUE;
 
-    public static final boolean t = true, f = false;
+    private static final boolean[] no = {false, false, false, false}; 
+    private static final boolean[] ud = { true, false,  true, false}; 
+    private static final boolean[] rl = {false,  true, false,  true}; 
+    private static final boolean[] ul = { true,  true, false, false}; 
+    private static final boolean[] dl = {false,  true,  true, false}; 
+    private static final boolean[] dr = {false, false,  true,  true}; 
+    private static final boolean[] ur = { true, false, false,  true}; 
+    private static final boolean[] nu = {false,  true,  true,  true}; 
+    private static final boolean[] nl = { true, false,  true,  true}; 
+    private static final boolean[] nd = { true,  true, false,  true}; 
+    private static final boolean[] nr = { true,  true,  true, false}; 
+    private static final boolean[] al = { true,  true,  true,  true};
 
-    public static final boolean[] no = {f, f, f, f}, ud = {t, f, t, f}, rl = {f, t, f, t}, ul = {t, t, f, f}, dl = {f, t, t, f}, dr = {f, f, t, t}, ur = {t, f, f, t}, nu = {f, t, t, t}, nl = {t, f, t, t}, nd = {t, t, f, t}, nr = {t, t, t, f}, al = {t, t, t, t};
-
+    /**
+     * An array storing the directions in which ghosts can go at any given tile.
+     */
     public static final boolean[][][] INTERSECTIONS = mirror(new boolean[][][]
             {{no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, rl, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no},
              {no, no, no, no, dr, ud, ud, ud, nl, ud, ud, ur, no, no, no, no, no, rl, no, no, no, no, no, dr, ud, ud, ur, no, no, dr, ud, ud, ur, no, no, no},
@@ -77,7 +119,7 @@ public class GameUtilities{
     //scatter, chase, scatter, chase......
     public static final int[][] MODE_TIMES = new int[][] {{420, 1200, 420, 1200, 300, 1200, 300}, {420, 1200, 420, 1200, 300, 61980, 1}, {420, 1200, 420, 1200, 300, 61980, 1}, {420, 1200, 420, 1200, 300, 61980, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}};
 
-    public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), new Color(0, 51, 255), new Color(250, 250, 250), new Color(230, 46, 37), new Color(230, 46, 37), null};
+    public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), new Color(0, 51, 255), new Color(250, 250, 250), new Color(230, 46, 37), new Color(230, 46, 37), BLANK};
 
     public static final Point[] GHOST_LOCATIONS = new Point[] {new Point(0*MPT, 1*MPT, 3.5*MPT), new Point(0*MPT, 1*MPT, 0.5*MPT), new Point(-2*MPT, 1*MPT, 0.5*MPT), new Point(2*MPT, 1*MPT, 0.5*MPT)};
     public static final int[] GHOST_ORIENTATIONS = new int[] {1, 2, 0, 0, 0, 0, 1, 1, 0};

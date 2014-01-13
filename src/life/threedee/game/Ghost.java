@@ -28,7 +28,7 @@ public class Ghost implements Tickable{
     // 7 - Cruise Elroy MK. II
     // 8 - Eaten
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
-    protected int direction, decision, nextDecision, ghostNum, ghostId, pelletCounter = 0;
+    protected int direction, decision, nextDecision, ghostNum, ghostId, pelletCounter = 0, scaredTicksLeft;
     protected boolean uTurn, flipFlag = true, sentRelease;
     protected Game game;
     protected GhostPlane[] facePlanes;
@@ -286,5 +286,6 @@ public class Ghost implements Tickable{
     public void scare(int ticks) {
         this.ghostNum = 5; 
         this.updatePlanes();
+        this.scaredTicksLeft = ticks;
     }
 }

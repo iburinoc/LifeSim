@@ -122,7 +122,7 @@ public class Ghost implements Tickable{
             MapLocation indices = new MapLocation(newLocation.add(new Point(decision % 2 == 0 ? 0 : decision - 2, 0, decision % 2 == 0 ? -decision + 1 : 0)));
             boolean[] open = GameUtilities.INTERSECTIONS[indices.mx][indices.my].clone();
             if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 11 || indices.my == 23) && game.getMode() == -1){
-                open = GameUtilities.nd.clone();
+                open = new boolean[] {true, true, false, true};
             }
             target = findTarget();
             open[(decision + 2) % 4] = false;

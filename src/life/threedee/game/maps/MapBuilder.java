@@ -161,6 +161,8 @@ public class MapBuilder {
 		int[][] map = parseMap();
 		boolean[][] done = new boolean[28][36];
 		
+		final double CORNER_WIDTH = Math.sqrt(0.5);
+		
 		for(int x = 0; x < 28; x++) {
 			for(int y = 0; y < 36; y++) {
 				if(!done[x][y]) {
@@ -168,7 +170,6 @@ public class MapBuilder {
 						if(x == 17 && y == 15){
 							x = 17;
 						}
-						BufferedImage corner = WallTexFactory.createCornerTex();
 						double corn_x, corn_y;
 						Vector cv;
 						switch(map[x][y]) {
@@ -198,7 +199,7 @@ public class MapBuilder {
 								cv = null;
 						}
 						
-						l.add(new MapPlane(new Point(corn_x, 0, corn_y), cv, corner));
+						l.add(new MapPlane(new Point(corn_x, 0, corn_y), cv, CORNER_WIDTH, WALL_HEIGHT));
 						
 						int dx;
 						switch(map[x][y]) {
@@ -226,14 +227,13 @@ public class MapBuilder {
 						}
 
 						if(cx - x - dx != 0) {
-							BufferedImage tex = WallTexFactory.createWallTex((int) Math.abs(cx - x - dx));
 							double px = (x + (dx == 1 ? 1 : 0) - 14) * MPT;
 							double py = -(y - 18 + 0.5) * MPT;
 							
 							Point p = new Point(px, 0, py);
 							Vector v = new Vector(0, 0, dx);
 							
-							l.add(new MapPlane(p, v, tex));
+							l.add(new MapPlane(p, v, Math.abs(cx - x - dx), WALL_HEIGHT));
 						}
 
 						int dy;
@@ -262,14 +262,13 @@ public class MapBuilder {
 						}
 
 						if(cy - y - dy != 0) {
-							BufferedImage tex = WallTexFactory.createWallTex((int) Math.abs(cy - y - dy));
 							double px = (x - 14 + 0.5) * MPT;
 							double py = -(y + (dy == 1 ? 1 : 0) - 18) * MPT;
 							
 							Point p = new Point(px, 0, py);
 							Vector v = new Vector(dy, 0, 0);
 							
-							l.add(new MapPlane(p, v, tex));
+							l.add(new MapPlane(p, v, Math.abs(cy - y - dy), WALL_HEIGHT));
 						}
 						
 						done[x][y] = true;

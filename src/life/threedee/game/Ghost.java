@@ -278,7 +278,7 @@ public class Ghost implements Tickable{
     public Vector dirToV(){
         // ANDREY! ADD THE CORRECT TUNNEL SPEEDS HERE!
         // ANDREY! DO EVERYTHING!
-        return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar(game.getMode() == -1 ? (GAME_DATA[game.getArraySafeLevel()][1] + 15) / 5000.0 : (Math.abs(location.x) > 9 && Math.abs(location.z - 0.5) < 0.5) ? (GAME_DATA[game.getArraySafeLevel()][1] + 5) / 5000.0 : (GAME_DATA[game.getArraySafeLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0)) / 2500.0));
+        return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar(game.getMode() == -1 ? (GAME_DATA[game.getArraySafeLevel()][1] + 15) / 5000.0 : ((Math.abs(location.x) > 9 && Math.abs(location.z - 0.5) < 0.5) ? (GAME_DATA[game.getArraySafeLevel()][1] + 5) / 5000.0 : ((GAME_DATA[game.getArraySafeLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0)));
     }
 
     public Point getLocation(){

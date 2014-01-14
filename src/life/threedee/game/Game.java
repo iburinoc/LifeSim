@@ -207,7 +207,7 @@ public class Game implements Runnable, Tickable{
         if (frightTicks > FRIGHTENED_DATA[getArraySafeLevel()][0]) {
             mode = gameStage % 2;
         }
-        if (gameStage > 6) {
+        if (gameStage > 6 && mode != -1) {
             mode = 1;
         } else if (ticksThisMode == GameUtilities.MODE_TIMES[level][gameStage]) {
             ticksThisMode = 0;

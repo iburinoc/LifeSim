@@ -38,10 +38,6 @@ public class Vector {
 		
 		return s;
 	}
-	
-	public Vector unitVector(){
-		return new Vector(x / s(), y / s(), z / s());
-	}
 
     @Override
 	public String toString(){

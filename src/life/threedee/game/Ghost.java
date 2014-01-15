@@ -106,7 +106,8 @@ public class Ghost implements Tickable{
             facePlanes[(decision+1)%4].setFace(false);
             facePlanes[(decision+2)%4].setFace(false);
             facePlanes[(decision+3)%4].setFace(false);
-        } else if ((Math.abs(location.x % 1) < 0.5 != Math.abs(newLocation.x % 1) < 0.5) || (Math.abs(location.z % 1) < 0.5 != Math.abs(newLocation.z % 1) < 0.5)) {
+        } else if (((int) location.x + 0.5 > location.x != (int) newLocation.x + 0.5 > newLocation.x) || ((int) location.z + 0.5 > location.z != (int) newLocation.z + 0.5 > newLocation.z)) {
+        //else if ((Math.abs(location.x % 1) < 0.5 != Math.abs(newLocation.x % 1) < 0.5) || (Math.abs(location.z % 1) < 0.5 != Math.abs(newLocation.z % 1) < 0.5)) {
             direction = decision;
             decision = nextDecision;
         }
@@ -122,12 +123,12 @@ public class Ghost implements Tickable{
                 direction = (direction + 2) % 4;
                 decision = direction;
                 decision = makeDecision();
-                return 0;
+                return decision;
             }
             if (ghostNum == EATEN && Math.abs(location.x) < dirToV().s() && Math.abs(location.z - 3.5) < dirToV().s()) {
                 direction = 2;
                 decision = 2;
-                return 0;
+                return decision;
             }
             MapLocation indices = new MapLocation(newLocation.add(new Point(decision % 2 == 0 ? 0 : decision - 2, 0, decision % 2 == 0 ? -decision + 1 : 0)));
             boolean[] open = GameUtilities.INTERSECTIONS[indices.mx][indices.my].clone();
@@ -167,21 +168,8 @@ public class Ghost implements Tickable{
                     toReturn = i;
                 }
             }
-            if (ghostId==BLINKY) {
-                for (int i = 0; i < 4; i++) {
-                    System.out.print(open[i]?1:0);
-                }
-                System.out.print(nextDecision);
-                System.out.print(decision);
-                System.out.println(direction);
-            }
             return toReturn;
         } else {
-            if (ghostId==BLINKY) {
-                System.out.print(nextDecision);
-                System.out.print(decision);
-                System.out.println(direction);
-            }
             switch (ghostNum) {
                 case PINKY:
                 case INKY:
@@ -192,22 +180,22 @@ public class Ghost implements Tickable{
                         direction = (direction + 2) % 4;
                         decision = direction;
                         flipFlag = false;
-                        return 0;
+                        return decision;
                     } else {
                         flipFlag = true;
-                        return 0;
+                        return decision;
                     }
                 case EATEN:
                     if (Math.abs(location.x) < dirToV().s()) {
                         if (location.z > 0) {
                             direction = 2;
                             decision = 2;
-                            return 0;
+                            return decision;
                         } else if (ghostId == BLINKY || ghostId == PINKY) {
                             ghostNum = ghostId;
                             direction = 0;
                             decision = 0;
-                            return 0;
+                            return decision;
                         } else {
                             direction = (int) (2 * (ghostId - 2.5) + 2);
                             decision = direction;
@@ -217,7 +205,7 @@ public class Ghost implements Tickable{
                         ghostNum = ghostId;
                         direction = 0;
                         decision = 0;
-                        return 0;
+                        return decision;
                     } else {
                         return direction;
                     }

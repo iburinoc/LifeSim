@@ -16,12 +16,31 @@ import life.threedee.game.maps.MapLocation;
 
 import static life.threedee.game.GameUtilities.*;
 
+/**
+ * The main game class.  Contains the main method.
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ */
 public class Game implements Runnable, Tickable{
+	
+	/**
+	 * The number of ticks per second
+	 */
 	public static final int TICK_RATE = 60;
+	
+	/**
+	 * The number of frames per second
+	 */
 	public static final int FRAME_RATE = 30;
 	
+	/**
+	 * Creates a new game and starts it
+	 * @param args
+	 */
 	public static void main(String[] args){
-		new Thread(new Game()).start();
+		new Game().run();
 	}
 	
 	private List<ThreeDeeObject> objects;
@@ -46,11 +65,11 @@ public class Game implements Runnable, Tickable{
 	public Game() {
 		j = new JFrame("Game");
 		
-		m = new GameMap();
+		m = new GameMap(); // Create the map to give to the player
 		
 		p = new Player(this, m);
 		
-		objLock = new Object();
+		objLock = new Object(); // create the lock on which to synchronize
 		
 		setObjects(new ArrayList<ThreeDeeObject>());
         setTickables(new ArrayList<Tickable>());
@@ -59,15 +78,7 @@ public class Game implements Runnable, Tickable{
         ghosts.add(new Ghost(this, PINKY));
         ghosts.add(new Ghost(this, INKY));
         ghosts.add(new Ghost(this, CLYDE));
-        /* CRUISE ELROY SUMMONING RITUAL. REMOVE LATER*/
-        //ghosts.add(new Ghost(this, CRUISE_ELROY));
-        //ghosts.add(new Ghost(this, CRUISE_ELROY_2));
-        if (false) {
-            ghosts.add(new Ghost(this, SCARED));
-            ghosts.add(new Ghost(this, SCARED_FLASHING));
-            ghosts.add(new Ghost(this, EATEN));
-        }
-		
+        
 		i = new Input(p, this, j);
 		
 		running = true;
@@ -84,37 +95,32 @@ public class Game implements Runnable, Tickable{
 		tickables.add(this);
 	}
 	
+	// make the cursor invisible
 	private void removeCursor() {
 		Toolkit tk= p.getToolkit();
 		Cursor transparent = tk.createCustomCursor(tk.getImage(""), new java.awt.Point(), "trans");
 		j.setCursor(transparent);
 	}
 
-	private void tickablePellets() {
+	// Add all consumables to the list of tickables
+	private void tickableConsumables() {
 		for(ThreeDeeObject o : m.getObjects()) {
-			if(o instanceof Pellet) {
-				tickables.add((Pellet)o);
+			if(o instanceof Consumable) {
+				tickables.add((Consumable)o);
 			}
 		}
-	}
-	
-	private void tickableEnergizers() {
-	    for (ThreeDeeObject o : m.getObjects()) {
-	        if (o instanceof Energizer) {
-	            tickables.add((Energizer)o);
-	        }
-	    }
 	}
 	
 	@Override
 	public void run() {
 		removeCursor();
 		
-		tickablePellets();
-		tickableEnergizers();
+		tickableConsumables();
 		
 		RenderThread rt = new RenderThread();
 		TickThread tt = new TickThread();
+		
+		// RenderThread and TickThread happen asynchronously to try to keep ticks as close to TICK_RATE as possible
 		rt.start();
 		tt.start();
 	}

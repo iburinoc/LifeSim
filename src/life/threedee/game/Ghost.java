@@ -162,8 +162,21 @@ public class Ghost implements Tickable{
                     toReturn = i;
                 }
             }
+            if (ghostId==BLINKY) {
+                for (int i = 0; i < 4; i++) {
+                    System.out.print(open[i]?1:0);
+                }
+                System.out.print(nextDecision);
+                System.out.print(decision);
+                System.out.println(direction);
+            }
             return toReturn;
         } else {
+            if (ghostId==BLINKY) {
+                System.out.print(nextDecision);
+                System.out.print(decision);
+                System.out.println(direction);
+            }
             switch (ghostNum) {
                 case PINKY:
                 case INKY:

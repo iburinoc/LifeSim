@@ -96,20 +96,20 @@ public class Ghost implements Tickable{
         if (!sentRelease && leaving) {
             sentRelease = true;
             nextDecision = release();
-            facePlanes[decision].setFace(true);
-            facePlanes[(decision+1)%4].setFace(false);
-            facePlanes[(decision+2)%4].setFace(false);
-            facePlanes[(decision+3)%4].setFace(false);
+            facePlanes[direction].setFace(true);
+            facePlanes[(direction+1)%4].setFace(false);
+            facePlanes[(direction+2)%4].setFace(false);
+            facePlanes[(direction+3)%4].setFace(false);
         } else if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
             nextDecision = leaving ? release() : makeDecision();
-            facePlanes[decision].setFace(true);
-            facePlanes[(decision+1)%4].setFace(false);
-            facePlanes[(decision+2)%4].setFace(false);
-            facePlanes[(decision+3)%4].setFace(false);
-        } else if (((int) location.x + 0.5 > location.x != (int) newLocation.x + 0.5 > newLocation.x) || ((int) location.z + 0.5 > location.z != (int) newLocation.z + 0.5 > newLocation.z)) {
-        //else if ((Math.abs(location.x % 1) < 0.5 != Math.abs(newLocation.x % 1) < 0.5) || (Math.abs(location.z % 1) < 0.5 != Math.abs(newLocation.z % 1) < 0.5)) {
+        } else if ( (((int) location.x + Math.signum(location.x) * 0.5 > location.x) != ((int) location.x + Math.signum(location.x) * 0.5 > newLocation.x)) || 
+        		    (((int) location.z + Math.signum(location.z) * 0.5 > location.z) != ((int) location.z + Math.signum(location.z) * 0.5 > newLocation.z)) ) {
             direction = decision;
             decision = nextDecision;
+            facePlanes[direction].setFace(true);
+            facePlanes[(direction+1)%4].setFace(false);
+            facePlanes[(direction+2)%4].setFace(false);
+            facePlanes[(direction+3)%4].setFace(false);
         }
         translate(new Vector(newLocation.subtract(location)));
     }
@@ -212,7 +212,7 @@ public class Ghost implements Tickable{
                 case BLINKY:
                 case CRUISE_ELROY:
                 case CRUISE_ELROY_2:
-                default: throw new IllegalArgumentException("Blinky movement not implemented here yet.");
+                default: throw new RuntimeException("This should not be reached according to BAD WIZURD.  FIX YOUR OWN DAMN EXCEPTION STRINGS >:C");
             }
         }
     }

@@ -1,9 +1,16 @@
 package life.threedee.game;
 
 import static java.lang.Math.PI;
+
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.List;
-import life.threedee.*;
+
+import life.threedee.Camera;
+import life.threedee.Point;
+import life.threedee.TColorTransfer;
+import life.threedee.ThreeDeeObject;
+import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
 
 public class Player extends Camera implements Tickable{
@@ -42,6 +49,12 @@ public class Player extends Camera implements Tickable{
     	super.calcBuffer();
     }
 
+    @Override
+    public void paintBuffer(Graphics g) {
+    	super.paintBuffer(g);
+    	this.g.drawScore(g);
+    }
+    
     private void move() {
     	double y = dir.yaw();
     	if(y != y) {

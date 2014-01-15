@@ -66,6 +66,10 @@ public class Ghost implements Tickable{
         if (game.getTicksThisMode() == 0 && game.getGameStage() != 0) {
             uTurn = true;
         }
+        scaredTicksLeft--;
+        if (scaredTicksLeft <= 0) {
+            ghostNum = ghostId;
+        }
         for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
         }
@@ -319,7 +323,7 @@ public class Ghost implements Tickable{
     }
     
     public void scare(int ticks) {
-        this.ghostNum = 4; 
+        this.ghostNum = SCARED;
         this.updatePlanes();
         this.scaredTicksLeft = ticks;
     }

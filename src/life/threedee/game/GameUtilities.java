@@ -1,13 +1,15 @@
 package life.threedee.game;
 
-import life.threedee.Point;
-
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import life.threedee.Point;
 
 /**
  * A class containing various variables and methods that are used throughout the program. <br>
@@ -123,8 +125,11 @@ public class GameUtilities{
     public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), new Color(0, 51, 255), new Color(250, 250, 250), new Color(230, 46, 37), new Color(230, 46, 37), BLANK};
 
     public static final Point[] GHOST_LOCATIONS = new Point[] {new Point(0*MPT, 1*MPT, 3.5*MPT), new Point(0*MPT, 1*MPT, 0.5*MPT), new Point(-2*MPT, 1*MPT, 0.5*MPT), new Point(2*MPT, 1*MPT, 0.5*MPT)};
+    
     public static final int[] GHOST_ORIENTATIONS = new int[] {1, 2, 0, 0, 0, 0, 1, 1, 0};
+    
     public static final Point[] GHOST_CORNERS = new Point[] {new Point(11.5*MPT, 1*MPT, 18.5*MPT), new Point(-11.5*MPT, 1*MPT, 18.5*MPT), new Point(13.5*MPT, 1*MPT, -16.5*MPT), new Point(-13.5*MPT, 1*MPT, -16.5*MPT), new Point(0.0*MPT, 1*MPT, 0.0*MPT), new Point(0.0*MPT, 1*MPT, 0.0*MPT), new Point(11.5*MPT, 1*MPT, 18.5*MPT), new Point(11.5*MPT, 1*MPT, 18.5*MPT), new Point(0*MPT, 1*MPT, 3.5*MPT)};
+    
     public static final BufferedImage[] GHOST_SIDE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/BlinkySide.png"), 
                                                                                    GameUtilities.loadImage("resources/PinkySide.png"), 
                                                                                    GameUtilities.loadImage("resources/InkySide.png"), 
@@ -134,6 +139,7 @@ public class GameUtilities{
                                                                                    GameUtilities.loadImage("resources/BlinkySide.png"),
                                                                                    GameUtilities.loadImage("resources/BlinkySide.png"),
                                                                                    GameUtilities.loadImage("resources/EatenSide.png"),};
+    
     public static final BufferedImage[] GHOST_FACE_TEXTURES = new BufferedImage[] {GameUtilities.loadImage("resources/BlinkyFace.png"), 
                                                                                    GameUtilities.loadImage("resources/PinkyFace.png"), 
                                                                                    GameUtilities.loadImage("resources/InkyFace.png"), 
@@ -156,8 +162,28 @@ public class GameUtilities{
     
     public static final boolean SCARY_FACES = false;
     
+    public static final Font SCORE_FONT = loadFont("resources/visitor1.ttf");
+    
 	public static boolean equals(double a, double b) {
 		return Math.abs(a - b) < 1e-15;
+	}
+	
+	public static Font loadFont(String ref) {
+		Font temp = null;
+		try {
+			temp = Font.createFont(java.awt.Font.TRUETYPE_FONT, 
+					GameUtilities.class.getClassLoader().getResourceAsStream(ref));
+		} catch (Exception e) {
+			try {
+				temp = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+						new File(ref));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (FontFormatException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return temp.deriveFont(20f);
 	}
 	
 	public static BufferedImage loadImage(String ref) {

@@ -1,6 +1,15 @@
 package life.threedee.game;
 
+import static life.threedee.game.GameUtilities.BLINKY;
+import static life.threedee.game.GameUtilities.CLYDE;
+import static life.threedee.game.GameUtilities.FRIGHTENED_DATA;
+import static life.threedee.game.GameUtilities.INKY;
+import static life.threedee.game.GameUtilities.PINKY;
+
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,8 +22,6 @@ import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapLocation;
-
-import static life.threedee.game.GameUtilities.*;
 
 /**
  * The main game class.  Contains the main method.
@@ -249,6 +256,13 @@ public class Game implements Runnable, Tickable{
 				}
 			}
 		}
+	}
+	
+	protected void drawScore(Graphics g) {
+		final int height = 50;
+		g.setColor(Color.WHITE);
+		g.setFont(GameUtilities.SCORE_FONT);
+		g.drawString("Score: " + score, 5, GameUtilities.SC_HEIGHT - height);
 	}
 	
 	public void addTickable(Tickable t){

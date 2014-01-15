@@ -278,7 +278,11 @@ public class Ghost implements Tickable{
     public Vector dirToV(){
         // ANDREY! ADD THE CORRECT TUNNEL SPEEDS HERE!
         // ANDREY! DO EVERYTHING!
-        return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar(game.getMode() == -1 ? (GAME_DATA[game.getArraySafeLevel()][1] + 15) / 5000.0 : ((Math.abs(location.x) > 9 && Math.abs(location.z - 0.5) < 0.5) ? (GAME_DATA[game.getArraySafeLevel()][1] + 5) / 5000.0 : ((GAME_DATA[game.getArraySafeLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 : (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0)));
+        return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar
+                (game.getMode() == -1 ? (GAME_DATA[game.getArraySafeLevel()][1] + 15) / 5000.0 :
+                        ((Math.abs(location.x) > 9 && Math.abs(location.z - 0.5) < 0.5) ? (GAME_DATA[game.getArraySafeLevel()][1] + 5) / 5000.0 :
+                                ((GAME_DATA[game.getArraySafeLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 :
+                                        (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0)));
     }
 
     public Point getLocation(){
@@ -294,10 +298,14 @@ public class Ghost implements Tickable{
     }
 
     public boolean inside() {
+        return Math.abs(newLocation.x) < 4 && newLocation.z < 3 && newLocation.z > -1;
+    }
+
+    /*public boolean inside() {
         MapLocation coords = new MapLocation(newLocation);
         boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my];
         return !(open[0] || open[1] || open[2] || open[3]);
-    }
+    }*/
 
     public boolean justExited() {
         MapLocation coords = new MapLocation(location);

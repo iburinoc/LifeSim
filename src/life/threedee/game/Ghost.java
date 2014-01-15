@@ -203,17 +203,15 @@ public class Ghost implements Tickable{
                             direction = 2;
                             decision = 2;
                             return 0;
+                        } else if (ghostId == BLINKY || ghostId == PINKY) {
+                            ghostNum = ghostId;
+                            direction = 0;
+                            decision = 0;
+                            return 0;
                         } else {
-                            if (ghostId == BLINKY || ghostId == PINKY) {
-                                ghostNum = ghostId;
-                                direction = 0;
-                                decision = 0;
-                                return 0;
-                            } else {
-                                direction = (int) (2 * (ghostId - 2.5) + 2);
-                                decision = direction;
-                                return decision;
-                            }
+                            direction = (int) (2 * (ghostId - 2.5) + 2);
+                            decision = direction;
+                            return decision;
                         }
                     } else if (Math.abs(location.x) > 2) {
                         ghostNum = ghostId;

@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
+import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapLocation;
 
@@ -293,10 +294,10 @@ public class Game implements Runnable, Tickable{
     }
     
     public void die() {
-        //p.setLoc(new Point(0, 1, -8.5));
-        //p.setDir(new Vector(-1, 0, 0));
+        p.setLoc(new Point(0, 1, -8.5));
+        p.setDir(new Vector(-1, 0, 0));
         for(Ghost ghost : ghosts) {
-            //ghost.reset();
+            ghost.reset();
         }
     }
     

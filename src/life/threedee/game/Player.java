@@ -13,6 +13,14 @@ import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
 
+/**
+ * A player, extends Camera and has some extra additions to represent the fact that it is part of the game
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ * 
+ */
 public class Player extends Camera implements Tickable{
     private Game g;
     private GameMap m;

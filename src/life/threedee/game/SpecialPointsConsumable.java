@@ -36,7 +36,7 @@ public class SpecialPointsConsumable extends Consumable {
     protected void generate() {
         if (amount > 2) {
             double cyaw = yaw;
-            double cpitch = C_QUARTER - (amount/2)*c_part();
+            double cpitch = cyaw + C_QUARTER - (amount/2)*c_part();
             for(int i = 0; i < amount; i++) {
                 p[i] = new Point(Vector.fromPolarTransform(cyaw, cpitch, 0.5));
                 cpitch += c_part();

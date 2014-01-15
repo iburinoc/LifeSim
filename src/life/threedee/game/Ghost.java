@@ -92,7 +92,8 @@ public class Ghost implements Tickable{
 
     public void move() {
         newLocation = location.add(new Point(dirToV()));
-        if (pelletCounter >= GameUtilities.EXIT_PELLETS[game.getArraySafeLevel()][ghostId] && inside() && !sentRelease) {
+        boolean leaving = pelletCounter >= GameUtilities.EXIT_PELLETS[game.getArraySafeLevel()][ghostId] && inside();
+        if (!sentRelease && leaving) {
             sentRelease = true;
             nextDecision = release();
             facePlanes[decision].setFace(true);
@@ -100,7 +101,7 @@ public class Ghost implements Tickable{
             facePlanes[(decision+2)%4].setFace(false);
             facePlanes[(decision+3)%4].setFace(false);
         } else if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
-            nextDecision = pelletCounter >= GameUtilities.EXIT_PELLETS[game.getArraySafeLevel()][ghostId] && inside() ? release() : makeDecision();
+            nextDecision = leaving ? release() : makeDecision();
             facePlanes[decision].setFace(true);
             facePlanes[(decision+1)%4].setFace(false);
             facePlanes[(decision+2)%4].setFace(false);

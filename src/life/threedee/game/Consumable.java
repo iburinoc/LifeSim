@@ -16,8 +16,6 @@ public abstract class Consumable implements ThreeDeeObject, Tickable, MapFeature
 	protected Triangle[] t;
 	protected Point[] p;
 	
-	protected Point top;
-	
 	protected Point center;
 	
 	protected double yaw;

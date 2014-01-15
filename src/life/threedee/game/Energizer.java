@@ -10,6 +10,7 @@ public class Energizer extends Consumable {
     private static final double A_INC = Math.PI / 360;
     private static final double C_QUARTER = Math.PI/2;
     
+    private Point top;
     private Point bottom;
     
     public Energizer(Point center) {

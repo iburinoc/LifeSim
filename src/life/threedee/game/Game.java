@@ -100,6 +100,10 @@ public class Game implements Runnable, Tickable{
 		
 		tickables.add(p);
 		tickables.add(this);
+		
+		/*SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(0, 0, -2.5));
+		objects.add(spc);
+		tickables.add(spc);*/
 	}
 	
 	// make the cursor invisible
@@ -335,6 +339,10 @@ public class Game implements Runnable, Tickable{
     public void pelletEaten() {
         pelletsEaten++;
         score += 10;
+    }
+    
+    public void pointsBonus() {
+        score += GameUtilities.GAME_DATA[getArraySafeLevel()][2];
     }
 
     public int getTicksThisMode() {

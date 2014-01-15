@@ -10,16 +10,22 @@ import life.threedee.Vector;
 public class SpecialPointsConsumable extends Consumable {
     private static final double A_INC = Math.PI / 90;
     private static final double C_QUARTER = Math.PI/2;
-    private static final double C_FIFTH = 2*Math.PI/5;
-    private static final Color[] colors = {new Color(255, 92, 205), Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE};
+    private static final Color[] colors = {new Color(255, 92, 205), Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.GRAY, Color.BLACK};
     
     private Point front;
     private Point back;
+    
+    private int amount;
 
-    public SpecialPointsConsumable(Point center) {
-        super(center, 10, 5, A_INC);
+    public SpecialPointsConsumable(Point center, int level) {
+        super(center, (level+2)*2, level+2, A_INC);
+        amount = level+2;
     }
 
+    public double c_part() {
+        return 2*Math.PI/amount;
+    }
+    
     // Should not be called. Use .getRData.c() instead.
     @Override
     public Color c() {
@@ -28,19 +34,35 @@ public class SpecialPointsConsumable extends Consumable {
 
     @Override
     protected void generate() {
-        double cyaw = yaw;
-        double cpitch = C_QUARTER - 2*C_FIFTH;
-        for(int i = 0; i < 5; i++) {
-            p[i] = new Point(Vector.fromPolarTransform(cyaw, cpitch, 0.5));
-            cpitch += C_FIFTH;
+        if (amount > 2) {
+            double cyaw = yaw;
+            double cpitch = C_QUARTER - (amount/2)*c_part();
+            for(int i = 0; i < amount; i++) {
+                p[i] = new Point(Vector.fromPolarTransform(cyaw, cpitch, 0.5));
+                cpitch += c_part();
+            }
+            front = new Point(Vector.fromPolarTransform(cyaw+C_QUARTER, 0, 0.2));
+            back = new Point(Vector.fromPolarTransform(cyaw-C_QUARTER, 0, 0.2));
+            for (int i = 0; i < amount; i++) {
+                t[2*i] = new Triangle(front, p[i], p[(i+((amount+1)/3))%amount], colors[i%7]);
+                t[2*i+1] = new Triangle(back, p[i], p[(i+((amount+1)/3))%amount], colors[(i+1)%7]);
+            }
+            translate(new Vector(center.x, 0.625, center.z));
+        } else {
+            double cyaw = yaw;
+            double cpitch = C_QUARTER - (p.length/2)*2*Math.PI/(p.length);
+            for(int i = 0; i < p.length; i++) {
+                p[i] = new Point(Vector.fromPolarTransform(cyaw, cpitch, 0.5));
+                cpitch += c_part();
+            }
+            front = new Point(Vector.fromPolarTransform(cyaw+C_QUARTER, 0, 0.2));
+            back = new Point(Vector.fromPolarTransform(cyaw-C_QUARTER, 0, 0.2));
+            for (int i = 0; i < p.length; i++) {
+                t[2*i] = new Triangle(front, p[i], p[(i+((p.length+1)/3))%p.length], colors[i%7]);
+                t[2*i+1] = new Triangle(back, p[i], p[(i+((p.length+1)/3))%p.length], colors[(i+1)%7]);
+            }
+            translate(new Vector(center.x, 0.625, center.z));
         }
-        front = new Point(Vector.fromPolarTransform(cyaw+C_QUARTER, 0, 0.2));
-        back = new Point(Vector.fromPolarTransform(cyaw-C_QUARTER, 0, 0.2));
-        for (int i = 0; i < 5; i++) {
-            t[2*i] = new Triangle(front, p[i], p[(i+2)%5], colors[i]);
-            t[2*i+1] = new Triangle(back, p[i], p[(i+2)%5], colors[(i+1)%5]);
-        }
-        translate(new Vector(center.x, 0.625, center.z));
     }
 
     @Override

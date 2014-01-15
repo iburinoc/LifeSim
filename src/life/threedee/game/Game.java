@@ -101,9 +101,38 @@ public class Game implements Runnable, Tickable{
 		tickables.add(p);
 		tickables.add(this);
 		
-		/*SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(0, 0, -2.5));
+		/* START REMOVE */
+		{
+		SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(0, 0, -2.5), 5);
 		objects.add(spc);
-		tickables.add(spc);*/
+		tickables.add(spc);
+		}
+		{
+	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(-1, 0, -2.5), 3);
+	        objects.add(spc);
+	        tickables.add(spc);
+	        }
+		{
+	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(-2, 0, -2.5), 4);
+	        objects.add(spc);
+	        tickables.add(spc);
+	        }
+		{
+	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(1, 0, -2.5), 2);
+	        objects.add(spc);
+	        tickables.add(spc);
+	        }
+		{
+	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(2, 0, -2.5), 1);
+	        objects.add(spc);
+	        tickables.add(spc);
+	        }
+		{
+            SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(3, 0, -2.5), 100);
+            objects.add(spc);
+            tickables.add(spc);
+            }
+		/* END REMOVE */
 	}
 	
 	// make the cursor invisible

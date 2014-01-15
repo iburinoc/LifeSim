@@ -102,8 +102,8 @@ public class Ghost implements Tickable{
             facePlanes[(direction+3)%4].setFace(false);
         } else if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
             nextDecision = leaving ? release() : makeDecision();
-        } else if ( (((int) location.x + Math.signum(location.x) * 0.5 > location.x) != ((int) location.x + Math.signum(location.x) * 0.5 > newLocation.x)) || 
-        		    (((int) location.z + Math.signum(location.z) * 0.5 > location.z) != ((int) location.z + Math.signum(location.z) * 0.5 > newLocation.z)) ) {
+        } else if ((((int) location.x + Math.signum(location.x) / 2 > location.x) != ((int) location.x + Math.signum(location.x) / 2 > newLocation.x)) ||
+        		   (((int) location.z + Math.signum(location.z) / 2 > location.z) != ((int) location.z + Math.signum(location.z) / 2 > newLocation.z))) {
             direction = decision;
             decision = nextDecision;
             facePlanes[direction].setFace(true);

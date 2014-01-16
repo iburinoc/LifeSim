@@ -1,8 +1,19 @@
 package life.threedee.game;
 
+import static life.threedee.game.GameUtilities.BLINKY;
+import static life.threedee.game.GameUtilities.CLYDE;
+import static life.threedee.game.GameUtilities.EATEN;
+import static life.threedee.game.GameUtilities.FRIGHTENED_DATA;
+import static life.threedee.game.GameUtilities.INKY;
+import static life.threedee.game.GameUtilities.INTERSECTIONS;
+import static life.threedee.game.GameUtilities.PINKY;
+import static life.threedee.game.GameUtilities.SCARED;
+import static life.threedee.game.GameUtilities.SCARED_FLASHING;
+import static life.threedee.game.GameUtilities.open;
+
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -16,8 +27,6 @@ import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapLocation;
-
-import static life.threedee.game.GameUtilities.*;
 
 /**
  * The main game class.  Contains the main method.
@@ -63,6 +72,12 @@ public class Game implements Runnable, Tickable{
 
     private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage, frightTicks, pointsPerGhost;
 	
+    private boolean dead;
+    
+    private int fade;
+    
+    private List<String> highscore;
+    
     private Object objLock;
     
 	public Game() {
@@ -201,6 +216,12 @@ public class Game implements Runnable, Tickable{
 	
     @Override
     public void tick(){
+    	if(dead) {
+    		if(fade < 256) { 
+    			fade++;
+    		}
+    		return;
+    	}
         if (preferredGhost < 4 && !ghosts.get(preferredGhost).inside()) {
             preferredGhost++;
         }
@@ -242,7 +263,9 @@ public class Game implements Runnable, Tickable{
                 if (ghost.ghostNum != SCARED && ghost.ghostNum != SCARED_FLASHING && ghost.ghostNum != EATEN){
                     lives--;
                     lostLifeThisLevel = true;
-                    die();
+                    if(lives > 0) {
+                    	die();
+                    }
                 } else if (ghost.ghostNum == SCARED || ghost.ghostNum == SCARED_FLASHING){
                     score += pointsPerGhost;
                     pointsPerGhost *= 2;
@@ -271,6 +294,10 @@ public class Game implements Runnable, Tickable{
             ticksThisMode = 0;
             gameStage++;
             mode = gameStage % 2;
+        }
+        
+        if(lives <= 0) {
+        	endGame();
         }
     }
 	
@@ -302,11 +329,51 @@ public class Game implements Runnable, Tickable{
 		}
 	}
 	
-	protected void drawScore(Graphics g) {
+	protected void drawSpecial(Graphics g) {
+		if(!dead) {
+			drawScore(g);
+		} else {
+			drawDead(g);
+		}
+	}
+	
+	private void drawScore(Graphics g) {
 		final int height = 50;
 		g.setColor(Color.WHITE);
 		g.setFont(GameUtilities.SCORE_FONT);
 		g.drawString("Score: " + score, 5, GameUtilities.SC_HEIGHT - height);
+	}
+	
+	private void drawDead(Graphics g) {
+		g.setFont(GameUtilities.GAME_OVER_FONT);
+		FontMetrics fm = g.getFontMetrics();
+		if(fade < 256) {
+			g.setColor(new Color(0, 0, 0, fade));
+			g.fillRect(0, 0, GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT);
+		} else {
+			g.setColor(new Color(0, 0, 0, 255));
+			g.fillRect(0, 0, GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT);
+			g.setColor(Color.WHITE);
+			String sc = "Score: " + score;
+			g.drawString(sc, GameUtilities.SC_WIDTH/2 - fm.stringWidth(sc)/2, 50);
+			if(highscore == null) {
+				String high = "Highscores could not be retrieved";
+				g.drawString(high, GameUtilities.SC_WIDTH/2 - fm.stringWidth(high)/2, 100);
+			} else {
+				String high = "Highscores:";
+				g.drawString(high, GameUtilities.SC_WIDTH/2 - fm.stringWidth(high)/2, 100);
+				for(int i = 0; i < highscore.size(); i++) {
+					String h = highscore.get(i);
+					g.drawString(h, GameUtilities.SC_WIDTH/2 - fm.stringWidth(h)/2, 130 + 30 * i);
+				}
+			}
+		}
+		g.setColor(Color.RED);
+		g.drawString("Game Over", GameUtilities.SC_WIDTH/2 - fm.stringWidth("Game Over")/2, GameUtilities.SC_HEIGHT - 100);
+	}
+	
+	private void endGame() {
+		dead = true;
 	}
 	
 	public void addTickable(Tickable t){

@@ -374,6 +374,7 @@ public class Game implements Runnable, Tickable{
 	
 	private void endGame() {
 		dead = true;
+		highscore = HighScore.getHighScores();
 	}
 	
 	public void addTickable(Tickable t){

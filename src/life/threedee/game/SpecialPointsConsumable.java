@@ -89,6 +89,9 @@ public class SpecialPointsConsumable extends Consumable {
     public void eat(Game g, Player p) {
         eaten = true;
         g.pointsBonus();
-        p.stop(1);
+    }
+
+    public void disappear() {
+        eaten = true;
     }
 }

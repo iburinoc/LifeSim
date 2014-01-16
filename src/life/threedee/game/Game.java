@@ -230,14 +230,21 @@ public class Game implements Runnable, Tickable{
             MapLocation ghostCoords = new MapLocation(ghostLoc.x, ghostLoc.z);
             boolean[] open = INTERSECTIONS[coords.mx][coords.my].clone();
             if (!(open[0] || open[1] || open[2] || open[3])) {
-                System.out.println("Are x: " + coords.mx + " y: " + coords.my);
-                boolean[] xTile = INTERSECTIONS[coords.mx + ((loc.x % 1) + 1) % 1 > 0.5 ? 1 : -1][coords.my].clone();
-                boolean[] zTile = INTERSECTIONS[coords.mx][coords.my + ((loc.z % 1) + 1) % 1 > 0.5 ? 1 : -1].clone();
-                boolean offsetX = (xTile[0] || xTile[1] || xTile[2] || xTile[3]);
-                boolean offsetZ = (zTile[0] || zTile[1] || zTile[2] || zTile[3]);
-                coords = new MapLocation(coords.mx + (offsetX ? (((loc.x % 1) + 1) % 1 > 0.5 ? 1 : -1) : 0), 
-                        coords.my + (offsetZ ? (((loc.z % 1) + 1) % 1 > 0.5 ? 1 : -1) : 0));
-                System.out.println("Should be x: " + coords.mx + " y: " + coords.my);
+                Point tempLoc = loc;
+                boolean[] xPlusOne = INTERSECTIONS[coords.mx + 1][coords.my];
+                boolean[] xMinusOne = INTERSECTIONS[coords.mx - 1][coords.my];
+                boolean[] zPlusOne = INTERSECTIONS[coords.mx][coords.my + 1];
+                boolean[] zMinusOne = INTERSECTIONS[coords.mx][coords.my - 1];
+                boolean xPlusOneOpen = xPlusOne[0] || xPlusOne[1] || xPlusOne[2] || xPlusOne[3];
+                boolean xMinusOneOpen = xMinusOne[0] || xMinusOne[1] || xMinusOne[2] || xMinusOne[3];
+                boolean zPlusOneOpen = zPlusOne[0] || zPlusOne[1] || zPlusOne[2] || zPlusOne[3];
+                boolean zMinusOneOpen = zMinusOne[0] || zMinusOne[1] || zMinusOne[2] || zMinusOne[3];
+                if (!xPlusOneOpen && !xMinusOneOpen && !zPlusOneOpen && !zMinusOneOpen) {
+                    throw new RuntimeException();
+                } else {
+                    tempLoc = new Point(loc.x + (xPlusOneOpen || xMinusOneOpen ? (xPlusOneOpen ? 1 : -1) : 0), loc.y, loc.z + (zPlusOneOpen || zMinusOneOpen ? (zPlusOneOpen ? 1 : -1) : 0));
+                }
+                coords = new MapLocation(tempLoc);
             }
             if (coords.equals(ghostCoords)) {
                 if (ghost.ghostNum != SCARED && ghost.ghostNum != SCARED_FLASHING && ghost.ghostNum != EATEN){

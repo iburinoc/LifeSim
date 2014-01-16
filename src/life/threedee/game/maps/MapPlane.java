@@ -1,7 +1,6 @@
 package life.threedee.game.maps;
 
 import static java.lang.Math.PI;
-import static life.threedee.game.GameUtilities.PX_METER;
 import static life.threedee.game.GameUtilities.idCount;
 
 import java.awt.Color;

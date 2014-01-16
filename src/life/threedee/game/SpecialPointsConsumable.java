@@ -22,6 +22,14 @@ public class SpecialPointsConsumable extends Consumable {
         amount = level+2;
     }
 
+    public void despawn() {
+        eaten = true;
+    }
+    
+    public void updateLevel(int level) {
+        amount = level+2;
+    }
+    
     public double c_part() {
         return 2*Math.PI/amount;
     }
@@ -89,9 +97,5 @@ public class SpecialPointsConsumable extends Consumable {
     public void eat(Game g, Player p) {
         eaten = true;
         g.pointsBonus();
-    }
-
-    public void disappear() {
-        eaten = true;
     }
 }

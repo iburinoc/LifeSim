@@ -80,6 +80,8 @@ public class Game implements Runnable, Tickable{
     
     private Object objLock;
     
+    private SpecialPointsConsumable spc;
+    
 	public Game() {
 		j = new JFrame("Game");
 		
@@ -111,39 +113,6 @@ public class Game implements Runnable, Tickable{
 		
 		tickables.add(p);
 		tickables.add(this);
-		
-		/* START REMOVE */
-		{
-		SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(0, 0, -2.5), 5);
-		objects.add(spc);
-		tickables.add(spc);
-		}
-		{
-	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(-1, 0, -2.5), 3);
-	        objects.add(spc);
-	        tickables.add(spc);
-	        }
-		{
-	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(-2, 0, -2.5), 4);
-	        objects.add(spc);
-	        tickables.add(spc);
-	        }
-		{
-	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(1, 0, -2.5), 2);
-	        objects.add(spc);
-	        tickables.add(spc);
-	        }
-		{
-	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(2, 0, -2.5), 1);
-	        objects.add(spc);
-	        tickables.add(spc);
-	        }
-		{
-            SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(3, 0, -2.5), 100);
-            objects.add(spc);
-            tickables.add(spc);
-            }
-		/* END REMOVE */
 	}
 	
 	// make the cursor invisible
@@ -160,6 +129,9 @@ public class Game implements Runnable, Tickable{
 				tickables.add((Consumable)o);
 			}
 		}
+		spc = new SpecialPointsConsumable(GameUtilities.FRUIT_LOCATION, 1);
+        objects.add(spc);
+        tickables.add(spc);
 	}
 	
 	@Override
@@ -226,7 +198,7 @@ public class Game implements Runnable, Tickable{
             fruitTimer++;
         }
         if (fruitTimer >= fruitTimerLimit) {
-            //call disappear method of fruit
+            spc.despawn();
             fruitOnMap = false;
         }
         if (preferredGhost < 4 && !ghosts.get(preferredGhost).inside()) {
@@ -237,13 +209,13 @@ public class Game implements Runnable, Tickable{
         }
         switch (pelletsEaten) {
             case 70:
-                //spawn fruit one
+                spc.spawn();
                 fruitOnMap = true;
                 fruitTimer = 0;
                 fruitTimerLimit = (int) (60 * (9 + Math.random()));
                 break;
             case 170:
-                //spawn fruit two
+                spc.spawn();
                 fruitOnMap = true;
                 fruitTimer = 0;
                 fruitTimerLimit = (int) (60 * (9 + Math.random()));
@@ -259,6 +231,7 @@ public class Game implements Runnable, Tickable{
                 level++;
                 pelletsEaten = 0;
                 lostLifeThisLevel = false;
+                spc.updateLevel(getArraySafeLevel());
                 break;
         }
         if (score >= 10000 && !gotExtraLife){
@@ -299,6 +272,13 @@ public class Game implements Runnable, Tickable{
             MapLocation consumableCoords = new MapLocation(consumableLoc.x, consumableLoc.z);
             if (coords.equals(consumableCoords) && !c.getEaten()) {
                 c.eat(this, p);
+            }
+        }
+        {
+            Point consumableLoc = spc.getCenter();
+            MapLocation consumableCoords = new MapLocation(consumableLoc.x, consumableLoc.z);
+            if (coords.equals(consumableCoords) && !spc.getEaten()) {
+                spc.eat(this, p);
             }
         }
         if (mode != -1) {

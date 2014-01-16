@@ -225,6 +225,12 @@ public class Game implements Runnable, Tickable{
         for (Ghost ghost : ghosts){
             Point ghostLoc = ghost.getLocation();
             MapLocation ghostCoords = new MapLocation(ghostLoc.x, ghostLoc.z);
+            boolean[] open = INTERSECTIONS[coords.mx][coords.my];
+            if (!(open[0] || open[1] || open[2] || open[3])) {
+                boolean[] xTile = INTERSECTIONS[coords.mx + ((loc.x % 1) + 1) % 1 > 0.5 ? 1 : -1][coords.my], zTile = INTERSECTIONS[coords.mx][coords.my + ((loc.z % 1) + 1) % 1 > 0.5 ? 1 : -1];
+                boolean offsetX = (open[0] || open[1] || open[2] || xTile[3]);
+                //coords = new MapLocation(coords.mx + );
+            }
             if (coords.equals(ghostCoords)) {
                 if (ghost.ghostNum != SCARED && ghost.ghostNum != SCARED_FLASHING && ghost.ghostNum != EATEN){
                     lives--;

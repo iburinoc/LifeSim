@@ -59,11 +59,10 @@ public class Game implements Runnable, Tickable{
 	
 	private Input i;
 	
-	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOnMap = false;
+	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOnMap = false, dead, globalCounterEnabled;
 
-    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
-	
-    private boolean dead;
+    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, globalPelletCounter = 0, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
+
     
     private int fade;
     
@@ -192,6 +191,15 @@ public class Game implements Runnable, Tickable{
             spc.despawn();
             fruitOnMap = false;
         }
+        if (lostLifeThisLevel) {
+            globalPelletCounter = 0;
+            globalCounterEnabled = true;
+            lostLifeThisLevel = false;
+        }
+        if (globalPelletCounter == 32 && ghosts.get(CLYDE).inside()) {
+            globalCounterEnabled = false;
+            globalPelletCounter = 0;
+        }
         if (preferredGhost < 4 && !ghosts.get(preferredGhost).inside()) {
             preferredGhost++;
         }
@@ -220,6 +228,8 @@ public class Game implements Runnable, Tickable{
             }
             level++;
             pelletsEaten = 0;
+            globalPelletCounter = 0;
+            globalCounterEnabled = false;
             lostLifeThisLevel = false;
             spc.updateLevel(getArraySafeLevel());
         }
@@ -246,7 +256,7 @@ public class Game implements Runnable, Tickable{
                 if (ghost.ghostNum != SCARED && ghost.ghostNum != SCARED_FLASHING && ghost.ghostNum != EATEN){
                     lives--;
                     lostLifeThisLevel = true;
-                    if(lives > 0) {
+                    if(lives >= 0) {
                     	die();
                     }
                 } else if (ghost.ghostNum == SCARED || ghost.ghostNum == SCARED_FLASHING){
@@ -420,6 +430,7 @@ public class Game implements Runnable, Tickable{
         p.setDir(new Vector(-1, 0, 0));
         for(Ghost ghost : ghosts) {
             ghost.reset();
+            ghost.resetCounter();
         }
     }
     
@@ -439,7 +450,11 @@ public class Game implements Runnable, Tickable{
         pelletsEaten++;
         score += 10;
         if (preferredGhost < 4) {
-            ghosts.get(preferredGhost).addToCounter();
+            if (globalCounterEnabled) {
+                globalPelletCounter++;
+            } else {
+                ghosts.get(preferredGhost).addToCounter();
+            }
             ghosts.get(preferredGhost).resetTimer();
         }
     }
@@ -448,16 +463,20 @@ public class Game implements Runnable, Tickable{
         score += GameUtilities.GAME_DATA[getArraySafeLevel()][2];
     }
 
+    public int getGlobalPelletCounter() {
+        return globalPelletCounter;
+    }
+
+    public boolean getGlobalCounterEnabled() {
+        return globalCounterEnabled;
+    }
+
     public int getTicksThisMode() {
         return ticksThisMode;
     }
 
     public int getGameStage() {
         return gameStage;
-    }
-
-    public int getPreferredGhost() {
-        return preferredGhost;
     }
     
     public int getArraySafeLevel() {

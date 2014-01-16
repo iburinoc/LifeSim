@@ -95,25 +95,21 @@ public class Ghost implements Tickable{
 
     public void move() {
         newLocation = location.add(new Point(dirToV()));
-        boolean leaving = (pelletCounter >= EXIT_PELLETS[game.getArraySafeLevel()][ghostId]||ghostTimer >= GAME_DATA[game.getArraySafeLevel()][4]) && inside();
+        boolean leaving = ((game.getGlobalCounterEnabled() ? game.getGlobalPelletCounter() >= POSTMORTEM_PELLETS[ghostId] : pelletCounter >= EXIT_PELLETS[game.getArraySafeLevel()][ghostId]) || ghostTimer >= GAME_DATA[game.getArraySafeLevel()][4]) && inside();
         if (!sentRelease && leaving) {
             sentRelease = true;
             nextDecision = release();
-            facePlanes[direction].setFace(true);
-            facePlanes[(direction+1)%4].setFace(false);
-            facePlanes[(direction+2)%4].setFace(false);
-            facePlanes[(direction+3)%4].setFace(false);
         } else if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
             nextDecision = leaving ? release() : makeDecision();
         } else if ((((int) location.x + Math.signum(location.x) / 2 > location.x) != ((int) location.x + Math.signum(location.x) / 2 > newLocation.x)) ||
         		   (((int) location.z + Math.signum(location.z) / 2 > location.z) != ((int) location.z + Math.signum(location.z) / 2 > newLocation.z))) {
             direction = decision;
             decision = nextDecision;
-            facePlanes[direction].setFace(true);
-            facePlanes[(direction+1)%4].setFace(false);
-            facePlanes[(direction+2)%4].setFace(false);
-            facePlanes[(direction+3)%4].setFace(false);
         }
+        facePlanes[direction].setFace(true);
+        facePlanes[(direction+1)%4].setFace(false);
+        facePlanes[(direction+2)%4].setFace(false);
+        facePlanes[(direction+3)%4].setFace(false);
         translate(new Vector(newLocation.subtract(location)));
     }
 
@@ -342,6 +338,10 @@ public class Ghost implements Tickable{
     
     public void resetTimer() {
         ghostTimer = 0;
+    }
+
+    public void resetCounter() {
+        pelletCounter = 0;
     }
     
     public void addToTimer() {

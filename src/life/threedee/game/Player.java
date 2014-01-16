@@ -44,6 +44,9 @@ public class Player extends Camera implements Tickable{
 
     @Override
     public void calcBuffer() {
+    	if(!g.draw()) {
+    		return;
+    	}
     	if(g != null || m != null){
     		if(g == null)
     			this.objects = null;

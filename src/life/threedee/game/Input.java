@@ -106,9 +106,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
 			p.s = true;
 		}else if(e.getKeyChar() == 'd'){
 			p.d = true;
-        }else if(e.getKeyChar() == 'e'){
-        	g.ePressed();
         }
+		g.keyPressed(e.getKeyCode(), e.getKeyChar());
 	}
 
 	@Override

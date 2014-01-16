@@ -69,6 +69,10 @@ public class Game implements Runnable, Tickable{
     
     private List<String> highscore;
     
+    private int scoreboardDrawMode;
+    
+    private String name;
+    
     private Object objLock;
     
     private SpecialPointsConsumable spc;
@@ -330,7 +334,7 @@ public class Game implements Runnable, Tickable{
 		}
 	}
 	
-	protected void drawSpecial(Graphics g) {
+	void drawSpecial(Graphics g) {
 		if(!dead) {
 			drawScore(g);
 		} else {
@@ -354,38 +358,96 @@ public class Game implements Runnable, Tickable{
 		} else {
 			g.setColor(new Color(0, 0, 0, 255));
 			g.fillRect(0, 0, GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT);
-			g.setColor(Color.WHITE);
-			String sc = "Score: " + score;
-			g.drawString(sc, GameUtilities.SC_WIDTH/2 - fm.stringWidth(sc)/2, 50);
-			if(highscore == null) {
-				String high = "Highscores could not be retrieved";
-				g.drawString(high, GameUtilities.SC_WIDTH/2 - fm.stringWidth(high)/2, 100);
-			} else {
-				String high = "Highscores:";
-				g.drawString(high, GameUtilities.SC_WIDTH/2 - fm.stringWidth(high)/2, 100);
-				for(int i = 0; i < highscore.size(); i++) {
-					String h = highscore.get(i);
-					g.drawString(h, GameUtilities.SC_WIDTH/2 - fm.stringWidth(h)/2, 130 + 30 * i);
-				}
+			switch(scoreboardDrawMode){
+				case 1:
+					drawEnterName(g);
+					break;
+				case 2:
+					drawScoreBoard(g);
+					break;
 			}
 		}
 		g.setColor(Color.RED);
 		g.drawString("Game Over", GameUtilities.SC_WIDTH/2 - fm.stringWidth("Game Over")/2, GameUtilities.SC_HEIGHT - 100);
 	}
 	
-	private void endGame() {
-		dead = true;
-		highscore = HighScore.getHighScores();
-	}
-	
-	protected void ePressed() {
-		if(dead && fade >= 256) {
-			String in = JOptionPane.showInputDialog(j, "Name: ");
-			if(in != null && !"".equals(in)) {
-				HighScore.postHighScores(in, score);
-				highscore = HighScore.getHighScores();
+	private void drawEnterName(Graphics g) {
+		g.setFont(GameUtilities.GAME_OVER_FONT);
+		FontMetrics fm = g.getFontMetrics();
+		g.setColor(Color.WHITE);
+		String prompt = "Enter Initials:";
+		g.drawString(prompt, GameUtilities.SC_WIDTH/2 - fm.stringWidth(prompt)/2, 200);
+		for(int i = 0; i < 3; i++) {
+			int x = GameUtilities.SC_WIDTH/2 - fm.charWidth('_')/2 + (i - 1) * fm.charWidth('_');
+			try{
+				g.drawString("" + name.charAt(i), x, 250);
+			}
+			catch(StringIndexOutOfBoundsException e) {
+				g.drawString("_", x, 250);
 			}
 		}
+	}
+	
+	private void drawScoreBoard(Graphics g) {
+		g.setFont(GameUtilities.GAME_OVER_FONT);
+		FontMetrics fm = g.getFontMetrics();
+		g.setColor(Color.WHITE);
+		String sc = "Score: " + score;
+		g.drawString(sc, GameUtilities.SC_WIDTH/2 - fm.stringWidth(sc)/2, 50);
+		if(highscore == null) {
+			String high = "Highscores could not be retrieved";
+			g.drawString(high, GameUtilities.SC_WIDTH/2 - fm.stringWidth(high)/2, 100);
+		} else {
+			String high = "Highscores:";
+			g.drawString(high, GameUtilities.SC_WIDTH/2 - fm.stringWidth(high)/2, 100);
+			for(int i = 0; i < highscore.size(); i++) {
+				String h = highscore.get(i);
+				g.drawString(h, GameUtilities.SC_WIDTH/2 - fm.stringWidth(h)/2, 130 + 30 * i);
+			}
+		}
+	}
+	
+	private void endGame() {
+		dead = true;
+		scoreboardDrawMode = 1;
+		name = "";
+	}
+
+	void keyPressed(int code, char key) {
+		System.out.println(code);
+		if(!dead || fade < 256)
+			return;
+		key = Character.toUpperCase(key);
+		if(scoreboardDrawMode == 1) {
+			if(key >= 'A' && key <= 'Z') {
+				if(name.length() < 3) {
+					name += key;
+				}
+			}
+			if(code == 8) {
+				if(name.length() >= 1) {
+					name = name.substring(0, name.length() - 1);
+				}
+			}
+			if(code == 10) {
+				if(name.length() >= 1) {
+					while(name.length() < 3) {
+						name += " ";
+					}
+					HighScore.postHighScores(name, score);
+					highscore = HighScore.getHighScores();
+					scoreboardDrawMode++;
+				}
+			}
+		} else if(scoreboardDrawMode == 2) {
+			if(code == 10) {
+				// newGame();
+			}
+		}
+	}
+	
+	boolean draw() {
+		return fade < 256;
 	}
 	
 	public void addTickable(Tickable t){

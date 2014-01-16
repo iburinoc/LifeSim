@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
@@ -385,6 +386,16 @@ public class Game implements Runnable, Tickable{
 	private void endGame() {
 		dead = true;
 		highscore = HighScore.getHighScores();
+	}
+	
+	protected void ePressed() {
+		if(dead && fade >= 256) {
+			String in = JOptionPane.showInputDialog(j, "Name: ");
+			if(in != null && !"".equals(in)) {
+				HighScore.postHighScores(in, score);
+				highscore = HighScore.getHighScores();
+			}
+		}
 	}
 	
 	public void addTickable(Tickable t){

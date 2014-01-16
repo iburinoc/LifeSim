@@ -62,7 +62,7 @@ public class Game implements Runnable, Tickable{
 	
 	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOnMap = false, dead, globalCounterEnabled;
 
-    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, globalPelletCounter = 0, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
+    private int mode, level, pelletsEaten, score, lives = GameUtilities.STARTING_LIVES, preferredGhost = 1, globalPelletCounter = 0, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
 
     
     private int fade;
@@ -441,7 +441,7 @@ public class Game implements Runnable, Tickable{
 			}
 		} else if(scoreboardDrawMode == 2) {
 			if(code == 10) {
-				// newGame();
+				newGame();
 			}
 		}
 	}
@@ -564,7 +564,7 @@ public class Game implements Runnable, Tickable{
         for(Energizer energizer : m.energyList()) {
             energizer.spawn();
         }
-        lives=0;
+        lives=GameUtilities.STARTING_LIVES;
         level=0;
         pelletsEaten = 0;
         globalPelletCounter = 0;

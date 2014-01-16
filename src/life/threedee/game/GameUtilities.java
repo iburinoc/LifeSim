@@ -117,6 +117,8 @@ public class GameUtilities{
     public static final int[][] EXIT_PELLETS = new int[][] {{Integer.MAX_VALUE, 0, 30, 60}, {Integer.MAX_VALUE, 0, 0, 50}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}};
     public static final int[] POSTMORTEM_PELLETS = new int[] {Integer.MAX_VALUE, 7, 17, Integer.MAX_VALUE};
 
+    public static final int STARTING_LIVES = 2;
+    
     //fright time, warning flashes
     public static final int[][] FRIGHTENED_DATA = new int[][] {{360, 5}, {300, 5}, {240, 5}, {180, 5}, {120, 5}, {300, 5}, {120, 5}, {120, 5}, {60, 3}, {300, 5}, {120, 5}, {60, 3}, {60, 3}, {180, 5}, {60, 3}, {60, 3}, {0, 0}, {60, 3}, {0, 0}, {0, 0}, {0, 0}};
 

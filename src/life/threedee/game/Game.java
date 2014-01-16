@@ -1,15 +1,6 @@
 package life.threedee.game;
 
-import static life.threedee.game.GameUtilities.BLINKY;
-import static life.threedee.game.GameUtilities.CLYDE;
-import static life.threedee.game.GameUtilities.EATEN;
-import static life.threedee.game.GameUtilities.FRIGHTENED_DATA;
-import static life.threedee.game.GameUtilities.INKY;
-import static life.threedee.game.GameUtilities.INTERSECTIONS;
-import static life.threedee.game.GameUtilities.PINKY;
-import static life.threedee.game.GameUtilities.SCARED;
-import static life.threedee.game.GameUtilities.SCARED_FLASHING;
-import static life.threedee.game.GameUtilities.open;
+import static life.threedee.game.GameUtilities.*;
 
 import java.awt.Color;
 import java.awt.Cursor;

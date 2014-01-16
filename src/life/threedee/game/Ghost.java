@@ -4,7 +4,6 @@ import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
 import life.threedee.game.maps.MapLocation;
-
 import static life.threedee.game.GameUtilities.*;
 
 public class Ghost implements Tickable{
@@ -31,10 +30,10 @@ public class Ghost implements Tickable{
         this.game=g;
         this.ghostNum=ghostNum;
         this.ghostId=ghostNum;
-        this.location=GameUtilities.GHOST_LOCATIONS[ghostNum];
-        this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
-        this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
-        this.nextDecision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
+        this.location=GHOST_LOCATIONS[ghostNum];
+        this.direction=GHOST_ORIENTATIONS[ghostNum];
+        this.decision=GHOST_ORIENTATIONS[ghostNum];
+        this.nextDecision=GHOST_ORIENTATIONS[ghostNum];
         Point top = new Point(0.0, 1.0, 0.0).add(this.location);
         Point zPlusXPlus = new Point(0.25, 0.5, 0.25).add(this.location);
         Point zMinusXPlus = new Point(0.25, 0.5, -0.25).add(this.location);
@@ -46,10 +45,10 @@ public class Ghost implements Tickable{
         Point lowerZPlusXMinus = new Point(-0.5, -1.0, 0.5).add(this.location);
         facePlanes = new GhostPlane[4];
         faceTriangles = new Triangle[4];
-        faceTriangles[0] = new Triangle(top, zPlusXPlus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        faceTriangles[1] = new Triangle(top, zMinusXMinus, zPlusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        faceTriangles[2] = new Triangle(top, zMinusXPlus, zMinusXMinus, GameUtilities.GHOST_COLORS[ghostNum]);
-        faceTriangles[3] = new Triangle(top, zPlusXPlus, zMinusXPlus, GameUtilities.GHOST_COLORS[ghostNum]);
+        faceTriangles[0] = new Triangle(top, zPlusXPlus, zPlusXMinus, GHOST_COLORS[ghostNum]);
+        faceTriangles[1] = new Triangle(top, zMinusXMinus, zPlusXMinus, GHOST_COLORS[ghostNum]);
+        faceTriangles[2] = new Triangle(top, zMinusXPlus, zMinusXMinus, GHOST_COLORS[ghostNum]);
+        faceTriangles[3] = new Triangle(top, zPlusXPlus, zMinusXPlus, GHOST_COLORS[ghostNum]);
         facePlanes[0] = new GhostPlane(lowerZPlusXPlus, lowerZPlusXMinus, zPlusXPlus, ghostNum);
         facePlanes[1] = new GhostPlane(lowerZPlusXMinus, lowerZMinusXMinus, zPlusXMinus, ghostNum);
         facePlanes[2] = new GhostPlane(lowerZMinusXMinus, lowerZMinusXPlus, zMinusXMinus, ghostNum);
@@ -80,23 +79,23 @@ public class Ghost implements Tickable{
         // We'll need to rework this.
         // Andrey, you'll need to implement ALL the rules 
         // concerning Blinky turning into his 2 Cruise Elroy forms. 
-        if (ghostId == BLINKY && ghostNum != SCARED && ghostNum != SCARED_FLASHING && ghostNum != EATEN && GameUtilities.GAME_DATA[game.getArraySafeLevel()][3] >= game.getPelletsRemaining()) {
+        if (ghostId == BLINKY && ghostNum != SCARED && ghostNum != SCARED_FLASHING && ghostNum != EATEN && GAME_DATA[game.getArraySafeLevel()][3] >= game.getPelletsRemaining()) {
             ghostNum = CRUISE_ELROY;
             updatePlanes();
         }
-        if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && ghostNum != SCARED_FLASHING && ghostNum != EATEN && GameUtilities.GAME_DATA[game.getArraySafeLevel()][3] >= game.getPelletsRemaining() * 2) {
+        if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && ghostNum != SCARED_FLASHING && ghostNum != EATEN && GAME_DATA[game.getArraySafeLevel()][3] >= game.getPelletsRemaining() * 2) {
             ghostNum = CRUISE_ELROY_2;
             updatePlanes();
         }
         move();
         if (Math.abs(location.x) > 14){
-            translate(new Vector(-28*GameUtilities.MPT * Math.signum(location.x), 0, 0));
+            translate(new Vector(-28*MPT * Math.signum(location.x), 0, 0));
         }
     }
 
     public void move() {
         newLocation = location.add(new Point(dirToV()));
-        boolean leaving = (pelletCounter >= GameUtilities.EXIT_PELLETS[game.getArraySafeLevel()][ghostId]||ghostTimer >= GameUtilities.GAME_DATA[game.getArraySafeLevel()][4]) && inside();
+        boolean leaving = (pelletCounter >= EXIT_PELLETS[game.getArraySafeLevel()][ghostId]||ghostTimer >= GAME_DATA[game.getArraySafeLevel()][4]) && inside();
         if (!sentRelease && leaving) {
             sentRelease = true;
             nextDecision = release();
@@ -135,7 +134,7 @@ public class Ghost implements Tickable{
                 return decision;
             }
             MapLocation indices = new MapLocation(newLocation.add(new Point(decision % 2 == 0 ? 0 : decision - 2, 0, decision % 2 == 0 ? -decision + 1 : 0)));
-            boolean[] open = GameUtilities.INTERSECTIONS[indices.mx][indices.my].clone();
+            boolean[] open = INTERSECTIONS[indices.mx][indices.my].clone();
             if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 14 || indices.my == 26) && game.getMode() == -1){
                 open = new boolean[] {true, true, false, true};
             }
@@ -223,7 +222,7 @@ public class Ghost implements Tickable{
 
     public Point findTarget() {
         if (game.getMode() == 0 && (ghostNum == BLINKY || ghostNum == PINKY || ghostNum == INKY || ghostNum == CLYDE)){
-            return GameUtilities.GHOST_CORNERS[ghostNum];
+            return GHOST_CORNERS[ghostNum];
         }
         switch(ghostNum) {
             case BLINKY:
@@ -253,7 +252,7 @@ public class Ghost implements Tickable{
                 if (new Vector(location, game.getPlayer().getLoc()).s() > 64){
                     return game.getPlayer().getLoc();
                 }
-                return GameUtilities.GHOST_CORNERS[3];
+                return GHOST_CORNERS[3];
             }
             case EATEN:
                 return eyesTarget;
@@ -267,7 +266,7 @@ public class Ghost implements Tickable{
     public void updatePlanes() {
         for (int i = 0; i < 4; i++) {
             facePlanes[(direction+i)%4].setGhostNum(ghostNum);
-            faceTriangles[(direction+i)%4].setC(GameUtilities.GHOST_COLORS[ghostNum]);
+            faceTriangles[(direction+i)%4].setC(GHOST_COLORS[ghostNum]);
         }
     }
     
@@ -281,9 +280,9 @@ public class Ghost implements Tickable{
 
     public void reset(){
         this.ghostNum=this.ghostId;
-        this.direction=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
-        this.decision=GameUtilities.GHOST_ORIENTATIONS[ghostNum];
-        Vector v = new Vector(this.location, GameUtilities.GHOST_LOCATIONS[ghostNum]);
+        this.direction=GHOST_ORIENTATIONS[ghostNum];
+        this.decision=GHOST_ORIENTATIONS[ghostNum];
+        Vector v = new Vector(this.location, GHOST_LOCATIONS[ghostNum]);
         translate(v);
         updatePlanes();
     }
@@ -317,7 +316,7 @@ public class Ghost implements Tickable{
 
     public boolean justExited() {
         MapLocation coords = new MapLocation(location);
-        boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my];
+        boolean[] open = INTERSECTIONS[coords.mx][coords.my];
         return !open(open) && !inside();
     }
 

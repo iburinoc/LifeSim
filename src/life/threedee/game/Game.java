@@ -302,7 +302,7 @@ public class Game implements Runnable, Tickable{
         }
         if (gameStage > 6 && mode != -1) {
             mode = 1;
-        } else if (ticksThisMode == GameUtilities.MODE_TIMES[level][gameStage]) {
+        } else if (ticksThisMode == GameUtilities.MODE_TIMES[getArraySafeLevel()][gameStage]) {
             ticksThisMode = 0;
             gameStage++;
             mode = gameStage % 2;

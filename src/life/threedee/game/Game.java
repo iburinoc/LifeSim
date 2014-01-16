@@ -198,32 +198,30 @@ public class Game implements Runnable, Tickable{
         if (preferredGhost < 4) {
             ghosts.get(preferredGhost).addToTimer();
         }
-        switch (pelletsEaten) {
-            case 70:
-                spc.spawn();
-                fruitOnMap = true;
-                fruitTimer = 0;
-                fruitTimerLimit = (int) (60 * (9 + Math.random()));
-                break;
-            case 170:
-                spc.spawn();
-                fruitOnMap = true;
-                fruitTimer = 0;
-                fruitTimerLimit = (int) (60 * (9 + Math.random()));
-                break;
-            case 240:
-                die();
-                for(Pellet pellet : m.pelletsList()) {
-                    pellet.spawn();
-                }
-                for(Energizer energizer : m.energyList()) {
-                    energizer.spawn();
-                }
-                level++;
-                pelletsEaten = 0;
-                lostLifeThisLevel = false;
-                spc.updateLevel(getArraySafeLevel());
-                break;
+        if (pelletsEaten == 70 && !fruitOnMap) {
+            spc.spawn();
+            fruitOnMap = true;
+            fruitTimer = 0;
+            fruitTimerLimit = (int) (60 * (9 + Math.random()));
+        }
+        if (pelletsEaten == 170 && !fruitOnMap) {
+            spc.spawn();
+            fruitOnMap = true;
+            fruitTimer = 0;
+            fruitTimerLimit = (int) (60 * (9 + Math.random()));
+        }
+        if (pelletsEaten == 240) {
+            die();
+            for(Pellet pellet : m.pelletsList()) {
+                pellet.spawn();
+            }
+            for(Energizer energizer : m.energyList()) {
+                energizer.spawn();
+            }
+            level++;
+            pelletsEaten = 0;
+            lostLifeThisLevel = false;
+            spc.updateLevel(getArraySafeLevel());
         }
         if (score >= 10000 && !gotExtraLife){
             gotExtraLife = true;
@@ -288,7 +286,7 @@ public class Game implements Runnable, Tickable{
             mode = gameStage % 2;
         }
         
-        if(lives <= 0) {
+        if(lives < 0) {
         	endGame();
         }
     }

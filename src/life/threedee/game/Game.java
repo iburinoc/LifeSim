@@ -242,7 +242,7 @@ public class Game implements Runnable, Tickable{
                 if (!xPlusOneOpen && !xMinusOneOpen && !zPlusOneOpen && !zMinusOneOpen) {
                     throw new RuntimeException();
                 } else {
-                    tempLoc = new Point(loc.x + (xPlusOneOpen || xMinusOneOpen ? (xPlusOneOpen ? 1 : -1) : 0), loc.y, loc.z + (zPlusOneOpen || zMinusOneOpen ? (zPlusOneOpen ? 1 : -1) : 0));
+                    tempLoc = new Point(loc.x + (xPlusOneOpen != xMinusOneOpen ? (xPlusOneOpen ? 1 : -1) : 0), loc.y, loc.z + (zPlusOneOpen != zMinusOneOpen ? (zPlusOneOpen ? 1 : -1) : 0));
                 }
                 coords = new MapLocation(tempLoc);
             }

@@ -80,11 +80,11 @@ public class Ghost implements Tickable{
         // We'll need to rework this.
         // Andrey, you'll need to implement ALL the rules 
         // concerning Blinky turning into his 2 Cruise Elroy forms. 
-        if (ghostId == BLINKY && GameUtilities.GAME_DATA[game.getArraySafeLevel()][3] == game.getPelletsRemaining()) {
+        if (ghostId == BLINKY && ghostNum != SCARED && ghostNum != SCARED_FLASHING && ghostNum != EATEN && GameUtilities.GAME_DATA[game.getArraySafeLevel()][3] >= game.getPelletsRemaining()) {
             ghostNum = CRUISE_ELROY;
             updatePlanes();
         }
-        if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && GameUtilities.GAME_DATA[game.getArraySafeLevel()][3] == game.getPelletsRemaining() * 2) {
+        if (ghostId == BLINKY && (ghostNum == BLINKY || ghostNum == CRUISE_ELROY) && ghostNum != SCARED_FLASHING && ghostNum != EATEN && GameUtilities.GAME_DATA[game.getArraySafeLevel()][3] >= game.getPelletsRemaining() * 2) {
             ghostNum = CRUISE_ELROY_2;
             updatePlanes();
         }

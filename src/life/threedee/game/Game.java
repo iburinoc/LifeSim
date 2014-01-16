@@ -68,9 +68,9 @@ public class Game implements Runnable, Tickable{
 	
 	private Input i;
 	
-	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOneSpawned = false, fruitTwoSpawned = false;
+	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOnMap = false;
 
-    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer;
+    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
 	
     private boolean dead;
     
@@ -222,6 +222,13 @@ public class Game implements Runnable, Tickable{
     		}
     		return;
     	}
+        if (fruitOnMap) {
+            fruitTimer++;
+        }
+        if (fruitTimer >= fruitTimerLimit) {
+            //call disappear method of fruit
+            fruitOnMap = false;
+        }
         if (preferredGhost < 4 && !ghosts.get(preferredGhost).inside()) {
             preferredGhost++;
         }
@@ -231,11 +238,15 @@ public class Game implements Runnable, Tickable{
         switch (pelletsEaten) {
             case 70:
                 //spawn fruit one
-                fruitOneSpawned = true;
+                fruitOnMap = true;
+                fruitTimer = 0;
+                fruitTimerLimit = (int) (60 * (9 + Math.random()));
                 break;
             case 170:
-                fruitTwoSpawned = true;
                 //spawn fruit two
+                fruitOnMap = true;
+                fruitTimer = 0;
+                fruitTimerLimit = (int) (60 * (9 + Math.random()));
                 break;
             case 240:
                 die();

@@ -315,16 +315,10 @@ public class Ghost implements Tickable{
         return Math.abs(newLocation.x) < 4 && newLocation.z < 3 && newLocation.z > -1;
     }
 
-    /*public boolean inside() {
-        MapLocation coords = new MapLocation(newLocation);
-        boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my];
-        return !(open[0] || open[1] || open[2] || open[3]);
-    }*/
-
     public boolean justExited() {
         MapLocation coords = new MapLocation(location);
         boolean[] open = GameUtilities.INTERSECTIONS[coords.mx][coords.my];
-        return !(open[0] || open[1] || open[2] || open[3]) && !inside();
+        return !open(open) && !inside();
     }
 
     public int release() {

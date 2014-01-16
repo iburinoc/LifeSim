@@ -68,9 +68,9 @@ public class Game implements Runnable, Tickable{
 	
 	private Input i;
 	
-	private boolean running, gotExtraLife = false, lostLifeThisLevel = false;
+	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOneSpawned = false, fruitTwoSpawned = false;
 
-    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage, frightTicks, pointsPerGhost;
+    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer;
 	
     private boolean dead;
     
@@ -228,17 +228,27 @@ public class Game implements Runnable, Tickable{
         if (preferredGhost < 4) {
             ghosts.get(preferredGhost).addToTimer();
         }
-        if (pelletsEaten == 240){
-            die();
-            for(Pellet pellet : m.pelletsList()) {
-                pellet.spawn();
-            }
-            for(Energizer energizer : m.energyList()) {
-                energizer.spawn();
-            }
-            level++;
-            pelletsEaten = 0;
-            lostLifeThisLevel = false;
+        switch (pelletsEaten) {
+            case 70:
+                //spawn fruit one
+                fruitOneSpawned = true;
+                break;
+            case 170:
+                fruitTwoSpawned = true;
+                //spawn fruit two
+                break;
+            case 240:
+                die();
+                for(Pellet pellet : m.pelletsList()) {
+                    pellet.spawn();
+                }
+                for(Energizer energizer : m.energyList()) {
+                    energizer.spawn();
+                }
+                level++;
+                pelletsEaten = 0;
+                lostLifeThisLevel = false;
+                break;
         }
         if (score >= 10000 && !gotExtraLife){
             gotExtraLife = true;
@@ -252,9 +262,9 @@ public class Game implements Runnable, Tickable{
             boolean[] open = INTERSECTIONS[coords.mx][coords.my].clone();
             if (!open(open)) {
                 Point tempLoc = loc;
-                if (!open(INTERSECTIONS[coords.mx + 1][coords.my]) && !open(INTERSECTIONS[coords.mx - 1][coords.my])) {
+                if (!open(INTERSECTIONS[(coords.mx + 1) % INTERSECTIONS.length][coords.my]) && !open(INTERSECTIONS[(((coords.mx - 1) % INTERSECTIONS.length) + INTERSECTIONS.length) % INTERSECTIONS.length][coords.my])) {
                     tempLoc = new Point(tempLoc.x, tempLoc.y, tempLoc.z + (((tempLoc.z % 1) + 1) % 1 > 0.5 ? 1 : -1));
-                } else if (!open(INTERSECTIONS[coords.mx][coords.my + 1]) && !open(INTERSECTIONS[coords.mx][coords.my - 1])) {
+                } else if (!open(INTERSECTIONS[coords.mx][coords.my + 1 % INTERSECTIONS[0].length]) && !open(INTERSECTIONS[coords.mx][(((coords.my - 1) % INTERSECTIONS[0].length) + INTERSECTIONS[0].length) % INTERSECTIONS[0].length])) {
                     tempLoc = new Point(tempLoc.x + (((tempLoc.x % 1) + 1) % 1 > 0.5 ? 1 : -1), tempLoc.y, tempLoc.z);
                 }
                 coords = new MapLocation(tempLoc);

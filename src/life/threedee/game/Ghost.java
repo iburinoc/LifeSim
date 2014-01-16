@@ -95,7 +95,7 @@ public class Ghost implements Tickable{
 
     public void move() {
         newLocation = location.add(new Point(dirToV()));
-        boolean leaving = ((game.getGlobalCounterEnabled() ? game.getGlobalPelletCounter() >= POSTMORTEM_PELLETS[ghostId] : pelletCounter >= EXIT_PELLETS[game.getArraySafeLevel()][ghostId]) || ghostTimer >= GAME_DATA[game.getArraySafeLevel()][4]) && inside();
+        boolean leaving = (((game.getGlobalCounterEnabled() && game.getGlobalPelletCounter() >= POSTMORTEM_PELLETS[ghostId]) || (!game.getGlobalCounterEnabled() && pelletCounter >= EXIT_PELLETS[game.getArraySafeLevel()][ghostId]) || ghostTimer >= GAME_DATA[game.getArraySafeLevel()][4]) && inside());
         if (!sentRelease && leaving) {
             sentRelease = true;
             nextDecision = release();

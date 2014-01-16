@@ -209,4 +209,6 @@ public class GameUtilities{
 	}
 	
 	public static int idCount = 0; // for map objects
+	
+	public static String CONNECT_URL = "http://localhost:3005";
 }

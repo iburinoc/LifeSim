@@ -186,12 +186,13 @@ public class Ghost implements Tickable{
                     }
                 case EATEN:
                     if (Math.abs(location.x) < dirToV().s()) {
-                        if (location.z > 0) {
+                        if (newLocation.z > 0) {
                             direction = 2;
                             decision = 2;
                             return decision;
                         } else if (ghostId == BLINKY || ghostId == PINKY) {
                             ghostNum = ghostId;
+                            updatePlanes();
                             direction = 0;
                             decision = 0;
                             return decision;
@@ -206,11 +207,13 @@ public class Ghost implements Tickable{
                         decision = 0;
                         return decision;
                     } else {
-                        return direction;
+                        decision = direction;
+                        return decision;
                     }
                 case BLINKY:
                 case CRUISE_ELROY:
                 case CRUISE_ELROY_2:
+                    return release();
                 default: throw new IllegalArgumentException();
             }
         }

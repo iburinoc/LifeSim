@@ -60,7 +60,7 @@ public class Player extends Camera implements Tickable{
     @Override
     public void paintBuffer(Graphics g) {
     	super.paintBuffer(g);
-    	this.g.drawScore(g);
+    	this.g.drawSpecial(g);
     }
     
     private void move() {

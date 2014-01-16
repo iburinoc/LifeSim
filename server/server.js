@@ -3,6 +3,7 @@ var url = require('url');
 var fs = require('fs');
 
 var score;
+var favicon;
 
 function writeScores(response) {
 	response.writeHead(200, {'Content-Type': 'text/plain'});
@@ -40,7 +41,11 @@ function addScore(data) {
 
 function onRequest(request, response) {
 	console.log(request.url);
-	if(request.method == 'GET') {
+	if(request.url === '/favicon.ico') {
+		response.writeHead(200, {'Content-Type': 'image/x-icon'});
+		response.write(favicon);
+		response.end();
+	}else if(request.method == 'GET') {
 		writeScores(response);
 	}else if(request.method == 'POST') {
 		request.on('data', function(data) {
@@ -65,6 +70,14 @@ function start() {
 			score = JSON.parse(data);
 		}
 		console.log(score);
+	});
+	fs.readFile('./favicon.ico', 'binary', function(err, data) {
+		if(err) { 
+			console.log(err);
+			console.log('Favicon not found');
+		} else {
+			favicon = data;
+		}
 	});
 	console.log("High Score server started");
 }

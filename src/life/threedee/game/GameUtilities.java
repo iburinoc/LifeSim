@@ -211,5 +211,5 @@ public class GameUtilities{
 	
 	public static int idCount = 0; // for map objects
 	
-	public static String CONNECT_URL = "http://localhost:3005";
+	public static String CONNECT_URL = "http://99.225.251.49:3005";
 }

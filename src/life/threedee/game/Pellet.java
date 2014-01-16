@@ -24,7 +24,7 @@ public class Pellet extends Consumable{
 			p[i] = new Point(Vector.fromPolarTransform(cyaw, 0, 0.2));
 			cyaw += C_THIRD;
 		}
-		for(int i = 0;i < 3; i++) {
+		for(int i = 0; i < 3; i++) {
 			t[i] = new Triangle(top, p[i], p[(i+1)%3]);
 		}
 		translate(new Vector(center.x, 0.625, center.z));

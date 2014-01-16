@@ -1,18 +1,10 @@
 package life.threedee.game;
 
 import static life.threedee.game.GameUtilities.PX_METER;
-
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import life.threedee.Point;
 import life.threedee.TexturedPlane;
 import life.threedee.Vector;
-import life.threedee.game.GameUtilities;
 
 public class GhostPlane extends TexturedPlane {
     private int offset, ghostNum;

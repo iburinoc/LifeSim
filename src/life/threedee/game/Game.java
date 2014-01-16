@@ -1,15 +1,6 @@
 package life.threedee.game;
 
-import static life.threedee.game.GameUtilities.BLINKY;
-import static life.threedee.game.GameUtilities.CLYDE;
-import static life.threedee.game.GameUtilities.EATEN;
-import static life.threedee.game.GameUtilities.FRIGHTENED_DATA;
-import static life.threedee.game.GameUtilities.INKY;
-import static life.threedee.game.GameUtilities.INTERSECTIONS;
-import static life.threedee.game.GameUtilities.PINKY;
-import static life.threedee.game.GameUtilities.SCARED;
-import static life.threedee.game.GameUtilities.SCARED_FLASHING;
-import static life.threedee.game.GameUtilities.open;
+import static life.threedee.game.GameUtilities.*;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -69,17 +60,18 @@ public class Game implements Runnable, Tickable{
 	
 	private Input i;
 	
-	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOneSpawned = false, fruitTwoSpawned = false;
+	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOnMap = false, dead, globalCounterEnabled;
 
-    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer;
-	
-    private boolean dead;
+    private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, globalPelletCounter = 0, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
+
     
     private int fade;
     
     private List<String> highscore;
     
     private Object objLock;
+    
+    private SpecialPointsConsumable spc;
     
 	public Game() {
 		j = new JFrame("Game");
@@ -112,39 +104,6 @@ public class Game implements Runnable, Tickable{
 		
 		tickables.add(p);
 		tickables.add(this);
-		
-		/* START REMOVE */
-		{
-		SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(0, 0, -2.5), 5);
-		objects.add(spc);
-		tickables.add(spc);
-		}
-		{
-	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(-1, 0, -2.5), 3);
-	        objects.add(spc);
-	        tickables.add(spc);
-	        }
-		{
-	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(-2, 0, -2.5), 4);
-	        objects.add(spc);
-	        tickables.add(spc);
-	        }
-		{
-	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(1, 0, -2.5), 2);
-	        objects.add(spc);
-	        tickables.add(spc);
-	        }
-		{
-	        SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(2, 0, -2.5), 1);
-	        objects.add(spc);
-	        tickables.add(spc);
-	        }
-		{
-            SpecialPointsConsumable spc = new SpecialPointsConsumable(new Point(3, 0, -2.5), 100);
-            objects.add(spc);
-            tickables.add(spc);
-            }
-		/* END REMOVE */
 	}
 	
 	// make the cursor invisible
@@ -161,6 +120,9 @@ public class Game implements Runnable, Tickable{
 				tickables.add((Consumable)o);
 			}
 		}
+		spc = new SpecialPointsConsumable(GameUtilities.FRUIT_LOCATION, 1);
+        objects.add(spc);
+        tickables.add(spc);
 	}
 	
 	@Override
@@ -223,33 +185,54 @@ public class Game implements Runnable, Tickable{
     		}
     		return;
     	}
+        if (fruitOnMap) {
+            fruitTimer++;
+        }
+        if (fruitTimer >= fruitTimerLimit) {
+            spc.despawn();
+            fruitOnMap = false;
+        }
+        if (lostLifeThisLevel) {
+            globalPelletCounter = 0;
+            globalCounterEnabled = true;
+            lostLifeThisLevel = false;
+        }
+        if (globalPelletCounter == 32 && ghosts.get(CLYDE).inside()) {
+            globalCounterEnabled = false;
+            globalPelletCounter = 0;
+        }
         if (preferredGhost < 4 && !ghosts.get(preferredGhost).inside()) {
             preferredGhost++;
         }
         if (preferredGhost < 4) {
             ghosts.get(preferredGhost).addToTimer();
         }
-        switch (pelletsEaten) {
-            case 70:
-                //spawn fruit one
-                fruitOneSpawned = true;
-                break;
-            case 170:
-                fruitTwoSpawned = true;
-                //spawn fruit two
-                break;
-            case 240:
-                die();
-                for(Pellet pellet : m.pelletsList()) {
-                    pellet.spawn();
-                }
-                for(Energizer energizer : m.energyList()) {
-                    energizer.spawn();
-                }
-                level++;
-                pelletsEaten = 0;
-                lostLifeThisLevel = false;
-                break;
+        if (pelletsEaten == 70 && !fruitOnMap) {
+            spc.spawn();
+            fruitOnMap = true;
+            fruitTimer = 0;
+            fruitTimerLimit = (int) (60 * (9 + Math.random()));
+        }
+        if (pelletsEaten == 170 && !fruitOnMap) {
+            spc.spawn();
+            fruitOnMap = true;
+            fruitTimer = 0;
+            fruitTimerLimit = (int) (60 * (9 + Math.random()));
+        }
+        if (pelletsEaten == 240) {
+            die();
+            for(Pellet pellet : m.pelletsList()) {
+                pellet.spawn();
+            }
+            for(Energizer energizer : m.energyList()) {
+                energizer.spawn();
+            }
+            level++;
+            pelletsEaten = 0;
+            globalPelletCounter = 0;
+            globalCounterEnabled = false;
+            lostLifeThisLevel = false;
+            spc.updateLevel(getArraySafeLevel());
         }
         if (score >= 10000 && !gotExtraLife){
             gotExtraLife = true;
@@ -274,7 +257,7 @@ public class Game implements Runnable, Tickable{
                 if (ghost.ghostNum != SCARED && ghost.ghostNum != SCARED_FLASHING && ghost.ghostNum != EATEN){
                     lives--;
                     lostLifeThisLevel = true;
-                    if(lives > 0) {
+                    if(lives >= 0) {
                     	die();
                     }
                 } else if (ghost.ghostNum == SCARED || ghost.ghostNum == SCARED_FLASHING){
@@ -291,6 +274,13 @@ public class Game implements Runnable, Tickable{
                 c.eat(this, p);
             }
         }
+        {
+            Point consumableLoc = spc.getCenter();
+            MapLocation consumableCoords = new MapLocation(consumableLoc.x, consumableLoc.z);
+            if (coords.equals(consumableCoords) && !spc.getEaten()) {
+                spc.eat(this, p);
+            }
+        }
         if (mode != -1) {
             ticksThisMode++;
         } else {
@@ -301,13 +291,13 @@ public class Game implements Runnable, Tickable{
         }
         if (gameStage > 6 && mode != -1) {
             mode = 1;
-        } else if (ticksThisMode == GameUtilities.MODE_TIMES[level][gameStage]) {
+        } else if (ticksThisMode == GameUtilities.MODE_TIMES[getArraySafeLevel()][gameStage] && mode != -1) {
             ticksThisMode = 0;
             gameStage++;
             mode = gameStage % 2;
         }
         
-        if(lives <= 0) {
+        if(lives < 0) {
         	endGame();
         }
     }
@@ -451,6 +441,7 @@ public class Game implements Runnable, Tickable{
         p.setDir(new Vector(-1, 0, 0));
         for(Ghost ghost : ghosts) {
             ghost.reset();
+            ghost.resetCounter();
         }
     }
     
@@ -470,7 +461,11 @@ public class Game implements Runnable, Tickable{
         pelletsEaten++;
         score += 10;
         if (preferredGhost < 4) {
-            ghosts.get(preferredGhost).addToCounter();
+            if (globalCounterEnabled) {
+                globalPelletCounter++;
+            } else {
+                ghosts.get(preferredGhost).addToCounter();
+            }
             ghosts.get(preferredGhost).resetTimer();
         }
     }
@@ -479,16 +474,20 @@ public class Game implements Runnable, Tickable{
         score += GameUtilities.GAME_DATA[getArraySafeLevel()][2];
     }
 
+    public int getGlobalPelletCounter() {
+        return globalPelletCounter;
+    }
+
+    public boolean getGlobalCounterEnabled() {
+        return globalCounterEnabled;
+    }
+
     public int getTicksThisMode() {
         return ticksThisMode;
     }
 
     public int getGameStage() {
         return gameStage;
-    }
-
-    public int getPreferredGhost() {
-        return preferredGhost;
     }
     
     public int getArraySafeLevel() {

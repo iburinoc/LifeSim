@@ -66,9 +66,13 @@ public class Ghost implements Tickable{
         if (game.getTicksThisMode() == 0 && game.getGameStage() != 0) {
             uTurn = true;
         }
-        scaredTicksLeft--;
-        if (scaredTicksLeft <= 0) {
-            ghostNum = ghostId;
+        if (game.getMode() == -1) {
+            scaredTicksLeft--;
+            if (scaredTicksLeft == 0) {
+                uTurn = true;
+                ghostNum = ghostId;
+                updatePlanes();
+            }
         }
         for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
@@ -212,7 +216,7 @@ public class Ghost implements Tickable{
                 case BLINKY:
                 case CRUISE_ELROY:
                 case CRUISE_ELROY_2:
-                default: throw new RuntimeException("This should not be reached according to BAD WIZURD.  FIX YOUR OWN DAMN EXCEPTION STRINGS >:C");
+                default: throw new IllegalArgumentException();
             }
         }
     }
@@ -288,7 +292,7 @@ public class Ghost implements Tickable{
         // ANDREY! ADD THE CORRECT TUNNEL SPEEDS HERE!
         // ANDREY! DO EVERYTHING!
         return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar
-                (game.getMode() == -1 ? (GAME_DATA[game.getArraySafeLevel()][1] + 15) / 5000.0 :
+                (game.getMode() == -1 ? (GAME_DATA[game.getArraySafeLevel()][1] + 25) / 5000.0 :
                         ((Math.abs(location.x) > 9 && Math.abs(location.z - 0.5) < 0.5) ? (GAME_DATA[game.getArraySafeLevel()][1] + 5) / 5000.0 :
                                 ((GAME_DATA[game.getArraySafeLevel()][1] + (ghostNum == CRUISE_ELROY ? 5 :
                                         (ghostNum == CRUISE_ELROY_2 ? 10 : 0))) / 2500.0)));
@@ -337,6 +341,7 @@ public class Ghost implements Tickable{
     
     public void scare(int ticks) {
         this.ghostNum = SCARED;
+        this.uTurn = true;
         this.updatePlanes();
         this.scaredTicksLeft = ticks;
     }

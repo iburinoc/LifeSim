@@ -402,7 +402,7 @@ public class Game implements Runnable, Tickable{
 			g.drawString(high, GameUtilities.SC_WIDTH/2 - fm.stringWidth(high)/2, 100);
 			for(int i = 0; i < highscore.size(); i++) {
 				String h = highscore.get(i);
-				g.drawString(h, GameUtilities.SC_WIDTH/2 - fm.stringWidth(h)/2, 130 + 30 * i);
+				g.drawString(h, GameUtilities.SC_WIDTH/2 - fm.stringWidth("___") + fm.charWidth(':')/2, 130 + 30 * i);
 			}
 		}
 	}
@@ -571,5 +571,9 @@ public class Game implements Runnable, Tickable{
         globalCounterEnabled = false;
         lostLifeThisLevel = false;
         spc.updateLevel(1);
+        dead = false;
+        highscore = null;
+        name = null;
+        scoreboardDrawMode = 0;
     }
 }

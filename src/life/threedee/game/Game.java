@@ -1,11 +1,5 @@
 package life.threedee.game;
 
-import static life.threedee.game.GameUtilities.BLINKY;
-import static life.threedee.game.GameUtilities.CLYDE;
-import static life.threedee.game.GameUtilities.FRIGHTENED_DATA;
-import static life.threedee.game.GameUtilities.INKY;
-import static life.threedee.game.GameUtilities.PINKY;
-
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -22,6 +16,8 @@ import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapLocation;
+
+import static life.threedee.game.GameUtilities.*;
 
 /**
  * The main game class.  Contains the main method.
@@ -63,7 +59,7 @@ public class Game implements Runnable, Tickable{
 	
 	private Input i;
 	
-	private boolean running, gotExtraLife = false;
+	private boolean running, gotExtraLife = false, lostLifeThisLevel = false;
 
     private int mode, level, pelletsEaten, score, lives = 2, preferredGhost = 1, ticksThisMode, gameStage, frightTicks, pointsPerGhost;
 	
@@ -218,6 +214,7 @@ public class Game implements Runnable, Tickable{
             level++;
             pelletsEaten = 0;
             die();
+            lostLifeThisLevel = false;
         }
         if (score >= 10000 && !gotExtraLife){
             gotExtraLife = true;
@@ -229,10 +226,11 @@ public class Game implements Runnable, Tickable{
             Point ghostLoc = ghost.getLocation();
             MapLocation ghostCoords = new MapLocation(ghostLoc.x, ghostLoc.z);
             if (coords.equals(ghostCoords)) {
-                if (mode != -1){
+                if (ghost.ghostNum != SCARED && ghost.ghostNum != SCARED_FLASHING && ghost.ghostNum != EATEN){
                     lives--;
+                    lostLifeThisLevel = true;
                     die();
-                } else {
+                } else if (ghost.ghostNum == SCARED || ghost.ghostNum == SCARED_FLASHING){
                     score += pointsPerGhost;
                     pointsPerGhost *= 2;
                     ghost.getAte();

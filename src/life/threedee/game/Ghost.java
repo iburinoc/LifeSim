@@ -68,7 +68,7 @@ public class Ghost implements Tickable{
         }
         if (game.getMode() == -1) {
             scaredTicksLeft--;
-            if (scaredTicksLeft == 0) {
+            if (scaredTicksLeft == 0 && ghostNum != EATEN) {
                 uTurn = true;
                 ghostNum = ghostId;
                 updatePlanes();
@@ -304,6 +304,7 @@ public class Ghost implements Tickable{
 
     public void getAte() {
         ghostNum = EATEN;
+        updatePlanes();
     }
 
     public void addToCounter() {

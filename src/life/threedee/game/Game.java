@@ -493,4 +493,21 @@ public class Game implements Runnable, Tickable{
     public int getArraySafeLevel() {
         return (Math.min(level, 20));
     }
+    
+    public void newGame() {
+        die();
+        for(Pellet pellet : m.pelletsList()) {
+            pellet.spawn();
+        }
+        for(Energizer energizer : m.energyList()) {
+            energizer.spawn();
+        }
+        lives=0;
+        level=0;
+        pelletsEaten = 0;
+        globalPelletCounter = 0;
+        globalCounterEnabled = false;
+        lostLifeThisLevel = false;
+        spc.updateLevel(1);
+    }
 }

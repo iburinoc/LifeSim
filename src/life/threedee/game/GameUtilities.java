@@ -159,6 +159,9 @@ public class GameUtilities{
     public static final int CRUISE_ELROY = 6;
     public static final int CRUISE_ELROY_2 = 7;
     public static final int EATEN = 8;
+
+    public static final int FIRST_FRUIT_PELLETS = 70;
+    public static final int SECOND_FRUIT_PELLETS = 170;
     
     public static final boolean SCARY_FACES = false;
     

@@ -167,6 +167,10 @@ public class GameUtilities{
 	public static boolean equals(double a, double b) {
 		return Math.abs(a - b) < 1e-15;
 	}
+
+    public static boolean open(boolean[] inter) {
+        return inter[0] || inter[1] || inter [2] || inter[3];
+    }
 	
 	public static Font loadFont(String ref) {
 		Font temp = null;

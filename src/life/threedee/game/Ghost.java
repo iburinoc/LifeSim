@@ -21,7 +21,7 @@ public class Ghost implements Tickable{
     // 7 - Cruise Elroy MK. II
     // 8 - Eaten
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
-    protected int direction, decision, nextDecision, ghostNum, ghostId, pelletCounter = 0, scaredTicksLeft;
+    protected int direction, decision, nextDecision, ghostNum, ghostId, pelletCounter = 0, scaredTicksLeft, ghostTimer;
     protected boolean uTurn, flipFlag = true, sentRelease;
     protected Game game;
     protected GhostPlane[] facePlanes;
@@ -96,7 +96,7 @@ public class Ghost implements Tickable{
 
     public void move() {
         newLocation = location.add(new Point(dirToV()));
-        boolean leaving = pelletCounter >= GameUtilities.EXIT_PELLETS[game.getArraySafeLevel()][ghostId] && inside();
+        boolean leaving = (pelletCounter >= GameUtilities.EXIT_PELLETS[game.getArraySafeLevel()][ghostId]||ghostTimer >= GameUtilities.GAME_DATA[game.getArraySafeLevel()][4]) && inside();
         if (!sentRelease && leaving) {
             sentRelease = true;
             nextDecision = release();
@@ -345,5 +345,13 @@ public class Ghost implements Tickable{
         this.uTurn = true;
         this.updatePlanes();
         this.scaredTicksLeft = ticks;
+    }
+    
+    public void resetTimer() {
+        ghostTimer = 0;
+    }
+    
+    public void addToTimer() {
+        ghostTimer++;
     }
 }

@@ -204,7 +204,11 @@ public class Game implements Runnable, Tickable{
         if (preferredGhost < 4 && !ghosts.get(preferredGhost).inside()) {
             preferredGhost++;
         }
+        if (preferredGhost < 4) {
+            ghosts.get(preferredGhost).addToTimer();
+        }
         if (pelletsEaten == 240){
+            die();
             for(Pellet pellet : m.pelletsList()) {
                 pellet.spawn();
             }
@@ -213,7 +217,6 @@ public class Game implements Runnable, Tickable{
             }
             level++;
             pelletsEaten = 0;
-            die();
             lostLifeThisLevel = false;
         }
         if (score >= 10000 && !gotExtraLife){
@@ -373,6 +376,10 @@ public class Game implements Runnable, Tickable{
     public void pelletEaten() {
         pelletsEaten++;
         score += 10;
+        if (preferredGhost < 4) {
+            ghosts.get(preferredGhost).addToCounter();
+            ghosts.get(preferredGhost).resetTimer();
+        }
     }
     
     public void pointsBonus() {

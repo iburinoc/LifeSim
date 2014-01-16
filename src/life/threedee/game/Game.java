@@ -228,8 +228,8 @@ public class Game implements Runnable, Tickable{
             boolean[] open = INTERSECTIONS[coords.mx][coords.my];
             if (!(open[0] || open[1] || open[2] || open[3])) {
                 boolean[] xTile = INTERSECTIONS[coords.mx + ((loc.x % 1) + 1) % 1 > 0.5 ? 1 : -1][coords.my], zTile = INTERSECTIONS[coords.mx][coords.my + ((loc.z % 1) + 1) % 1 > 0.5 ? 1 : -1];
-                boolean offsetX = (open[0] || open[1] || open[2] || xTile[3]);
-                //coords = new MapLocation(coords.mx + );
+                boolean offsetX = (xTile[0] || xTile[1] || xTile[2] || xTile[3]), offsetZ = (zTile[0] || zTile[1] || zTile[2] || zTile[3]);
+                coords = new MapLocation(coords.mx + (offsetX ? (((loc.x % 1) + 1) % 1 > 0.5 ? 1 : -1) : 0), coords.my + (offsetZ ? (((loc.z % 1) + 1) % 1 > 0.5 ? 1 : -1) : 0));
             }
             if (coords.equals(ghostCoords)) {
                 if (ghost.ghostNum != SCARED && ghost.ghostNum != SCARED_FLASHING && ghost.ghostNum != EATEN){

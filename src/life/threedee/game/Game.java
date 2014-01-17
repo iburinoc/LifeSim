@@ -243,7 +243,6 @@ public class Game implements Runnable, Tickable{
             }
             level++;
             pelletsEaten = 0;
-            globalPelletCounter = 0;
             globalCounterEnabled = false;
             lostLifeThisLevel = false;
             spc.updateLevel(level);
@@ -269,11 +268,11 @@ public class Game implements Runnable, Tickable{
             }
             if (coords.equals(ghostCoords)) {
                 if (ghost.ghostNum != SCARED && ghost.ghostNum != SCARED_FLASHING && ghost.ghostNum != EATEN){
-//                    lives--;
-//                    lostLifeThisLevel = true;
-//                    if(lives >= 0) {
-//                    	die();
-//                    }
+                    lives--;
+                    lostLifeThisLevel = true;
+                    if(lives >= 0) {
+                    	die();
+                    }
                 } else if (ghost.ghostNum == SCARED || ghost.ghostNum == SCARED_FLASHING){
                     score += pointsPerGhost;
                     pointsPerGhost *= 2;
@@ -310,14 +309,27 @@ public class Game implements Runnable, Tickable{
             gameStage++;
             mode = gameStage % 2;
         }
-        
         if(lives < 0) {
         	endGame();
         }
+        System.out.println(mode);
+    }
+
+    public void die() {
+        p.setLoc(new Point(0, 1, -8.5));
+        p.setDir(new Vector(-1, 0, 0));
+        mode = 0;
+        gameStage = 0;
+        preferredGhost = BLINKY;
+        for(Ghost ghost : ghosts) {
+            ghost.reset();
+            ghost.resetCounter();
+        }
+        fruitTimer = 0;
+        fruitOnMap = false;
     }
 	
 	private void drawFrame() {
-		long startT = System.currentTimeMillis();
 		synchronized(objLock) {
 			p.calcBuffer();
 		}
@@ -328,8 +340,6 @@ public class Game implements Runnable, Tickable{
 		}
 		catch(InterruptedException e){
 		}
-		//Do we need this?
-		long time = System.currentTimeMillis() - startT;
 	}
 	
 	private void tickTickables(int delta){
@@ -508,17 +518,9 @@ public class Game implements Runnable, Tickable{
     public List<Ghost> getGhosts(){
         return ghosts;
     }
-    
-    public void die() {
-        p.setLoc(new Point(0, 1, -8.5));
-        p.setDir(new Vector(-1, 0, 0));
-        mode = 0;
-        gameStage = 0;
-        preferredGhost = BLINKY;
-        for(Ghost ghost : ghosts) {
-            ghost.reset();
-            ghost.resetCounter();
-        }
+
+    public void rackTest() {
+        pelletsEaten = 240;
     }
     
     public void startFrightened() {

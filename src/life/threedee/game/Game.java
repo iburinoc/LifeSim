@@ -244,6 +244,7 @@ public class Game implements Runnable, Tickable{
             level++;
             pelletsEaten = 0;
             globalPelletCounter = 0;
+            ticksThisMode = 0;
             globalCounterEnabled = false;
             lostLifeThisLevel = false;
             spc.updateLevel(level);
@@ -539,12 +540,10 @@ public class Game implements Runnable, Tickable{
     public void pelletEaten() {
         pelletsEaten++;
         score += 10;
-        if (preferredGhost < 4) {
-            if (globalCounterEnabled) {
-                globalPelletCounter++;
-            } else {
-                ghosts.get(preferredGhost).addToCounter();
-            }
+        if (globalCounterEnabled) {
+            globalPelletCounter++;
+        } else if (preferredGhost < 4) {
+            ghosts.get(preferredGhost).addToCounter();
             ghosts.get(preferredGhost).resetTimer();
         }
     }

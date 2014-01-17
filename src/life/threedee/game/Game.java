@@ -243,6 +243,7 @@ public class Game implements Runnable, Tickable{
             }
             level++;
             pelletsEaten = 0;
+            globalPelletCounter = 0;
             globalCounterEnabled = false;
             lostLifeThisLevel = false;
             spc.updateLevel(level);

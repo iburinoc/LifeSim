@@ -28,6 +28,8 @@ public class SpecialPointsConsumable extends Consumable {
     
     public void updateLevel(int level) {
         amount = level+2;
+        t = new Triangle[2*amount];
+        p = new Point[amount];
     }
     
     public double c_part() {

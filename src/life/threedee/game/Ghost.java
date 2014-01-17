@@ -66,6 +66,11 @@ public class Ghost implements Tickable{
             uTurn = true;
         }
         if (game.getMode() == -1) {
+            int ticks = FRIGHTENED_DATA[game.getArraySafeLevel()][1] * 30;
+            ghostNum = scaredTicksLeft < ticks && (scaredTicksLeft % 30) < 15 ? SCARED_FLASHING : SCARED;
+            updatePlanes();
+        }
+        if (game.getMode() == -1) {
             scaredTicksLeft--;
             if (scaredTicksLeft == 0 && ghostNum != EATEN) {
                 uTurn = true;

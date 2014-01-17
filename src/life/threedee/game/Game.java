@@ -318,6 +318,7 @@ public class Game implements Runnable, Tickable{
 		}
 		catch(InterruptedException e){
 		}
+		//Do we need this?
 		long time = System.currentTimeMillis() - startT;
 	}
 	

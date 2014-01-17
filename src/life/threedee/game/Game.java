@@ -295,7 +295,7 @@ public class Game implements Runnable, Tickable{
         }
         if (gameStage > 6 && mode != -1) {
             mode = 1;
-        } else if (ticksThisMode == GameUtilities.MODE_TIMES[getArraySafeLevel()][gameStage] && mode != -1) {
+        } else if (mode != -1 && ticksThisMode == GameUtilities.MODE_TIMES[getArraySafeLevel()][gameStage]) {
             ticksThisMode = 0;
             gameStage++;
             mode = gameStage % 2;
@@ -501,6 +501,9 @@ public class Game implements Runnable, Tickable{
     public void die() {
         p.setLoc(new Point(0, 1, -8.5));
         p.setDir(new Vector(-1, 0, 0));
+        mode = 0;
+        gameStage = 0;
+        preferredGhost = BLINKY;
         for(Ghost ghost : ghosts) {
             ghost.reset();
             ghost.resetCounter();

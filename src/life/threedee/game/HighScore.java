@@ -15,6 +15,8 @@ public class HighScore {
 		try {
 			URL url = new URL(GameUtilities.CONNECT_URL);
 			HttpURLConnection c = (HttpURLConnection)  url.openConnection();
+
+			c.setConnectTimeout(4000);
 			c.setRequestMethod("GET");
 			int i = c.getResponseCode();
 			if(i == 200) {
@@ -43,7 +45,7 @@ public class HighScore {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setDoOutput(true);
-
+			conn.setConnectTimeout(4000);
 			OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
 
 			writer.write("{\"name\":\"" + name + "\", \"score\":" + score + " }");

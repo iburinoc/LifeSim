@@ -220,12 +220,14 @@ public class Game implements Runnable, Tickable{
             ghosts.get(preferredGhost).addToTimer();
         }
         if (pelletsEaten == 70 && !fruitOnMap) {
+            spc.updateLevel(getArraySafeLevel());
             spc.spawn();
             fruitOnMap = true;
             fruitTimer = 0;
             fruitTimerLimit = (int) (60 * (9 + Math.random()));
         }
         if (pelletsEaten == 170 && !fruitOnMap) {
+            spc.updateLevel(getArraySafeLevel());
             spc.spawn();
             fruitOnMap = true;
             fruitTimer = 0;

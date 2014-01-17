@@ -54,8 +54,8 @@ public class SpecialPointsConsumable extends Consumable {
             front = new Point(Vector.fromPolarTransform(cyaw+C_QUARTER, 0, 0.2));
             back = new Point(Vector.fromPolarTransform(cyaw-C_QUARTER, 0, 0.2));
             for (int i = 0; i < amount; i++) {
-                t[2*i] = new Triangle(front, p[i], p[(i+((amount+1)/3))%amount], colors[(((-i-((int) (cyaw/c_part())))%amount+amount)%amount)%7/*i%7*/]);
-                t[2*i+1] = new Triangle(back, p[i], p[(i+((amount+1)/3))%amount], colors[(((-i-((int) (cyaw/c_part()))+1)%amount+amount)%amount)%7/*(i+1)%7*/]);
+                t[2*i] = new Triangle(front, p[i], p[(i+((amount+1)/3))%amount], colors[(((-i-((int) (cyaw/c_part())))%amount+amount)%amount)%colors.length/*i%7*/]);
+                t[2*i+1] = new Triangle(back, p[i], p[(i+((amount+1)/3))%amount], colors[(((-i-((int) (cyaw/c_part()))+1)%amount+amount)%amount)%colors.length/*(i+1)%7*/]);
             }
             translate(new Vector(center.x, 0.625, center.z));
         } else {

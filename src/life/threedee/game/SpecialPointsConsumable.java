@@ -18,8 +18,8 @@ public class SpecialPointsConsumable extends Consumable {
     private int amount;
 
     public SpecialPointsConsumable(Point center, int level) {
-        super(center, (level+2)*2, level+2, A_INC);
-        amount = level+2;
+        super(center, (level+3)*2, level+3, A_INC);
+        amount = level+3;
     }
 
     public void despawn() {
@@ -27,9 +27,10 @@ public class SpecialPointsConsumable extends Consumable {
     }
     
     public void updateLevel(int level) {
-        amount = level+2;
+        amount = level+3;
         t = new Triangle[2*amount];
         p = new Point[amount];
+        generate();
     }
     
     public double c_part() {

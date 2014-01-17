@@ -220,14 +220,14 @@ public class Game implements Runnable, Tickable{
             ghosts.get(preferredGhost).addToTimer();
         }
         if (pelletsEaten == 70 && !fruitOnMap) {
-            spc.updateLevel(getArraySafeLevel());
+            spc.updateLevel(level);
             spc.spawn();
             fruitOnMap = true;
             fruitTimer = 0;
             fruitTimerLimit = (int) (60 * (9 + Math.random()));
         }
         if (pelletsEaten == 170 && !fruitOnMap) {
-            spc.updateLevel(getArraySafeLevel());
+            spc.updateLevel(level);
             spc.spawn();
             fruitOnMap = true;
             fruitTimer = 0;
@@ -246,7 +246,7 @@ public class Game implements Runnable, Tickable{
             globalPelletCounter = 0;
             globalCounterEnabled = false;
             lostLifeThisLevel = false;
-            spc.updateLevel(getArraySafeLevel());
+            spc.updateLevel(level);
         }
         if (score >= 10000 && !gotExtraLife){
             gotExtraLife = true;
@@ -269,11 +269,11 @@ public class Game implements Runnable, Tickable{
             }
             if (coords.equals(ghostCoords)) {
                 if (ghost.ghostNum != SCARED && ghost.ghostNum != SCARED_FLASHING && ghost.ghostNum != EATEN){
-                    lives--;
-                    lostLifeThisLevel = true;
-                    if(lives >= 0) {
-                    	die();
-                    }
+//                    lives--;
+//                    lostLifeThisLevel = true;
+//                    if(lives >= 0) {
+//                    	die();
+//                    }
                 } else if (ghost.ghostNum == SCARED || ghost.ghostNum == SCARED_FLASHING){
                     score += pointsPerGhost;
                     pointsPerGhost *= 2;

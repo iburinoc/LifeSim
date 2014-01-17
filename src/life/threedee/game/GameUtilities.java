@@ -35,7 +35,7 @@ public class GameUtilities{
 	 * This allows us to change the resolution by just altering one value. 
 	 * Note that a 2x increase in R_INC leads to a 4x decrease in game speed.
 	 */
-	public static final int R_INC = 8;
+	public static int R_INC = 8;
 	
 	/**
 	 * The amount of pixels per meter.
@@ -212,6 +212,10 @@ public class GameUtilities{
 	}
 	
 	public static int idCount = 0; // for map objects
+
+    public static void rIncSet(boolean up) {
+        R_INC *= up ? 0.5 : 2;
+    }
 	
 	public static String CONNECT_URL = "http://99.225.251.49:3005";
 }

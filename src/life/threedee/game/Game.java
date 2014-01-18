@@ -70,10 +70,7 @@ public class Game implements Runnable, Tickable{
 	
 	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOnMap = false, dead, globalCounterEnabled;
 
-    private int mode, level, pelletsEaten, score, lives = GameUtilities.STARTING_LIVES, preferredGhost = 1, globalPelletCounter = 0, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
-
-    
-    private int fade;
+    private int mode, level, pelletsEaten, score, lives = GameUtilities.STARTING_LIVES, preferredGhost = 1, globalPelletCounter = 0, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit, fade;
     
     private List<String> highscore;
     

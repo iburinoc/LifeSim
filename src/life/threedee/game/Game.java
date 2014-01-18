@@ -70,7 +70,17 @@ public class Game implements Runnable, Tickable{
 	
 	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOnMap = false, dead, globalCounterEnabled;
 
-    private int mode, level, pelletsEaten, score, lives = GameUtilities.STARTING_LIVES, preferredGhost = 1, globalPelletCounter = 0, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit, fade;
+    /**
+     * Indicates which motion phase ghosts are in<br>
+     * <li> -1: frightened
+     * <li> 0: scatter
+     * <li> 1: chase
+     */
+	private int mode;
+    
+    private int level, pelletsEaten, score, lives = GameUtilities.STARTING_LIVES, preferredGhost = 1, globalPelletCounter = 0, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
+    
+    private int fade;
     
     private List<String> highscore;
     
@@ -239,6 +249,9 @@ public class Game implements Runnable, Tickable{
     		} else {
     			gameMode = 2;
     		}
+    		return;
+    	}
+    	if(gameMode != 1) {
     		return;
     	}
         if (fruitOnMap) {

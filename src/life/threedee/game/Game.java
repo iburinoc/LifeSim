@@ -378,6 +378,7 @@ public class Game implements Runnable, Tickable{
         p.setDir(new Vector(-1, 0, 0));
         mode = 0;
         gameStage = 0;
+        ticksThisMode = 0;
         preferredGhost = BLINKY;
         for(Ghost ghost : ghosts) {
             ghost.reset();
@@ -606,10 +607,6 @@ public class Game implements Runnable, Tickable{
 	
 	public List<ThreeDeeObject> objects() {
 		return objects;
-    }
-    
-    public int getLevel(){
-        return level;
     }
 
     public int getMode(){

@@ -120,14 +120,14 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
 
 	@Override
 	public void keyReleased(KeyEvent e){	
-		if(e.getKeyChar() == 'w'){
+		if(e.getKeyChar() == 'w' || e.getKeyCode() == 38){
 			p.w = false;
-		}else if(e.getKeyChar() == 'a'){
+		}else if(e.getKeyChar() == 'a' || e.getKeyCode() == 37){
 			p.a = false;
-		}else if(e.getKeyChar() == 's'){
+		}else if(e.getKeyChar() == 's' || e.getKeyCode() == 40){
 			p.s = false;
-		}else if(e.getKeyChar() == 'd'){
-			p.d = false;
+		}else if(e.getKeyChar() == 'd' || e.getKeyCode() == 39){
+            p.d = false;
         }
 	}
 }

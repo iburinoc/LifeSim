@@ -137,7 +137,7 @@ public class Game implements Runnable, Tickable{
 			@Override
 			public void selected() {
 				gameMode++;
-				p.reset();
+				newGame();
 			}
 		};
 		
@@ -235,10 +235,12 @@ public class Game implements Runnable, Tickable{
 	}
 	
     @Override
-    public void tick(){
+    public void tick() {
     	if(dead) {
     		if(fade < 256) { 
     			fade++;
+    		} else {
+    			gameMode = 2;
     		}
     		return;
     	}
@@ -563,6 +565,7 @@ public class Game implements Runnable, Tickable{
 			} else if(scoreboardDrawMode == 2) {
 				if(code == 10) {
 					newGame();
+					gameMode = 0;
 				}
 			}
 		}
@@ -669,6 +672,7 @@ public class Game implements Runnable, Tickable{
     
     public void newGame() {
         die();
+        p.reset();
         for(Pellet pellet : m.pelletsList()) {
             pellet.spawn();
         }

@@ -42,9 +42,17 @@ public class Player extends Camera implements Tickable{
         this.g = g;
     }
 
+    public void reset() {
+    	w = false;
+    	d = false;
+    	s = false;
+    	a = false;
+    	stop = 0;
+    }
+    
     @Override
     public void calcBuffer() {
-    	if(!g.draw()) {
+    	if(!g.draw3D()) {
     		return;
     	}
     	if(g != null || m != null){

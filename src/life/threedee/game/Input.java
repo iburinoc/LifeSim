@@ -98,13 +98,13 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
 		if(e.getKeyCode() == 27){
 			this.mouseCaptured = !mouseCaptured;
 		}
-		if(e.getKeyChar() == 'w'){
+		if(e.getKeyChar() == 'w' || e.getKeyCode() == 38){
 			p.w = true;
-		}else if(e.getKeyChar() == 'a'){
+		}else if(e.getKeyChar() == 'a' || e.getKeyCode() == 37){
 			p.a = true;
-		}else if(e.getKeyChar() == 's'){
+		}else if(e.getKeyChar() == 's' || e.getKeyCode() == 40){
 			p.s = true;
-		}else if(e.getKeyChar() == 'd'){
+		}else if(e.getKeyChar() == 'd' || e.getKeyCode() == 39){
             p.d = true;
         }else if(e.getKeyChar() == '\\'){
             g.pelletEaten();

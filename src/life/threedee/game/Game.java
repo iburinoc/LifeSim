@@ -85,6 +85,12 @@ public class Game implements Runnable, Tickable{
     
     private SpecialPointsConsumable spc;
     
+    private int gameMode;
+    
+    private List<MenuOption> menu;
+    
+    private int menuChoice;
+    
 	public Game() {
 		j = new JFrame("Game");
 		
@@ -118,6 +124,44 @@ public class Game implements Runnable, Tickable{
 		tickables.add(this);
 	}
 	
+	private void initMenu() {
+		highscore = HighScore.getHighScores();
+		
+		menu = new ArrayList<Game.MenuOption>();
+		MenuOption start = new MenuOption() {
+			@Override
+			public String name() {
+				return "START GAME";
+			}
+			
+			@Override
+			public void selected() {
+				gameMode++;
+				p.reset();
+			}
+		};
+		
+		MenuOption quit = new MenuOption() {
+			@Override
+			public String name() {
+				return "QUIT";
+			}
+			
+			@Override
+			public void selected() {
+				System.exit(0);
+			}
+		};
+		
+		menu.add(start);
+		menu.add(quit);
+	}
+	
+	private interface MenuOption {
+		String name();
+		void selected();
+	}
+	
 	// make the cursor invisible
 	private void removeCursor() {
 		Toolkit tk= p.getToolkit();
@@ -139,6 +183,7 @@ public class Game implements Runnable, Tickable{
 	
 	@Override
 	public void run() {
+		initMenu();
 		removeCursor();
 		
 		tickableConsumables();
@@ -314,7 +359,6 @@ public class Game implements Runnable, Tickable{
         if(lives < 0) {
         	endGame();
         }
-        System.out.println(mode);
     }
 
     public void die() {
@@ -358,10 +402,50 @@ public class Game implements Runnable, Tickable{
 	}
 	
 	void drawSpecial(Graphics g) {
-		if(!dead) {
-			drawScore(g);
-		} else {
+		switch(gameMode) {
+		case 0:
+			drawMenu(g);
+			break;
+		case 1:
+			if(!dead) {
+				drawScore(g);
+			} else {
+				drawDead(g);
+			}
+			break;
+		case 2:
 			drawDead(g);
+			break;
+		}
+	}
+	
+	private void drawMenu(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT);
+		g.setFont(GameUtilities.TITLE_FONT);
+		FontMetrics fm = g.getFontMetrics();
+		g.setColor(Color.YELLOW);
+		
+		String title = "PACMAN";
+		g.drawString(title, GameUtilities.SC_WIDTH/2 - fm.stringWidth(title)/2, 100);
+		
+		g.setFont(GameUtilities.TITLE_OPTION_FONT);
+		fm = g.getFontMetrics();
+		
+		for(int i = 0; i < menu.size(); i++) {
+			MenuOption mo = menu.get(i);
+			g.setColor(i == menuChoice ? Color.YELLOW : Color.WHITE);
+			g.drawString(mo.name(), GameUtilities.SC_WIDTH/2 - fm.stringWidth(mo.name())/2, 250 + i * 75);
+		}
+		
+		if(highscore != null && highscore.get(0) != null) {
+			g.setFont(GameUtilities.GAME_OVER_FONT);
+			g.setColor(Color.WHITE);
+			fm = g.getFontMetrics();
+			String highscoreS = highscore.get(0);
+			int val = Integer.parseInt(highscoreS.substring(highscoreS.indexOf(':') + 2));
+			String display = "Highscore: " + val;
+			g.drawString(display, GameUtilities.SC_WIDTH/2 - fm.stringWidth("________"), GameUtilities.SC_HEIGHT - 10);
 		}
 	}
 	
@@ -370,6 +454,7 @@ public class Game implements Runnable, Tickable{
 		g.setColor(Color.WHITE);
 		g.setFont(GameUtilities.SCORE_FONT);
 		g.drawString("Score: " + score, 5, GameUtilities.SC_HEIGHT - height);
+		g.drawString("Lives: " + lives, 5, GameUtilities.SC_HEIGHT - height + g.getFontMetrics().getHeight());
 	}
 	
 	private void drawDead(Graphics g) {
@@ -437,40 +522,53 @@ public class Game implements Runnable, Tickable{
 	}
 
 	void keyPressed(int code, char key) {
-		System.out.println(code);
-		if(!dead || fade < 256)
-			return;
-		key = Character.toUpperCase(key);
-		if(scoreboardDrawMode == 1) {
-			if(key >= 'A' && key <= 'Z') {
-				if(name.length() < 3) {
-					name += key;
-				}
+		switch(gameMode) {
+		case 0:
+			if(code == 38) {
+				menuChoice = (menuChoice + menu.size() - 1) % menu.size();
 			}
-			if(code == 8) {
-				if(name.length() >= 1) {
-					name = name.substring(0, name.length() - 1);
-				}
+			if(code == 40) {
+				menuChoice = (menuChoice + 1) % menu.size();
 			}
 			if(code == 10) {
-				if(name.length() >= 1) {
-					while(name.length() < 3) {
-						name += " ";
+				menu.get(menuChoice).selected();
+			}
+			break;
+		case 1:
+			break;
+		case 2: System.out.println(code);
+			key = Character.toUpperCase(key);
+			if(scoreboardDrawMode == 1) {
+				if(key >= 'A' && key <= 'Z') {
+					if(name.length() < 3) {
+						name += key;
 					}
-					HighScore.postHighScores(name, score);
-					highscore = HighScore.getHighScores();
-					scoreboardDrawMode++;
 				}
-			}
-		} else if(scoreboardDrawMode == 2) {
-			if(code == 10) {
-				newGame();
+				if(code == 8) {
+					if(name.length() >= 1) {
+						name = name.substring(0, name.length() - 1);
+					}
+				}
+				if(code == 10) {
+					if(name.length() >= 1) {
+						while(name.length() < 3) {
+							name += " ";
+						}
+						HighScore.postHighScores(name, score);
+						highscore = HighScore.getHighScores();
+						scoreboardDrawMode++;
+					}
+				}
+			} else if(scoreboardDrawMode == 2) {
+				if(code == 10) {
+					newGame();
+				}
 			}
 		}
 	}
-	
-	boolean draw() {
-		return fade < 256;
+
+	boolean draw3D() {
+		return fade < 256 && gameMode == 1;
 	}
 	
 	public void addTickable(Tickable t){

@@ -171,6 +171,10 @@ public class GameUtilities{
     
     public static final Font GAME_OVER_FONT = SCORE_FONT.deriveFont(30f);
     
+    public static final Font TITLE_FONT = SCORE_FONT.deriveFont(150f);
+    
+    public static final Font TITLE_OPTION_FONT = SCORE_FONT.deriveFont(60f);
+    
 	public static boolean equals(double a, double b) {
 		return Math.abs(a - b) < 1e-15;
 	}

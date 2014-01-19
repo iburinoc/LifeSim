@@ -199,7 +199,7 @@ public class Ghost implements Tickable{
                             updatePlanes();
                             direction = 0;
                             decision = 0;
-                            return decision;
+                            return 1;
                         } else {
                             direction = (int) (2 * (ghostId - 2.5) + 2);
                             decision = direction;
@@ -207,6 +207,7 @@ public class Ghost implements Tickable{
                         }
                     } else if (Math.abs(location.x) > 2) {
                         ghostNum = ghostId;
+                        updatePlanes();
                         direction = 0;
                         decision = 0;
                         return decision;
@@ -219,7 +220,7 @@ public class Ghost implements Tickable{
                 case CRUISE_ELROY_2:
                     direction = 0;
                     decision = 0;
-                    return decision;
+                    return 1;
                 default: throw new IllegalArgumentException();
             }
         }

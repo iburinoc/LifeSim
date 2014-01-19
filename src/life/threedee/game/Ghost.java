@@ -122,7 +122,7 @@ public class Ghost implements Tickable{
         if (justExited()) {
             return nextDecision;
         } else if (!inside()) {
-            if (uTurn) {
+            if (uTurn && ghostNum != EATEN) {
                 uTurn = false;
                 direction = (direction + 2) % 4;
                 decision = direction;
@@ -190,7 +190,7 @@ public class Ghost implements Tickable{
                         return decision;
                     }
                 case EATEN:
-                    if (Math.abs(location.x) < dirToV().s()) {
+                    if (Math.abs(newLocation.x) < dirToV().s()) {
                         if (newLocation.z > 0) {
                             direction = 2;
                             decision = 2;

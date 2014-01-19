@@ -369,7 +369,7 @@ public class Game implements Runnable, Tickable{
         } else {
             frightTicks++;
         }
-        if (frightTicks > FRIGHTENED_DATA[getArraySafeLevel()][0]) {
+        if (frightTicks >= FRIGHTENED_DATA[getArraySafeLevel()][0]) {
             mode = gameStage % 2;
         }
         if (gameStage > 6 && mode != -1) {

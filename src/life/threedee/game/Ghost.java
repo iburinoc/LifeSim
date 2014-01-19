@@ -26,6 +26,11 @@ public class Ghost implements Tickable{
     protected GhostPlane[] facePlanes;
     protected Triangle[] faceTriangles;
 
+    /**
+     * This is the "default" constructor.
+     * @param g This is the game that the ghost will get information from to make certain decisions.
+     * @param ghostNum This is the number of the ghost. Ghost behaviour varies depending on ghostNum (and other factors). (See above)
+     */
     public Ghost(Game g, int ghostNum) {
         this.game=g;
         this.ghostNum=ghostNum;
@@ -61,6 +66,9 @@ public class Ghost implements Tickable{
         g.addTickable(this);
     }
 
+    /**
+     * This method is run every tick. The ghost updates things such as timers. It represents 1 / 60 of a second.
+     */
     public void tick(){
         if (game.getTicksThisMode() == 0 && game.getGameStage() != 0) {
             uTurn = true;
@@ -81,9 +89,6 @@ public class Ghost implements Tickable{
         for (int i = 0; i < 4; i++) {
             facePlanes[i].shiftTexture();
         }
-        // We'll need to rework this.
-        // Andrey, you'll need to implement ALL the rules 
-        // concerning Blinky turning into his 2 Cruise Elroy forms. 
         if (ghostId == BLINKY && ghostNum != SCARED && ghostNum != SCARED_FLASHING && ghostNum != EATEN && GAME_DATA[game.getArraySafeLevel()][3] >= game.getPelletsRemaining()) {
             ghostNum = CRUISE_ELROY;
             updatePlanes();
@@ -98,6 +103,9 @@ public class Ghost implements Tickable{
         }
     }
 
+    /**
+     * This method is responsible for looking ahead to decide where to go and the ghost moving forward by a tiny bit.
+     */
     public void move() {
         newLocation = location.add(new Point(dirToV()));
         boolean leaving = (((game.getGlobalCounterEnabled() && game.getGlobalPelletCounter() >= POSTMORTEM_PELLETS[ghostId]) || (!game.getGlobalCounterEnabled() && pelletCounter >= EXIT_PELLETS[game.getArraySafeLevel()][ghostId]) || ghostTimer >= GAME_DATA[game.getArraySafeLevel()][4]) && inside());
@@ -118,6 +126,10 @@ public class Ghost implements Tickable{
         translate(new Vector(newLocation.subtract(location)));
     }
 
+    /**
+     * The ghost looks at the current state of things in the game and decides where it will turn in one tile.
+     * @return The direction in which the ghost will turn in one tile.
+     */
     public int makeDecision(){
         if (justExited()) {
             return nextDecision;
@@ -226,6 +238,10 @@ public class Ghost implements Tickable{
         }
     }
 
+    /**
+     * Every ghost targets a different tile. This method determines where that tile is.
+     * @return The location of the tile the ghost is targeting.
+     */
     public Point findTarget() {
         if (game.getMode() == 0 && (ghostNum == BLINKY || ghostNum == PINKY || ghostNum == INKY || ghostNum == CLYDE)){
             return GHOST_CORNERS[ghostNum];
@@ -268,14 +284,21 @@ public class Ghost implements Tickable{
                 return null;
         }
     }
-    
+
+    /**
+     * This will make the ghost's planes correspond with the current state it is in.
+     */
     public void updatePlanes() {
         for (int i = 0; i < 4; i++) {
             facePlanes[(direction+i)%4].setGhostNum(ghostNum);
             faceTriangles[(direction+i)%4].setC(GHOST_COLORS[ghostNum]);
         }
     }
-    
+
+    /**
+     * This method translates the entire ghost some distance.
+     * @param v The vector by which the ghost must be translated.
+     */
     public void translate(Vector v) {
         location = location.add(new Point(v));
         for (int i = 0; i < 4; i++) {
@@ -284,6 +307,9 @@ public class Ghost implements Tickable{
         }
     }
 
+    /**
+     * This resets the ghost to its default location, as well as resetting some of its values.
+     */
     public void reset(){
         this.ghostNum=this.ghostId;
         this.direction=GHOST_ORIENTATIONS[ghostNum];
@@ -293,9 +319,11 @@ public class Ghost implements Tickable{
         updatePlanes();
     }
 
+    /**
+     * This method uses information from the game (e.g. what mode is the game in, what level, whether its in the tunnel, whether it has been eaten) to transform the direction the ghost is facing into a vector by which it can move in one tick.
+     * @return The vector by which the ghost will move in one tick.
+     */
     public Vector dirToV(){
-        // ANDREY! ADD THE CORRECT TUNNEL SPEEDS HERE!
-        // ANDREY! DO EVERYTHING!
         return new Vector(direction % 2 == 0 ? 0 : direction - 2, 0, direction % 2 == 1 ? 0 : -direction + 1).setScalar
             (ghostNum == EATEN ? GAME_DATA[game.getArraySafeLevel()][1] / 500.0 :
                 (game.getMode() == -1 ? (GAME_DATA[game.getArraySafeLevel()][1] + 25) / 5000.0 :
@@ -304,30 +332,45 @@ public class Ghost implements Tickable{
                             (ghostNum == CRUISE_ELROY_2 ? 10 : 0)))  / 2500.0))));
     }
 
+    /**
+     * Location getter.
+     * @return The location of the ghost.
+     */
     public Point getLocation(){
         return location;
     }
 
+    /**
+     * This method changes some values in case the ghost has been consumed by the player.
+     */
     public void getAte() {
         ghostNum = EATEN;
         frightenedThisMode = true;
         updatePlanes();
     }
 
-    public void addToCounter() {
-        pelletCounter++;
-    }
-
+    /**
+     * This method returns whether or not is inside the ghost house in the centre of the map (edges included).
+     * @return Whether the ghost is inside or not.
+     */
     public boolean inside() {
         return Math.abs(newLocation.x) < 4 && Math.abs(newLocation.z - 1) < 2;
     }
 
+    /**
+     * This method checks whether the ghost is inside the house and is not going to be anymore on one tick.
+     * @return
+     */
     public boolean justExited() {
         MapLocation coords = new MapLocation(location);
         boolean[] open = INTERSECTIONS[coords.mx][coords.my];
         return !open(open) && !inside();
     }
 
+    /**
+     * This method is called in case the ghost needs to be released from the house.
+     * @return The decision the ghost should make to leave the house.
+     */
     public int release() {
         if (Math.abs(location.x) < dirToV().s()) {
             direction = 0;
@@ -340,7 +383,11 @@ public class Ghost implements Tickable{
             return decision;
         }
     }
-    
+
+    /**
+     * If frightened mode is activated, this method is called, updating some values.
+     * @param ticks The number of ticks this fright will last for. Varies with level.
+     */
     public void scare(int ticks) {
         this.uTurn = true;
         frightenedThisMode = true;
@@ -350,16 +397,32 @@ public class Ghost implements Tickable{
             this.scaredTicksLeft = ticks;
         }
     }
-    
-    public void resetTimer() {
-        ghostTimer = 0;
+
+    /**
+     * This method adds to the counter controlling when the ghost gets to leave the house.
+     */
+    public void addToCounter() {
+        pelletCounter++;
     }
 
+    /**
+     * This method resets the counter controlling when the ghost gets to leave the house.
+     */
     public void resetCounter() {
         pelletCounter = 0;
     }
-    
+
+    /**
+     * This method adds to the timer controlling when the ghost gets to leave the house.
+     */
     public void addToTimer() {
         ghostTimer++;
+    }
+
+    /**
+     * This method resets the timer controlling when the ghost gets to leave the house.
+     */
+    public void resetTimer() {
+        ghostTimer = 0;
     }
 }

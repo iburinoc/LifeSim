@@ -492,12 +492,16 @@ public class Game implements Runnable, Tickable{
 	}
 	
 	private void drawMinimap(Graphics g) {
-		MapLocation m = new MapLocation(p.getLoc());
+		Point m = p.getLoc();
 		miniG.setColor(Color.BLACK);
 		miniG.fillRect(0, 0, 112, 112);
 
-		int px = (int) (-(m.mx) * 8) + 56;
-		int py = (int) (-(m.my) * 8) + 56;
+		double mx = ((m.x + 42) % 28);
+		double my = (-m.z + 18);
+		
+		int px = (int) (-(mx) * 8) + 56;
+		int py = (int) (-(my) * 8) + 56;
+		
 		miniG.drawImage(GameUtilities.MAP, px, py, null);
 
 
@@ -527,9 +531,13 @@ public class Game implements Runnable, Tickable{
 			if(frameNum == 3) {
 				frameNum = 1;
 			}
-			MapLocation p = new MapLocation(this.p.getLoc());
-			int x = (int) (p.mx * 8) - 4 + px;
-			int y = (int) (p.my * 8) - 4 + py;
+			Point p = this.p.getLoc();
+			
+			double ix = ((p.x + 41.5) % 28);
+			double iy = (-p.z + 17.5);
+			
+			int x = (int) (ix * 8) - 4 + px;
+			int y = (int) (iy * 8) - 4 + py;
 			miniG.drawImage(GameUtilities.PAC_SPRITES_ARR[dir][frameNum], x, y, null);
 		}
 		

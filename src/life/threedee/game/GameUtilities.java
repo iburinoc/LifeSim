@@ -152,6 +152,8 @@ public class GameUtilities{
                                                                                    GameUtilities.loadImage("resources/CruiseElroyFace.png"),
                                                                                    GameUtilities.loadImage("resources/CruiseElroy2Face.png"),
                                                                                    GameUtilities.loadImage("resources/EatenFace.png"),};
+   
+    public static final BufferedImage MAP = GameUtilities.loadImage("resources/map.png");
     
     public static final int BLINKY = 0;
     public static final int PINKY = 1;

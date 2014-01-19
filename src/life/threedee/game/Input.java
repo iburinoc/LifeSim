@@ -110,8 +110,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
             g.pelletEaten();
         }else if(e.getKeyChar() == '='){
             g.rackTest();
-        }else if(e.getKeyChar() == '`'){
-            g.startFrightened();
         }else if(e.getKeyChar() == ','){
             GameUtilities.rIncSet(false);
         }else if(e.getKeyChar() == '.'){
@@ -129,7 +127,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
 		}else if(e.getKeyChar() == 's' || e.getKeyCode() == 40){
 			p.s = false;
 		}else if(e.getKeyChar() == 'd' || e.getKeyCode() == 39){
-            p.d = false;
+            p.d = false; 
         }
 	}
 }

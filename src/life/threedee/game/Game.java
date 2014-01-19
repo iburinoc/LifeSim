@@ -16,6 +16,7 @@ import java.awt.Cursor;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -98,6 +99,9 @@ public class Game implements Runnable, Tickable{
     
     private int menuChoice;
     
+    private BufferedImage minimap;
+    private Graphics miniG;
+    
 	public Game() {
 		j = new JFrame("Game");
 		
@@ -129,6 +133,11 @@ public class Game implements Runnable, Tickable{
 		
 		tickables.add(p);
 		tickables.add(this);
+		
+		initMenu();
+		
+		minimap = new BufferedImage(112, 112, BufferedImage.TYPE_INT_RGB);
+		miniG = minimap.createGraphics();
 	}
 	
 	private void initMenu() {
@@ -422,6 +431,7 @@ public class Game implements Runnable, Tickable{
 		case 1:
 			if(!dead) {
 				drawScore(g);
+				drawMinimap(g);
 			} else {
 				drawDead(g);
 			}
@@ -433,6 +443,10 @@ public class Game implements Runnable, Tickable{
 	}
 	
 	private void drawMenu(Graphics g) {
+		if(menu == null) {
+			return;
+		}
+		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GameUtilities.SC_WIDTH, GameUtilities.SC_HEIGHT);
 		g.setFont(GameUtilities.TITLE_FONT);
@@ -468,6 +482,18 @@ public class Game implements Runnable, Tickable{
 		g.setFont(GameUtilities.SCORE_FONT);
 		g.drawString("Score: " + score, 5, GameUtilities.SC_HEIGHT - height);
 		g.drawString("Lives: " + lives, 5, GameUtilities.SC_HEIGHT - height + g.getFontMetrics().getHeight());
+	}
+	
+	private void drawMinimap(Graphics g) {
+		MapLocation m = new MapLocation(p.getLoc());
+		miniG.setColor(Color.BLACK);
+		miniG.fillRect(0, 0, 112, 112);
+		int x = (int) ((-m.mx + 13.5) * 16);
+		int y = (int) ((-m.my + 17.5) * 16);
+		miniG.drawImage(GameUtilities.MAP, x, y, null);
+		g.drawImage(minimap.getScaledInstance(224, 224, 0), GameUtilities.SC_WIDTH - 250, GameUtilities.SC_HEIGHT - 250, null);
+		g.setColor(Color.WHITE);
+		g.drawRect(GameUtilities.SC_WIDTH - 250, GameUtilities.SC_HEIGHT - 250, 224, 224);
 	}
 	
 	private void drawDead(Graphics g) {

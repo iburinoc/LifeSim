@@ -42,21 +42,12 @@ public class Ghost implements Tickable{
     protected int nextDecision;
 
     /**
-     * The current state of the ghost (0-8). This is used to decide textures, behaviour, etc.
-     * 0 - Blinky
-     * 1 - Pinky
-     * 2 - Inky
-     * 3 - Clyde
-     * 4 - Scared
-     * 5 - ScaredFlashing
-     * 6 - Cruise Elroy
-     * 7 - Cruise Elroy MK. II
-     * 8 - Eaten
+     * The current state of the ghost. This is used to decide textures, behaviour, etc.
      */
     protected int ghostNum;
 
     /**
-     * The true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
+     * The true id of the ghost. This is used to remember who the ghost is upon exiting frightened mode.
      */
     protected int ghostId;
 
@@ -93,7 +84,7 @@ public class Ghost implements Tickable{
     /**
      * Whether the ghost has been eaten already. Used to avoid eating ghosts again.
      */
-    protected boolean frightenedThisMode;
+    protected boolean eatenThisMode;
 
     /**
      * The game the ghost gets information from.
@@ -157,7 +148,7 @@ public class Ghost implements Tickable{
         if (game.getTicksThisMode() == 0 && game.getGameStage() != 0) {
             uTurn = true;
         }
-        if (game.getMode() == -1 && ghostNum != EATEN && !frightenedThisMode) {
+        if (game.getMode() == -1 && ghostNum != EATEN && !eatenThisMode) {
             int ticks = FRIGHTENED_DATA[game.getArraySafeLevel()][1] * 30;
             ghostNum = scaredTicksLeft < ticks && (scaredTicksLeft % 30) < 15 ? SCARED_FLASHING : SCARED;
             updatePlanes();
@@ -431,7 +422,7 @@ public class Ghost implements Tickable{
      */
     public void getAte() {
         ghostNum = EATEN;
-        frightenedThisMode = true;
+        eatenThisMode = true;
         updatePlanes();
     }
 
@@ -476,7 +467,7 @@ public class Ghost implements Tickable{
      */
     public void scare(int ticks) {
         this.uTurn = true;
-        frightenedThisMode = false;
+        eatenThisMode = false;
         if (ghostNum != EATEN) {
             this.ghostNum = SCARED;
             this.updatePlanes();

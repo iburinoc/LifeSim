@@ -488,9 +488,32 @@ public class Game implements Runnable, Tickable{
 		MapLocation m = new MapLocation(p.getLoc());
 		miniG.setColor(Color.BLACK);
 		miniG.fillRect(0, 0, 112, 112);
-		int x = (int) ((-m.mx + 13.5) * 16);
-		int y = (int) ((-m.my + 17.5) * 16);
-		miniG.drawImage(GameUtilities.MAP, x, y, null);
+
+		int px = (int) (-(m.mx) * 8) + 56;
+		int py = (int) (-(m.my) * 8) + 56;
+		miniG.drawImage(GameUtilities.MAP, px, py, null);
+
+
+		miniG.setColor(Color.YELLOW);
+		for(Pellet p : this.m.pelletsList()) {
+			if(!p.eaten) {
+				MapLocation l = new MapLocation(p.center);
+				int x = (int) (l.mx * 8) + 3 + px;
+				int y = (int) (l.my * 8) + 3 + py;
+				miniG.fillRect(x, y, 2, 2);
+			}
+		}
+		
+		miniG.setColor(Color.WHITE);
+		for(Energizer e : this.m.energyList()) {
+			if(!e.eaten) {
+				MapLocation l = new MapLocation(e.center);
+				int x = (int) (l.mx * 8) + 2 + px;
+				int y = (int) (l.my * 8) + 2 + py;
+				miniG.fillRect(x, y, 4, 4);
+			}
+		}
+		
 		g.drawImage(minimap.getScaledInstance(224, 224, 0), GameUtilities.SC_WIDTH - 250, GameUtilities.SC_HEIGHT - 250, null);
 		g.setColor(Color.WHITE);
 		g.drawRect(GameUtilities.SC_WIDTH - 250, GameUtilities.SC_HEIGHT - 250, 224, 224);

@@ -84,7 +84,7 @@ public class Ghost implements Tickable{
     /**
      * Whether the ghost has been eaten already. Used to avoid eating ghosts again.
      */
-    protected boolean frightenedThisMode;
+    protected boolean eatenThisMode;
 
     /**
      * The game the ghost gets information from.
@@ -148,7 +148,7 @@ public class Ghost implements Tickable{
         if (game.getTicksThisMode() == 0 && game.getGameStage() != 0) {
             uTurn = true;
         }
-        if (game.getMode() == -1 && ghostNum != EATEN && !frightenedThisMode) {
+        if (game.getMode() == -1 && ghostNum != EATEN && !eatenThisMode) {
             int ticks = FRIGHTENED_DATA[game.getArraySafeLevel()][1] * 30;
             ghostNum = scaredTicksLeft < ticks && (scaredTicksLeft % 30) < 15 ? SCARED_FLASHING : SCARED;
             updatePlanes();
@@ -422,7 +422,7 @@ public class Ghost implements Tickable{
      */
     public void getAte() {
         ghostNum = EATEN;
-        frightenedThisMode = true;
+        eatenThisMode = true;
         updatePlanes();
     }
 
@@ -467,7 +467,7 @@ public class Ghost implements Tickable{
      */
     public void scare(int ticks) {
         this.uTurn = true;
-        frightenedThisMode = true;
+        eatenThisMode = false;
         if (ghostNum != EATEN) {
             this.ghostNum = SCARED;
             this.updatePlanes();

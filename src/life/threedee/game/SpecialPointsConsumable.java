@@ -47,7 +47,7 @@ public class SpecialPointsConsumable extends Consumable {
     protected void generate() {
         if (amount > 2) {
             double cyaw = yaw;
-            double cpitch = (cyaw%(c_part())-c_part()) + C_QUARTER + (amount/2-0.5)*c_part();/*C_QUARTER - (amount/2)*c_part();*/
+            double cpitch = (cyaw%(c_part())-c_part()) + C_QUARTER + (amount/2-0.5)*c_part();
             for(int i = 0; i < amount; i++) {
                 p[i] = new Point(Vector.fromPolarTransform(cyaw, cpitch, 0.5));
                 cpitch -= c_part();
@@ -55,8 +55,8 @@ public class SpecialPointsConsumable extends Consumable {
             front = new Point(Vector.fromPolarTransform(cyaw+C_QUARTER, 0, 0.2));
             back = new Point(Vector.fromPolarTransform(cyaw-C_QUARTER, 0, 0.2));
             for (int i = 0; i < amount; i++) {
-                t[2*i] = new Triangle(front, p[i], p[(i+((amount+1)/3))%amount], colors[(((-i-((int) (cyaw/c_part())))%amount+amount)%amount)%colors.length/*i%7*/]);
-                t[2*i+1] = new Triangle(back, p[i], p[(i+((amount+1)/3))%amount], colors[(((-i-((int) (cyaw/c_part()))+1)%amount+amount)%amount)%colors.length/*(i+1)%7*/]);
+                t[2*i] = new Triangle(front, p[i], p[(i+((amount+1)/3))%amount], colors[(((-i-((int) (cyaw/c_part())))%amount+amount)%amount)%colors.length]);
+                t[2*i+1] = new Triangle(back, p[i], p[(i+((amount+1)/3))%amount], colors[(((-i-((int) (cyaw/c_part()))+1)%amount+amount)%amount)%colors.length]);
             }
             translate(new Vector(center.x, 0.625, center.z));
         } else {

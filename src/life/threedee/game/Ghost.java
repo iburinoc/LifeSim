@@ -444,7 +444,7 @@ public class Ghost implements Tickable{
     }
 
     /**
-     * This method checks whether the ghost is inside the house and is not going to be anymore on one tick.
+     * This method checks whether the ghost is inside the house and is not going to be anymore in one tick.
      * @return
      */
     public boolean justExited() {

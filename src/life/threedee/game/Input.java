@@ -16,9 +16,9 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
 
 	private Player p;
 	private Game g;
-	private JFrame j;
+	protected JFrame j;
 
-	private boolean mouseCaptured;
+	protected boolean mouseCaptured;
 
 	private Robot recenter;
 

@@ -18,6 +18,14 @@ import javax.swing.SwingUtilities;
 import life.threedee.game.GameUtilities;
 import life.threedee.game.Player;
 
+/**
+ * Original proof of concept class.  Ignore.
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ *
+ */
 public class POC3D implements Runnable{
 
 	private JFrame j;

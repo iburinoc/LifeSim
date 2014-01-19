@@ -7,29 +7,113 @@ import life.threedee.game.maps.MapLocation;
 import static life.threedee.game.GameUtilities.*;
 
 public class Ghost implements Tickable{
-    protected Point location, newLocation, target;
-    protected final Point eyesTarget = new Point(-0.5, 1, 3.5);
-    // ghostNum is the current state of the ghost (0-8). This is used to decide textures, behaviour, etc.
-    // 0 - Blinky
-    // 1 - Pinky
-    // 2 - Inky
-    // 3 - Clyde
-    // 4 - Scared
-    // 5 - ScaredFlashing
-    // 6 - Cruise Elroy
-    // 7 - Cruise Elroy MK. II
-    // 8 - Eaten
-    // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
-    protected int direction, decision, nextDecision, ghostNum, ghostId, pelletCounter = 0, scaredTicksLeft, ghostTimer;
-    protected boolean uTurn, flipFlag = true, sentRelease, frightenedThisMode;
+    /**
+     * Current location of the ghost.
+     */
+    protected Point location;
+
+    /**
+     * Where the ghost will be in one tick.
+     */
+    protected Point newLocation;
+
+    /**
+     * The target the ghost is trying to get to.
+     */
+    protected Point target;
+
+    /**
+     * The direction the ghost is facing (0-3).
+     * 0 - North - Up
+     * 1 - West - Left
+     * 2 - South - Down
+     * 3 - East - Right
+     */
+    protected int direction;
+
+    /**
+     * The direction the ghost is going to turn in the centre of this tile.
+     */
+    protected int decision;
+
+    /**
+     * The direction the ghost is going to turn in one tile.
+     */
+    protected int nextDecision;
+
+    /**
+     * The current state of the ghost (0-8). This is used to decide textures, behaviour, etc.
+     * 0 - Blinky
+     * 1 - Pinky
+     * 2 - Inky
+     * 3 - Clyde
+     * 4 - Scared
+     * 5 - ScaredFlashing
+     * 6 - Cruise Elroy
+     * 7 - Cruise Elroy MK. II
+     * 8 - Eaten
+     */
+    protected int ghostNum;
+
+    /**
+     * The true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
+     */
+    protected int ghostId;
+
+    /**
+     * The ghost uses this counter to determine when it can leave the house.
+     */
+    protected int pelletCounter;
+
+    /**
+     * The ghost uses this timer to determine when it can leave the house.
+     */
+    protected int ghostTimer;
+
+    /**
+     * The number of ticks that the ghost is going to be scared for.
+     */
+    protected int scaredTicksLeft;
+
+    /**
+     * Whether the ghost should turn around upon reaching the next tile.
+     */
+    protected boolean uTurn;
+
+    /**
+     * A flag used for bouncing up and down inside the ghost house.
+     */
+    protected boolean flipFlag = true;
+
+    /**
+     * Whether or not the ghost has been told to leave the house.
+     */
+    protected boolean sentRelease;
+
+    /**
+     * Whether the ghost has been eaten already. Used to avoid eating ghosts again.
+     */
+    protected boolean frightenedThisMode;
+
+    /**
+     * The game the ghost gets information from.
+     */
     protected Game game;
+
+    /**
+     * The planes on which most of the ghost is drawn.
+     */
     protected GhostPlane[] facePlanes;
+
+    /**
+     * The planes on which the rest of the ghost is drawm.
+     */
     protected Triangle[] faceTriangles;
 
     /**
      * This is the "default" constructor.
      * @param g This is the game that the ghost will get information from to make certain decisions.
-     * @param ghostNum This is the number of the ghost. Ghost behaviour varies depending on ghostNum (and other factors). (See above)
+     * @param ghostNum This is the number of the ghost. Ghost behaviour varies depending on ghostNum (and other factors). (See above.)
      */
     public Ghost(Game g, int ghostNum) {
         this.game=g;
@@ -108,7 +192,9 @@ public class Ghost implements Tickable{
      */
     public void move() {
         newLocation = location.add(new Point(dirToV()));
-        boolean leaving = (((game.getGlobalCounterEnabled() && game.getGlobalPelletCounter() >= POSTMORTEM_PELLETS[ghostId]) || (!game.getGlobalCounterEnabled() && pelletCounter >= EXIT_PELLETS[game.getArraySafeLevel()][ghostId]) || ghostTimer >= GAME_DATA[game.getArraySafeLevel()][4]) && inside());
+        boolean leaving = (((game.getGlobalCounterEnabled() && game.getGlobalPelletCounter() >= POSTMORTEM_PELLETS[ghostId]) ||
+                           (!game.getGlobalCounterEnabled() && pelletCounter >= EXIT_PELLETS[game.getArraySafeLevel()][ghostId]) ||
+                             ghostTimer >= GAME_DATA[game.getArraySafeLevel()][4]) && inside());
         if (!sentRelease && leaving) {
             sentRelease = true;
             nextDecision = release();
@@ -277,7 +363,7 @@ public class Ghost implements Tickable{
                 return GHOST_CORNERS[3];
             }
             case EATEN:
-                return eyesTarget;
+                return EYES_TARGET;
             case SCARED:
             case SCARED_FLASHING:
             default:

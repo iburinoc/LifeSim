@@ -115,7 +115,7 @@ public class GameUtilities{
 
     //pellets needed for the ghosts to exit the ghost house
     public static final int[][] EXIT_PELLETS = new int[][] {{Integer.MAX_VALUE, 0, 30, 60}, {Integer.MAX_VALUE, 0, 0, 50}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}};
-    public static final int[] POSTMORTEM_PELLETS = new int[] {Integer.MAX_VALUE, 7, 17, Integer.MAX_VALUE};
+    public static final int[] POSTMORTEM_PELLETS = new int[] {Integer.MAX_VALUE, 7, 17, 32};
 
     public static final int STARTING_LIVES = 2;
     
@@ -125,7 +125,9 @@ public class GameUtilities{
     //scatter, chase, scatter, chase......
     public static final int[][] MODE_TIMES = new int[][] {{420, 1200, 420, 1200, 300, 1200, 300}, {420, 1200, 420, 1200, 300, 61980, 1}, {420, 1200, 420, 1200, 300, 61980, 1}, {420, 1200, 420, 1200, 300, 61980, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}, {300, 1200, 300, 1200, 300, 62220, 1}};
 
-    public static Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), new Color(0, 51, 255), new Color(250, 250, 250), new Color(230, 46, 37), new Color(230, 46, 37), BLANK};
+    public static final Color[] GHOST_COLORS = new Color[] {new Color(230, 46, 37), new Color(240, 178, 254), new Color(95, 248, 251), new Color(244, 171, 76), new Color(0, 51, 255), new Color(250, 250, 250), new Color(230, 46, 37), new Color(230, 46, 37), BLANK};
+
+    public static final Point EYES_TARGET = new Point(-0.5, 1, 3.5);
 
     public static final Point[] GHOST_LOCATIONS = new Point[] {new Point(0*MPT, 1*MPT, 3.5*MPT), new Point(0*MPT, 1*MPT, 0.5*MPT), new Point(-2*MPT, 1*MPT, 0.5*MPT), new Point(2*MPT, 1*MPT, 0.5*MPT)};
     

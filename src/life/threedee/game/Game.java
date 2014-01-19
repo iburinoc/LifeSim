@@ -102,6 +102,8 @@ public class Game implements Runnable, Tickable{
     private BufferedImage minimap;
     private Graphics miniG;
     
+    private int pacCounter;
+    
 	public Game() {
 		j = new JFrame("Game");
 		
@@ -380,6 +382,11 @@ public class Game implements Runnable, Tickable{
         if(lives < 0) {
         	endGame();
         }
+        
+        pacCounter++;
+        if(pacCounter >= 40) {
+        	pacCounter = 0;
+        }
     }
 
     public void die() {
@@ -514,9 +521,21 @@ public class Game implements Runnable, Tickable{
 			}
 		}
 		
-		g.drawImage(minimap.getScaledInstance(224, 224, 0), GameUtilities.SC_WIDTH - 250, GameUtilities.SC_HEIGHT - 250, null);
+		{
+			int dir = (int) (((Math.PI * 3 / 4 - p.getDir().yaw() + Math.PI * 2) % (Math.PI * 2)) / (Math.PI / 2));
+			int frameNum = pacCounter / 10;
+			if(frameNum == 3) {
+				frameNum = 1;
+			}
+			MapLocation p = new MapLocation(this.p.getLoc());
+			int x = (int) (p.mx * 8) - 4 + px;
+			int y = (int) (p.my * 8) - 4 + py;
+			miniG.drawImage(GameUtilities.PAC_SPRITES_ARR[dir][frameNum], x, y, null);
+		}
+		
+		g.drawImage(minimap.getScaledInstance(168, 168, 0), GameUtilities.SC_WIDTH - 180, GameUtilities.SC_HEIGHT - 180, null);
 		g.setColor(Color.WHITE);
-		g.drawRect(GameUtilities.SC_WIDTH - 250, GameUtilities.SC_HEIGHT - 250, 224, 224);
+		g.drawRect(GameUtilities.SC_WIDTH - 180, GameUtilities.SC_HEIGHT - 180, 168, 168);
 	}
 	
 	private void drawDead(Graphics g) {

@@ -155,6 +155,20 @@ public class GameUtilities{
    
     public static final BufferedImage MAP = GameUtilities.loadImage("resources/map.png");
     
+    public static final BufferedImage PAC_FULL = GameUtilities.loadImage("resources/pacFull.png");
+    
+    public static final BufferedImage PAC_SPRITES_FULL = GameUtilities.loadImage("resources/pacsprites.png");
+    public static final BufferedImage[][] PAC_SPRITES_ARR = new BufferedImage[][]{
+    	{PAC_FULL, pacSubImage(2, 0), pacSubImage(2, 1)},
+    	{PAC_FULL, pacSubImage(1, 0), pacSubImage(1, 1)},
+    	{PAC_FULL, pacSubImage(3, 0), pacSubImage(3, 1)},
+    	{PAC_FULL, pacSubImage(0, 0), pacSubImage(0, 1)}
+    };
+    
+    private static final BufferedImage pacSubImage(int x, int y) {
+    	return PAC_SPRITES_FULL.getSubimage(x * 16, y * 16, 16, 16);
+    }
+    
     public static final int BLINKY = 0;
     public static final int PINKY = 1;
     public static final int INKY = 2;

@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +21,9 @@ import life.threedee.Vector;
 import life.threedee.WorldObject;
 import life.threedee.game.Energizer;
 import life.threedee.game.GameUtilities;
+import life.threedee.game.GhostHouseDoor;
 import life.threedee.game.Pellet;
 import life.threedee.game.TunnelPlane;
-import life.threedee.game.GhostHouseDoor;
 
 /**
  * Parses 2D pacman map image and builds the object list for it.
@@ -111,7 +112,9 @@ public class MapBuilder {
 		try{
 			br = new BufferedReader(new FileReader("resources/map.dat"));
 		}
-		catch(IOException e){}
+		catch(IOException e){
+			br = new BufferedReader(new InputStreamReader(MapBuilder.class.getResourceAsStream("/resources/map.dat")));
+		}
 		for(int x = 0; x < 28; x++) {
 			for(int y = 0; y < 36; y++) {
 				try{

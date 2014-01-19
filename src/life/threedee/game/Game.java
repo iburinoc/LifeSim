@@ -398,7 +398,6 @@ public class Game implements Runnable, Tickable{
         preferredGhost = BLINKY;
         for(Ghost ghost : ghosts) {
             ghost.reset();
-            ghost.resetCounter();
         }
         fruitTimer = 0;
         fruitOnMap = false;
@@ -764,6 +763,9 @@ public class Game implements Runnable, Tickable{
         }
         for(Energizer energizer : m.energyList()) {
             energizer.spawn();
+        }
+        for (Ghost ghost : ghosts) {
+            ghost.resetCounter();
         }
         lives=GameUtilities.STARTING_LIVES;
         level=0;

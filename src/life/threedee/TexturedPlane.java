@@ -6,12 +6,40 @@ import static life.threedee.game.GameUtilities.PX_METER;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+/**
+ * A plane that has a texture on it, does not extend past it's texture.  The origin point given is the bottom left corner of the image
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ *
+ */
 public class TexturedPlane extends Plane{
+	
+	/**
+	 * The texture for this textured plane
+	 */
     public BufferedImage texture;
 
-    public Vector right, up;
+    /**
+     * Represents right with regards to this plane, must be recalculated if the plane is rotated
+     */
+    public Vector right;
+    
+    /**
+     * Represents up with regards to this plane, must be recalculated if the plane is rotated
+     */
+    public Vector up;
 
-	public int w, h;
+    /**
+     * The width of the image in pixels
+     */
+	public int w;
+	
+	/**
+	 * The height of the image in pixels
+	 */
+	public int h;
 	
 	/**
 	 * Note: p is the bottom left corner of the texture, so keep that in mind.
@@ -37,6 +65,11 @@ public class TexturedPlane extends Plane{
 		this.h = texture.getHeight();
 	}
 	
+	/**
+	 * Calculates the pixel at a given point of intersection, null if it is outside the image
+	 * @param inter
+	 * @return
+	 */
 	public Color c(Point inter) {
 		Vector p = new Vector(this.origin, inter);
 		double du = p.dotProduct(up);
@@ -69,8 +102,4 @@ public class TexturedPlane extends Plane{
         Color color = getRData(new Vector(point1, point2), point1, Double.NaN).c;
         return color == null || color.getAlpha() == 0 || super.sameSide(point1, point2);
     }
-
-	public void setTexture(BufferedImage texture) {
-	    this.texture = texture;
-	}
 }

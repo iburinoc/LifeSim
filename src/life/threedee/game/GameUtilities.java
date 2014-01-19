@@ -183,7 +183,7 @@ public class GameUtilities{
 
     public static final boolean SCARY_FACES = false;
     
-    public static final Font SCORE_FONT = loadFont("resources/visitorC.ttf");
+    public static final Font SCORE_FONT = loadFont("resources/visitorMod.ttf");
     
     public static final Font GAME_OVER_FONT = SCORE_FONT.deriveFont(30f);
     

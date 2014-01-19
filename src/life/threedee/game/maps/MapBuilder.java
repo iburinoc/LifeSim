@@ -18,7 +18,6 @@ import life.threedee.Plane;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
-import life.threedee.WorldObject;
 import life.threedee.game.Energizer;
 import life.threedee.game.GameUtilities;
 import life.threedee.game.GhostHouseDoor;
@@ -34,77 +33,11 @@ public class MapBuilder {
 	private static final BufferedImage wall = GameUtilities.loadImage("resources/wall.png");
 	private static final BufferedImage pellets = GameUtilities.loadImage("resources/pellets.png");
 	
-	private static final int PX_TILE = 8;
-	
-	public static List<ThreeDeeObject> generateBetaScreenShotObjects() {
-		List<ThreeDeeObject> o = new ArrayList<ThreeDeeObject>();
-		/*WorldObject wo = WorldObject.generateObject("(0,1,0);"
-                + "(0,2,0),(0.5,1.5,0),(0,1.5,0.5);"
-                + "(0,2,0),(0,1.5,0.5),(-0.5,1.5,0);"
-                + "(0,2,0),(-0.5,1.5,0),(0,1.5,-0.5);"
-                + "(0,2,0),(0,1.5,-0.5),(0.5,1.5,0);"
-                + "(0.425,0.5,0.425),(0.5,1.5,0),(0,1.5,0.5);"
-                + "(-0.425,0.5,0.425),(0,1.5,0.5),(-0.5,1.5,0);"
-                + "(-0.425,0.5,-0.425),(-0.5,1.5,0),(0,1.5,-0.5);"
-                + "(0.425,0.5,-0.425),(0,1.5,-0.5),(0.5,1.5,0);"
-                + "(0.5,1.5,0),(0.6,0,0),(0.425,0.5,0.425);"
-                + "(0.5,1.5,0),(0.6,0,0),(0.425,0.5,-0.425);"
-                + "(0,1.5,0.5),(0,0,0.6),(-0.425,0.5,0.425);"
-                + "(0,1.5,0.5),(0,0,0.6),(0.425,0.5,0.425);"
-                + "(-0.5,1.5,0),(-0.6,0,0),(-0.425,0.5,-0.425);"
-                + "(-0.5,1.5,0),(-0.6,0,0),(-0.425,0.5,0.425);"
-                + "(0,1.5,-0.5),(0,0,-0.6),(0.425,0.5,-0.425);"
-                + "(0,1.5,-0.5),(0,0,-0.6),(-0.425,0.5,-0.425)", Color.RED);
-		o.add(wo);*/
-		for (double i = -5.0; i < 5; i++) {
-		    WorldObject pellet = WorldObject.generateObject("(0,0.75,0);"
-                    + "(0,0.875,0),(0,0.625,0.2),(0.14,0.625,-0.1);"
-                    + "(0,0.875,0),(0,0.625,0.2),(-0.14,0.625,-0.1);"
-                    + "(0,0.875,0),(0.14,0.625,-0.1),(-0.14,0.625,-0.1)", /*Color.WHITE*/ Color.YELLOW);
-            pellet.translate(new Vector(new Point(MPT*i+0.5, 0.0, 3.5*MPT)));
-//            o.add(pellet);
-		}
-//		o.addAll(createPelletss());
-		
-		/*BufferedImage texture = null;
-        try {
-            texture = ImageIO.read(new File("./resources/zelda.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        GhostPlane http = new GhostPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
-        //TexturedPlane http = new TexturedPlane(new Point(25.0, 25.0, 25.0), new Vector(0.0, 0.0, 1.0), texture);
-        o.add(http);*/
-		//o.add(GhostModelFactory.generateGhostModel(0));
-		/*Point top = new Point(0.0, 2.0, 0.0);
-        Point zP = new Point(0.25, 1.5, 0.25);
-        Point xP = new Point(0.25, 1.5, -0.25);
-        Point zM = new Point(-0.25, 1.5, -0.25);
-        Point xM = new Point(-0.25, 1.5, 0.25);
-        Point lZP = new Point(0.5, 0.0, 0.5);
-        Point lXP = new Point(0.5, 0.0, -0.5);
-        Point lZM = new Point(-0.5, 0.0, -0.5);
-        Point lXM = new Point(-0.5, 0.0, 0.5);
-        Triangle t1 = new Triangle(top, zP, xP, Color.RED);
-        Triangle t2 = new Triangle(top, xP, zM, Color.RED);
-        Triangle t3 = new Triangle(top, zM, xM, Color.RED);
-        Triangle t4 = new Triangle(top, xM, zP, Color.RED);
-        
-        GhostPlane http1 = new GhostPlane(lZP, new Vector(lZP, zP).crossProduct(new Vector(lZP, lXP)));
-        GhostPlane http2 = new GhostPlane(lXP, new Vector(lXP, xP).crossProduct(new Vector(lXP, lZM)));
-        GhostPlane http3 = new GhostPlane(lZM, new Vector(lZM, zM).crossProduct(new Vector(lZM, lXM)));
-        GhostPlane http4 = new GhostPlane(lXM, new Vector(lXM, xM).crossProduct(new Vector(lXM, lZP)));
-        o.add(t1);
-        o.add(t2);
-        o.add(t3);
-        o.add(t4);
-        o.add(http1);
-        o.add(http2);
-        o.add(http3);
-        o.add(http4);*/
-		return o;
-	}
-	
+	/**
+	 * Deserializes the map.dat file and constructs the sublists for each tile from it
+	 * @param map
+	 * @return
+	 */
 	public static Map<MapLocation, List<ThreeDeeObject>> deserializeMap(List<ThreeDeeObject> map) {
 		Map<MapLocation, List<ThreeDeeObject>> m = new HashMap<MapLocation, List<ThreeDeeObject>>();
 		BufferedReader br = null;
@@ -152,6 +85,10 @@ public class MapBuilder {
 		return m;
 	}
 	
+	/**
+	 * Creates the map by parsing the walls.png image
+	 * @return
+	 */
 	public static List<ThreeDeeObject> createMap() {
 		List<ThreeDeeObject> l = new ArrayList<ThreeDeeObject>();
 		
@@ -284,6 +221,10 @@ public class MapBuilder {
 		return l;
 	}
 	
+	/**
+	 * Creates the pellets by parsing the pellets.png image
+	 * @return
+	 */
 	private static List<ThreeDeeObject> createPellets() {
 		int[][] pel = parsePellets();
 		List<ThreeDeeObject> l = new ArrayList<ThreeDeeObject>();

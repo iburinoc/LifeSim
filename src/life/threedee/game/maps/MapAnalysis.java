@@ -18,8 +18,9 @@ import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
 
-/** Builds a list of viewable planes from each spot so that we can just use that for the objects list on render;
- * 
+/**
+ * Builds a list of viewable planes from each spot so that we can just use that for the objects list on render;
+ * Not used in actual execution.  Do not run, runtime on a relatively fast system is an 90 minutes more or less
  * @author iburinoc
  *
  */

@@ -11,15 +11,34 @@ import life.threedee.TColorTransfer;
 import life.threedee.Vector;
 import life.threedee.game.GameUtilities;
 
+/**
+ * A plane in the map
+ * @author Sean
+ *
+ */
 public class MapPlane extends Plane implements MapFeature {
+	
+	/**
+	 * The id value for this map feature
+	 */
 	public final int id;
 	
+	// the width of the edge
 	private static final double EDGE = GameUtilities.PX_WALL_BORDER / (double) GameUtilities.PX_METER;
 	
+	// up and right for this plane
 	private final Vector up, right;
 	
+	// the width and height of this plane
 	private final double width, height;
 	
+	/**
+	 * Constructs a new MapPlane with the given parameters
+	 * @param p
+	 * @param n
+	 * @param width
+	 * @param height
+	 */
 	public MapPlane(Point p, Vector n, double width, double height) {
 		super(p, n);
 		id = idCount;
@@ -39,10 +58,16 @@ public class MapPlane extends Plane implements MapFeature {
 		}
 	}
 
+	@Override
 	public int getID() {
 		return id;
 	}
 	
+	/**
+	 * Calculates the colour at a given point, returning null if it is outside the plane
+	 * @param inter
+	 * @return
+	 */
 	public Color c(Point inter) {
 		Vector p = new Vector(this.origin, inter);
 		double du = p.dotProduct(up);

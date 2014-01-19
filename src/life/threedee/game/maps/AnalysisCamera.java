@@ -7,6 +7,11 @@ import life.threedee.Point;
 import life.threedee.TColorTransfer;
 import life.threedee.Vector;
 
+/**
+ * A fake camera used for doing the calculations required to analyze the map and determine which planes are visible from where.  Extends visibility to it's package for use in MapAnalysis
+ * @author Sean
+ *
+ */
 public class AnalysisCamera extends Camera{
 	@Override
 	public void paintComponent(Graphics g) {

@@ -21,7 +21,7 @@ public class Ghost implements Tickable{
     // 8 - Eaten
     // ghostId is the true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
     protected int direction, decision, nextDecision, ghostNum, ghostId, pelletCounter = 0, scaredTicksLeft, ghostTimer;
-    protected boolean uTurn, flipFlag = true, sentRelease;
+    protected boolean uTurn, flipFlag = true, sentRelease, frightenedThisMode;
     protected Game game;
     protected GhostPlane[] facePlanes;
     protected Triangle[] faceTriangles;
@@ -65,7 +65,7 @@ public class Ghost implements Tickable{
         if (game.getTicksThisMode() == 0 && game.getGameStage() != 0) {
             uTurn = true;
         }
-        if (game.getMode() == -1 && ghostNum != EATEN) {
+        if (game.getMode() == -1 && ghostNum != EATEN && !frightenedThisMode) {
             int ticks = FRIGHTENED_DATA[game.getArraySafeLevel()][1] * 30;
             ghostNum = scaredTicksLeft < ticks && (scaredTicksLeft % 30) < 15 ? SCARED_FLASHING : SCARED;
             updatePlanes();
@@ -217,7 +217,9 @@ public class Ghost implements Tickable{
                 case BLINKY:
                 case CRUISE_ELROY:
                 case CRUISE_ELROY_2:
-                    return release();
+                    direction = 0;
+                    decision = 0;
+                    return decision;
                 default: throw new IllegalArgumentException();
             }
         }
@@ -307,6 +309,7 @@ public class Ghost implements Tickable{
 
     public void getAte() {
         ghostNum = EATEN;
+        frightenedThisMode = true;
         updatePlanes();
     }
 
@@ -339,6 +342,7 @@ public class Ghost implements Tickable{
     
     public void scare(int ticks) {
         this.uTurn = true;
+        frightenedThisMode = true;
         if (ghostNum != EATEN) {
             this.ghostNum = SCARED;
             this.updatePlanes();

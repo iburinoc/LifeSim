@@ -13,17 +13,17 @@ import java.awt.Color;
  * @author Sean Christopher Papillon Purcell
  */
 public final class TColorTransfer {
-	
+
 	/**
 	 * The t value for this object
 	 */
 	public final double t;
-	
+
 	/**
 	 * The color that should be rendered if this is the closest one
 	 */
 	public final Color c;
-	
+
 	/**
 	 * The ThreeDeeObject of origin
 	 */
@@ -31,6 +31,7 @@ public final class TColorTransfer {
 
 	/**
 	 * Creates a new TColorTransfer from the values given
+	 * 
 	 * @param t
 	 * @param c
 	 * @param o

@@ -20,12 +20,14 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
+import life.threedee.game.demo.InputRecorder;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapLocation;
 
@@ -56,6 +58,8 @@ public class Game implements Runnable, Tickable{
 		new Game().run();
 	}
 	
+	public Random rand;
+	
 	private List<ThreeDeeObject> objects;
 	private List<Tickable> tickables;
 
@@ -68,6 +72,8 @@ public class Game implements Runnable, Tickable{
 	private JFrame j;
 	
 	private Input i;
+	
+	private Input gameI;
 	
 	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOnMap = false, dead, globalCounterEnabled;
 
@@ -103,6 +109,9 @@ public class Game implements Runnable, Tickable{
     private Graphics miniG;
     
     private int pacCounter;
+    
+    // 0: normal, 1: recording, 2: demo playback
+    private int gameType; 
     
 	public Game() {
 		j = new JFrame("Game");
@@ -154,7 +163,28 @@ public class Game implements Runnable, Tickable{
 			
 			@Override
 			public void selected() {
-				gameMode++;
+				rand = new Random(System.currentTimeMillis());
+				newGame();
+			}
+		};
+		
+		MenuOption record = new MenuOption() {
+			@Override
+			public String name() {
+				return "RECORD GAME";
+			}
+			
+			@Override
+			public void selected() {
+				j.removeKeyListener(i);
+				j.removeMouseListener(i);
+				j.removeMouseMotionListener(i);
+				long seed = System.currentTimeMillis();
+				gameI = new InputRecorder(p, Game.this, j, seed);
+				j.addKeyListener(gameI);
+				j.addMouseListener(gameI);
+				j.addMouseMotionListener(gameI);
+				rand = new Random(seed);
 				newGame();
 			}
 		};
@@ -172,6 +202,7 @@ public class Game implements Runnable, Tickable{
 		};
 		
 		menu.add(start);
+		menu.add(record);
 		menu.add(quit);
 	}
 	
@@ -292,14 +323,14 @@ public class Game implements Runnable, Tickable{
             spc.spawn();
             fruitOnMap = true;
             fruitTimer = 0;
-            fruitTimerLimit = (int) (60 * (9 + Math.random()));
+            fruitTimerLimit = 600;
         }
         if (pelletsEaten == 170 && !fruitOnMap) {
             spc.updateLevel(level);
             spc.spawn();
             fruitOnMap = true;
             fruitTimer = 0;
-            fruitTimerLimit = (int) (60 * (9 + Math.random()));
+            fruitTimerLimit = 600;
         }
         if (pelletsEaten == 240) {
             die();
@@ -756,6 +787,7 @@ public class Game implements Runnable, Tickable{
     }
     
     public void newGame() {
+    	gameMode = 1;
         die();
         p.reset();
         for(Pellet pellet : m.pelletsList()) {

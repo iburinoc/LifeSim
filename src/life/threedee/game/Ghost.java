@@ -94,7 +94,7 @@ public class Ghost implements Tickable{
         }
         move();
         if (Math.abs(location.x) > 14){
-            translate(new Vector(-28*MPT * Math.signum(location.x), 0, 0));
+            translate(new Vector(-28 * MPT * Math.signum(location.x), 0, 0));
         }
     }
 
@@ -105,7 +105,7 @@ public class Ghost implements Tickable{
             sentRelease = true;
             nextDecision = release();
         } else if (!new MapLocation(location).equals(new MapLocation(newLocation))) {
-            nextDecision = leaving ? release() : makeDecision();
+            nextDecision = leaving && ghostNum != EATEN ? release() : makeDecision();
         } else if ((((int) location.x + Math.signum(location.x) / 2 > location.x) != ((int) location.x + Math.signum(location.x) / 2 > newLocation.x)) ||
         		   (((int) location.z + Math.signum(location.z) / 2 > location.z) != ((int) location.z + Math.signum(location.z) / 2 > newLocation.z))) {
             direction = decision;
@@ -122,16 +122,16 @@ public class Ghost implements Tickable{
         if (justExited()) {
             return nextDecision;
         } else if (!inside()) {
-            if (uTurn && ghostNum != EATEN) {
+            if (ghostNum == EATEN && Math.abs(location.x) < dirToV().s() && Math.abs(location.z - 3.5) < dirToV().s()) {
+                direction = 2;
+                decision = 2;
+                return decision;
+            }
+            if (uTurn) {
                 uTurn = false;
                 direction = (direction + 2) % 4;
                 decision = direction;
                 decision = makeDecision();
-                return decision;
-            }
-            if (ghostNum == EATEN && Math.abs(location.x) < dirToV().s() && Math.abs(location.z - 3.5) < dirToV().s()) {
-                direction = 2;
-                decision = 2;
                 return decision;
             }
             MapLocation indices = new MapLocation(newLocation.add(new Point(decision % 2 == 0 ? 0 : decision - 2, 0, decision % 2 == 0 ? -decision + 1 : 0)));
@@ -162,11 +162,10 @@ public class Ghost implements Tickable{
             int toReturn = 3;
             for (int i = 3; i >= 0; i--){
                 double s = new Vector(
-                		new Point(location.x + (i % 2 == 0 ? 0 : i - 2) + (decision % 2 == 0 ? 0 : decision - 2),
-                				1,
-                				location.z + (i % 2 == 0 ? -i + 1 : 0) + (decision % 2 == 0 ? -decision + 1 : 0)),
-                				target)
-                .s();
+                	new Point(location.x + (i % 2 == 0 ? 0 : i - 2) + (decision % 2 == 0 ? 0 : decision - 2),
+                			1,
+                			location.z + (i % 2 == 0 ? -i + 1 : 0) + (decision % 2 == 0 ? -decision + 1 : 0)),
+                			target).s();
                 if (open[i] && s <= shortest){
                     shortest = s;
                     toReturn = i;
@@ -316,7 +315,7 @@ public class Ghost implements Tickable{
     }
 
     public boolean inside() {
-        return Math.abs(newLocation.x) < 4 && newLocation.z < 3 && newLocation.z > -1;
+        return Math.abs(newLocation.x) < 4 && Math.abs(newLocation.z - 1) < 2;
     }
 
     public boolean justExited() {
@@ -339,10 +338,12 @@ public class Ghost implements Tickable{
     }
     
     public void scare(int ticks) {
-        this.ghostNum = SCARED;
         this.uTurn = true;
-        this.updatePlanes();
-        this.scaredTicksLeft = ticks;
+        if (ghostNum != EATEN) {
+            this.ghostNum = SCARED;
+            this.updatePlanes();
+            this.scaredTicksLeft = ticks;
+        }
     }
     
     public void resetTimer() {

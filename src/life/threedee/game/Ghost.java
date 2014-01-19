@@ -42,21 +42,12 @@ public class Ghost implements Tickable{
     protected int nextDecision;
 
     /**
-     * The current state of the ghost (0-8). This is used to decide textures, behaviour, etc.
-     * 0 - Blinky
-     * 1 - Pinky
-     * 2 - Inky
-     * 3 - Clyde
-     * 4 - Scared
-     * 5 - ScaredFlashing
-     * 6 - Cruise Elroy
-     * 7 - Cruise Elroy MK. II
-     * 8 - Eaten
+     * The current state of the ghost. This is used to decide textures, behaviour, etc.
      */
     protected int ghostNum;
 
     /**
-     * The true id of the ghost. It should be from (0-3). This is used to remember who the ghost is upon exiting frightened mode.
+     * The true id of the ghost. This is used to remember who the ghost is upon exiting frightened mode.
      */
     protected int ghostId;
 

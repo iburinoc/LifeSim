@@ -242,6 +242,9 @@ public class GameUtilities{
         R_INC += up ? -1 : 1;
     }
 	
+    /**
+     * Reads a big-endian int from the input stream
+     */
     public static int readInt(InputStream s) throws IOException{
     	int t = 0;
     	for(int i = 0; i < 4; i++) {
@@ -251,6 +254,12 @@ public class GameUtilities{
     	return t;
     }
     
+    /**
+     * Reads a big-endian long from the input stream
+     * @param s
+     * @return
+     * @throws IOException
+     */
     public static long readLong(InputStream s) throws IOException{
     	int t = 0;
     	for(int i = 0; i < 8; i++) {
@@ -260,12 +269,24 @@ public class GameUtilities{
     	return t;
     }
     
+    /**
+     * Writes an int to the output stream.  Big-endian
+     * @param s
+     * @param t
+     * @throws IOException
+     */
     public static void writeInt(OutputStream s, int t) throws IOException{
     	for(int i = 0; i < 4; i++) {
     		s.write((int) ((t & (0xffL << ((3 - i) * 8))) >>> ((3 - i) * 8)));
     	}
     }
     
+    /**
+     * Writes a long to the output stream.  Big-endian
+     * @param s
+     * @param t
+     * @throws IOException
+     */
     public static void writeLong(OutputStream s, long t) throws IOException{
     	for(int i = 0; i < 8; i++) {
     		s.write((int) ((t & (0xffL << ((7 - i) * 8))) >>> ((7 - i) * 8)));

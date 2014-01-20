@@ -236,7 +236,7 @@ public class Ghost implements Tickable{
                         choices++;
                     }
                 }
-                int random = (int) (Math.random() * choices) + 1;
+                int random = (int) (game.rand.nextInt(choices)) + 1;
                 for (int i = 0, counter = 0; i < 4; i++) {
                     if (open[i] && i != (decision + 2) % 4) {
                         counter++;
@@ -391,6 +391,7 @@ public class Ghost implements Tickable{
         this.ghostNum=this.ghostId;
         this.direction=GHOST_ORIENTATIONS[ghostNum];
         this.decision=GHOST_ORIENTATIONS[ghostNum];
+        this.ghostTimer = 0;
         Vector v = new Vector(this.location, GHOST_LOCATIONS[ghostNum]);
         translate(v);
         updatePlanes();

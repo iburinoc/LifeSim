@@ -6,6 +6,8 @@ import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
@@ -115,7 +117,7 @@ public class GameUtilities{
 
     //pellets needed for the ghosts to exit the ghost house
     public static final int[][] EXIT_PELLETS = new int[][] {{Integer.MAX_VALUE, 0, 30, 60}, {Integer.MAX_VALUE, 0, 0, 50}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}};
-    public static final int[] POSTMORTEM_PELLETS = new int[] {Integer.MAX_VALUE, 7, 17, 32};
+    public static final int[] POSTMORTEM_PELLETS = new int[] {Integer.MAX_VALUE, 7, 17, Integer.MAX_VALUE};
 
     public static final int STARTING_LIVES = 2;
     
@@ -236,8 +238,38 @@ public class GameUtilities{
 	public static int idCount = 0; // for map objects
 
     public static void rIncSet(boolean up) {
-        R_INC *= up ? 0.5 : 2;
+        R_INC += up ? -1 : 1;
     }
 	
+    public static int readInt(InputStream s) throws IOException{
+    	int t = 0;
+    	for(int i = 0; i < 4; i++) {
+    		t |= s.read();
+    		t <<= 8;
+    	}
+    	return t;
+    }
+    
+    public static long readLong(InputStream s) throws IOException{
+    	int t = 0;
+    	for(int i = 0; i < 8; i++) {
+    		t |= s.read();
+    		t <<= 8;
+    	}
+    	return t;
+    }
+    
+    public static void writeInt(OutputStream s, int t) throws IOException{
+    	for(int i = 0; i < 4; i++) {
+    		s.write((t & (0xff << ((3 - i) * 8))) >>> ((3 - i) * 8));
+    	}
+    }
+    
+    public static void writeLong(OutputStream s, long t) throws IOException{
+    	for(int i = 0; i < 8; i++) {
+    		s.write((int) ((t & (0xff << ((7 - i) * 8))) >>> ((7 - i) * 8)));
+    	}
+    }
+    
 	public static String CONNECT_URL = "http://99.225.251.49:3005";
 }

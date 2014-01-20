@@ -64,23 +64,52 @@ public class Game implements Runnable, Tickable{
 		new Game().run();
 	}
 	
+	/**
+	 * The random number generator for random number generating purposes
+	 */
 	public Random rand;
 	
+	/**
+	 * The list of all objects
+	 */
 	private List<ThreeDeeObject> objects;
+	
+	/**
+	 * The list of all tickables
+	 */
 	private List<Tickable> tickables;
 
+	/**
+	 * The ghosts
+	 */
     private List<Ghost> ghosts;
 	
+    /**
+     * The player
+     */
 	private Player p;
 	
+	/**
+	 * The object containing map data
+	 */
 	private GameMap m;
 	
+	/**
+	 * The window containing the game
+	 */
 	private JFrame j;
 	
+	/**
+	 * The input object handling user input
+	 */
 	private Input i;
 	
+	/**
+	 * The input used during the game for Playback and Record
+	 */
 	private Input gameI;
 	
+	// some data
 	private boolean running, gotExtraLife, lostLifeThisLevel, fruitOneOnMap, fruitTwoOnMap, deactivateFruitTimer, dead, globalCounterEnabled;
 
     /**
@@ -91,29 +120,41 @@ public class Game implements Runnable, Tickable{
      */
 	private int mode;
     
+	// basic game data
     private int level, pelletsEaten, score, lives = GameUtilities.STARTING_LIVES, preferredGhost = 1, globalPelletCounter, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
     
+    // the screen fade to black
     private int fade;
     
+    // the highscores
     private List<String> highscore;
     
+    // what stage of scoreboard its at
     private int scoreboardDrawMode;
     
+    // the name inputted
     private String name;
     
+    // the lock used for synchronising drawing and ticking
     private Object objLock;
     
+    // the "fruit
     private SpecialPointsConsumable spc;
     
+    // what mode the game is in: menu, game, scoreboard
     private int gameMode;
     
+    // the list of menu options
     private List<MenuOption> menu;
     
+    // the currently selected option
     private int menuChoice;
     
+    // the minimap
     private BufferedImage minimap;
     private Graphics miniG;
     
+    // the pacman sprite to draw on the minimap
     private int pacCounter;
     
     // 0: normal, 1: recording, 2: demo playback
@@ -160,6 +201,7 @@ public class Game implements Runnable, Tickable{
 		miniG = minimap.createGraphics();
 	}
 	
+	// initialize the menu with anonymous classes
 	private void initMenu() {
 		highscore = HighScore.getHighScores();
 		
@@ -251,6 +293,11 @@ public class Game implements Runnable, Tickable{
 		menu.add(quit);
 	}
 	
+	/**
+	 * Represents an option in the menu
+	 * @author Sean
+	 *
+	 */
 	private interface MenuOption {
 		String name();
 		void selected();
@@ -275,6 +322,9 @@ public class Game implements Runnable, Tickable{
         tickables.add(spc);
 	}
 	
+	/**
+	 * Starts the game
+	 */
 	@Override
 	public void run() {
 		initMenu();
@@ -291,6 +341,9 @@ public class Game implements Runnable, Tickable{
 	}
 
 	private class RenderThread extends Thread {
+		/**
+		 * Draws a frame every 1000/FRAME_RATE milliseconds
+		 */
 		@Override
 		public void run() {
 			long frame_time = System.currentTimeMillis();
@@ -310,6 +363,9 @@ public class Game implements Runnable, Tickable{
 	}
 	
 	private class TickThread extends Thread {
+		/**
+		 * Ticks every 1000/TICK_RATE milliseconds
+		 */
 		@Override
 		public void run() {
 			long tick_time = System.currentTimeMillis();
@@ -488,6 +544,7 @@ public class Game implements Runnable, Tickable{
         fruitTwoOnMap = false;
     }
 	
+    // draws a single frame
 	private void drawFrame() {
 		synchronized(objLock) {
 			p.calcBuffer();
@@ -517,6 +574,10 @@ public class Game implements Runnable, Tickable{
 		}
 	}
 	
+	/**
+	 * This draws the non-3d world part of the game
+	 * @param g
+	 */
 	void drawSpecial(Graphics g) {
 		switch(gameMode) {
 		case 0:
@@ -536,6 +597,10 @@ public class Game implements Runnable, Tickable{
 		}
 	}
 	
+	/**
+	 * Draw the main menu
+	 * @param g
+	 */
 	private void drawMenu(Graphics g) {
 		if(menu == null) {
 			return;
@@ -570,6 +635,7 @@ public class Game implements Runnable, Tickable{
 		}
 	}
 	
+	// draw the score
 	private void drawScore(Graphics g) {
 		final int height = 50;
 		g.setColor(Color.WHITE);
@@ -578,6 +644,7 @@ public class Game implements Runnable, Tickable{
 		g.drawString("Lives: " + lives, 5, GameUtilities.SC_HEIGHT - height + g.getFontMetrics().getHeight());
 	}
 	
+	// draw the minimap
 	private void drawMinimap(Graphics g) {
 		Point m = p.getLoc();
 		miniG.setColor(Color.BLACK);
@@ -641,6 +708,7 @@ public class Game implements Runnable, Tickable{
 		g.drawRect(GameUtilities.SC_WIDTH - 180, GameUtilities.SC_HEIGHT - 180, 168, 168);
 	}
 	
+	// draw the end of the game
 	private void drawDead(Graphics g) {
 		g.setFont(GameUtilities.GAME_OVER_FONT);
 		FontMetrics fm = g.getFontMetrics();
@@ -662,7 +730,8 @@ public class Game implements Runnable, Tickable{
 		g.setColor(Color.RED);
 		g.drawString("Game Over", GameUtilities.SC_WIDTH/2 - fm.stringWidth("Game Over")/2, GameUtilities.SC_HEIGHT - 100);
 	}
-	
+	 
+	// draw entering your name
 	private void drawEnterName(Graphics g) {
 		g.setFont(GameUtilities.GAME_OVER_FONT);
 		FontMetrics fm = g.getFontMetrics();
@@ -699,6 +768,7 @@ public class Game implements Runnable, Tickable{
 		}
 	}
 	
+	// end the game, and do special things for the special games
 	private void endGame() {
 		dead = true;
 		scoreboardDrawMode = 1;
@@ -735,6 +805,11 @@ public class Game implements Runnable, Tickable{
 		}
 	}
 
+	/**
+	 * React to key input
+	 * @param code
+	 * @param key
+	 */
 	void keyPressed(int code, char key) {
 		switch(gameMode) {
 		case 0:
@@ -782,26 +857,50 @@ public class Game implements Runnable, Tickable{
 		}
 	}
 
+	/**
+	 * Whether the 3d buffer should be calculated
+	 * @return
+	 */
 	boolean draw3D() {
 		return fade < 256 && gameMode == 1;
 	}
 	
+	/**
+	 * Add a tickable
+	 * @param t
+	 */
 	public void addTickable(Tickable t){
 		tickables.add(t);
 	}
 	
+	/**
+	 * Set the list of tickables
+	 * @param l
+	 */
 	public void setTickables(List<Tickable> l){
 		tickables = Collections.synchronizedList(l);
 	}
 	
+	/**
+	 * Add an object
+	 * @param o
+	 */
 	public void addObject(ThreeDeeObject o) {
 		objects.add(o);
 	}
 	
+	/**
+	 * Set the list of objects
+	 * @param o
+	 */
 	public void setObjects(List<ThreeDeeObject> o){
 		objects = Collections.synchronizedList(o);
 	}
 	
+	/**
+	 * Get the list of objects
+	 * @return
+	 */
 	public List<ThreeDeeObject> objects() {
 		return objects;
     }

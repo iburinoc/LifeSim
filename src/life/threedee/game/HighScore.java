@@ -19,6 +19,7 @@ import java.util.List;
  *
  */
 public class HighScore {
+
     /**
      * Gets the high scores from the server.
      * @return The list of the highest scorers and their scores.
@@ -51,7 +52,7 @@ public class HighScore {
 		return null;
 	}
 	
-	/**
+	/*
 	 * Posts a high score to the high score board.
 	 * @param name The name of the user who got the high score.
 	 * @param score Their score.

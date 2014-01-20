@@ -20,6 +20,8 @@ import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,8 +34,8 @@ import javax.swing.JOptionPane;
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
+import life.threedee.game.demo.Demo;
 import life.threedee.game.demo.InputPlayback;
-import life.threedee.game.demo.InputRecorder;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapLocation;
 
@@ -160,7 +162,11 @@ public class Game implements Runnable, Tickable{
     
     // 0: normal, 1: recording, 2: demo playback
     private int gameType;
+    
+    private Demo d;
 
+    private long tickNum;
+    
     /**
      * The default constructor for Game. This creates a new game with a player and ghosts. It also handles graphics.
      */
@@ -228,14 +234,8 @@ public class Game implements Runnable, Tickable{
 			
 			@Override
 			public void selected() {
-				j.removeKeyListener(i);
-				j.removeMouseListener(i);
-				j.removeMouseMotionListener(i);
 				long seed = System.currentTimeMillis();
-				gameI = new InputRecorder(p, Game.this, j, seed);
-				j.addKeyListener(gameI);
-				j.addMouseListener(gameI);
-				j.addMouseMotionListener(gameI);
+				d = new Demo(seed);
 				rand = new Random(seed);
 				gameType = 1;
 				newGame();
@@ -257,18 +257,25 @@ public class Game implements Runnable, Tickable{
 						j.removeKeyListener(i);
 						j.removeMouseListener(i);
 						j.removeMouseMotionListener(i);
-						InputPlayback gameI = new InputPlayback(p, Game.this, j, new FileInputStream(fc.getSelectedFile()));
+						gameI = new InputPlayback(p, Game.this, j);
 						j.addKeyListener(gameI);
 						j.addMouseListener(gameI);
 						j.addMouseMotionListener(gameI);
-						Game.this.gameI = gameI;
-						rand = new Random(gameI.seed());
-						(new Thread(gameI)).start();
+						FileInputStream s = new FileInputStream(fc.getSelectedFile());
+						ObjectInputStream o = new ObjectInputStream(s);
+						d = (Demo) o.readObject();
+						o.close();
+						s.close();
+						rand = new Random(d.seed);
 						gameType = 2;
 						newGame();
 					}
 					catch(IOException e) {
 						e.printStackTrace();
+						JOptionPane.showMessageDialog(j, "File not valid demo file");
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+						System.err.println("WAT");
 						JOptionPane.showMessageDialog(j, "File not valid demo file");
 					}
 				}
@@ -398,6 +405,14 @@ public class Game implements Runnable, Tickable{
     			}
     		}
     		return;
+    	}
+    	switch(gameType) {
+    	case 1:
+    		d.recordTick(p);
+    		break;
+    	case 2:
+    		d.replayTick(p, tickNum++);
+    		break;
     	}
     	if (gameMode != 1) {//if you are currently not in game, end method
     		return;
@@ -776,18 +791,13 @@ public class Game implements Runnable, Tickable{
 		name = "";
 		switch(gameType) {
 		case 1:
-			j.removeKeyListener(gameI);
-			j.removeMouseListener(gameI);
-			j.removeMouseMotionListener(gameI);
-			j.addMouseListener(i);
-			j.addMouseMotionListener(i);
-			j.addKeyListener(i);
 			final JFileChooser fc = new JFileChooser(".");
 			int choice = fc.showSaveDialog(j);
 			if(choice == JFileChooser.APPROVE_OPTION) {
 				try{
-					InputRecorder r = (InputRecorder) gameI;
-					r.serialize(new FileOutputStream(fc.getSelectedFile()));
+					FileOutputStream fs = new FileOutputStream(fc.getSelectedFile());
+					ObjectOutputStream o = new ObjectOutputStream(fs);
+					o.writeObject(d);
 				}
 				catch(IOException e) {
 					e.printStackTrace();
@@ -802,6 +812,8 @@ public class Game implements Runnable, Tickable{
 			j.addMouseListener(i);
 			j.addMouseMotionListener(i);
 			j.addKeyListener(i);
+			d = null;
+			gameType = 0;
 			break;
 		}
 	}
@@ -1061,5 +1073,6 @@ public class Game implements Runnable, Tickable{
         name = null;
         fade = 0;
         scoreboardDrawMode = 0;
+        tickNum = 0;
     }
 }

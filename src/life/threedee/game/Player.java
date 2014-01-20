@@ -105,6 +105,9 @@ public class Player extends Camera implements Tickable{
     				mloc = loc.add(new Point(mov));
     				break slide;
     			}
+    			if(!(Math.abs((yawl - yaw) % (2*PI)) < PI)) {
+    				mloc = loc;
+    			}
     		}
     		mloc = loc;
     	}

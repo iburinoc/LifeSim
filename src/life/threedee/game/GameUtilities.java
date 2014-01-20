@@ -276,7 +276,7 @@ public class GameUtilities {
     /**
      * The font used for the scores.
      */
-    public static final Font SCORE_FONT = loadFont("resources/visitorMod.ttf");
+    public static final Font SCORE_FONT = loadFont("resources/VisitorMod.ttf");
     
     /**
      * The font used to display the Game Over message.

@@ -5,13 +5,11 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 
 import life.threedee.game.Game;
-import life.threedee.game.GameUtilities;
 import life.threedee.game.Input;
 import life.threedee.game.Player;
 
@@ -23,14 +21,7 @@ import life.threedee.game.Player;
  * @author Sean Christopher Papillon Purcell
  *
  */
-public class InputPlayback extends Input implements Runnable{
-
-	// the seed
-	private long seed;
-	// the start time
-	private long start;
-	// the list of actions to be replayed
-	private List<Action> actions;
+public class InputPlayback extends Input{
 	
 	/**
 	 * Standard ctor with the inputstream to deserialize from
@@ -40,58 +31,8 @@ public class InputPlayback extends Input implements Runnable{
 	 * @param i
 	 * @throws IOException
 	 */
-	public InputPlayback(Player p, Game g, JFrame j, InputStream i) throws IOException{
+	public InputPlayback(Player p, Game g, JFrame j){
 		super(p, g, j);
-		deserialize(i);
-	}
-	
-	private void deserialize(InputStream s) throws IOException{
-		seed = GameUtilities.readLong(s);
-		int num = GameUtilities.readInt(s);
-
-		actions = new ArrayList<Action>(num);
-		for(int i = 0; i < num; i++) {
-			actions.add(Action.deserialize(s));
-		}
-		if(s.available() != 0) {
-			System.err.println("Not all data read");
-		}
-		/*
-		try{
-			ObjectInputStream o = new ObjectInputStream(s);
-			Data d = (Data) o.readObject();
-			this.seed = d.seed;
-			this.actions = d.actions;
-			o.close();
-		}
-		catch(ClassNotFoundException e) {
-
-		}*/
-		s.close();
-	}
-	
-	/**
-	 * Iterates through each action and executes it
-	 */
-	@Override
-	public void run() {
-		start = System.currentTimeMillis();
-		for(int i = 0; i < actions.size(); i++) {
-			Action a = actions.get(i);
-			long t = start + (a.when - seed);
-			while(System.currentTimeMillis() < t);
-			switch(a.type) {
-			case 0:
-				super.mouseMoved(new MouseEvent(this.j, a.id, a.when, 0, a.field1, a.field2, 1, false));
-				break;
-			case 1:
-				super.keyPressed(new KeyEvent(this.j, a.id, a.when, 0, a.field1, (char) a.field2));
-				break;
-			case 2:
-				super.keyReleased(new KeyEvent(this.j, a.id, a.when, 0, a.field1, (char) a.field2));
-				break;
-			}
-		}
 	}
 	
 	@Override
@@ -104,13 +45,5 @@ public class InputPlayback extends Input implements Runnable{
 
 	@Override
 	public void keyReleased(KeyEvent e){	
-	}
-	
-	/**
-	 * Getter
-	 * @return
-	 */
-	public long seed() {
-		return seed;
 	}
 }

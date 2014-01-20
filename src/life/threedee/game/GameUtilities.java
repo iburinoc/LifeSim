@@ -368,19 +368,18 @@ public class GameUtilities {
     }
 	
     /**
-     * Reads a big-endian int from the input stream
+     * Reads a little-endian int from the input stream
      */
     public static int readInt(InputStream s) throws IOException{
     	int t = 0;
     	for(int i = 0; i < 4; i++) {
-    		t |= s.read();
-    		t <<= 8;
+    		t |= ((int)s.read()) << (i * 8);
     	}
     	return t;
     }
     
     /**
-     * Reads a big-endian long from the input stream
+     * Reads a little-endian long from the input stream
      * @param s
      * @return
      * @throws IOException
@@ -388,21 +387,20 @@ public class GameUtilities {
     public static long readLong(InputStream s) throws IOException{
     	int t = 0;
     	for(int i = 0; i < 8; i++) {
-    		t |= s.read();
-    		t <<= 8;
+    		t |= ((long)s.read()) << (i * 8);
     	}
     	return t;
     }
     
     /**
-     * Writes an int to the output stream.  Big-endian
+     * Writes an int to the output stream.  little-endian
      * @param s
      * @param t
      * @throws IOException
      */
     public static void writeInt(OutputStream s, int t) throws IOException{
     	for(int i = 0; i < 4; i++) {
-    		s.write((int) ((t & (0xffL << ((3 - i) * 8))) >>> ((3 - i) * 8)));
+    		s.write((int) ((t & (0xff << (i * 8))) >>> (i * 8)));
     	}
     }
     
@@ -414,7 +412,7 @@ public class GameUtilities {
      */
     public static void writeLong(OutputStream s, long t) throws IOException{
     	for(int i = 0; i < 8; i++) {
-    		s.write((int) ((t & (0xffL << ((7 - i) * 8))) >>> ((7 - i) * 8)));
+    		s.write((int) ((t & (0xffL << (i * 8))) >>> (i * 8)));
     	}
     }
 

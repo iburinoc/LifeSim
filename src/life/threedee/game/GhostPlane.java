@@ -8,16 +8,39 @@ import life.threedee.Point;
 import life.threedee.TexturedPlane;
 import life.threedee.Vector;
 
+/**
+ * The graphical element of the side of a ghost.
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ *
+ */
 public class GhostPlane extends TexturedPlane {
     private int offset, ghostNum;
     private boolean facePlane;
     
-    public GhostPlane(Point o, Point r, Point u, int ghostNum) {
-        this(o,new Vector(o, u).crossProduct(new Vector(o, r)), ghostNum);
+    /**
+     * Constructs a Ghost plane with 3 given points, 
+     * and the number of the ghost that this plane is a part of.
+     * @param origin The origin point. Used in the same manner as in a TexturedPlane.
+     * @param right The "right" point.
+     * @param up The "up" point.
+     * @param ghostNum The number of ghost for which this plane is a side.
+     */
+    public GhostPlane(Point origin, Point right, Point up, int ghostNum) {
+        this(origin,new Vector(origin, up).crossProduct(new Vector(origin, right)), ghostNum);
     }
     
-    public GhostPlane(Point p, Vector n, int ghostNum) {
-        super(p, n, GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
+    /**
+     * Constructs a GhostPlane with a given point, a normal vector,
+     * and the number of the ghost that this plane is a part of.
+     * @param point The origin point. Used in the same manner as in a TexturedPlane.
+     * @param normal The normal vector.
+     * @param ghostNum The number of ghost for which this plane is a side.
+     */
+    public GhostPlane(Point point, Vector normal, int ghostNum) {
+        super(point, normal, GameUtilities.GHOST_SIDE_TEXTURES[ghostNum]);
         this.offset = 1;
         this.ghostNum=ghostNum;
         this.facePlane=false;
@@ -60,16 +83,27 @@ public class GhostPlane extends TexturedPlane {
         return null;
     }
     
+    /**
+     * Sets whether this plane is the face of the ghost or not.
+     * @param face Whether or not this plane is the face of the ghost.
+     */
     public void setFace(boolean face) {
         this.facePlane=face;
         reloadTexture();
     }
     
+    /** 
+     * Sets the number of the ghost that this plane is a part of.
+     * @param ghostNum The number of the ghost.
+     */
     public void setGhostNum(int ghostNum) {
         this.ghostNum = ghostNum;
         reloadTexture();
     }
     
+    /** 
+     * Reloads the texture. Used for when the ghost changes color or rotates.
+     */
     public void reloadTexture() {
         if(facePlane) {
             this.texture = GameUtilities.GHOST_FACE_TEXTURES[ghostNum];
@@ -78,6 +112,9 @@ public class GhostPlane extends TexturedPlane {
         }
     }
     
+    /**
+     * Shifts the bottom of the ghost.
+     */
     public void shiftTexture() {
         offset++; 
         offset %= 10;

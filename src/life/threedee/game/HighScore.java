@@ -10,7 +10,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class for interfacing with the High Score board over the Internet.
+ *
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ *
+ */
 public class HighScore {
+    /**
+     * Gets the high scores from the server.
+     * @return The list of the highest scorers and their scores.
+     */
 	public static List<String> getHighScores() {
 		try {
 			URL url = new URL(GameUtilities.CONNECT_URL);
@@ -39,6 +51,11 @@ public class HighScore {
 		return null;
 	}
 	
+	/**
+	 * Posts a high score to the high score board.
+	 * @param name The name of the user who got the high score.
+	 * @param score Their score.
+	 */
 	public static void postHighScores(String name, int score) {
 		try{
 			URL url = new URL(GameUtilities.CONNECT_URL);

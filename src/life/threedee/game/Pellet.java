@@ -45,7 +45,7 @@ public class Pellet extends Consumable{
 	public void eat(Game g, Player p){
         eaten = true;
         g.pelletEaten();
-        p.stop(1);
+        p.stop(4);
     }
 
 	@Override

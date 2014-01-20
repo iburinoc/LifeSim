@@ -286,7 +286,7 @@ public class Game implements Runnable, Tickable{
 		MenuOption quit = new MenuOption() {
 			@Override
 			public String name() {
-				return "QUIT";
+				return "QUIT GAME";
 			}
 			
 			@Override

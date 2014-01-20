@@ -14,7 +14,7 @@ import life.threedee.Vector;
 import life.threedee.game.maps.GameMap;
 
 /**
- * A player, extends Camera and has some extra additions to represent the fact that it is part of the game
+ * A player, extends Camera and has some extra additions to represent the fact that it is part of the game.
  * 
  * @author Andrey Boris Khesin
  * @author Dmitry Andreevich Paramonov
@@ -24,19 +24,45 @@ import life.threedee.game.maps.GameMap;
 public class Player extends Camera implements Tickable{
     private Game g;
     private GameMap m;
-    
-    protected boolean w, d, s, a;
+
+    /**
+     * Indicates whether the button to move forward is pressed.
+     */
+    protected boolean w;
+
+    /**
+     * Indicates whether the button to move left is pressed.
+     */
+    protected boolean d;
+
+    /**
+     * Indicates whether the button to move backwards is pressed.
+     */
+    protected boolean s;
+
+    /**
+     * Indicates whether the button to move right is pressed.
+     */
+    protected boolean a;
     
     protected int stop;
     
     private List<ThreeDeeObject> map;
-    
+
+    /**
+     * The "default" player constructor. Calls the camera constructor with the default player location and orientation.
+     * @param g The game that the player will read input from.
+     * @param m The map that contains information in the game.
+     */
     public Player(Game g, GameMap m) {
         super(new Point(0, 1, -8.5), new Vector(-1, 0, 0));
         this.g = g;
         this.m = m;
     }
 
+    /**
+     * Resets the player upon death.
+     */
     public void reset() {
     	w = false;
     	d = false;
@@ -68,7 +94,10 @@ public class Player extends Camera implements Tickable{
     	super.paintBuffer(g);
     	this.g.drawSpecial(g);
     }
-    
+
+    /**
+     * Uses input to determine which way to move. Makes sure that the player cannot go through walls.
+     */
     private void move() {
     	double y = dir.yaw();
     	if(y != y) {
@@ -117,7 +146,13 @@ public class Player extends Camera implements Tickable{
     	loc = mloc;
     	
     }
-    
+
+    /**
+     * Determines if the player wrapped around the map through the tunnel through checking if two points are on opposite sides of a tunnel plane.
+     * @param a The first point.
+     * @param b The second point.
+     * @return Whether the player has crossed through the tunnel.
+     */
     private boolean crossTunnel(Point a, Point b) {
     	if(map != null) {
     		for(ThreeDeeObject wall : map) {
@@ -128,7 +163,13 @@ public class Player extends Camera implements Tickable{
     	}
     	return false;
     }
-    
+
+    /**
+     * Determines if the player is on the same side of all the walls in the game by checking if two points are on the same side.
+     * @param a The first point.
+     * @param b The second point.
+     * @return Whether the player is on the same side as all the walls.
+     */
     private boolean sameSideAll(Point a, Point b) {
     	if(map != null) {
     		for(ThreeDeeObject wall : map) {
@@ -141,12 +182,19 @@ public class Player extends Camera implements Tickable{
     	}
     	return true;
     }
-    
+
+    /**
+     * Determines which way to move based on the keys that are being pressed.
+     * @param d Direction pressed.
+     * @param yaw Direction the player is facing.
+     * @return Returns which way the player is going.
+     */
     private Vector getMoveVector(int d, double yaw) {
          yaw -= PI / 2 * d;
          return Vector.fromPolarTransform(yaw, 0, 1);
     }
 
+    @Override
     public void tick(){
         if (stop == 0) {
     	    move();
@@ -162,7 +210,14 @@ public class Player extends Camera implements Tickable{
     protected TColorTransfer closestInFront(Vector dir, Point px) {
     	return closestInFront(dir, px, this.map);
     }
-    
+
+    /**
+     * Determines which plane is the first thing that the player sees in a given pixel.
+     * @param dir The direction of the pixel from the player.
+     * @param px The coordinates of the pixel.
+     * @param map The list of planes to check.
+     * @return Returns the colour and distance to the closest plane.
+     */
     private TColorTransfer closestInFront(Vector dir, Point px, List<ThreeDeeObject> map){
 		TColorTransfer min = new TColorTransfer(Double.MAX_VALUE, Color.white, null);
 		if(map != null) {
@@ -188,23 +243,43 @@ public class Player extends Camera implements Tickable{
 		return min;
 	}
 
+    /**
+     * Location getter.
+     * @return Returns the location.
+     */
     public Point getLoc(){
         return loc;
     }
 
+    /**
+     * Stop the player for a given number of ticks.
+     * @param len Duration of the time player needs to be stopped.
+     */
     public void stop(int len){
         stop = len;
     }
 
+    /**
+     * Location setter.
+     * @param loc New location.
+     */
     public void setLoc(Point loc){
         this.loc = loc;
     }
 
-    public void setDir(Vector dir){
-        this.dir = dir;
-    }
-
+    /**
+     * Direction getter.
+     * @return Returns the direction.
+     */
     public Vector getDir(){
         return dir;
+    }
+
+    /**
+     * Direction setter.
+     * @param dir New direction.
+     */
+    public void setDir(Vector dir){
+        this.dir = dir;
     }
 }

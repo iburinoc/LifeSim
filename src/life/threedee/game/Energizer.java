@@ -49,7 +49,7 @@ public class Energizer extends Consumable {
     public void eat(Game g, Player p){
         eaten = true;
         g.startFrightened();
-        p.stop(3);
+        p.stop(12);
     }     
 
     @Override

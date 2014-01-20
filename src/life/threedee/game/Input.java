@@ -126,6 +126,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
             g.rackTest();
         }else if(e.getKeyChar() == '`' && GameUtilities.DEVELOPER_MODE){
             g.startFrightened();
+        }else if(e.getKeyChar() == 'r' && GameUtilities.DEVELOPER_MODE){
+            g.die();
         }else if(e.getKeyChar() == ','){
             GameUtilities.rIncSet(false);
         }else if(e.getKeyChar() == '.'){

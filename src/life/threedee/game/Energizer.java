@@ -6,12 +6,27 @@ import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
 
+/**
+ * An Energizer that can be eaten in the game.
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ *
+ */
 public class Energizer extends Consumable {
+    // A quarter of a circle in radians. Used for finding the locations of the middle points.
     private static final double C_QUARTER = Math.PI/2;
     
+    // The top point of the octahedron.
     private Point top;
+    // The bottom point of the octahedron.
     private Point bottom;
     
+    /**
+     * Constructs an Energizer at a given location.
+     * @param center The center of this Energizer.
+     */
     public Energizer(Point center) {
     	super(center, 8, 4, Math.PI / 360);
     }

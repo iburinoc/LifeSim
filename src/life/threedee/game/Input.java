@@ -105,11 +105,11 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
 			p.s = true;
 		}else if(e.getKeyChar() == 'd' || e.getKeyCode() == 39){
             p.d = true;
-        }else if(e.getKeyChar() == '\\'){
+        }else if(e.getKeyChar() == '\\' && GameUtilities.DEVELOPER_MODE){
             g.pelletEaten();
-        }else if(e.getKeyChar() == '='){
+        }else if(e.getKeyChar() == '=' && GameUtilities.DEVELOPER_MODE){
             g.rackTest();
-        }else if(e.getKeyChar() == '`'){
+        }else if(e.getKeyChar() == '`' && GameUtilities.DEVELOPER_MODE){
             g.startFrightened();
         }else if(e.getKeyChar() == ','){
             GameUtilities.rIncSet(false);

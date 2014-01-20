@@ -161,9 +161,7 @@ public class Ghost implements Tickable{
         g.addTickable(this);
     }
 
-    /**
-     * This method is run every tick. The ghost updates things such as timers. It represents 1 / 60 of a second.
-     */
+    @Override
     public void tick(){
         if (game.getTicksThisMode() == 0 && game.getGameStage() != 0) {
             uTurn = true;

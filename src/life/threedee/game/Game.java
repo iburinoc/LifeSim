@@ -613,6 +613,14 @@ public class Game implements Runnable, Tickable{
 			}
 		}
 		
+		if(!spc.eaten) {
+			miniG.setColor(Color.RED);
+			MapLocation l = new MapLocation(spc.center);
+			int x = (int) (l.mx * 8) + 2 + px;
+			int y = (int) (l.my * 8) + 2 + py;
+			miniG.fillRect(x, y, 4, 4);
+		}
+		
 		{
 			int dir = (int) (((Math.PI * 3 / 4 - p.getDir().yaw() + Math.PI * 2) % (Math.PI * 2)) / (Math.PI / 2));
 			int frameNum = pacCounter / 10;
@@ -698,6 +706,12 @@ public class Game implements Runnable, Tickable{
 		name = "";
 		switch(gameType) {
 		case 1:
+			j.removeKeyListener(gameI);
+			j.removeMouseListener(gameI);
+			j.removeMouseMotionListener(gameI);
+			j.addMouseListener(i);
+			j.addMouseMotionListener(i);
+			j.addKeyListener(i);
 			final JFileChooser fc = new JFileChooser(".");
 			int choice = fc.showSaveDialog(j);
 			if(choice == JFileChooser.APPROVE_OPTION) {
@@ -710,6 +724,7 @@ public class Game implements Runnable, Tickable{
 					JOptionPane.showMessageDialog(j, "Could not write demo file");
 				}
 			}
+			break;
 		case 2:
 			j.removeKeyListener(gameI);
 			j.removeMouseListener(gameI);

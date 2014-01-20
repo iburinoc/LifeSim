@@ -7,24 +7,51 @@ import life.threedee.TColorTransfer;
 import life.threedee.Triangle;
 import life.threedee.Vector;
 
+/**
+ * A Special Points Consumable that can be eaten in the game.
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ *
+ */
 public class SpecialPointsConsumable extends Consumable {
+    // A quarter of a circle in radians. Used for finding the locations of the forward and back points.
     private static final double C_QUARTER = Math.PI/2;
+    // The colors of the various triangles.
     private static final Color[] colors = {new Color(255, 92, 205), Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.GRAY, Color.BLACK};
     
+    // The point at the front of the SPC.
     private Point front;
+    // The point at the back of the SPC.
     private Point back;
     
+    // The amount of triangles that this SPC has.
     private int amount;
 
+    /**
+     * Constructs a SpecialPointsConsumable at a given location when it's a given level.
+     * The level decides the amount of sides.
+     * @param center The center of this SpecialPointsConsumable.
+     * @param level The level during which this SpecialPointsConsumable is created.
+     */
     public SpecialPointsConsumable(Point center, int level) {
         super(center, (level+3)*2, level+3, Math.PI / 90);
         amount = level+3;
     }
 
+    /**
+     * Despawns this SpecialPointsConsumable.
+     */
     public void despawn() {
         eaten = true;
     }
     
+    /**
+     * Updates the level for this SpecialPointsConsumable 
+     * and thereby updates the amount of sides.
+     * @param level The current level.
+     */
     public void updateLevel(int level) {
         amount = level+3;
         t = new Triangle[2*amount];
@@ -32,7 +59,8 @@ public class SpecialPointsConsumable extends Consumable {
         generate();
     }
     
-    public double c_part() {
+    // Generates a part of a circle. Used to find the amount that the angle for each of the points is changed by.
+    private double c_part() {
         return 2*Math.PI/amount;
     }
     

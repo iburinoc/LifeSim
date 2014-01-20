@@ -7,7 +7,7 @@ import life.threedee.Triangle;
 import life.threedee.Vector;
 
 /**
- * A pellet that can be eaten.
+ * A pellet that can be eaten in the game.
  * 
  * @author Andrey Boris Khesin
  * @author Dmitry Andreevich Paramonov
@@ -23,7 +23,7 @@ public class Pellet extends Consumable{
 	
 	/**
 	 * Constructs a Pellet at a given location.
-	 * @param center The center of this pellet.
+	 * @param center The center of this Pellet.
 	 */
 	public Pellet(Point center) {
 		super(center, 3, 3, Math.PI / 90);

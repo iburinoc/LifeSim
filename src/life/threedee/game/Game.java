@@ -370,7 +370,7 @@ public class Game implements Runnable, Tickable{
             fruitOneOnMap = true;
             fruitTimer = 0;
             deactivateFruitTimer = false;
-            fruitTimerLimit = 600;
+            fruitTimerLimit = 2400;
         }
         if (pelletsEaten == 170 && !fruitTwoOnMap) {
             spc.updateLevel(level);
@@ -378,7 +378,7 @@ public class Game implements Runnable, Tickable{
             fruitTwoOnMap = true;
             fruitTimer = 0;
             deactivateFruitTimer = false;
-            fruitTimerLimit = 600;
+            fruitTimerLimit = 2400;
         }
         if (pelletsEaten == 240) {
             die();
@@ -819,8 +819,6 @@ public class Game implements Runnable, Tickable{
     }
     
     public void startFrightened() {
-        // ANDREY! THIS IS WHERE THE CODE FOR STARTING AND ENDING (MAYBE) FRIGHTENED MODE GOES!
-        // ANDREY! I'M USING "ANDREY!" AS TODO NOW!
         mode = -1;
         frightTicks = 0;
         score += 50;

@@ -6,15 +6,27 @@ import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
 
+/**
+ * A pellet that can be eaten.
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ *
+ */
 public class Pellet extends Consumable{
-
-	private static final double A_INC = Math.PI / 90;
+    // A third of a circle in radians. Used for finding the locations of the lower points.
 	private static final double C_THIRD = 2*Math.PI/3;
 	
+	// The top point of the tetrahedron.
 	private Point top;
 	
+	/**
+	 * Constructs a Pellet at a given location.
+	 * @param center The center of this pellet.
+	 */
 	public Pellet(Point center) {
-		super(center, 3, 3, A_INC);
+		super(center, 3, 3, Math.PI / 90);
 	}
 	
 	protected void generate() {

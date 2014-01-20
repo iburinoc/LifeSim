@@ -2,12 +2,15 @@ package life.threedee.game.demo;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 
 import life.threedee.game.Game;
+import life.threedee.game.GameUtilities;
 import life.threedee.game.Input;
 import life.threedee.game.Player;
 
@@ -23,6 +26,13 @@ public class InputRecorder extends Input{
 		actions = new ArrayList<Action>();
 	}
 
+	public void serialize(OutputStream s) throws IOException {
+		GameUtilities.writeLong(s, seed);
+		GameUtilities.writeInt(s, actions.size());
+		for(int i = 0; i < actions.size(); i++) {
+			actions.get(i).serialize(s);
+		}
+	}
 	
 	@Override
 	public void mouseMoved(MouseEvent e) {

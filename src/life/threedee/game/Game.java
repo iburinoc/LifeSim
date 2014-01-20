@@ -759,9 +759,11 @@ public class Game implements Runnable, Tickable{
         score += 10;
         if (globalCounterEnabled) {
             globalPelletCounter++;
+            if (preferredGhost < 4) {
+                ghosts.get(preferredGhost).resetTimer();
+            }
         } else if (preferredGhost < 4) {
             ghosts.get(preferredGhost).addToCounter();
-            ghosts.get(preferredGhost).resetTimer();
         }
     }
     

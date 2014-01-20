@@ -391,6 +391,7 @@ public class Ghost implements Tickable{
         this.ghostNum=this.ghostId;
         this.direction=GHOST_ORIENTATIONS[ghostNum];
         this.decision=GHOST_ORIENTATIONS[ghostNum];
+        this.ghostTimer = 0;
         Vector v = new Vector(this.location, GHOST_LOCATIONS[ghostNum]);
         translate(v);
         updatePlanes();

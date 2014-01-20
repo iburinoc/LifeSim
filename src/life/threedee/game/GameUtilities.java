@@ -115,7 +115,7 @@ public class GameUtilities{
 
     //pellets needed for the ghosts to exit the ghost house
     public static final int[][] EXIT_PELLETS = new int[][] {{Integer.MAX_VALUE, 0, 30, 60}, {Integer.MAX_VALUE, 0, 0, 50}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}, {Integer.MAX_VALUE, 0, 0, 0}};
-    public static final int[] POSTMORTEM_PELLETS = new int[] {Integer.MAX_VALUE, 7, 17, 32};
+    public static final int[] POSTMORTEM_PELLETS = new int[] {Integer.MAX_VALUE, 7, 17, Integer.MAX_VALUE};
 
     public static final int STARTING_LIVES = 2;
     

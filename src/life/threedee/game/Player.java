@@ -37,11 +37,6 @@ public class Player extends Camera implements Tickable{
         this.m = m;
     }
 
-    public Player(Point loc, Vector dir, Game g) {
-        super(loc, dir);
-        this.g = g;
-    }
-
     public void reset() {
     	w = false;
     	d = false;

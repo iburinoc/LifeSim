@@ -45,20 +45,20 @@ public class InputRecorder extends Input{
 			return;
 		}
         if(e.getX() != j.getWidth() / 2 || e.getY() != j.getHeight() / 2){
-			actions.add(new Action(0, e.getID(), e.getWhen(), e.getX(), e.getY()));
+        	actions.add(new Action(0, e.getID(), System.currentTimeMillis(), e.getX(), e.getY()));
 			super.mouseMoved(e);
 		}
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e){
-		actions.add(new Action(1, e.getID(), e.getWhen(), e.getKeyCode(), (int) e.getKeyChar()));
+		actions.add(new Action(1, e.getID(), System.currentTimeMillis(), e.getKeyCode(), (int) e.getKeyChar()));
 		super.keyPressed(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e){	
-		actions.add(new Action(2, e.getID(), e.getWhen(), e.getKeyCode(), (int) e.getKeyChar()));
+		actions.add(new Action(2, e.getID(), System.currentTimeMillis(), e.getKeyCode(), (int) e.getKeyChar()));
 		super.keyReleased(e);
 	}
 }

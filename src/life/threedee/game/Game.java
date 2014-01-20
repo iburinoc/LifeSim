@@ -386,7 +386,7 @@ public class Game implements Runnable, Tickable{
 
     @Override
     public void tick() {
-    	if(dead) {//if you lost all your lives, face to black
+    	if(dead) {//if you lost all your lives, fade to black
     		if(fade < 256) { 
     			fade++;
     		} else {
@@ -423,7 +423,7 @@ public class Game implements Runnable, Tickable{
         if (preferredGhost < 4) {//updates the timer of the preferred ghost
             ghosts.get(preferredGhost).addToTimer();
         }
-        if (pelletsEaten == 70 && !fruitOneOnMap) {//spawn first fruit at 70 pellets
+        if (pelletsEaten == 70 && !fruitOneOnMap) {//spawn first Special Points Consumable at 70 pellets
             spc.updateLevel(level);
             spc.spawn();
             fruitOneOnMap = true;
@@ -431,7 +431,7 @@ public class Game implements Runnable, Tickable{
             deactivateFruitTimer = false;
             fruitTimerLimit = 2400;
         }
-        if (pelletsEaten == 170 && !fruitTwoOnMap) {//spawn second fruit at 170 pellets
+        if (pelletsEaten == 170 && !fruitTwoOnMap) {//spawn second Special Points Consumable at 170 pellets
             spc.updateLevel(level);
             spc.spawn();
             fruitTwoOnMap = true;
@@ -461,7 +461,7 @@ public class Game implements Runnable, Tickable{
         }
         Point loc = p.getLoc();//update player location
         MapLocation coords = new MapLocation(loc.x, loc.z);//turn it into coordinates
-        for (Ghost ghost : ghosts){//complicated process making sure you cannot go around ghosts that checks if a ghost ate you of if you ate a ghost for each ghost
+        for (Ghost ghost : ghosts){//complicated process making sure you cannot go around ghosts that checks if a ghost ate you or if you ate a ghost for each ghost
             Point ghostLoc = ghost.getLocation();
             MapLocation ghostCoords = new MapLocation(ghostLoc.x, ghostLoc.z);
             boolean[] open = INTERSECTIONS[coords.mx][coords.my].clone();

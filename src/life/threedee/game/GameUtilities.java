@@ -99,6 +99,7 @@ public class GameUtilities{
              {no, no, no, no, dl, ud, ud, ud, nd, no, no, dl, ud, ud, rl, no, no, no, no, no, rl, no, no, dl, ud, ud, rl, no, no, dl, ud, ud, nd, no, no, no},
              {no, no, no, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, no, no, no, rl, no, no, no}});
 
+    // Flips the above hard-coded map to provide the larger, symmetrical, correct map. 
     private static boolean[][][] mirror(boolean[][][] intersections){
         boolean[][][] toReturn = new boolean[intersections.length * 2][intersections[0].length][intersections[0][0].length];
         for (int i = 0; i < intersections.length; i++){

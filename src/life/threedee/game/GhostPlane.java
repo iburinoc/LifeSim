@@ -1,7 +1,9 @@
 package life.threedee.game;
 
 import static life.threedee.game.GameUtilities.PX_METER;
+
 import java.awt.Color;
+
 import life.threedee.Point;
 import life.threedee.TexturedPlane;
 import life.threedee.Vector;

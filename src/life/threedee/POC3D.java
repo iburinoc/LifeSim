@@ -13,8 +13,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
 import life.threedee.game.GameUtilities;
 import life.threedee.game.Player;
 

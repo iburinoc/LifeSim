@@ -1,5 +1,7 @@
 package life.threedee;
 
+import java.io.Serializable;
+
 /**
  * A single point. Not much to say about it.
  * 
@@ -8,7 +10,7 @@ package life.threedee;
  * @author Sean Christopher Papillon Purcell
  * 
  */
-public class Point {
+public class Point implements Serializable{
 
 	/**
 	 * The x coordinate of this Point

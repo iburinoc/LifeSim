@@ -1,5 +1,7 @@
 package life.threedee;
 
+import java.io.Serializable;
+
 import life.threedee.game.GameUtilities;
 
 /**
@@ -11,7 +13,7 @@ import life.threedee.game.GameUtilities;
  * @author Dmitry Andreevich Paramonov
  * @author Sean Christopher Papillon Purcell
  */
-public class Vector {
+public class Vector implements Serializable{
 
 	/**
 	 * X unit vector

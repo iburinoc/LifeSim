@@ -813,7 +813,6 @@ public class Game implements Runnable, Tickable{
 			j.addMouseMotionListener(i);
 			j.addKeyListener(i);
 			d = null;
-			gameType = 0;
 			break;
 		}
 	}

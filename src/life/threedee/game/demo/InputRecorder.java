@@ -16,16 +16,30 @@ import life.threedee.game.Player;
 
 public class InputRecorder extends Input{
 
+	// the start time
 	private final long seed;
 	
+	// the list of all actions taken to date
 	private List<Action> actions;
 	
+	/**
+	 * ctor with the seed value to ensure its the same
+	 * @param p
+	 * @param g
+	 * @param j
+	 * @param seed
+	 */
 	public InputRecorder(Player p, Game g, JFrame j, long seed) {
 		super(p, g, j);
 		this.seed = seed;
 		actions = new ArrayList<Action>();
 	}
 
+	/**
+	 * Serializes this to the outputstream
+	 * @param s
+	 * @throws IOException
+	 */
 	public void serialize(OutputStream s) throws IOException {
 		/*GameUtilities.writeLong(s, seed);
 		GameUtilities.writeInt(s, actions.size());
@@ -39,6 +53,9 @@ public class InputRecorder extends Input{
 		s.close();
 	}
 	
+	/**
+	 * Captures the action and propogates it
+	 */
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if(!mouseCaptured){
@@ -50,12 +67,18 @@ public class InputRecorder extends Input{
 		}
 	}
 
+	/**
+	 * Captures the action and propogates it
+	 */
 	@Override
 	public void keyPressed(KeyEvent e){
 		actions.add(new Action(1, e.getID(), System.currentTimeMillis(), e.getKeyCode(), (int) e.getKeyChar()));
 		super.keyPressed(e);
 	}
 
+	/**
+	 * Captures the action and propogates it
+	 */
 	@Override
 	public void keyReleased(KeyEvent e){	
 		actions.add(new Action(2, e.getID(), System.currentTimeMillis(), e.getKeyCode(), (int) e.getKeyChar()));

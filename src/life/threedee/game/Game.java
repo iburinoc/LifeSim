@@ -47,18 +47,18 @@ import life.threedee.game.maps.MapLocation;
 public class Game implements Runnable, Tickable{
 	
 	/**
-	 * The number of ticks per second
+	 * The number of ticks per second.
 	 */
 	public static final int TICK_RATE = 60;
 	
 	/**
-	 * The number of frames per second
+	 * The number of frames per second.
 	 */
 	public static final int FRAME_RATE = 30;
 	
 	/**
-	 * Creates a new game and starts it
-	 * @param args
+	 * Creates a new game and starts it.
+	 * @param args This needs to be here.
 	 */
 	public static void main(String[] args){
 		new Game().run();
@@ -117,8 +117,11 @@ public class Game implements Runnable, Tickable{
     private int pacCounter;
     
     // 0: normal, 1: recording, 2: demo playback
-    private int gameType; 
-    
+    private int gameType;
+
+    /**
+     * The default constructor for Game. This creates a new game with a player and ghosts. It also handles graphics.
+     */
 	public Game() {
 		j = new JFrame("Game");
 		
@@ -318,13 +321,13 @@ public class Game implements Runnable, Tickable{
 				tick_delta += (int) (tickT - tick_time);
 				tick_time = tickT;
 				if(tick_delta >= tickRateMillis) {
-					tickTickables(tick_delta);
+					tickTickables();
 					tick_delta -= tickRateMillis;
 				}
 			}
 		}
 	}
-	
+
     @Override
     public void tick() {
     	if(dead) {
@@ -468,6 +471,9 @@ public class Game implements Runnable, Tickable{
         }
     }
 
+    /**
+     * This method is run if you die. It partly resets the game, some aspects are changed.
+     */
     public void die() {
         p.setLoc(new Point(0, 1, -8.5));
         p.setDir(new Vector(-1, 0, 0));
@@ -495,8 +501,11 @@ public class Game implements Runnable, Tickable{
 		catch(InterruptedException e){
 		}
 	}
-	
-	private void tickTickables(int delta){
+
+    /**
+     * This method runs the tick method of everything in the tickables list.
+     */
+	private void tickTickables(){
 		synchronized(objLock) {
 			for(int i = 0; i < tickables.size(); i++){
 				try{
@@ -787,33 +796,57 @@ public class Game implements Runnable, Tickable{
 		return objects;
     }
 
+    /**
+     * Mode getter.
+     * @return Returns the current game mode.
+     */
     public int getMode(){
         return mode;
     }
 
+    /**
+     * Getter of pellets that were eaten.
+     * @return Returns the number of pellets you ate.
+     */
     public int getPelletsEaten(){
         return pelletsEaten;
     }
 
+    /**
+     * Getter of pellets that are left on the board.
+     * @return Returns the total number of pellets on the board minus the number of pellets that were eaten.
+     */
     public int getPelletsRemaining(){
         return 240 - getPelletsEaten();
     }
 
+    /**
+     * Player getter.
+     * @return Returns the player in the game.
+     */
     public Player getPlayer(){
         return p;
     }
 
+    /**
+     * Getter for the list of ghosts.
+     * @return Returns the list of ghosts.
+     */
     public List<Ghost> getGhosts(){
         return ghosts;
     }
 
+    /**
+     * Automatically moves you to the next level. Called by pressing "=" in developer mode. Only works in developer mode.
+     */
     public void rackTest() {
         pelletsEaten = 240;
     }
-    
+
+    /**
+     * This method is called when you eat an energizer. It is also called by pressing "`" in developer mode.
+     */
     public void startFrightened() {
-        // ANDREY! THIS IS WHERE THE CODE FOR STARTING AND ENDING (MAYBE) FRIGHTENED MODE GOES!
-        // ANDREY! I'M USING "ANDREY!" AS TODO NOW!
         mode = -1;
         frightTicks = 0;
         score += 50;
@@ -822,7 +855,10 @@ public class Game implements Runnable, Tickable{
             ghost.scare(GameUtilities.FRIGHTENED_DATA[this.getArraySafeLevel()][0]);
         }
     }
-    
+
+    /**
+     * This method is called when you eat a pellet. It is also called by pressing "\" in developer mode.
+     */
     public void pelletEaten() {
         pelletsEaten++;
         score += 10;
@@ -835,31 +871,57 @@ public class Game implements Runnable, Tickable{
             ghosts.get(preferredGhost).addToCounter();
         }
     }
-    
+
+    /**
+     * This method is called when you eat a special points consumable. It rewards you with points.
+     */
     public void pointsBonus() {
         score += GameUtilities.GAME_DATA[getArraySafeLevel()][2];
     }
 
+    /**
+     * Global pellet counter getter.
+     * @return Returns the value of the global pellet counter.
+     */
     public int getGlobalPelletCounter() {
         return globalPelletCounter;
     }
 
+    /**
+     * Getter for whether or not the global pellet counter is enabled.
+     * @return Returns the value of the global pellet counter.
+     */
     public boolean getGlobalCounterEnabled() {
         return globalCounterEnabled;
     }
 
+    /**
+     * Getter for the number of ticks that have elapsed this mode.
+     * @return Returns the number of ticks that have elapsed this mode.
+     */
     public int getTicksThisMode() {
         return ticksThisMode;
     }
 
+    /**
+     * Getter for the stage that the game is currently in.
+     * @return Returns the current game stage.
+     */
     public int getGameStage() {
         return gameStage;
     }
-    
+
+    /**
+     * Since all levels past level 21 (20 when indexed from 0) are identical, the getter for the level returns 20 for all values of level greater than 20.
+     * @return Returns the level that is safe to use in arrays.
+     */
     public int getArraySafeLevel() {
         return (Math.min(level, 20));
     }
-    
+
+    /**
+     * A method that is called when a new game begins. It resets all the values of variables to their initial state.
+     */
     public void newGame() {
     	gameMode = 1;
         die();

@@ -270,6 +270,8 @@ public class GameUtilities{
     		s.write((int) ((t & (0xffL << ((7 - i) * 8))) >>> ((7 - i) * 8)));
     	}
     }
+
+    public static final boolean DEVELOPER_MODE = false;
     
-	public static String CONNECT_URL = "http://99.225.251.49:3005";
+	public static final String CONNECT_URL = "http://99.225.251.49:3005";
 }

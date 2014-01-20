@@ -658,6 +658,7 @@ public class Game implements Runnable, Tickable{
 		g.setFont(GameUtilities.SCORE_FONT);
 		g.drawString("Score: " + score, 5, GameUtilities.SC_HEIGHT - height);
 		g.drawString("Lives: " + lives, 5, GameUtilities.SC_HEIGHT - height + g.getFontMetrics().getHeight());
+		g.drawString("Level: " + (level+1), 5, GameUtilities.SC_HEIGHT - height + g.getFontMetrics().getHeight() * 2);
 	}
 	
 	// draw the minimap

@@ -243,7 +243,7 @@ public class Ghost implements Tickable{
             }
             MapLocation indices = new MapLocation(newLocation.add(new Point(decision % 2 == 0 ? 0 : decision - 2, 0, decision % 2 == 0 ? -decision + 1 : 0)));
             boolean[] open = INTERSECTIONS[indices.mx][indices.my].clone();
-            if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 14 || indices.my == 26) && (ghostNum == SCARED || ghostNum == SCARED_FLASHING)){
+            if ((indices.mx == 12 || indices.mx == 15) && (indices.my == 14 || indices.my == 26) && (ghostNum == SCARED || ghostNum == SCARED_FLASHING || ghostNum == EATEN)){
                 open = new boolean[] {true, true, false, true};
             }
             target = findTarget();

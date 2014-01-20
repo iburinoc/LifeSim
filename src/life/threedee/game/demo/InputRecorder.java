@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import life.threedee.game.Game;
+import life.threedee.game.GameUtilities;
 import life.threedee.game.Input;
 import life.threedee.game.Player;
 
@@ -41,15 +42,15 @@ public class InputRecorder extends Input{
 	 * @throws IOException
 	 */
 	public void serialize(OutputStream s) throws IOException {
-		/*GameUtilities.writeLong(s, seed);
+		GameUtilities.writeLong(s, seed);
 		GameUtilities.writeInt(s, actions.size());
 		for(int i = 0; i < actions.size(); i++) {
 			actions.get(i).serialize(s);
-		}*/
+		}/*
 		Data d = new Data(seed, actions);
 		ObjectOutputStream o = new ObjectOutputStream(s);
 		o.writeObject(d);
-		o.close();
+		o.close();*/
 		s.close();
 	}
 	

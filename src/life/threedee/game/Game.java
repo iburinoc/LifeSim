@@ -795,10 +795,6 @@ public class Game implements Runnable, Tickable{
 		tickables = Collections.synchronizedList(l);
 	}
 	
-	public List<Tickable> tickables(){
-		return tickables;
-	}
-	
 	public void addObject(ThreeDeeObject o) {
 		objects.add(o);
 	}

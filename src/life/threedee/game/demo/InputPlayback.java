@@ -13,12 +13,31 @@ import life.threedee.game.Game;
 import life.threedee.game.Input;
 import life.threedee.game.Player;
 
+/**
+ * A version of Input that plays back 
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ *
+ */
 public class InputPlayback extends Input implements Runnable{
 
+	// the seed
 	private long seed;
+	// the start time
 	private long start;
+	// the list of actions to be replayed
 	private List<Action> actions;
 	
+	/**
+	 * Standard ctor with the inputstream to deserialize from
+	 * @param p
+	 * @param g
+	 * @param j
+	 * @param i
+	 * @throws IOException
+	 */
 	public InputPlayback(Player p, Game g, JFrame j, InputStream i) throws IOException{
 		super(p, g, j);
 		deserialize(i);
@@ -56,6 +75,9 @@ public class InputPlayback extends Input implements Runnable{
 		}
 	}
 	
+	/**
+	 * Iterates through each action and executes it
+	 */
 	@Override
 	public void run() {
 		start = System.currentTimeMillis();
@@ -93,6 +115,10 @@ public class InputPlayback extends Input implements Runnable{
 	public void keyReleased(KeyEvent e){	
 	}
 	
+	/**
+	 * Getter
+	 * @return
+	 */
 	public long seed() {
 		return seed;
 	}

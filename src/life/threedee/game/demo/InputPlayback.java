@@ -4,13 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.io.ObjectInputStream;
 import java.util.List;
 
 import javax.swing.JFrame;
 
 import life.threedee.game.Game;
-import life.threedee.game.GameUtilities;
 import life.threedee.game.Input;
 import life.threedee.game.Player;
 
@@ -26,7 +25,7 @@ public class InputPlayback extends Input implements Runnable{
 	}
 	
 	private void deserialize(InputStream s) throws IOException{
-		try {
+		/*try {
 			seed = GameUtilities.readLong(s);
 			int num = GameUtilities.readInt(s);
 			
@@ -34,16 +33,32 @@ public class InputPlayback extends Input implements Runnable{
 			for(int i = 0; i < num; i++) {
 				actions.add(Action.deserialize(s));
 			}
-			start = System.currentTimeMillis();
+			if(s.available() != 0) {
+				System.err.println("Not all data read");
+			}
+			s.close();
 		}
 		catch(IOException e) {
 			System.err.println("Not valid file");
 			throw e;
 		}
+		*/
+		try{
+			ObjectInputStream o = new ObjectInputStream(s);
+			Data d = (Data) o.readObject();
+			this.seed = d.seed;
+			this.actions = d.actions;
+			o.close();
+			s.close();
+		}
+		catch(ClassNotFoundException e) {
+
+		}
 	}
 	
 	@Override
 	public void run() {
+		start = System.currentTimeMillis();
 		for(int i = 0; i < actions.size(); i++) {
 			Action a = actions.get(i);
 			try{

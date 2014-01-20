@@ -17,16 +17,22 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import life.threedee.Point;
 import life.threedee.ThreeDeeObject;
 import life.threedee.Vector;
+import life.threedee.game.demo.InputPlayback;
 import life.threedee.game.demo.InputRecorder;
 import life.threedee.game.maps.GameMap;
 import life.threedee.game.maps.MapLocation;
@@ -185,8 +191,43 @@ public class Game implements Runnable, Tickable{
 				j.addMouseListener(gameI);
 				j.addMouseMotionListener(gameI);
 				rand = new Random(seed);
+				gameType = 1;
 				newGame();
 			}
+		};
+		
+		MenuOption playback = new MenuOption() {
+			@Override
+			public String name() {
+				return "PLAYBACK GAME";
+			}
+
+			@Override
+			public void selected() {
+				final JFileChooser fc = new JFileChooser(".");
+				int choice = fc.showOpenDialog(j);
+				if(choice == JFileChooser.APPROVE_OPTION) {
+					try{
+						j.removeKeyListener(i);
+						j.removeMouseListener(i);
+						j.removeMouseMotionListener(i);
+						InputPlayback gameI = new InputPlayback(p, Game.this, j, new FileInputStream(fc.getSelectedFile()));
+						j.addKeyListener(gameI);
+						j.addMouseListener(gameI);
+						j.addMouseMotionListener(gameI);
+						Game.this.gameI = gameI;
+						rand = new Random(gameI.seed());
+						(new Thread(gameI)).start();
+						gameType = 2;
+						newGame();
+					}
+					catch(IOException e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(j, "File not valid demo file");
+					}
+				}
+			}
+			
 		};
 		
 		MenuOption quit = new MenuOption() {
@@ -203,6 +244,7 @@ public class Game implements Runnable, Tickable{
 		
 		menu.add(start);
 		menu.add(record);
+		menu.add(playback);
 		menu.add(quit);
 	}
 	
@@ -289,7 +331,11 @@ public class Game implements Runnable, Tickable{
     		if(fade < 256) { 
     			fade++;
     		} else {
-    			gameMode = 2;
+    			if(gameType == 2) {
+    				gameMode = 0;
+    			} else {
+    				gameMode = 2;
+    			}
     		}
     		return;
     	}
@@ -641,6 +687,29 @@ public class Game implements Runnable, Tickable{
 		dead = true;
 		scoreboardDrawMode = 1;
 		name = "";
+		switch(gameType) {
+		case 1:
+			final JFileChooser fc = new JFileChooser(".");
+			int choice = fc.showSaveDialog(j);
+			if(choice == JFileChooser.APPROVE_OPTION) {
+				try{
+					InputRecorder r = (InputRecorder) gameI;
+					r.serialize(new FileOutputStream(fc.getSelectedFile()));
+				}
+				catch(IOException e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(j, "Could not write demo file");
+				}
+			}
+		case 2:
+			j.removeKeyListener(gameI);
+			j.removeMouseListener(gameI);
+			j.removeMouseMotionListener(gameI);
+			j.addMouseListener(i);
+			j.addMouseMotionListener(i);
+			j.addKeyListener(i);
+			break;
+		}
 	}
 
 	void keyPressed(int code, char key) {

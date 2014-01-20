@@ -3,6 +3,7 @@ package life.threedee.game.demo;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +28,16 @@ public class InputRecorder extends Input{
 	}
 
 	public void serialize(OutputStream s) throws IOException {
-		GameUtilities.writeLong(s, seed);
+		/*GameUtilities.writeLong(s, seed);
 		GameUtilities.writeInt(s, actions.size());
 		for(int i = 0; i < actions.size(); i++) {
 			actions.get(i).serialize(s);
-		}
+		}*/
+		Data d = new Data(seed, actions);
+		ObjectOutputStream o = new ObjectOutputStream(s);
+		o.writeObject(d);
+		o.close();
+		s.close();
 	}
 	
 	@Override

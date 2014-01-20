@@ -261,13 +261,13 @@ public class GameUtilities{
     
     public static void writeInt(OutputStream s, int t) throws IOException{
     	for(int i = 0; i < 4; i++) {
-    		s.write((t & (0xff << ((3 - i) * 8))) >>> ((3 - i) * 8));
+    		s.write((int) ((t & (0xffL << ((3 - i) * 8))) >>> ((3 - i) * 8)));
     	}
     }
     
     public static void writeLong(OutputStream s, long t) throws IOException{
     	for(int i = 0; i < 8; i++) {
-    		s.write((int) ((t & (0xff << ((7 - i) * 8))) >>> ((7 - i) * 8)));
+    		s.write((int) ((t & (0xffL << ((7 - i) * 8))) >>> ((7 - i) * 8)));
     	}
     }
     

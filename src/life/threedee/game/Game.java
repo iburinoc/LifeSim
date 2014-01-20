@@ -689,6 +689,12 @@ public class Game implements Runnable, Tickable{
 		name = "";
 		switch(gameType) {
 		case 1:
+			j.removeKeyListener(gameI);
+			j.removeMouseListener(gameI);
+			j.removeMouseMotionListener(gameI);
+			j.addMouseListener(i);
+			j.addMouseMotionListener(i);
+			j.addKeyListener(i);
 			final JFileChooser fc = new JFileChooser(".");
 			int choice = fc.showSaveDialog(j);
 			if(choice == JFileChooser.APPROVE_OPTION) {
@@ -701,6 +707,7 @@ public class Game implements Runnable, Tickable{
 					JOptionPane.showMessageDialog(j, "Could not write demo file");
 				}
 			}
+			break;
 		case 2:
 			j.removeKeyListener(gameI);
 			j.removeMouseListener(gameI);

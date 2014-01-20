@@ -75,7 +75,7 @@ public class Game implements Runnable, Tickable{
 	
 	private Input gameI;
 	
-	private boolean running, gotExtraLife = false, lostLifeThisLevel = false, fruitOnMap = false, dead, globalCounterEnabled;
+	private boolean running, gotExtraLife, lostLifeThisLevel, fruitOneOnMap, fruitTwoOnMap, deactivateFruitTimer, dead, globalCounterEnabled;
 
     /**
      * Indicates which motion phase ghosts are in<br>
@@ -85,7 +85,7 @@ public class Game implements Runnable, Tickable{
      */
 	private int mode;
     
-    private int level, pelletsEaten, score, lives = GameUtilities.STARTING_LIVES, preferredGhost = 1, globalPelletCounter = 0, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
+    private int level, pelletsEaten, score, lives = GameUtilities.STARTING_LIVES, preferredGhost = 1, globalPelletCounter, ticksThisMode, gameStage, frightTicks, pointsPerGhost, fruitTimer, fruitTimerLimit;
     
     private int fade;
     
@@ -296,12 +296,12 @@ public class Game implements Runnable, Tickable{
     	if(gameMode != 1) {
     		return;
     	}
-        if (fruitOnMap) {
+        if (!deactivateFruitTimer) {
             fruitTimer++;
         }
         if (fruitTimer >= fruitTimerLimit) {
             spc.despawn();
-            fruitOnMap = false;
+            deactivateFruitTimer = true;
         }
         if (lostLifeThisLevel) {
             globalPelletCounter = 0;
@@ -318,18 +318,20 @@ public class Game implements Runnable, Tickable{
         if (preferredGhost < 4) {
             ghosts.get(preferredGhost).addToTimer();
         }
-        if (pelletsEaten == 70 && !fruitOnMap) {
+        if (pelletsEaten == 70 && !fruitOneOnMap) {
             spc.updateLevel(level);
             spc.spawn();
-            fruitOnMap = true;
+            fruitOneOnMap = true;
             fruitTimer = 0;
+            deactivateFruitTimer = false;
             fruitTimerLimit = 600;
         }
-        if (pelletsEaten == 170 && !fruitOnMap) {
+        if (pelletsEaten == 170 && !fruitTwoOnMap) {
             spc.updateLevel(level);
             spc.spawn();
-            fruitOnMap = true;
+            fruitTwoOnMap = true;
             fruitTimer = 0;
+            deactivateFruitTimer = false;
             fruitTimerLimit = 600;
         }
         if (pelletsEaten == 240) {
@@ -431,7 +433,8 @@ public class Game implements Runnable, Tickable{
             ghost.reset();
         }
         fruitTimer = 0;
-        fruitOnMap = false;
+        fruitOneOnMap = false;
+        fruitTwoOnMap = false;
     }
 	
 	private void drawFrame() {
@@ -756,9 +759,11 @@ public class Game implements Runnable, Tickable{
         score += 10;
         if (globalCounterEnabled) {
             globalPelletCounter++;
+            if (preferredGhost < 4) {
+                ghosts.get(preferredGhost).resetTimer();
+            }
         } else if (preferredGhost < 4) {
             ghosts.get(preferredGhost).addToCounter();
-            ghosts.get(preferredGhost).resetTimer();
         }
     }
     

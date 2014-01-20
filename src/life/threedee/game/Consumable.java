@@ -1,9 +1,6 @@
 package life.threedee.game;
 
 import static life.threedee.game.GameUtilities.idCount;
-
-import java.awt.Color;
-
 import life.threedee.Point;
 import life.threedee.TColorTransfer;
 import life.threedee.ThreeDeeObject;

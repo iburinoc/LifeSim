@@ -1,10 +1,10 @@
 package life.threedee.game;
 
+import java.awt.Color;
+
 import life.threedee.Plane;
 import life.threedee.Point;
 import life.threedee.Vector;
-
-import java.awt.*;
 
 public class TunnelPlane extends Plane{
 	public final double id;

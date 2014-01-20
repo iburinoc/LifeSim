@@ -1,10 +1,30 @@
 package life.threedee.game;
 
+import static life.threedee.game.GameUtilities.BLINKY;
+import static life.threedee.game.GameUtilities.CLYDE;
+import static life.threedee.game.GameUtilities.CRUISE_ELROY;
+import static life.threedee.game.GameUtilities.CRUISE_ELROY_2;
+import static life.threedee.game.GameUtilities.EATEN;
+import static life.threedee.game.GameUtilities.EXIT_PELLETS;
+import static life.threedee.game.GameUtilities.EYES_TARGET;
+import static life.threedee.game.GameUtilities.FRIGHTENED_DATA;
+import static life.threedee.game.GameUtilities.GAME_DATA;
+import static life.threedee.game.GameUtilities.GHOST_COLORS;
+import static life.threedee.game.GameUtilities.GHOST_CORNERS;
+import static life.threedee.game.GameUtilities.GHOST_LOCATIONS;
+import static life.threedee.game.GameUtilities.GHOST_ORIENTATIONS;
+import static life.threedee.game.GameUtilities.INKY;
+import static life.threedee.game.GameUtilities.INTERSECTIONS;
+import static life.threedee.game.GameUtilities.MPT;
+import static life.threedee.game.GameUtilities.PINKY;
+import static life.threedee.game.GameUtilities.POSTMORTEM_PELLETS;
+import static life.threedee.game.GameUtilities.SCARED;
+import static life.threedee.game.GameUtilities.SCARED_FLASHING;
+import static life.threedee.game.GameUtilities.open;
 import life.threedee.Point;
 import life.threedee.Triangle;
 import life.threedee.Vector;
 import life.threedee.game.maps.MapLocation;
-import static life.threedee.game.GameUtilities.*;
 
 public class Ghost implements Tickable{
     /**

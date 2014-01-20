@@ -863,6 +863,7 @@ public class Game implements Runnable, Tickable{
     public void newGame() {
     	gameMode = 1;
         die();
+        i.recenter();
         p.reset();
         for(Pellet pellet : m.pelletsList()) {
             pellet.spawn();

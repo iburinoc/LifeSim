@@ -8,7 +8,6 @@ import life.threedee.Triangle;
 import life.threedee.Vector;
 
 public class SpecialPointsConsumable extends Consumable {
-    private static final double A_INC = Math.PI / 90;
     private static final double C_QUARTER = Math.PI/2;
     private static final Color[] colors = {new Color(255, 92, 205), Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.GRAY, Color.BLACK};
     
@@ -18,7 +17,7 @@ public class SpecialPointsConsumable extends Consumable {
     private int amount;
 
     public SpecialPointsConsumable(Point center, int level) {
-        super(center, (level+3)*2, level+3, A_INC);
+        super(center, (level+3)*2, level+3, Math.PI / 90);
         amount = level+3;
     }
 

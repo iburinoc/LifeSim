@@ -7,14 +7,12 @@ import life.threedee.Triangle;
 import life.threedee.Vector;
 
 public class Pellet extends Consumable{
-
-	private static final double A_INC = Math.PI / 90;
 	private static final double C_THIRD = 2*Math.PI/3;
 	
 	private Point top;
 	
 	public Pellet(Point center) {
-		super(center, 3, 3, A_INC);
+		super(center, 3, 3, Math.PI / 90);
 	}
 	
 	protected void generate() {

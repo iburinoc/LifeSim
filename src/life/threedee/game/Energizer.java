@@ -7,14 +7,13 @@ import life.threedee.Triangle;
 import life.threedee.Vector;
 
 public class Energizer extends Consumable {
-    private static final double A_INC = Math.PI / 360;
     private static final double C_QUARTER = Math.PI/2;
     
     private Point top;
     private Point bottom;
     
     public Energizer(Point center) {
-    	super(center, 8, 4, A_INC);
+    	super(center, 8, 4, Math.PI / 360);
     }
     
     protected void generate() {

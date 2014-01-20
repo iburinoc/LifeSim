@@ -57,7 +57,12 @@ public final class CameraSlave extends Thread {
 			}
 			if (job) { // if it has a job to do, draw range, and then set it as
 						// done
-				master.drawRange(x1, y1, x2, y2);
+				try{
+					master.drawRange(x1, y1, x2, y2);
+				}
+				catch(NullPointerException e) {
+					
+				}
 				setDone(true);
 			}
 		}

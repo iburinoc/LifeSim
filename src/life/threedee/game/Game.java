@@ -604,6 +604,14 @@ public class Game implements Runnable, Tickable{
 			}
 		}
 		
+		if(fruitOneOnMap || fruitTwoOnMap) {
+			miniG.setColor(Color.RED);
+			MapLocation l = new MapLocation(spc.center);
+			int x = (int) (l.mx * 8) + 2 + px;
+			int y = (int) (l.my * 8) + 2 + py;
+			miniG.fillRect(x, y, 4, 4);
+		}
+		
 		{
 			int dir = (int) (((Math.PI * 3 / 4 - p.getDir().yaw() + Math.PI * 2) % (Math.PI * 2)) / (Math.PI / 2));
 			int frameNum = pacCounter / 10;

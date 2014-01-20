@@ -21,8 +21,7 @@ import life.threedee.Point;
  * @author Dmitry Andreevich Paramonov
  * @author Sean Christopher Papillon Purcell
  */
-
-public class GameUtilities{
+public class GameUtilities {
     /**
      * The width of the display in pixels.
      */

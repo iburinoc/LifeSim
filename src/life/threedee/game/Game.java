@@ -604,7 +604,7 @@ public class Game implements Runnable, Tickable{
 			}
 		}
 		
-		if(fruitOneOnMap || fruitTwoOnMap) {
+		if(!spc.eaten) {
 			miniG.setColor(Color.RED);
 			MapLocation l = new MapLocation(spc.center);
 			int x = (int) (l.mx * 8) + 2 + px;

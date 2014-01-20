@@ -21,7 +21,7 @@ public class GhostPlane extends TexturedPlane {
     private boolean facePlane;
     
     /**
-     * Constructs a Ghost plane with 3 given points, 
+     * Constructs a GhostPlane with 3 given points, 
      * and the number of the ghost that this plane is a part of.
      * @param origin The origin point. Used in the same manner as in a TexturedPlane.
      * @param right The "right" point.

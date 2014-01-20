@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HighScore {
+	
+	/**
+	 * Connects to the Pi and loads the highscores
+	 * @return
+	 */
 	public static List<String> getHighScores() {
 		try {
 			URL url = new URL(GameUtilities.CONNECT_URL);
@@ -39,6 +44,11 @@ public class HighScore {
 		return null;
 	}
 	
+	/**
+	 * Submits a score to the Pi
+	 * @param name
+	 * @param score
+	 */
 	public static void postHighScores(String name, int score) {
 		try{
 			URL url = new URL(GameUtilities.CONNECT_URL);

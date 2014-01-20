@@ -83,12 +83,8 @@ public class InputPlayback extends Input implements Runnable{
 		start = System.currentTimeMillis();
 		for(int i = 0; i < actions.size(); i++) {
 			Action a = actions.get(i);
-			try{
-				Thread.sleep(Math.max(0, ((a.when - seed + start) - System.currentTimeMillis())));
-			}
-			catch(InterruptedException e) {
-				
-			}
+			long t = start + (a.when - seed);
+			while(System.currentTimeMillis() < t);
 			switch(a.type) {
 			case 0:
 				super.mouseMoved(new MouseEvent(this.j, a.id, a.when, 0, a.field1, a.field2, 1, false));

@@ -11,12 +11,27 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+/**
+ * The input class. This accepts all user input, and acts on it.
+ * 
+ * @author Andrey Boris Khesin
+ * @author Dmitry Andreevich Paramonov
+ * @author Sean Christopher Papillon Purcell
+ *
+ */
 public class Input implements KeyListener, MouseListener, MouseMotionListener{
-
+    // The player to whom this input will apply.
 	private Player p;
+	// The game for which this input will apply. 
 	private Game g;
+	/**
+	 * The JFrame from which this input will arrive.
+	 */
 	protected JFrame j;
 
+	/**
+	 * 
+	 */
 	protected boolean mouseCaptured;
 
 	private Robot recenter;

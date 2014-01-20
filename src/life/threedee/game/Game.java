@@ -43,6 +43,7 @@ import life.threedee.game.maps.MapLocation;
  * @author Andrey Boris Khesin
  * @author Dmitry Andreevich Paramonov
  * @author Sean Christopher Papillon Purcell
+ * 
  */
 public class Game implements Runnable, Tickable{
 	

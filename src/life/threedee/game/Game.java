@@ -330,7 +330,7 @@ public class Game implements Runnable, Tickable{
 
     @Override
     public void tick() {
-    	if(dead) {
+    	if(dead) {//if you lost all your lives, face to black
     		if(fade < 256) { 
     			fade++;
     		} else {
@@ -342,32 +342,32 @@ public class Game implements Runnable, Tickable{
     		}
     		return;
     	}
-    	if(gameMode != 1) {
+    	if (gameMode != 1) {//if you are currently not in game, end method
     		return;
     	}
-        if (!deactivateFruitTimer) {
+        if (!deactivateFruitTimer) {//if the fruit timer is on, add to it
             fruitTimer++;
         }
-        if (fruitTimer >= fruitTimerLimit) {
+        if (fruitTimer >= fruitTimerLimit) {//if it's time for the fruit to disappear, it goes away
             spc.despawn();
             deactivateFruitTimer = true;
         }
-        if (lostLifeThisLevel) {
+        if (lostLifeThisLevel) {//enables and reset the global dot counter if you die
             globalPelletCounter = 0;
             globalCounterEnabled = true;
             lostLifeThisLevel = false;
         }
-        if (globalPelletCounter == 32 && ghosts.get(CLYDE).inside()) {
+        if (globalPelletCounter == 32 && ghosts.get(CLYDE).inside()) {//deactivates counter if it reaches 32 and clyde is inside
             globalCounterEnabled = false;
             globalPelletCounter = 0;
         }
-        if (preferredGhost < 4 && !ghosts.get(preferredGhost).inside()) {
+        if (preferredGhost < 4 && !ghosts.get(preferredGhost).inside()) {//updates preferred ghost if a ghost leaves
             preferredGhost++;
         }
-        if (preferredGhost < 4) {
+        if (preferredGhost < 4) {//updates the timer of the preferred ghost
             ghosts.get(preferredGhost).addToTimer();
         }
-        if (pelletsEaten == 70 && !fruitOneOnMap) {
+        if (pelletsEaten == 70 && !fruitOneOnMap) {//spawn first fruit at 70 pellets
             spc.updateLevel(level);
             spc.spawn();
             fruitOneOnMap = true;
@@ -375,7 +375,7 @@ public class Game implements Runnable, Tickable{
             deactivateFruitTimer = false;
             fruitTimerLimit = 2400;
         }
-        if (pelletsEaten == 170 && !fruitTwoOnMap) {
+        if (pelletsEaten == 170 && !fruitTwoOnMap) {//spawn second fruit at 170 pellets
             spc.updateLevel(level);
             spc.spawn();
             fruitTwoOnMap = true;
@@ -383,7 +383,7 @@ public class Game implements Runnable, Tickable{
             deactivateFruitTimer = false;
             fruitTimerLimit = 2400;
         }
-        if (pelletsEaten == 240) {
+        if (pelletsEaten == 240) {//clear level at 240 pellets
             die();
             for(Pellet pellet : m.pelletsList()) {
                 pellet.spawn();
@@ -399,13 +399,13 @@ public class Game implements Runnable, Tickable{
             lostLifeThisLevel = false;
             spc.updateLevel(level);
         }
-        if (score >= 10000 && !gotExtraLife){
+        if (score >= 10000 && !gotExtraLife) {//reward you with an extra life at 10000 points
             gotExtraLife = true;
             lives++;
         }
-        Point loc = p.getLoc();
-        MapLocation coords = new MapLocation(loc.x, loc.z);
-        for (Ghost ghost : ghosts){
+        Point loc = p.getLoc();//update player location
+        MapLocation coords = new MapLocation(loc.x, loc.z);//turn it into coordinates
+        for (Ghost ghost : ghosts){//complicated process making sure you cannot go around ghosts that checks if a ghost ate you of if you ate a ghost for each ghost
             Point ghostLoc = ghost.getLocation();
             MapLocation ghostCoords = new MapLocation(ghostLoc.x, ghostLoc.z);
             boolean[] open = INTERSECTIONS[coords.mx][coords.my].clone();
@@ -432,41 +432,40 @@ public class Game implements Runnable, Tickable{
                 }
             }
         }
-        for (Consumable c : m.consumableList()){
+        for (Consumable c : m.consumableList()){//checks if you ate anything consumable for each consumable
             Point consumableLoc = c.getCenter();
             MapLocation consumableCoords = new MapLocation(consumableLoc.x, consumableLoc.z);
             if (coords.equals(consumableCoords) && !c.getEaten()) {
                 c.eat(this, p);
             }
         }
-        {
+        {//checks if you ate a special points consumable
             Point consumableLoc = spc.getCenter();
             MapLocation consumableCoords = new MapLocation(consumableLoc.x, consumableLoc.z);
             if (coords.equals(consumableCoords) && !spc.getEaten()) {
                 spc.eat(this, p);
             }
         }
-        if (mode != -1) {
+        if (mode != -1) {//updates the amount of time this scatter or chase mode has lasted
             ticksThisMode++;
-        } else {
+        } else {//updates the amount of time this fright mode has lasted
             frightTicks++;
         }
-        if (frightTicks >= FRIGHTENED_DATA[getArraySafeLevel()][0]) {
+        if (frightTicks >= FRIGHTENED_DATA[getArraySafeLevel()][0]) {//if fright mode is over, goes back to the stage the game was on
             mode = gameStage % 2;
         }
-        if (gameStage > 6 && mode != -1) {
+        if (gameStage > 6 && mode != -1) {//if all the stages have cycled, chase is activated permanently
             mode = 1;
-        } else if (mode != -1 && ticksThisMode == GameUtilities.MODE_TIMES[getArraySafeLevel()][gameStage]) {
+        } else if (mode != -1 && ticksThisMode == GameUtilities.MODE_TIMES[getArraySafeLevel()][gameStage]) {//if this stage is over, it moves on to the next one
             ticksThisMode = 0;
             gameStage++;
             mode = gameStage % 2;
         }
-        if(lives < 0) {
+        if(lives < 0) {//if you lose all your lives, you get a game over
         	endGame();
         }
-        
-        pacCounter++;
-        if(pacCounter >= 40) {
+        pacCounter++;//the amount that the player's mouth is open on the mini map
+        if(pacCounter >= 40) {//resets the value if it goes to 40
         	pacCounter = 0;
         }
     }

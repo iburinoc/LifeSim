@@ -469,7 +469,7 @@ public class Game implements Runnable, Tickable{
             ticksThisMode = 0;
             globalCounterEnabled = false;
             lostLifeThisLevel = false;
-            spc.updateLevel(level);
+            spc.updateLevel(level + 1);
         }
         if (score >= 10000 && !gotExtraLife) {//reward you with an extra life at 10000 points
             gotExtraLife = true;
@@ -1058,8 +1058,11 @@ public class Game implements Runnable, Tickable{
         for (Ghost ghost : ghosts) {
             ghost.resetCounter();
         }
-        lives=GameUtilities.STARTING_LIVES;
-        level=0;
+        lives = GameUtilities.STARTING_LIVES;
+        level = 0;
+        fruitOneOnMap = false;
+        fruitTwoOnMap = false;
+        fruitTimer = 0;
         pelletsEaten = 0;
         globalPelletCounter = 0;
         score = 0;

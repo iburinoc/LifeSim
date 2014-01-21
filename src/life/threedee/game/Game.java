@@ -141,7 +141,7 @@ public class Game implements Runnable, Tickable{
     // the lock used for synchronising drawing and ticking
     private Object objLock;
     
-    // the "fruit
+    // the "fruit"
     private SpecialPointsConsumable spc;
     
     // what mode the game is in: menu, game, scoreboard
@@ -555,9 +555,8 @@ public class Game implements Runnable, Tickable{
         for(Ghost ghost : ghosts) {
             ghost.reset();
         }
-        fruitTimer = 0;
-        fruitOneOnMap = false;
-        fruitTwoOnMap = false;
+        fruitTimer = Integer.MAX_VALUE;
+        spc.despawn();
     }
 	
     // draws a single frame

@@ -419,7 +419,7 @@ public class GameUtilities {
     /**
      * Whether Developer Mode is enabled.
      */
-    public static final boolean DEVELOPER_MODE = true;
+    public static final boolean DEVELOPER_MODE = false;
     
     /**
      * The URL of the highscore board.

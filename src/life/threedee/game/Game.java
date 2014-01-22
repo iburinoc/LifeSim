@@ -837,7 +837,7 @@ public class Game implements Runnable, Tickable{
 			break;
 		case 1:
 			break;
-		case 2: System.out.println(code);
+		case 2: 
 			key = Character.toUpperCase(key);
 			if(scoreboardDrawMode == 1) {
 				if(key >= 'A' && key <= 'Z') {

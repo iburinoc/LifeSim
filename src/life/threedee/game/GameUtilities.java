@@ -385,11 +385,16 @@ public class GameUtilities {
      * @throws IOException
      */
     public static long readLong(InputStream s) throws IOException{
-    	int t = 0;
+    	long t = 0;
     	for(int i = 0; i < 8; i++) {
     		t |= ((long)s.read()) << (i * 8);
     	}
     	return t;
+    }
+    
+    public static double readDouble(InputStream s) throws IOException {
+    	long l = readLong(s);
+    	return Double.longBitsToDouble(l);
     }
     
     /**
@@ -416,6 +421,10 @@ public class GameUtilities {
     	}
     }
 
+    public static void writeDouble(OutputStream s, double d) throws IOException {
+    	writeLong(s, Double.doubleToLongBits(d));
+    }
+    
     /**
      * Whether Developer Mode is enabled.
      */

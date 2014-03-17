@@ -1,5 +1,8 @@
 package life.threedee;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 
 import life.threedee.game.GameUtilities;
@@ -242,5 +245,18 @@ public class Vector implements Serializable{
 		} catch (ClassCastException e) {
 			return false;
 		}
+	}
+
+	public void serialize(OutputStream o) throws IOException {
+		GameUtilities.writeDouble(o, x);
+		GameUtilities.writeDouble(o, y);
+		GameUtilities.writeDouble(o, z);
+	}
+	
+	public static Vector deserialize(InputStream i) throws IOException {
+		double x = GameUtilities.readDouble(i);
+		double y = GameUtilities.readDouble(i);
+		double z = GameUtilities.readDouble(i);
+		return new Vector(x, y, z);
 	}
 }

@@ -1,6 +1,11 @@
 package life.threedee;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
+
+import life.threedee.game.GameUtilities;
 
 /**
  * A single point. Not much to say about it.
@@ -89,5 +94,18 @@ public class Point implements Serializable{
 	 */
 	public Point stretch(double elasticity) {
 		return new Point(x * elasticity, y * elasticity, z * elasticity);
+	}
+	
+	public void serialize(OutputStream o) throws IOException {
+		GameUtilities.writeDouble(o, x);
+		GameUtilities.writeDouble(o, y);
+		GameUtilities.writeDouble(o, z);
+	}
+	
+	public static Point deserialize(InputStream i) throws IOException {
+		double x = GameUtilities.readDouble(i);
+		double y = GameUtilities.readDouble(i);
+		double z = GameUtilities.readDouble(i);
+		return new Point(x, y, z);
 	}
 }

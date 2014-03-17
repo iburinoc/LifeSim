@@ -1,9 +1,13 @@
 package life.threedee.game.demo;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import life.threedee.game.GameUtilities;
 import life.threedee.game.Player;
 
 /**
@@ -38,6 +42,11 @@ public class Demo implements Serializable{
 		this.actions = new ArrayList<PData>();
 	}
 	
+	private Demo(long seed, List<PData> actions) {
+		this.seed = seed;
+		this.actions = actions;
+	}
+	
 	public void recordTick(Player p) {
 		actions.add(new PData(p.getDir(), p.getLoc()));
 	}
@@ -49,5 +58,23 @@ public class Demo implements Serializable{
 	 	PData d = actions.get((int) tickNum);
 	 	p.setDir(d.dir);
 	 	p.setLoc(d.loc);
+	}
+	
+	public void serialize(OutputStream o) throws IOException {
+		GameUtilities.writeLong(o, seed);
+		GameUtilities.writeInt(o, actions.size());
+		for(int i = 0; i < actions.size(); i++) {
+			actions.get(i).serialize(o);
+		}
+	}
+	
+	public static Demo deserialize(InputStream i) throws IOException {
+		long seed = GameUtilities.readLong(i);
+		int len = GameUtilities.readInt(i);
+		List<PData> actions = new ArrayList<PData>(len);
+		for(int j = 0; j < len; j++) {
+			actions.add(PData.deserialize(i));
+		}
+		return new Demo(seed, actions);
 	}
 }

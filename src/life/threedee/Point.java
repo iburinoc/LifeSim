@@ -18,6 +18,11 @@ import life.threedee.game.GameUtilities;
 public class Point implements Serializable{
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2430041703358196041L;
+
+	/**
 	 * The x coordinate of this Point
 	 */
 	public final double x;

@@ -19,6 +19,11 @@ import life.threedee.game.GameUtilities;
 public class Vector implements Serializable{
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7819196802404488035L;
+
+	/**
 	 * X unit vector
 	 */
 	public static final Vector UNIT_X = new Vector(1, 0, 0);

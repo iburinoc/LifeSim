@@ -261,11 +261,29 @@ public class Game implements Runnable, Tickable{
 						j.addKeyListener(gameI);
 						j.addMouseListener(gameI);
 						j.addMouseMotionListener(gameI);
-						FileInputStream s = new FileInputStream(fc.getSelectedFile());
+						/*FileInputStream s = new FileInputStream(fc.getSelectedFile());
 						ObjectInputStream o = new ObjectInputStream(s);
 						d = (Demo) o.readObject();
 						o.close();
-						s.close();
+						s.close();*/
+						try {
+							FileInputStream s = new FileInputStream(fc.getSelectedFile());
+							ObjectInputStream o = new ObjectInputStream(s);
+							d = (Demo) o.readObject();
+							o.close();
+							s.close();
+						}
+						catch(IOException e) {
+							e.printStackTrace();
+							FileInputStream s = new FileInputStream(fc.getSelectedFile());
+							d = Demo.deserialize(s);
+							s.close();
+						} catch (ClassNotFoundException e) {
+							e.printStackTrace();
+							FileInputStream s = new FileInputStream(fc.getSelectedFile());
+							d = Demo.deserialize(s);
+							s.close();
+						}
 						rand = new Random(d.seed);
 						gameType = 2;
 						newGame();
@@ -273,11 +291,11 @@ public class Game implements Runnable, Tickable{
 					catch(IOException e) {
 						e.printStackTrace();
 						JOptionPane.showMessageDialog(j, "File not valid demo file");
-					} catch (ClassNotFoundException e) {
+					} /*catch (ClassNotFoundException e) {
 						e.printStackTrace();
 						System.err.println("WAT");
 						JOptionPane.showMessageDialog(j, "File not valid demo file");
-					}
+					}*/
 				}
 			}
 			
@@ -796,8 +814,9 @@ public class Game implements Runnable, Tickable{
 			if(choice == JFileChooser.APPROVE_OPTION) {
 				try{
 					FileOutputStream fs = new FileOutputStream(fc.getSelectedFile());
-					ObjectOutputStream o = new ObjectOutputStream(fs);
-					o.writeObject(d);
+					d.serialize(fs);
+					//ObjectOutputStream o = new ObjectOutputStream(fs);
+					//o.writeObject(d);
 				}
 				catch(IOException e) {
 					e.printStackTrace();

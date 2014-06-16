@@ -16,3 +16,5 @@ result:
 a = (l*h - l*e - k*i + k*f - f*h + f*e + e*i - e*f)/(j*h - j*e - k*g + k*d - d*h + d*e + e*g - e*d)
 b = (i - a*(g-d) - f)/(h - e)
 c = f - a*d - b*e
+
+7

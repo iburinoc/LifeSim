@@ -17,4 +17,4 @@ a = (l*h - l*e - k*i + k*f - f*h + f*e + e*i - e*f)/(j*h - j*e - k*g + k*d - d*h
 b = (i - a*(g-d) - f)/(h - e)
 c = f - a*d - b*e
 
-7
+77
